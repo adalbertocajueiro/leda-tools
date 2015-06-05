@@ -1,0 +1,7 @@
+.metadata
+bin/
+local.properties
+.settings/
+.classpath
+.target
+/target/
