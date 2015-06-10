@@ -21,7 +21,9 @@ public class HTMLFileUtility {
 		
 		StringBuilder result = new StringBuilder();
 		InputStream is = HTMLFileUtility.class.getResourceAsStream(filePath);
+		
 		InputStreamReader isr = new InputStreamReader(is);
+		//System.out.println("Loading HTML file: " + filePath + " stream: " + is);
 		BufferedReader br = new BufferedReader(isr);
 		String line = "";
 		while((line = br.readLine()) != null){
@@ -39,6 +41,8 @@ public class HTMLFileUtility {
 			String testSuiteName, String testsTag, int tests, TestReport report) throws IOException {
 		
 		String contentString = this.loadHTMLFile(htmlFilePath);
+		//System.out.println("$$$$$Testsuitetag: " + testSuiteTag);
+		//System.out.println("$$$$$Testsuitename: " + testSuiteName);
 		contentString = contentString.replace(testSuiteTag, testSuiteName);
 		contentString = contentString.replace(testsTag, String.valueOf(tests));
 		
