@@ -1,15 +1,12 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -120,7 +117,8 @@ public class HTMLFileUtility {
 		if(item instanceof TestReportErrorItem){
 			pass.appendText(String.valueOf(0));
 		}else{
-			pass.appendText(String.valueOf(tests - item.getErrors() - item.getFailures()));
+			//pass.appendText(String.valueOf(tests - item.getErrors() - item.getFailures()));
+			pass.appendText(String.valueOf(item.getTotalTests() - item.getErrors() - item.getFailures()));
 		}
 		tableLine.appendChild(pass);
 		

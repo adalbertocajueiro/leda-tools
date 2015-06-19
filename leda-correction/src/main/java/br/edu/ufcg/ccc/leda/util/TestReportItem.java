@@ -6,16 +6,18 @@ import java.net.URL;
 public class TestReportItem {
 	private File testResultXMLFile;
 	private String studentName;
+	private int totalTests;
 	private int errors;
 	private int failures;
 	private double time;
 	private URL completeReport;
 	
 	public TestReportItem(File testResultXMLFile, String studentName,
-			int errors, int failures, double time, URL completeReport) {
+			int totalTests, int errors, int failures, double time, URL completeReport) {
 		super();
 		this.testResultXMLFile = testResultXMLFile;
 		this.studentName = studentName;
+		this.totalTests = totalTests;
 		this.errors = errors;
 		this.failures = failures;
 		this.time = time;
@@ -69,8 +71,13 @@ public class TestReportItem {
 	public void setTime(double time) {
 		this.time = time;
 	}
-	
-	
-	 
+
+	public int getTotalTests() {
+		return totalTests;
+	}
+
+	public void setTotalTests(int totalTests) {
+		this.totalTests = totalTests;
+	} 
 	
 }

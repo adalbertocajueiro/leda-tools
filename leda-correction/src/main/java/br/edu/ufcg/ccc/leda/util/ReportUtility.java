@@ -36,9 +36,9 @@ public class ReportUtility {
 					XMLFileUtility fu = new XMLFileUtility();
 					Document xml = fu.loadXMLFile(xmlFile);
 					Element testSuite = xml.getRootElement();
+					int tests = Integer.parseInt(testSuite.getAttributeValue("tests"));
 					if(report.getTestSuitName() == null){
 						String testSuiteName = testSuite.getAttributeValue("name");
-						int tests = Integer.parseInt(testSuite.getAttributeValue("tests"));
 						report.setTestSuitName(testSuiteName);
 						report.setNumberOfTests(tests);
 					}
@@ -49,7 +49,7 @@ public class ReportUtility {
 							File.separator + "target" + File.separator + "site" + File.separator + "project-reports.html";
 					URL completeReport = new File(generatedReport).toURI().toURL();
 					int errors = Integer.parseInt(testSuite.getAttributeValue("errors"));
-					TestReportItem item = new TestReportItem(xmlFile, studentName, errors, failures, time, completeReport);
+					TestReportItem item = new TestReportItem(xmlFile, studentName, tests, errors, failures, time, completeReport);
 					report.getReportItems().add(item);
 				} else{
 					String studentName = subFolder.getName();

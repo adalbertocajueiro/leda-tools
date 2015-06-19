@@ -16,17 +16,17 @@ package br.edu.ufcg.ccc.leda;
  * limitations under the License.
  */
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.List;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.jdom2.JDOMException;
 
 import br.edu.ufcg.ccc.leda.util.MavenUtility;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Goal which corrects a student's submission.
