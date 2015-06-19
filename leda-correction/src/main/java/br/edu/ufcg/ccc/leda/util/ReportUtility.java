@@ -51,6 +51,10 @@ public class ReportUtility {
 					int errors = Integer.parseInt(testSuite.getAttributeValue("errors"));
 					TestReportItem item = new TestReportItem(xmlFile, studentName, errors, failures, time, completeReport);
 					report.getReportItems().add(item);
+				} else{
+					String studentName = subFolder.getName();
+					TestReportErrorItem errorItem = new TestReportErrorItem(studentName);
+					report.getReportItems().add(errorItem);
 				}
 			}
 		}

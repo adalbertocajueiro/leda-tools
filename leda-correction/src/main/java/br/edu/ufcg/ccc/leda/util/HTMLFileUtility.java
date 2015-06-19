@@ -117,7 +117,11 @@ public class HTMLFileUtility {
 		tableLine.appendChild(name);
 		
 		Element pass = new Element(Tag.valueOf("td"),"");
-		pass.appendText(String.valueOf(tests - item.getErrors() - item.getFailures()));
+		if(item instanceof TestReportErrorItem){
+			pass.appendText(String.valueOf(0));
+		}else{
+			pass.appendText(String.valueOf(tests - item.getErrors() - item.getFailures()));
+		}
 		tableLine.appendChild(pass);
 		
 		Element errors = new Element(Tag.valueOf("td"),"");
@@ -133,10 +137,17 @@ public class HTMLFileUtility {
 		tableLine.appendChild(time);
 		
 		Element detailedReport = new Element(Tag.valueOf("td"),"");
-		Element link = new Element(Tag.valueOf("a"), "");
-		link.attr("href", item.getCompleteReport().toString());
-		link.appendText("See detailed report");
-		detailedReport.appendChild(link);
+		if(item instanceof TestReportErrorItem){
+			Element font = new Element(Tag.valueOf("font"), "");
+			font.attr("color", "red");
+			font.appendText("Report not generated. Possible compilation error.");
+			detailedReport.appendChild(font);
+		}else{
+			Element link = new Element(Tag.valueOf("a"), "");
+			link.attr("href", item.getCompleteReport().toString());
+			link.appendText("See detailed report");
+			detailedReport.appendChild(link);
+		}
 		tableLine.appendChild(detailedReport);
 		
 		return tableLine;
