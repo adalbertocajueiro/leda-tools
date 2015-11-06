@@ -84,12 +84,12 @@
   <repository>
      <id>ufcg-maven2</id>
      <name>Internal Snapshots</name>
-     <url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg/</url>
+     <url>http://150.165.15.99:10080/nexus/content/repositories/br.edu.ufcg/</url>
   </repository>
   <snapshotRepository>
      <id>ufcg-maven2</id>
      <name>Internal Snapshots</name>
-     <url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg/</url>
+     <url>http://150.165.15.99:10080/nexus/content/repositories/br.edu.ufcg/</url>
   </snapshotRepository>
 </distributionManagement>
 
