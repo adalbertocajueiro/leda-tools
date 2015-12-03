@@ -25,7 +25,7 @@
 	<repositories>
 		<repository>
 			<id>ufcg-maven2</id>
-			<url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg</url>
+			<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -37,7 +37,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>ufcg-maven2</id>
-			<url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg</url>
+			<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
