@@ -29,11 +29,10 @@ import java.util.Set;
 
 
 /**
- * Goal which corrects a student's submission.
+ * Goal which compacts a student's submission.
  *
  * @goal compact
  * 
- * @phase process-sources
  */
 public class LEDACompactorMojo extends AbstractMojo {
 	
