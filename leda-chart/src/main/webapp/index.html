@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>LEDA Gráficos</title>
+	<meta charset="utf-8"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="static/crossfilter-master/crossfilter.js"></script>
+	<script type="text/javascript" src="static/d3-master/d3.min.js"></script>
+	<script type="text/javascript" src="static/node_modules/dc/dc.min.js"></script>
+	<script src="data.json"></script>
+	<script type="text/javascript" src="static/js/charts.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/stylesheet/stylesheet.css" media="screen" /> 
+	<link rel="stylesheet" type="text/css" href="static/node_modules/dc/web/css/dc.css" media="screen" /> 
+
+</head>
+<body>
+	<header>
+			<h1>LEDA Gráficos</h1>
+	</header>
+	<aside>
+	</aside>
+	<main>
+		 <div id='chart'>
+ 			<div id='your-chart'></div>
+
+		 	<a class='reset'
+         	 href='javascript:myChart.filterAll();dc.redrawAll();'
+          	 style='display: none;'>reset</a>
+
+          	 <div id="Teste1"></div>
+    	</div>
+	</main>
+	<footer>
+		<h3>Created by Gustavo Oliveira</h3>
+	</footer>
+</body>
+</html>
