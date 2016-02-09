@@ -18,12 +18,6 @@ public class Graph {
 			setOfCoordinates.add(new Coordinate<Double, Double>(x, y));
 		}
 		
-		public void closeSerie(Algorithm algorithm){
-			for(Coordinate<Double, Double> coord : setOfCoordinates) {
-				json.addCoordinates(coord, algorithm);
-			}
-		}
-		
 		public void closeSerie(String algorithm){
 			for(Coordinate<Double, Double> coord : setOfCoordinates) {
 				json.addCoordinates(coord, algorithm);

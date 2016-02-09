@@ -23,24 +23,20 @@ public class JsonGraph {
 		coordinatesArray = new JSONArray();
 	}
 
-	@SuppressWarnings("unchecked")
-	public void addCoordinates(Coordinate<Double, Double> coord,
-			Algorithm algorithm) {
-		coordinatesArray.add(createPointObject(coord, algorithm.getName()));
-	}
-	
 	public void addCoordinates(Coordinate<Double, Double> coord,
 			String algorithm) {
-		coordinatesArray.add(createPointObject(coord, algorithm));
+		coordinatesArray.add(createPointObject(coord, algorithm, Algorithm.getCode(algorithm)));
 	}
 
 	@SuppressWarnings("unchecked")
 	private JSONObject createPointObject(Coordinate<Double, Double> coord,
-			String algorithm) {
+			String algorithm, int algorithmCode) {
 		JSONObject jsonCoordinate = new JSONObject();
+		jsonCoordinate.put("algorithmCode", algorithmCode);
 		jsonCoordinate.put("algorithm", algorithm);
 		jsonCoordinate.put("yaxis", coord.getValue());
 		jsonCoordinate.put("xaxis", coord.getKey());//.toString().replace(".", ","));
+		
 
 		return jsonCoordinate;
 	}
