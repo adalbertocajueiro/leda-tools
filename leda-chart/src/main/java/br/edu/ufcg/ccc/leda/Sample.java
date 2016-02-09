@@ -4,17 +4,27 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
-import br.edu.ufcg.ccc.leda.grafico.Graph;
+import br.edu.ufcg.ccc.leda.graph.Graph;
+import br.edu.ufcg.ccc.leda.runner.Drawer;
 import br.edu.ufcg.ccc.leda.util.Algorithm;
 import br.edu.ufcg.ccc.leda.util.Paths;
+import br.edu.ufcg.ccc.leda.simpleSorting.*;
+import br.edu.ufcg.ccc.leda.sorting.Sorting;
 
 
 public class Sample {
 
 	public static void main(String[] args) throws IOException {
 		// Set of Coordinate
+		Sorting[] bubble = new Sorting[2];
 		
-		Graph graph = new Graph();
+		bubble[1] = new Bubblesort<Integer>();
+		bubble[0] = new Insertionsort<Integer>();
+		
+		Drawer chartDrawer = new Drawer();
+		chartDrawer.addSortingImplementation(bubble);
+		chartDrawer.draw();
+		/*Graph graph = new Graph();
 		
 		//Create series 1 
 		graph.openSerie();
@@ -27,7 +37,7 @@ public class Sample {
 		graph.closeSerie( Algorithm.INSERTION);
 		
 		graph.draw();
-		
+*/		
 		openBrowser();
 	}
 
