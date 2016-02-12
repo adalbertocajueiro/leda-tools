@@ -6,20 +6,18 @@ import java.io.IOException;
 
 import br.edu.ufcg.ccc.leda.graph.Graph;
 import br.edu.ufcg.ccc.leda.runner.Drawer;
-import br.edu.ufcg.ccc.leda.util.Algorithm;
-import br.edu.ufcg.ccc.leda.util.Paths;
-import br.edu.ufcg.ccc.leda.simpleSorting.*;
+import br.edu.ufcg.ccc.leda.util.*;
 import br.edu.ufcg.ccc.leda.sorting.Sorting;
 
 
 public class Sample {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, NumberFormatException, ClassNotFoundException {
 		// Set of Coordinate
-		Sorting[] bubble = new Sorting[2];
+		String[] bubble = new String[2];
 		
-		bubble[1] = new Bubblesort<Integer>();
-		bubble[0] = new Insertionsort<Integer>();
+		bubble[1] = new Bubblesort<Integer>().getClass().getName();
+		bubble[0] = new Insertionsort<Integer>().getClass().getName();
 		
 		Drawer chartDrawer = new Drawer();
 		chartDrawer.addSortingImplementation(bubble);

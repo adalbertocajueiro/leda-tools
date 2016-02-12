@@ -1,4 +1,4 @@
-package br.edu.ufcg.ccc.leda.simpleSorting;
+package br.edu.ufcg.ccc.leda.util;
 
 import br.edu.ufcg.ccc.leda.sorting.SortingImpl;
 

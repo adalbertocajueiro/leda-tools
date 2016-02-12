@@ -7,23 +7,17 @@ $(document).ready(function(){
 	var lastCode = -1;
 	
 	for( var i = 0 ; i < dataTest.length; i ++ ){
-		console.log(!(dataTest[i].algorithmCode == lastCode));
 		if(!(dataTest[i].algorithmCode == lastCode)){
-			console.log("entrou no if")
 			algorithm.push([dataTest[i].algorithmCode, dataTest[i].algorithm]);
 			lastCode = dataTest[i].algorithmCode;
 		}
 	}
 	
-	console.log(algorithm);
-	
-
     ndx = crossfilter(dataTest);
     dimensaoDaAmostra = ndx.dimension(function(d){ return [+d.algorithmCode, +d.xaxis]; });
     totalDoTempo = dimensaoDaAmostra.group().reduceSum(function(d){return d.yaxis;});
     var menorTamanho = dimensaoDaAmostra.bottom(1)[0].xaxis;
     var maiorTamanho = dimensaoDaAmostra.top(1)[0].xaxis;
-     console.log(maiorTamanho);
     chart
     	.width(768)
     	.height(480)

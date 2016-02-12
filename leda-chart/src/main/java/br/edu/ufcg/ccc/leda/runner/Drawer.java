@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.management.timer.Timer;
 
@@ -12,7 +13,7 @@ import br.edu.ufcg.ccc.leda.sorting.Sorting;
 
 public class Drawer {
 
-	private Sorting[] sortingList;
+	private String[] sortingList;
 	Graph graph;
 
 	
@@ -20,21 +21,35 @@ public class Drawer {
 		graph = new Graph();
 	}
 	
-	public void addSortingImplementation(Sorting[] sortList) {
+	public void addSortingImplementation(String[] sortList) {
 		if (sortList != null) {
 			sortingList = sortList;
 		}
 
 	}
 
-	public void draw() throws NumberFormatException, IOException {
-		for (Sorting sort : sortingList) {
-			String implemantationName = sort.getClass().getSimpleName();
+	public void draw() {
+		for (String sort : sortingList) {
+			Sorting sortClass;
+			try {
+				Object  sorting = Class.forName(sort).newInstance();
+				
+				if (sorting instanceof Sorting) {
+					sortClass = (Sorting) sorting;
+				};
+				sortClass = (Sorting) Class.forName(sort).newInstance();
+				System.out.println(Class.forName(sort).getConstructor());
+				
+				run(sortClass);
+			} catch (InstantiationException | IllegalAccessException
+					| NoSuchMethodException | SecurityException
+					| ClassNotFoundException | NumberFormatException | IOException  e) {
+				System.out.println("An error occurred while generating the chart " + e.getMessage());
+			}
 			
 			
 			
-			System.out.println(implemantationName);
-			run(sort);
+			
 		}
 	}
 
