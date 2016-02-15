@@ -23,6 +23,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
+import br.edu.ufcg.ccc.leda.runner.Drawer;
+
 
 /**
  * Goal which generates a performance chart of student's sorting
@@ -44,11 +46,19 @@ public class LEDAChartMojo extends AbstractMojo {
      * @parameter 
      * @required
      */
-	private List<String> implementationsPath;
+	private List<String> qualifiedNames;
 
 	
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		// TODO Auto-generated method stub
+		String[] listOfNames = new String[qualifiedNames.size()]; 
+		
+		for (int i = 0; i < listOfNames.length; i++) {
+			listOfNames[i] = qualifiedNames.get(i);
+		}
+		
+		Drawer drawer  = new Drawer();
+		
+		drawer.addSortingImplementation(listOfNames);
+		drawer.extractImplemantation();
 	}
-
 }
