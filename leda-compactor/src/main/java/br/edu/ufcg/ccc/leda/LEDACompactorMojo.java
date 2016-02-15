@@ -23,9 +23,6 @@ import org.apache.maven.project.MavenProject;
 import br.edu.ufcg.ccc.leda.util.Compactor;
 
 import java.io.File;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
 
 
 /**
@@ -33,6 +30,7 @@ import java.util.Set;
  *
  * @goal compact
  * 
+ * @phase process-sources
  */
 public class LEDACompactorMojo extends AbstractMojo {
 	
