@@ -1,15 +1,15 @@
 package br.edu.ufcg.ccc.leda.util;
 
 /**
- * Enum para especificar os caminhos que são usados para
- * criação ou leitura do arquivo JSON
+ * Enum para especificar os caminhos que sï¿½o usados para
+ * criaï¿½ï¿½o ou leitura do arquivo JSON
  * 
  * @author Gustavo
  */
 public enum Paths {
-	JSON_SOURCE("src/main/webapp/data.json"),
+	JSON_SOURCE("web/data.json"),
 	
-	HTML_SOURCE("src/main/webapp/index.html");
+	HTML_SOURCE("web/index.html");
 
 	String path;
 

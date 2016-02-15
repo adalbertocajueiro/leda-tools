@@ -101,7 +101,7 @@ public class Drawer {
 			implementation.sort(a);
 			double elapsedTime = (System.nanoTime() - start) / 1000000000F;
 
-			System.out.println(elapsedTime);
+			//System.out.println(elapsedTime);
 
 			graph.addCoordinate((double) a.length, elapsedTime);
 			for (int i : a) {

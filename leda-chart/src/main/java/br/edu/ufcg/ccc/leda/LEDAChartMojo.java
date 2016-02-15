@@ -16,6 +16,7 @@ package br.edu.ufcg.ccc.leda;
  * limitations under the License.
  */
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -30,7 +31,7 @@ import br.edu.ufcg.ccc.leda.runner.Drawer;
  * Goal which generates a performance chart of student's sorting
  * implementations at compile.
  *
- * @goal compile
+ * @goal generateChart
  * 
  */
 public class LEDAChartMojo extends AbstractMojo {
@@ -60,5 +61,6 @@ public class LEDAChartMojo extends AbstractMojo {
 		
 		drawer.addSortingImplementation(listOfNames);
 		drawer.extractImplemantation();
+		//File targetFolder = new File(this.project.getBuild().getDirectory());
 	}
 }

@@ -1,5 +1,6 @@
 package br.edu.ufcg.ccc.leda.graph;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -45,7 +46,11 @@ public class JsonGraph {
 	public void createJson() {
 		graph.put("", coordinatesArray);
 		try {
-			FileWriter file = new FileWriter(Paths.JSON_SOURCE.getPath());
+			File f = new File(Paths.JSON_SOURCE.getPath());
+			if(!f.exists()){
+				f.mkdirs();
+			}
+			FileWriter file = new FileWriter(f);
 			file.write("data = " + coordinatesArray.toJSONString());
 			file.close();
 		} catch (IOException ex) {

@@ -8,10 +8,10 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>${parent.groupId}</groupId>
-	<artifactId>leda-chart</artifactId>
+	<groupId>br.edu.ufcg.ccc</groupId>
+	<artifactId>leda-chart-tool</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>${parent.version}</version>
+	<!--  version>${parent.version}</version -->
 	<name>ledagraphs</name>
 	<description>Ferramenta para acompanhamento de desempenho de algoritmos</description>
 	<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
@@ -88,14 +88,13 @@
 					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
 				</configuration>
 				<executions>
-					<execution>
-						<id>mojo-generator</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>genarateChart</goal>
-						</goals>
-					</execution>
-				</executions>
+                    <execution>
+                        <id>mojo-descriptor</id>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 		</plugins>
 	</build>
