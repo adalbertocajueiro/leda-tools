@@ -7,9 +7,11 @@ package br.edu.ufcg.ccc.leda.util;
  * @author Gustavo
  */
 public enum Paths {
-	JSON_SOURCE("web/data.json"),
+	JSON_SOURCE("src/main/resources/web/data.json"),
 	
-	HTML_SOURCE("web/index.html");
+	DATA_SOURCE("src/main/resources/data/"),
+	
+	HTML_SOURCE("src/main/resources/web/index.html");
 
 	String path;
 
