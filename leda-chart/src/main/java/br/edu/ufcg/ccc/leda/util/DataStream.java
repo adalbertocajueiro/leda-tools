@@ -17,6 +17,7 @@ public class DataStream {
 	
 	private DataStream() throws FileNotFoundException{
 		setIs(null);
+		setIsr(null);
 	}
 	
 	

@@ -33,12 +33,16 @@ public class Drawer {
 	/**
 	 * Objeto Graph que irá gerar o grafico
 	 */
-	Graph graph;
+	private Graph graph;
+	
+	private String baseDir;
 
 	/**
 	 * Construtor Default
 	 */
-	public Drawer() {
+	public Drawer(File targetFolder) {
+		
+		setBaseDir(targetFolder.getPath());
 		graph = new Graph();
 	}
 
@@ -127,7 +131,7 @@ public class Drawer {
 		
 		String implemantationName = implementation.getClass().getSimpleName();
 		graph.closeSerie(implemantationName);
-		graph.draw();
+		graph.draw(baseDir);
 
 	}
 
@@ -154,5 +158,13 @@ public class Drawer {
 		}
 
 		return auxiliarList;
+	}
+	
+	/**
+	 * 
+	 * @param baseDir
+	 */
+	public void setBaseDir(String baseDir) {
+		this.baseDir = baseDir;
 	}
 }

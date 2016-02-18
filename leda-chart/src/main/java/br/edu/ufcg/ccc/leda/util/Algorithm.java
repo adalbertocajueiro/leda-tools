@@ -10,7 +10,9 @@ import java.util.Map;
 public enum Algorithm {
 	BUBBLE(1,"Bubblesort"),
 	
-	INSERTION(2,"Insertionsort");
+	INSERTION(2,"Insertionsort"),
+	
+	SELECTION(3,"Insertionsort");
 	
 	private int code;
 	private String name;

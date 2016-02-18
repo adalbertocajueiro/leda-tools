@@ -1,8 +1,9 @@
 package br.edu.ufcg.ccc.leda.graph;
 
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -36,26 +37,29 @@ public class JsonGraph {
 		jsonCoordinate.put("algorithmCode", algorithmCode);
 		jsonCoordinate.put("algorithm", algorithm);
 		jsonCoordinate.put("yaxis", coord.getValue());
-		jsonCoordinate.put("xaxis", coord.getKey());//.toString().replace(".", ","));
+		jsonCoordinate.put("xaxis", coord.getKey());
 		
 
 		return jsonCoordinate;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void createJson() {
-		graph.put("", coordinatesArray);
+	public void createJson(String baseDir) {
 		try {
-			File f = new File(PathsEnum.JSON_SOURCE.getPath());
-			if(!f.exists()){
-				f.mkdirs();
+			String data = "data = " + coordinatesArray.toJSONString();
+			
+			OutputStream os = new FileOutputStream(PathsEnum.JSON_SOURCE.getPath(baseDir));
+			
+			for(int i = 0 ; i < data.length(); i++) {
+				os.write(data.charAt(i));
 			}
-			FileWriter file = new FileWriter(f);
-			file.write("data = " + coordinatesArray.toJSONString());
-			file.close();
+			
+			os.close();
+			
+			
 		} catch (IOException ex) {
 			System.out
-					.println("Would'nt be able to find the path you passed on to save the JSON");
+					.println("Would'nt be able to find the path you passed on to save the JSON" + ex);
 		}
 	}
 }

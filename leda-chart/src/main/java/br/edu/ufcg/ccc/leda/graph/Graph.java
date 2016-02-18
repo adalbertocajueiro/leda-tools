@@ -28,7 +28,7 @@ public class Graph {
 			setOfCoordinates = new TreeSet<Coordinate<Double,Double>>();
 		}
 		
-		public void draw() {
-			json.createJson();
+		public void draw(String baseDir) {
+			json.createJson(baseDir);
 		}
 }

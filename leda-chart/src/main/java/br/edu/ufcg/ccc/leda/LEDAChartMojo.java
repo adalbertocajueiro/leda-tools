@@ -55,11 +55,14 @@ public class LEDAChartMojo extends AbstractMojo {
 		
 		for (int i = 0; i < listOfNames.length; i++) {
 			listOfNames[i] = qualifiedNames.get(i);
+			System.out.println(listOfNames[i]);
 		}
 		
-		File targetFolder = new File(this.project.getBuild().getDirectory());
+		File targetFolder = new File(this.project.getBuild().getDirectory() + "/target/");
 		
-		Drawer drawer  = new Drawer();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>." + this.project.getBuild().getDirectory() + "/target/");
+		
+		Drawer drawer  = new Drawer(targetFolder);
 		
 		drawer.addSortingImplementation(listOfNames);
 		drawer.extractImplemantation();

@@ -16,10 +16,12 @@ public class Sample {
 		// Set of Coordinate
 		String[] bubble = new String[2];
 		
-		bubble[0] = "br.edu.ufcg.ccc.leda.util.Bubblesort";
-		bubble[1] = new Insertionsort<Integer>().getClass().getName();
+		bubble[1] = "br.edu.ufcg.ccc.leda.util.Bubblesort";
+		bubble[0] = new Insertionsort<Integer>().getClass().getName();
 		
-		Drawer chartDrawer = new Drawer();
+		File targetDir = new File("/home/gustavooliveira/workspace/Roteiro-OrdenacaoPorComparacao-I-correction-proj-T1/Roteiro-OrdenacaoPorComparacao-I-correction-env-T1/target");
+		
+		Drawer chartDrawer = new Drawer(targetDir);
 		chartDrawer.addSortingImplementation(bubble);
 		chartDrawer.extractImplemantation();
 		openBrowser();
