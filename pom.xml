@@ -18,7 +18,9 @@
       <module>leda-compactor</module>
       <module>leda-chart</module>
       <module>leda-correction</module>
-    </modules>
+      <!--  module>leda-submission</module -->
+      <module>leda-submission-tool</module>
+     </modules>
     <build>
     <plugins>
      <plugin>
