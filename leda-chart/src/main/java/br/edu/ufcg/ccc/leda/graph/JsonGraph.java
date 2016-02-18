@@ -8,7 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import br.edu.ufcg.ccc.leda.util.Algorithm;
-import br.edu.ufcg.ccc.leda.util.Paths;
+import br.edu.ufcg.ccc.leda.util.PathsEnum;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class JsonGraph {
 	public void createJson() {
 		graph.put("", coordinatesArray);
 		try {
-			File f = new File(Paths.JSON_SOURCE.getPath());
+			File f = new File(PathsEnum.JSON_SOURCE.getPath());
 			if(!f.exists()){
 				f.mkdirs();
 			}

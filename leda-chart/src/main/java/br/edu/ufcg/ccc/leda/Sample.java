@@ -22,45 +22,14 @@ public class Sample {
 		Drawer chartDrawer = new Drawer();
 		chartDrawer.addSortingImplementation(bubble);
 		chartDrawer.extractImplemantation();
-		/*Graph graph = new Graph();
-		
-		//Create series 1 
-		graph.openSerie();
-		createCoordinates(graph);
-		graph.closeSerie(Algorithm.BUBBLE);
-
-		//Create Series 2
-		graph.openSerie();
-		createCoordinates3(graph);
-		graph.closeSerie( Algorithm.INSERTION);
-		
-		graph.draw();
-*/		
 		openBrowser();
 	}
 
-	private static void createCoordinates(Graph graph) {
-		graph.addCoordinate(0.0,0.0);
-		graph.addCoordinate(1.0,1.0);
-		graph.addCoordinate(2.0,5.0);
-		graph.addCoordinate(3.0,3.0);
-		graph.addCoordinate(4.0,3.0);
-	}
-	
-	
-	private static void createCoordinates3(Graph graph) {
-		for(double i = 0; i < 5; i ++) {
-			double y = i * i + 2*i + 1;
-			
-			graph.addCoordinate(i,y);
-		}
-	}
-	
 	private static void openBrowser(){
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 	    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
 	        try {
-	        	File file = new File(System.getProperty("user.dir").replace("\\", "/") + "/" + Paths.HTML_SOURCE.getPath());
+	        	File file = new File(System.getProperty("user.dir").replace("\\", "/") + "/" + PathsEnum.HTML_SOURCE.getPath());
 	            desktop.browse(file.toURI());
 	        } catch (Exception e) {
 	            e.printStackTrace();

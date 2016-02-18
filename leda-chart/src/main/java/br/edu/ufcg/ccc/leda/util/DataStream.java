@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DataStream {
 	
-	private static File file = new File(Paths.DATA_SOURCE.getPath());
+	private static File file = new File(PathsEnum.DATA_SOURCE.getPath());
 	private static FileInputStream is;
 	private static InputStreamReader isr;
 	

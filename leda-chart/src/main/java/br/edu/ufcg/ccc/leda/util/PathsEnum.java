@@ -1,21 +1,21 @@
 package br.edu.ufcg.ccc.leda.util;
 
 /**
- * Enum para especificar os caminhos que s�o usados para
- * cria��o ou leitura do arquivo JSON
+ * Enum para especificar os caminhos que são usados para
+ * criaçãoo ou leitura do arquivo JSON
  * 
  * @author Gustavo
  */
-public enum Paths {
+public enum PathsEnum {
 	JSON_SOURCE("src/main/resources/web/data.json"),
 	
 	DATA_SOURCE("src/main/resources/data/"),
 	
-	HTML_SOURCE("src/main/resources/web/index.html");
+	HTML_SOURCE("src/main/resources/web/");
 
 	String path;
 
-	private Paths(String path) {
+	private PathsEnum(String path) {
 		this.path = path;
 	}
 
