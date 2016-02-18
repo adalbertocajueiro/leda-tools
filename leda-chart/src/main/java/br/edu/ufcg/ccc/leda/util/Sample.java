@@ -1,4 +1,4 @@
-package br.edu.ufcg.ccc.leda;
+package br.edu.ufcg.ccc.leda.util;
 
 import java.awt.Desktop;
 import java.io.File;

@@ -8,12 +8,11 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>br.edu.ufcg.ccc</groupId>
+	<groupId>${parent.groupId}</groupId>
 	<artifactId>leda-chart-tool</artifactId>
 	<packaging>maven-plugin</packaging>
-	<!-- version>${parent.version}</version -->
-	<name>ledagraphs</name>
-	<description>Ferramenta para acompanhamento de desempenho de algoritmos</description>
+	<version>${parent.version}</version>
+	<name>LEDA Chart Genarator Mojo</name>
 	<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
 
 	<developers>
@@ -78,6 +77,11 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
