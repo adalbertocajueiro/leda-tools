@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +37,14 @@ public class Drawer {
 	 * Objeto Graph que irá gerar o grafico
 	 */
 	private Graph graph;
-	
+
 	private String baseDir;
 
 	/**
 	 * Construtor Default
 	 */
 	public Drawer(File targetFolder) {
-		
+
 		setBaseDir(targetFolder.getPath());
 		graph = new Graph();
 	}
@@ -54,7 +55,7 @@ public class Drawer {
 	 * @param sortList
 	 *            Lista de String contendo os fullyqualifiedName das Classes a
 	 *            serem executadas
-	 * @param urlClassLoader 
+	 * @param urlClassLoader
 	 */
 	public void addSortingImplementation(String[] sortList) {
 		if (sortList != null) {
@@ -66,8 +67,10 @@ public class Drawer {
 	/**
 	 * Extrai as implementações e gera instancias delas para serem executadas e
 	 * gerarem o gráfico.
-	 * @param sortingInterface 
-	 * @param urlClassLoader 
+	 * 
+	 * @param sortingInterface
+	 * @param urlClassLoader
+	 * @throws InvocationTargetException
 	 */
 	public void extractImplemantation(String sortingInterface, URLClassLoader urlClassLoader) {
 		
@@ -80,29 +83,20 @@ public class Drawer {
 				loader = urlClassLoader.loadClass(sort);
 				sortClass = loader.newInstance();
 				
-				Method[] methods = loader.getDeclaredMethods();
+				Method[] methods = loader.getSuperclass().getDeclaredMethods();
 				
 				for(Method mt : methods){
-					String mtName = mt.getName();
+					String mtName = mt.toGenericString();
 					System.out.println(mtName);
 					
-					if(mtName.equals("sort")){
-						draw(mt, sortClass);
+					if(mtName.contains("public")){
+						draw(mt,  sortClass, loader.getSimpleName());
 					}
-					
-				}
-				
-				
-			
-				
-				//System.out.println(Class.forName(sort).newInstance().toString());
-				//sortClass = (Sorting) Class.forName(sort).newInstance();
-				//draw(sortClass);
-			} catch (InstantiationException
-					| IllegalAccessException | ClassNotFoundException | IOException  e) {
-				
+				}				
+			} catch (ClassNotFoundException | IOException | InstantiationException | IllegalAccessException | InvocationTargetException  e) {
 				System.out.println("[ERROR] An error occurred while capturing implemantation "
 								+ e.getStackTrace());
+				
 			}
 
 		}
@@ -117,10 +111,12 @@ public class Drawer {
 	 * @param implementation
 	 *            Uma implementação do tipo Sorting.
 	 * @throws IOException
+	 * @throws InvocationTargetException
 	 */
-	private void draw(Method method, Object obj) throws IOException {
+	private void draw(Method method, Object obj, String accessedClassName)
+			throws IOException, InvocationTargetException {
 		List<BufferedReader> listOfFiles = new ArrayList<BufferedReader>();
-		
+
 		try {
 			listOfFiles = DataStream.getData();
 		} catch (IOException e1) {
@@ -129,6 +125,7 @@ public class Drawer {
 		}
 
 		graph.openSerie();
+
 		for (BufferedReader dataFile : listOfFiles) {
 			Integer[] a = new Integer[0];
 
@@ -142,9 +139,8 @@ public class Drawer {
 
 			long start = System.nanoTime();
 			try {
-				method.invoke(obj,a);
-			} catch (IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
+				method.invoke(obj, new Object[] { a });
+			} catch (IllegalAccessException | IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -157,11 +153,9 @@ public class Drawer {
 			}
 
 		}
-		
+
 		DataStream.closeStream();
-		
-		String implemantationName = method.getDeclaringClass().getSimpleName();
-		graph.closeSerie(implemantationName);
+		graph.closeSerie(accessedClassName);
 		graph.draw(baseDir);
 
 	}
@@ -190,7 +184,7 @@ public class Drawer {
 
 		return auxiliarList;
 	}
-	
+
 	/**
 	 * 
 	 * @param baseDir

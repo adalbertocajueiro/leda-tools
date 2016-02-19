@@ -16,8 +16,10 @@ package br.edu.ufcg.ccc.leda;
  * limitations under the License.
  */
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -30,87 +32,101 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.runner.Drawer;
-
+import br.edu.ufcg.ccc.leda.util.PathsEnum;
 
 /**
- * Goal which generates a performance chart of student's sorting
- * implementations at compile.
+ * Goal which generates a performance chart of student's sorting implementations
+ * at compile.
  *
  * @goal generateChart
  * 
  */
-//@Mojo( name = "generateChart")
+// @Mojo( name = "generateChart")
 public class LEDAChartMojo extends AbstractMojo {
-	
+
 	/**
 	 * @parameter default-value="${project}"
 	 * @required
 	 * @readonly
 	 */
 	private MavenProject project;
-	
+
 	/**
-     * @parameter 
-     * @required
-     */
+	 * @parameter
+	 * @required
+	 */
 	private List<String> qualifiedNames;
-	
+
 	/**
 	 * @parameter
 	 * @required
 	 */
 	private String sortingInterface;
 
-
 	public void execute() throws MojoExecutionException {
-		String[] listOfNames = new String[qualifiedNames.size()]; 
-		
+		String[] listOfNames = new String[qualifiedNames.size()];
+
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-    	System.out.println("Folder to be compacted: " + project.getBuild().getDirectory());
-		
+		System.out.println("Folder to be compacted: "
+				+ project.getBuild().getDirectory());
+
 		for (int i = 0; i < listOfNames.length; i++) {
 			listOfNames[i] = qualifiedNames.get(i);
-			//System.out.println(listOfNames[i]);
 			try {
-				System.out.println(getClassesPath().loadClass(listOfNames[i]).getName());
+				System.out.println(getClassesPath().loadClass(listOfNames[i])
+						.getName());
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+
+		File targetFolder = new File(this.project.getBuild().getDirectory());
+		System.out.println(targetFolder);
 		
-		File targetFolder = new File(this.project.getBuild().getDirectory() + "/target/");
-		
-		
-		
-		Drawer drawer  = new Drawer(targetFolder);
-		
+		Drawer drawer = new Drawer(targetFolder);
+
 		drawer.addSortingImplementation(listOfNames);
-		drawer.extractImplemantation(sortingInterface,getClassesPath());
+		drawer.extractImplemantation(sortingInterface, getClassesPath());
+		openBrowser(targetFolder);
 	}
-	
-	private URLClassLoader getClassesPath() throws MojoExecutionException{
+
+	private URLClassLoader getClassesPath() throws MojoExecutionException {
 		List<String> classesPath = null;
 		try {
-			classesPath =		project.getCompileClasspathElements();
-			
-			 List<URL> projectClasspathList = new ArrayList<URL>();
-		        for (String element : classesPath) {
-		            try {
-		                projectClasspathList.add(new File(element).toURI().toURL());
-		            } catch (Exception e) {
-		                throw new MojoExecutionException(element + " is an invalid classpath element", e);
-		            }
-		        }		
-			
-		        URLClassLoader loader = new URLClassLoader(projectClasspathList.toArray(new URL[0]));
-		        
-		        return loader;
-		        
+			classesPath = project.getCompileClasspathElements();
+
+			List<URL> projectClasspathList = new ArrayList<URL>();
+			for (String element : classesPath) {
+				try {
+					projectClasspathList.add(new File(element).toURI().toURL());
+				} catch (Exception e) {
+					throw new MojoExecutionException(element
+							+ " is an invalid classpath element", e);
+				}
+			}
+
+			URLClassLoader loader = new URLClassLoader(
+					projectClasspathList.toArray(new URL[0]));
+
+			return loader;
+
 		} catch (DependencyResolutionRequiredException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private void openBrowser(File targetFolder){
+		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+	    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+	        try {
+	        	File file = new File(PathsEnum.HTML_SOURCE.getPath(targetFolder.getCanonicalPath()));
+	            desktop.browse(file.toURI());
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }

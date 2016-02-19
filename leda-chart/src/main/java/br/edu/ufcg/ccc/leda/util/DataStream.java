@@ -12,11 +12,11 @@ import java.util.List;
 public class DataStream {
 	
 	private static File file = new File(PathsEnum.DATA_SOURCE.getPath());
-	private static FileInputStream[] is;
+	private static FileInputStream is;
 	private static InputStreamReader isr;
 	
-	private DataStream() throws IOException{
-		setIs(new File(""));
+	private DataStream() throws FileNotFoundException{
+		setIs(null);
 		setIsr(null);
 	}
 	
@@ -27,11 +27,11 @@ public class DataStream {
 		
 		for (File fi : file.listFiles()) {
 			setIs(fi); 
-			//setIsr(is);
+			setIsr(is);
 			
-			//BufferedReader br = new BufferedReader(isr);
+			BufferedReader br = new BufferedReader(isr);
 			
-			//dataStreamed.add(br);
+			dataStreamed.add(br);
 		}
 		
 		
@@ -39,16 +39,12 @@ public class DataStream {
 	}
 	
 	public static void closeStream() throws IOException{
-				isr.close();
+		is.close();
+		isr.close();
 	}
 
-	public static void setIs(File fi) throws IOException {
-		is = new FileInputStream[fi.listFiles().length];
-		
-		for(int i = 0; i < fi.listFiles().length; i ++){
-			System.out.println(fi.listFiles()[i].getCanonicalPath());
-			is[i] = new FileInputStream(fi.listFiles()[i].getCanonicalPath());
-		}
+	public static void setIs(File fi) throws FileNotFoundException {
+		is = new FileInputStream(fi);
 	}
 	
 	public static void setIsr(FileInputStream is) throws FileNotFoundException {

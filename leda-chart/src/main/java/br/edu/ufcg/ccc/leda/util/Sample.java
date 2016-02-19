@@ -23,7 +23,7 @@ public class Sample {
 		
 		Drawer chartDrawer = new Drawer(targetDir);
 		chartDrawer.addSortingImplementation(bubble);
-		chartDrawer.extractImplemantation();
+		//chartDrawer.extractImplemantation();
 		openBrowser();
 	}
 
