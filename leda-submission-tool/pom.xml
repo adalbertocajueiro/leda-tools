@@ -47,7 +47,7 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-			<!-- to RUN TOMCAT WITH GOAL tomcat7:run, THAT IS, mvn tomcat7:run -->
+			<!-- to RUN TOMCAT USE GOAL tomcat7:run, THAT IS, mvn tomcat7:run -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -59,7 +59,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- TO RUN JETTY WITH GOAL jetty:run, THAT IS, mvn jetty:run -->
+			<!-- TO RUN JETTY USE GOAL jetty:run, THAT IS, mvn jetty:run -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
