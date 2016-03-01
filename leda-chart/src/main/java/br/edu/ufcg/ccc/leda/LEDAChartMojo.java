@@ -64,29 +64,24 @@ public class LEDAChartMojo extends AbstractMojo {
 	private String sortingInterface;
 
 	public void execute() throws MojoExecutionException {
-		String[] listOfNames = new String[qualifiedNames.size()];
+		//String[] listOfNames = new String[qualifiedNames.size()];
 
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-		System.out.println("Folder to be compacted: "
-				+ project.getBuild().getDirectory());
+		File targetFolder = new File(this.project.getBuild().getDirectory());
+		System.out.println("Target folder: " + targetFolder.getAbsolutePath());
 
-		for (int i = 0; i < listOfNames.length; i++) {
-			listOfNames[i] = qualifiedNames.get(i);
+		for (String string : qualifiedNames) {
 			try {
-				System.out.println(getClassesPath().loadClass(listOfNames[i])
-						.getName());
+				System.out.println(getClassesPath().loadClass(string).getName());
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw new MojoExecutionException("Informed class could not be instantiated", e);
 			}
 		}
-
-		File targetFolder = new File(this.project.getBuild().getDirectory());
-		System.out.println(targetFolder);
 		
 		Drawer drawer = new Drawer(targetFolder);
-
-		drawer.addSortingImplementation(listOfNames);
+		drawer.addSortingImplementation(qualifiedNames);
 		drawer.extractImplemantation(sortingInterface, getClassesPath());
 		openBrowser(targetFolder);
 	}

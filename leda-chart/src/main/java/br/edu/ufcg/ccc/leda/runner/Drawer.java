@@ -31,7 +31,7 @@ public class Drawer {
 	 * Lista com os fullyQualifiedNames das implementações a serem gerado os
 	 * graficos
 	 */
-	private String[] sortingList;
+	private List<String> sortingList;
 
 	/**
 	 * Objeto Graph que irá gerar o grafico
@@ -57,7 +57,7 @@ public class Drawer {
 	 *            serem executadas
 	 * @param urlClassLoader
 	 */
-	public void addSortingImplementation(String[] sortList) {
+	public void addSortingImplementation(List<String> sortList) {
 		if (sortList != null) {
 			sortingList = sortList;
 		}

@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -38,11 +38,11 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<dependency>
+		<!--  dependency>
 			<groupId>jfree</groupId>
 			<artifactId>jfreechart</artifactId>
 			<version>1.0.13</version>
-		</dependency>
+		</dependency -->
 
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -107,13 +107,11 @@
 		<repository>
 			<id>ufcg-maven2</id>
 			<name>Internal Snapshots</name>
-			<!-- url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg/</url -->
 			<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
 		</repository>
 		<snapshotRepository>
 			<id>ufcg-maven2</id>
 			<name>Internal Snapshots</name>
-			<!-- url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg/</url -->
 			<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
 		</snapshotRepository>
 	</distributionManagement>
