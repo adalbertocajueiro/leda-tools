@@ -1,25 +1,18 @@
 package br.edu.ufcg.ccc.leda.graph;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import br.edu.ufcg.ccc.leda.util.PathsEnum;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 
 public class JsonGraph {
-	private JSONObject jsonObject;
-
 	private JSONArray coordinatesArray;
 
 	public JsonGraph() {
-		jsonObject = new JSONObject();
 		coordinatesArray = new JSONArray();
 	}
 
@@ -50,10 +43,7 @@ public class JsonGraph {
 	        writer.write(data);
 	        writer.flush();
 	        writer.close();
-	        
-			//System.out.println("Content: " + data);
-			
-			
+
 		} catch (IOException ex) {
 			System.out.println("Would'nt be able to find the path you passed on to save the JSON" + ex);
 		}

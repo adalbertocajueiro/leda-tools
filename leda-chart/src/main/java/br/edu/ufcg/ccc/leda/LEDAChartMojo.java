@@ -18,6 +18,7 @@ package br.edu.ufcg.ccc.leda;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.runner.Drawer;
-import br.edu.ufcg.ccc.leda.util.PathsEnum;
+import br.edu.ufcg.ccc.leda.util.Utilities;
 
 /**
  * Goal which generates a performance chart of student's sorting implementations
@@ -67,8 +68,11 @@ public class LEDAChartMojo extends AbstractMojo {
 		classes = new ArrayList<Class<?>>();
 		
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-		File targetFolder = new File(this.project.getBuild().getDirectory());
+		File targetFolder = new File(this.project.getBuild().getDirectory() + File.separator + Utilities.WEB_FOLDER);
 		System.out.println("Target folder: " + targetFolder.getAbsolutePath());
+		if(!targetFolder.exists()){
+			targetFolder.mkdirs();
+		}
 		ClassLoader loader = getClassesPath();
 		Drawer drawer = new Drawer(targetFolder);
 
@@ -79,20 +83,26 @@ public class LEDAChartMojo extends AbstractMojo {
 				Class<?> loaded = Class.forName(string,true,loader);
 				classes.add(loaded);
 				drawer.setSortingList(classes);
-				drawer.instantiateAndRunImplementations();
+				//drawer.instantiateAndRunImplementations();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				throw new MojoExecutionException("Informed class could not be instantiated", e);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("Instantiation error", e);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
-			}
+			} //catch (InstantiationException e) {
+			//	e.printStackTrace();
+			//	throw new MojoExecutionException("Instantiation error", e);
+			//} catch (IllegalAccessException e) {
+			//	e.printStackTrace();
+			//	throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
+			//}
 		}
 		
-		openBrowser(targetFolder);
+		 try {
+			Utilities.fillWebFolder(targetFolder);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//openBrowser(targetFolder);
 	}
 
 	private URLClassLoader getClassesPath() throws MojoExecutionException {
@@ -126,7 +136,7 @@ public class LEDAChartMojo extends AbstractMojo {
 			desktop = Desktop.getDesktop();
 			if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE)){
 				try {
-		        	File file = new File(PathsEnum.HTML_SOURCE.getPath(targetFolder.getCanonicalPath()));
+		        	File file = new File(targetFolder,Utilities.HTML_FILE_NAME);
 		            desktop.browse(file.toURI());
 		        } catch (Exception e) {
 		            e.printStackTrace();
