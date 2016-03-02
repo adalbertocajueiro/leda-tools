@@ -18,8 +18,6 @@ package br.edu.ufcg.ccc.leda;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import java.util.List;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.runner.Drawer;
@@ -57,32 +54,44 @@ public class LEDAChartMojo extends AbstractMojo {
 	 */
 	private List<String> qualifiedNames;
 
-	/**
+	/*
 	 * @parameter
 	 * @required
 	 */
-	private String sortingInterface;
+	//private String sortingInterface;
 
+	private List<Class<?>> classes;
+	
 	public void execute() throws MojoExecutionException {
 		//String[] listOfNames = new String[qualifiedNames.size()];
-
+		classes = new ArrayList<Class<?>>();
+		
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
 		File targetFolder = new File(this.project.getBuild().getDirectory());
 		System.out.println("Target folder: " + targetFolder.getAbsolutePath());
+		ClassLoader loader = getClassesPath();
+		Drawer drawer = new Drawer(targetFolder);
 
+		
 		for (String string : qualifiedNames) {
 			try {
-				System.out.println(getClassesPath().loadClass(string).getName());
+				
+				Class<?> loaded = Class.forName(string,true,loader);
+				classes.add(loaded);
+				drawer.setSortingList(classes);
+				drawer.instantiateAndRunImplementations();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new MojoExecutionException("Informed class could not be instantiated", e);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Instantiation error", e);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
 			}
 		}
 		
-		Drawer drawer = new Drawer(targetFolder);
-		drawer.addSortingImplementation(qualifiedNames);
-		drawer.extractImplemantation(sortingInterface, getClassesPath());
 		openBrowser(targetFolder);
 	}
 
@@ -96,13 +105,11 @@ public class LEDAChartMojo extends AbstractMojo {
 				try {
 					projectClasspathList.add(new File(element).toURI().toURL());
 				} catch (Exception e) {
-					throw new MojoExecutionException(element
-							+ " is an invalid classpath element", e);
+					throw new MojoExecutionException(element + " is an invalid classpath element", e);
 				}
 			}
 
-			URLClassLoader loader = new URLClassLoader(
-					projectClasspathList.toArray(new URL[0]));
+			URLClassLoader loader = new URLClassLoader(projectClasspathList.toArray(new URL[0]));
 
 			return loader;
 
@@ -114,14 +121,17 @@ public class LEDAChartMojo extends AbstractMojo {
 	}
 	
 	private void openBrowser(File targetFolder){
-		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-	    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-	        try {
-	        	File file = new File(PathsEnum.HTML_SOURCE.getPath(targetFolder.getCanonicalPath()));
-	            desktop.browse(file.toURI());
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
+		Desktop desktop = null;
+		if(Desktop.isDesktopSupported()){
+			desktop = Desktop.getDesktop();
+			if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE)){
+				try {
+		        	File file = new File(PathsEnum.HTML_SOURCE.getPath(targetFolder.getCanonicalPath()));
+		            desktop.browse(file.toURI());
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+			}
+		}
 	}
 }

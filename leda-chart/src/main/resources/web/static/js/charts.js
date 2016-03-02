@@ -19,17 +19,18 @@ $(document).ready(function(){
     var menorTamanho = dimensaoDaAmostra.bottom(1)[0].xaxis;
     var maiorTamanho = dimensaoDaAmostra.top(1)[0].xaxis;
     chart
-    	.width(768)
+    	.width(800)
     	.height(480)
     	.chart(function(c) { return dc.lineChart(c).interpolate('basis'); })
     	.x(d3.scale.linear().domain([menorTamanho,maiorTamanho]))
-    	.margins({top: 30, right: 50, bottom: 40, left: 40})
-    	.yAxisLabel("Tempo em segundos")
+    	.margins({top: 20, right: 20, bottom: 40, left: 40})
+    	.yAxisLabel("Tempo(ms)")
     	.xAxisLabel("Tamanho da amostra")
     	.brushOn(false)
     	.mouseZoomable(true)
     	.clipPadding(10)
     	.renderHorizontalGridLines(true)
+		.renderVerticalGridLines(true)
     	.dimension(dimensaoDaAmostra)
     	.group(totalDoTempo)
     	.seriesAccessor(function(d) {

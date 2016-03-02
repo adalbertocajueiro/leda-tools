@@ -3,26 +3,25 @@ package br.edu.ufcg.ccc.leda.util;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import br.edu.ufcg.ccc.leda.graph.Graph;
 import br.edu.ufcg.ccc.leda.runner.Drawer;
-import br.edu.ufcg.ccc.leda.util.*;
-import br.edu.ufcg.ccc.leda.sorting.Sorting;
 
 
 public class Sample {
 
 	public static void main(String[] args) throws IOException, NumberFormatException, ClassNotFoundException {
 		// Set of Coordinate
-		String[] bubble = new String[2];
+		List<String> bubble = new ArrayList<String>();
 		
-		bubble[1] = "br.edu.ufcg.ccc.leda.util.Bubblesort";
-		bubble[0] = new Insertionsort<Integer>().getClass().getName();
+		bubble.add("br.edu.ufcg.ccc.leda.util.Bubblesort");
+		//bubble.add(new Insertionsort<Integer>().getClass().getName());
 		
 		File targetDir = new File("/home/gustavooliveira/workspace/Roteiro-OrdenacaoPorComparacao-I-correction-proj-T1/Roteiro-OrdenacaoPorComparacao-I-correction-env-T1/target");
 		
 		Drawer chartDrawer = new Drawer(targetDir);
-		chartDrawer.addSortingImplementation(bubble);
+		//chartDrawer.addSortingImplementations(bubble);
 		//chartDrawer.extractImplemantation();
 		openBrowser();
 	}

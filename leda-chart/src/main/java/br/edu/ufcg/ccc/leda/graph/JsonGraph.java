@@ -1,5 +1,7 @@
 package br.edu.ufcg.ccc.leda.graph;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,58 +10,52 @@ import java.io.OutputStream;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import br.edu.ufcg.ccc.leda.util.Algorithm;
 import br.edu.ufcg.ccc.leda.util.PathsEnum;
+import br.edu.ufcg.ccc.leda.util.Utilities;
 
-/**
- * 
- * @author Gustavo Oliveira
- */
 public class JsonGraph {
-	private JSONObject graph;
+	private JSONObject jsonObject;
 
 	private JSONArray coordinatesArray;
 
 	public JsonGraph() {
-		graph = new JSONObject();
+		jsonObject = new JSONObject();
 		coordinatesArray = new JSONArray();
 	}
 
-	public void addCoordinates(Coordinate<Double, Double> coord,
-			String algorithm) {
-		coordinatesArray.add(createPointObject(coord, algorithm, Algorithm.getCode(algorithm)));
+	public void addCoordinate(Coordinate<Integer,Double> coord){
+		coordinatesArray.add(createPointObject(coord, coord.getAlgorithmName(), coord.getAlgorithmCode()));
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	private JSONObject createPointObject(Coordinate<Double, Double> coord,
-			String algorithm, int algorithmCode) {
+	private JSONObject createPointObject(Coordinate<Integer, Double> coord, String algorithm, int algorithmCode) {
+		
 		JSONObject jsonCoordinate = new JSONObject();
 		jsonCoordinate.put("algorithmCode", algorithmCode);
 		jsonCoordinate.put("algorithm", algorithm);
-		jsonCoordinate.put("yaxis", coord.getValue());
-		jsonCoordinate.put("xaxis", coord.getKey());
+		jsonCoordinate.put("yaxis", coord.getyValue());
+		jsonCoordinate.put("xaxis", coord.getxValue());
 		
 
 		return jsonCoordinate;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void createJson(String baseDir) {
+	public void createJson(File baseDir) {
 		try {
 			String data = "data = " + coordinatesArray.toJSONString();
 			
-			OutputStream os = new FileOutputStream(PathsEnum.JSON_SOURCE.getPath(baseDir));
-			
-			for(int i = 0 ; i < data.length(); i++) {
-				os.write(data.charAt(i));
-			}
-			
-			os.close();
+			File file = new File(baseDir,Utilities.JSON_FILE_NAME);
+			FileWriter writer = new FileWriter(file);
+	        writer.write(data);
+	        writer.flush();
+	        writer.close();
+	        
+			//System.out.println("Content: " + data);
 			
 			
 		} catch (IOException ex) {
-			System.out
-					.println("Would'nt be able to find the path you passed on to save the JSON" + ex);
+			System.out.println("Would'nt be able to find the path you passed on to save the JSON" + ex);
 		}
 	}
 }
