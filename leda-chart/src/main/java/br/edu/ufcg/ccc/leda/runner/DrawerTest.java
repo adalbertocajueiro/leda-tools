@@ -1,10 +1,10 @@
 package br.edu.ufcg.ccc.leda.runner;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.maven.plugin.MojoExecutionException;
 
 public class DrawerTest {
 	public static void main(String[] args) {
@@ -31,6 +31,9 @@ public class DrawerTest {
 		try {
 			drawer.instantiateAndRunImplementations();
 		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

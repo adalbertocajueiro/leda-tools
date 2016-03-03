@@ -1,6 +1,7 @@
 package br.edu.ufcg.ccc.leda.runner;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import sorting.Sorting;
 import br.edu.ufcg.ccc.leda.graph.Coordinate;
 import br.edu.ufcg.ccc.leda.graph.JsonGraph;
 import br.edu.ufcg.ccc.leda.util.InputGenerator;
+import br.edu.ufcg.ccc.leda.util.Utilities;
 
 /**
  * Classe responsável pela captação e execução das implementações de Sorting e
@@ -68,13 +70,14 @@ public class Drawer {
 		return baseDir;
 	}
 
-	public void instantiateAndRunImplementations() throws InstantiationException, IllegalAccessException{
+	public void instantiateAndRunImplementations() throws InstantiationException, IllegalAccessException, IOException{
 		int algorithmCode = 0;
 		for (Class<?> sortingClass : sortingList) {
 			Sorting sortImplementation = (Sorting) sortingClass.newInstance();
 			collectExecutionData(sortImplementation, algorithmCode);
 			algorithmCode++;
 		}
+		Utilities.createWebFolder(baseDir);
 		graph.createJson(baseDir);
 	}
 	

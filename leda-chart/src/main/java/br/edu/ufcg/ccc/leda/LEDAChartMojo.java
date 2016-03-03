@@ -68,7 +68,8 @@ public class LEDAChartMojo extends AbstractMojo {
 		classes = new ArrayList<Class<?>>();
 		
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-		File targetFolder = new File(this.project.getBuild().getDirectory() + File.separator + Utilities.WEB_FOLDER);
+		//File targetFolder = new File(this.project.getBuild().getDirectory() + File.separator + Utilities.WEB_FOLDER);
+		File targetFolder = new File(this.project.getBuild().getDirectory());
 		System.out.println("Target folder: " + targetFolder.getAbsolutePath());
 		if(!targetFolder.exists()){
 			targetFolder.mkdirs();
@@ -83,21 +84,24 @@ public class LEDAChartMojo extends AbstractMojo {
 				Class<?> loaded = Class.forName(string,true,loader);
 				classes.add(loaded);
 				drawer.setSortingList(classes);
-				//drawer.instantiateAndRunImplementations();
+				drawer.instantiateAndRunImplementations();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				throw new MojoExecutionException("Informed class could not be instantiated", e);
-			} //catch (InstantiationException e) {
-			//	e.printStackTrace();
-			//	throw new MojoExecutionException("Instantiation error", e);
-			//} catch (IllegalAccessException e) {
-			//	e.printStackTrace();
-			//	throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
-			//}
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Instantiation error", e);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("IO error. Problems creating folder and files", e);
+			}
 		}
 		
 		 try {
-			Utilities.fillWebFolder(targetFolder);
+			Utilities.createWebFolder(targetFolder);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
