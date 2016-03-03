@@ -19,6 +19,7 @@ package br.edu.ufcg.ccc.leda;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -97,6 +98,12 @@ public class LEDAChartMojo extends AbstractMojo {
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new MojoExecutionException("IO error. Problems creating folder and files", e);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Illegal argument. Problems in arguments in method call", e);
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Invocation error. Problems invoking method", e);
 			}
 		}
 		

@@ -2,12 +2,13 @@ package br.edu.ufcg.ccc.leda.runner;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class DrawerTest {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalArgumentException, InvocationTargetException {
 		String folderName = "D:\\tmp\\jsonData";
 		File folder = new File(folderName);
 		if(!folder.exists()){

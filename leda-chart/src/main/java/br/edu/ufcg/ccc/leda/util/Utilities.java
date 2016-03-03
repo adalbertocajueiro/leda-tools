@@ -51,16 +51,17 @@ public class Utilities {
 		}
 	}
 
-	public static void createWebFolder(File webFolder) throws IOException {
+	public static File createWebFolder(File targetFolder) throws IOException {
 		URL file = Utilities.class.getResource(RESOURCES_WEB_FOLDER);
 		// boolean dir = isDirectory(file);
-		unzip(file, webFolder);
+		File webFolder = unzip(file, targetFolder);
+		return webFolder;
 	}
 
 	public static void main(String[] args) throws IOException {
 		File folder = new File(
 				"D:\\UFCG\\leda\\leda-tools\\leda-chart\\src\\main\\resources");
-		Utilities.createWebFolder(folder);
+		//Utilities.createWebFolder(folder);
 	}
 
 	public static boolean isDirectory(URL url) throws IOException {
@@ -89,7 +90,7 @@ public class Utilities {
 		throw new RuntimeException("Invalid protocol: " + protocol);
 	}
 
-	public static void unzip(URL folder, File destDir) throws IOException {
+	public static File unzip(URL folder, File destDir) throws IOException {
 
 		if (!destDir.exists()) {
 			destDir.mkdir();
@@ -97,6 +98,7 @@ public class Utilities {
 		String file = folder.getFile();
 		int bangIndex = file.indexOf('!');
 		String jarPath = file.substring(bangIndex + 2);
+		System.out.println("JAR PATH: " + jarPath);
 		file = new URL(file.substring(0, bangIndex)).getFile();
 		ZipFile zip = new ZipFile(file);
 		ZipEntry entryWeb = zip.getEntry(jarPath);
@@ -113,9 +115,8 @@ public class Utilities {
 					+ entry.getName();
 			if (entry.getName().startsWith(entryWeb.getName())) {
 				if (!entry.isDirectory()) {
-					String submittedFileName = getPureFileName(entry);
-					String submittedFilePath = getPathFileName(entry);
-
+					//String submittedFileName = getPureFileName(entry);
+					//String submittedFilePath = getPathFileName(entry);
 					extractFile(zipIn, filePath);
 				} else {
 					// if the entry is a directory, make the directory
@@ -129,6 +130,9 @@ public class Utilities {
 			entry = zipIn.getNextEntry();
 		}
 		zipIn.close();
+		
+		File webFolder = new File(destDir,jarPath);
+		return webFolder;
 	}
 
 	private static String getPureFileName(ZipEntry entry) {
