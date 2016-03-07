@@ -8,9 +8,9 @@ public class FilesUtilityTest {
 
 	public static void main(String[] args) throws IOException {
 		FilesUtility fu = new FilesUtility();
-		File studentZipFile = new File("D:\\tmp\\FULANO DE TAL.zip");
-		File envZipFile = new File("D:\\tmp\\Gnomesort-Combsort-environment.zip");
-		File destDirectory = new File("D:\\tmp\\zipExtractionTest");
+		File studentZipFile = new File("D:\\tmp\\hash\\subs\\Aluno1.zip");
+		File envZipFile = new File("D:\\tmp\\hash\\Roteiro-TabelaHash-correction-env-T1.zip");
+		File destDirectory = new File("D:\\tmp\\hash\\subs\\Aluno1");
 		System.out.println("creating basic structure...");
 		fu.unzip(envZipFile, destDirectory);
 		/*FileFolder f1 = new FileFolder("Gnomesort.java",new File("sorting\\variationsOfBubblesort"));

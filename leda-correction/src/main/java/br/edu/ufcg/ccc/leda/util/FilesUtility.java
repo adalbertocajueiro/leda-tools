@@ -37,7 +37,7 @@ public class FilesUtility{
     public void unzip(File studentZipFile, File projectFolder, List<String> files) throws IOException {
     	
         if (!projectFolder.exists()) {
-            projectFolder.mkdir();
+            projectFolder.mkdirs();
         }
         ZipInputStream zipIn = new ZipInputStream(new FileInputStream(studentZipFile));
         ZipEntry entry = zipIn.getNextEntry();
@@ -90,7 +90,7 @@ public class FilesUtility{
     public void unzip(File correctionZipFile, File destDir) throws IOException {
     	
         if (!destDir.exists()) {
-            destDir.mkdir();
+            destDir.mkdirs();
         }
         ZipInputStream zipIn = new ZipInputStream(new FileInputStream(correctionZipFile));
         ZipEntry entry = zipIn.getNextEntry();
@@ -101,6 +101,10 @@ public class FilesUtility{
             if (!entry.isDirectory()) {
             	String submittedFileName = this.getPureFileName(entry);
             	String submittedFilePath = this.getPathFileName(entry);
+            	File fileParentDir = new File(destDir.getAbsolutePath() + File.separator + submittedFilePath);
+            	if(!fileParentDir.exists()){
+            		fileParentDir.mkdirs();
+            	}
             	this.filesFolders.put(submittedFileName, submittedFilePath);
             	
            		extractFile(zipIn, filePath);
@@ -108,7 +112,7 @@ public class FilesUtility{
                 // if the entry is a directory, make the directory
                 File dir = new File(filePath);
                 if(!dir.exists()){
-                	dir.mkdir();
+                	dir.mkdirs();
                 }
             }
             zipIn.closeEntry();
