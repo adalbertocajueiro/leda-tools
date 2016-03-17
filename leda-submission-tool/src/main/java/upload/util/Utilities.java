@@ -73,7 +73,8 @@ public class Utilities {
 	}
 
 	private static void createFolder(String folderName) {
-		submissionsFolder = new File("target" + File.separator + folderName);
+		//submissionsFolder = new File("target" + File.separator + folderName);
+		submissionsFolder = new File(folderName);
 		if (!submissionsFolder.exists()) {
 			submissionsFolder.mkdirs();
 		}

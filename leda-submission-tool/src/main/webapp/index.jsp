@@ -7,9 +7,11 @@ System.out.println(IP + " - " + (new Date()).toString());
   //if(!IP.startsWith("150.165.74") && !IP.startsWith("150.165.80")){
   //System.out.println(IP);
   if(!IP.startsWith("150.165.74")
+	 && !IP.startsWith("150.165.75")
   	 && !IP.startsWith("0:0:0:0:0:0:0:1")
   	 && !IP.startsWith("127.0.0.1")
 	 && !IP.startsWith("150.165.80.168")
+	 && !IP.startsWith("150.165.80.189")
     ){
 	  //if(false){
 %>
@@ -33,7 +35,7 @@ System.out.println(IP + " - " + (new Date()).toString());
 
  --> 
   
-<a href="Final2015.1-environment.zip">Baixe os arquivos da prova.</a><br>
+<a href="Prova-RecursiveBubblesort-environment.zip">Baixe os arquivos da prova.</a><br>
 
 
 Escolha seu nome, seu arquivo contendo sua resposta e clique em enviar.<br>

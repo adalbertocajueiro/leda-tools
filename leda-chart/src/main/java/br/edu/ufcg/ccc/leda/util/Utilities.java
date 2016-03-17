@@ -115,8 +115,11 @@ public class Utilities {
 					+ entry.getName();
 			if (entry.getName().startsWith(entryWeb.getName())) {
 				if (!entry.isDirectory()) {
-					//String submittedFileName = getPureFileName(entry);
-					//String submittedFilePath = getPathFileName(entry);
+	            	String submittedFilePath = getPathFileName(entry);
+	            	File fileParentDir = new File(destDir.getAbsolutePath() + File.separator + submittedFilePath);
+	            	if(!fileParentDir.exists()){
+	            		fileParentDir.mkdirs();
+	            	}
 					extractFile(zipIn, filePath);
 				} else {
 					// if the entry is a directory, make the directory
@@ -133,16 +136,6 @@ public class Utilities {
 		
 		File webFolder = new File(destDir,jarPath);
 		return webFolder;
-	}
-
-	private static String getPureFileName(ZipEntry entry) {
-
-		String result = entry.getName();
-		int index = result.lastIndexOf("/");
-		if (index != 1) {
-			result = result.substring(index + 1);
-		}
-		return result;
 	}
 
 	private static String getPathFileName(ZipEntry entry) {
