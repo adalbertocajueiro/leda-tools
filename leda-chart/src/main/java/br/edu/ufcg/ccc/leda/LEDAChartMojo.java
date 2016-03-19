@@ -84,36 +84,37 @@ public class LEDAChartMojo extends AbstractMojo {
 				
 				Class<?> loaded = Class.forName(string,true,loader);
 				classes.add(loaded);
-				drawer.setSortingList(classes);
-				drawer.instantiateAndRunImplementations();
+				System.out.println("Classes loaded: " + loaded.getSimpleName());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				throw new MojoExecutionException("Informed class could not be instantiated", e);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("Instantiation error", e);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("IO error. Problems creating folder and files", e);
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 				throw new MojoExecutionException("Illegal argument. Problems in arguments in method call", e);
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("Invocation error. Problems invoking method", e);
-			}
+			} 
 		}
 		
+		System.out.println("Classes loaded: " + classes.size());
 		 try {
-			Utilities.createWebFolder(targetFolder);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			drawer.setSortingList(classes);
+			drawer.instantiateAndRunImplementations();
+			File webFolder = Utilities.createWebFolder(targetFolder);
+			Utilities.addDataToFinalJavaScript(webFolder, drawer.getGraphData().toString());
+			openBrowser(webFolder);
+		} catch (InstantiationException e) {
 			e.printStackTrace();
+			throw new MojoExecutionException("Instantiation error", e);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new MojoExecutionException("IO error. Problems creating folder and files", e);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			throw new MojoExecutionException("Invocation error. Problems invoking method", e);
 		}
-		//openBrowser(targetFolder);
+		
 	}
 
 	private URLClassLoader getClassesPath() throws MojoExecutionException {
@@ -141,13 +142,13 @@ public class LEDAChartMojo extends AbstractMojo {
 		return null;
 	}
 	
-	private void openBrowser(File targetFolder){
+	private void openBrowser(File webFolder){
 		Desktop desktop = null;
 		if(Desktop.isDesktopSupported()){
 			desktop = Desktop.getDesktop();
 			if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE)){
 				try {
-		        	File file = new File(targetFolder,Utilities.HTML_FILE_NAME);
+		        	File file = new File(webFolder,Utilities.HTML_FILE_NAME);
 		            desktop.browse(file.toURI());
 		        } catch (Exception e) {
 		            e.printStackTrace();

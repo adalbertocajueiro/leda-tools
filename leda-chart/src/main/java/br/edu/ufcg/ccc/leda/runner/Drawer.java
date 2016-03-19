@@ -8,35 +8,24 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-import sorting.Sorting;
-import br.edu.ufcg.ccc.leda.graph.Coordinate;
-import br.edu.ufcg.ccc.leda.graph.JsonGraph;
+import br.edu.ufcg.ccc.leda.graph.Point;
+import br.edu.ufcg.ccc.leda.graph.GraphData;
+import br.edu.ufcg.ccc.leda.graph.Serie;
 import br.edu.ufcg.ccc.leda.util.InputGenerator;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 
-/**
- * Classe responsável pela captação e execução das implementações de Sorting e
- * por gerar os dados necessários para criaçao dos graficos de desempenho.
- * 
- * @author Gustavo
- *
- */
 public class Drawer {
 
-	/**
-	 * Lista com os fullyQualifiedNames das implementações a serem gerado os
-	 * graficos
-	 */
 	private List<Class<?>> sortingList;
 
-	private List<Sorting> sortingImplementations;
+	private List<Object> sortingImplementations;
 	
 	/**
 	 * Objeto Graph que irá gerar o grafico
 	 */
-	private JsonGraph graph;
+	private GraphData<Integer,Double> graphData;
 
-	private File baseDir;
+	private File targetFolder;
 	
 	private ClassLoader classLoader;
 
@@ -44,9 +33,9 @@ public class Drawer {
 	 * Construtor Default
 	 */
 	public Drawer(File targetFolder) {
-		setBaseDir(targetFolder);
-		sortingImplementations = new ArrayList<Sorting>();
-		graph = new JsonGraph();
+		setTargetFolder(targetFolder);
+		sortingImplementations = new ArrayList<Object>();
+		graphData = new GraphData<Integer,Double>();
 	}
 
 
@@ -69,74 +58,40 @@ public class Drawer {
 	}
 
 
-	public File getBaseDir() {
-		return baseDir;
-	}
-
 	public void instantiateAndRunImplementations() throws InstantiationException, IllegalAccessException, IOException, IllegalArgumentException, InvocationTargetException{
-		int algorithmCode = 0;
+		int colorCode = 0;
+		System.out.println("Sorting list size: " + sortingList.size());
 		for (Class<?> sortingClass : sortingList) {
 			Object sortImplementation = (Object) sortingClass.newInstance();
-			executionData(sortImplementation, algorithmCode);
-			algorithmCode++;
+			Serie<Integer,Double> serie = new Serie<Integer,Double>(sortImplementation.getClass().getSimpleName(),colorCode);
+			executionData(sortImplementation, serie);
+			graphData.addSerie(serie);
+			colorCode++;
 		}
-		File webFolder = Utilities.createWebFolder(baseDir);
-		System.out.println("CREATING JSON FILE");
-		graph.createJson(webFolder);
+		File webFolder = Utilities.createWebFolder(targetFolder);
+		//System.out.println("Web folder created: " + webFolder.getAbsolutePath());
+		Utilities.addDataToFinalJavaScript(webFolder, graphData.toString());
+		
+		//graph.createJson(webFolder);
 	}
 	
-	public void collectExecutionData(Sorting sortImplementation, int algorithmCode) {
-		InputGenerator generator = new InputGenerator();
-		List<List<Integer>> inputs = generator.generateWorstCases();
-		//graph.openSerie();
-
-		Coordinate<Integer,Double> initialCoord = new Coordinate<Integer,Double>(0,0.0, 
-				sortImplementation.getClass().getSimpleName(), algorithmCode);
-		
-		graph.addCoordinate(initialCoord);
-		int counter = 0;
-		for (List<Integer> list : inputs) {
-			if(counter > 0){
-				long start = System.nanoTime();
-				sortImplementation.sort(list.toArray(new Integer[0]));
-				double elapsedTime = (System.nanoTime() - start) / 1000000F;
-				Coordinate<Integer,Double> coord = new Coordinate<Integer,Double>(list.size(), elapsedTime, 
-						sortImplementation.getClass().getSimpleName(), algorithmCode);
-				graph.addCoordinate(coord);
-				//graph.addCoordinate((double) list.size(), elapsedTime);
-			}
-			counter++;
-		}
-
-	}
 	
-	public void executionData(Object sortImplementation, int algorithmCode) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void executionData(Object sortImplementation, Serie<Integer,Double> serie) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		InputGenerator generator = new InputGenerator();
 		List<List<Integer>> inputs = generator.generateWorstCases();
-		//graph.openSerie();
 
-		Coordinate<Integer,Double> initialCoord = new Coordinate<Integer,Double>(0,0.0, 
-				sortImplementation.getClass().getSimpleName(), algorithmCode);
+		Method sortMethod = getSortMethod(sortImplementation);
+		//Parameter[] paramtype = getParameterType(sortMethod);
 		
-		graph.addCoordinate(initialCoord);
-		int counter = 0;
 		for (List<Integer> list : inputs) {
-			if(counter > 0){
-				Method sortMethod = getSortMethod(sortImplementation);
-				Parameter[] paramtype = getParameterType(sortMethod);
 				long start = System.nanoTime();
-				//sortImplementation.sort(list.toArray(new Integer[0]));
 				sortMethod.invoke(sortImplementation, new Object[] { list.toArray(new Integer[0]) });
 				double elapsedTime = (System.nanoTime() - start) / 1000000F;
-				Coordinate<Integer,Double> coord = new Coordinate<Integer,Double>(list.size(), elapsedTime, 
-						sortImplementation.getClass().getSimpleName(), algorithmCode);
-				graph.addCoordinate(coord);
-				//graph.addCoordinate((double) list.size(), elapsedTime);
-			}
-			counter++;
+				Point<Integer,Double> point = new Point<Integer,Double>(list.size(), elapsedTime);
+				serie.add(point);
 		}
-
 	}
+
 	
 	private Method getSortMethod(Object sortImplementation){
 		Method result = null;
@@ -163,7 +118,25 @@ public class Drawer {
 	}
 
 
-	public void setBaseDir(File baseDir) {
-		this.baseDir = baseDir;
+	public GraphData<Integer, Double> getGraphData() {
+		return graphData;
 	}
+
+
+	public void setGraphData(GraphData<Integer, Double> graphData) {
+		this.graphData = graphData;
+	}
+
+
+	public File getTargetFolder() {
+		return targetFolder;
+	}
+
+
+	public void setTargetFolder(File targetFolder) {
+		this.targetFolder = targetFolder;
+	}
+
+
+	
 }

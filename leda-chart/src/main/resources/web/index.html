@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-	<title>LEDA Gráficos</title>
-	<meta charset="utf-8"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js" type="text/javascript"></script>
-	<script type="text/javascript" src="static/crossfilter.min.js"></script>
-	<script type="text/javascript" src="static/d3.min.js"></script>
-	<script type="text/javascript" src="static/dc.min.js"></script>
-	<script src="data.json"></script>
-	<script type="text/javascript" src="static/js/charts.js"></script>
-	<link rel="stylesheet" type="text/css" href="static/stylesheet/stylesheet.css" media="screen" /> 
-	<link rel="stylesheet" type="text/css" href="static/dc.css" media="screen" /> 
+    <meta charset="utf-8">
+    <link href="./static/stylesheet/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="./static/js/d3.min.js" charset="utf-8"></script>
+    <script src="./static/js/nv.d3.js"></script>
+    <style>
+        text {
+            font: 10px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
 
+        .dashed {
+            stroke-dasharray: 5,5;
+        }
+    </style>
 </head>
-<body>
-	<main>
-		 <div id='chart'>
-		 	<a class='reset'
-         	 href='javascript:myChart.filterAll();dc.redrawAll();'
-          	 style='display: none;'>reset</a>
-			<div id="Teste1"></div> 	 
-    	</div>
-	</main>
+<body class='with-3d-shadow with-transitions'>
+<div id="chart1"></div>
+<script src="./static/js/chart.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ public class DrawerTest {
 		}
 		Drawer drawer = new Drawer(folder);
 		
-		String[] qualifiedNames = {"sorting.simpleSorting.Bubblesort","sorting.simpleSorting.Insertionsort"};
+		String[] qualifiedNames = {"sorting.simpleSorting.BubbleSort","sorting.simpleSorting.SelectionSort","sorting.simpleSorting.InsertionSort"};
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		ClassLoader loader = DrawerTest.class.getClassLoader();
 		
