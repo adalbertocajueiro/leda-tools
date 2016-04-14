@@ -102,7 +102,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 			System.out.println(fileName);
 		}
     	System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n");
-    	System.out.println("Generating project folder");
+    	System.out.println("GENERATING MAVEN PROJECTS FOR EACH STUDENT");
     	
     	
     	MavenUtility mu = new MavenUtility(submissionsDirectory, mavenHomeFolder, 
@@ -128,7 +128,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
     			try {
         			//File projectFolder = mu.createCompleteProjectFolder(environmentZipFile, studentZipFile, fileNames);
     				File projectFolder = mu.createCompleteProjectFolder(correctionEnvZipFile, studZipFile, fileNames);
-    			
+    				System.out.println("CREATING AND RUNNING MAVEN FOR FOLDER: " + projectFolder.getAbsolutePath());
         			//run maven
         			mu.executeMaven(projectFolder);
         		} catch (Exception e) {
@@ -136,6 +136,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
         			throw new MojoExecutionException("Error creating project folder", e);
         		}
 			}
+    		System.out.println("GENERATING FINAL REPORT");
     		File targetFolder = new File(this.project.getBuild().getDirectory());
 			try {
 				mu.generateReport(submissionsDirectory, targetFolder);

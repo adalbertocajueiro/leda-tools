@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+  var userip;
+</script>
+
+<script type="text/javascript" src="https://l2.io/ip.js?var=userip"></script>
+
+<script type="text/javascript">
+  //alert(userip);
+  var inp = document.getElementsByTagName("originalIP");
+  inp.value = userip
+  alert("Captured IP: " + inp.value);
+  var form = document.getElementById("mainForm");
+  alert(form.action);
+  document.getElementsByTagName("mainForm");
+  
+</script>
+
+</head>
+<body>
+ <form id = "mainForm" name="mainForm" method="GET" action="processaAcesso.jsp">
+ 	<input id = "originalIP" name="originalIP" type="hidden" value=""></input>
+ </form>
+</body>
+</html>

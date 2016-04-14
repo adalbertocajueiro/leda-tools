@@ -56,8 +56,11 @@ public class MavenUtility {
 	 * @throws JDOMException 
 	 */
 	public File createCompleteProjectFolder(File correctionZipFile, File studentZipFile, List<String> files) throws IOException, JDOMException{
+		
 		String projectFolderName = filesUtility.getFileNameWithoutExtension(studentZipFile);
+		//System.out.println("Creating folder: " + projectFolderName);
 		File projectFolder = createDefaultProjectFolder(correctionZipFile, projectFolderName);
+		//System.out.println("Default project folder: " + projectFolder.getAbsolutePath());
 		unzipSubmittedFiles(projectFolder, studentZipFile, files);
 		createPOMFile(submissionsDirectory, studentZipFile);
 				
@@ -105,10 +108,10 @@ public class MavenUtility {
 		File projectDir = new File(submissionsDirectory, projectFolderName);
 		
 		if (!submissionsDirectory.exists()) {
-			submissionsDirectory.mkdir();
+			submissionsDirectory.mkdirs();
         }
 		if (!projectDir.exists()) {
-            projectDir.mkdir();
+            projectDir.mkdirs();
         }
 		
         File sourceFolder = new File(projectDir,SOURCE_FOLDER);
@@ -123,7 +126,6 @@ public class MavenUtility {
         testResourceFolder.mkdirs();
         siteFolder.mkdirs();
         
-        //filesUtility.unzip(envZipFile, sourceFolder);
         filesUtility.unzip(envZipFile, projectDir);
 		
         return projectDir;

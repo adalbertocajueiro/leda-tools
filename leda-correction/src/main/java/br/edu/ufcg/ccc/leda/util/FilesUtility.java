@@ -88,7 +88,6 @@ public class FilesUtility{
      * @throws IOException
      */
     public void unzip(File correctionZipFile, File destDir) throws IOException {
-    	
         if (!destDir.exists()) {
             destDir.mkdirs();
         }
@@ -157,6 +156,7 @@ public class FilesUtility{
      * @throws IOException
      */
     private void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+    	
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
         byte[] bytesIn = new byte[BUFFER_SIZE];
         int read = 0;

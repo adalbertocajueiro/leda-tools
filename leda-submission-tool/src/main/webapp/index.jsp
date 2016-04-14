@@ -10,8 +10,10 @@ System.out.println(IP + " - " + (new Date()).toString());
 	 && !IP.startsWith("150.165.75")
   	 && !IP.startsWith("0:0:0:0:0:0:0:1")
   	 && !IP.startsWith("127.0.0.1")
-	 && !IP.startsWith("150.165.80.168")
-	 && !IP.startsWith("150.165.80.189")
+	 && !IP.startsWith("150.165.80.163")
+	 && !IP.startsWith("150.165.80.143")
+	 && !IP.startsWith("150.165.80.75")
+	 && !IP.startsWith("150.165.80.17")
     ){
 	  //if(false){
 %>
@@ -35,7 +37,7 @@ System.out.println(IP + " - " + (new Date()).toString());
 
  --> 
   
-<a href="Prova-RecursiveBubblesort-environment.zip">Baixe os arquivos da prova.</a><br>
+<a href="Prova-QueueComHeap-environment.zip">Baixe os arquivos da prova.</a><br>
 
 
 Escolha seu nome, seu arquivo contendo sua resposta e clique em enviar.<br>
