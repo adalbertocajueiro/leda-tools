@@ -9,11 +9,12 @@ public class TestReportItem {
 	private int totalTests;
 	private int errors;
 	private int failures;
+	private int skipped;
 	private double time;
 	private URL completeReport;
 	
 	public TestReportItem(File testResultXMLFile, String studentName,
-			int totalTests, int errors, int failures, double time, URL completeReport) {
+			int totalTests, int errors, int failures, int skiped, double time, URL completeReport) {
 		super();
 		this.testResultXMLFile = testResultXMLFile;
 		this.studentName = studentName;
@@ -78,6 +79,14 @@ public class TestReportItem {
 
 	public void setTotalTests(int totalTests) {
 		this.totalTests = totalTests;
+	}
+
+	public int getSkipped() {
+		return skipped;
+	}
+
+	public void setSkipped(int skipped) {
+		this.skipped = skipped;
 	} 
 	
 }

@@ -90,6 +90,10 @@ public class HTMLFileUtility {
 		failures.appendText("Failures");
 		tableHeader.appendChild(failures);
 		
+		Element skipped = new Element(Tag.valueOf("th"),"");
+		skipped.appendText("Skipped");
+		tableHeader.appendChild(skipped);
+		
 		Element time = new Element(Tag.valueOf("th"),"");
 		time.appendText("Time");
 		tableHeader.appendChild(time);
@@ -118,7 +122,7 @@ public class HTMLFileUtility {
 			pass.appendText(String.valueOf(0));
 		}else{
 			//pass.appendText(String.valueOf(tests - item.getErrors() - item.getFailures()));
-			pass.appendText(String.valueOf(item.getTotalTests() - item.getErrors() - item.getFailures()));
+			pass.appendText(String.valueOf(item.getTotalTests() - item.getErrors() - item.getFailures() - item.getSkipped()));
 		}
 		tableLine.appendChild(pass);
 		
@@ -129,6 +133,10 @@ public class HTMLFileUtility {
 		Element failures = new Element(Tag.valueOf("td"),"");
 		failures.appendText(String.valueOf(item.getFailures()));
 		tableLine.appendChild(failures);
+		
+		Element skipped = new Element(Tag.valueOf("td"),"");
+		skipped.appendText(String.valueOf(item.getSkipped()));
+		tableLine.appendChild(skipped);
 		
 		Element time = new Element(Tag.valueOf("td"),"");
 		time.appendText(String.valueOf(item.getTime()));

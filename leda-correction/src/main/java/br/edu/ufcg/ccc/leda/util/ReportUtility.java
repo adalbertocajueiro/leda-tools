@@ -49,7 +49,8 @@ public class ReportUtility {
 							File.separator + "target" + File.separator + "site" + File.separator + "project-reports.html";
 					URL completeReport = new File(generatedReport).toURI().toURL();
 					int errors = Integer.parseInt(testSuite.getAttributeValue("errors"));
-					TestReportItem item = new TestReportItem(xmlFile, studentName, tests, errors, failures, time, completeReport);
+					int skipped = Integer.parseInt(testSuite.getAttributeValue("skipped"));
+					TestReportItem item = new TestReportItem(xmlFile, studentName, tests, errors, failures, skipped, time, completeReport);
 					report.getReportItems().add(item);
 				} else{
 					String studentName = subFolder.getName();
