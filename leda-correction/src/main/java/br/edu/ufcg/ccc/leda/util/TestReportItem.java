@@ -21,6 +21,7 @@ public class TestReportItem {
 		this.totalTests = totalTests;
 		this.errors = errors;
 		this.failures = failures;
+		this.skipped = skiped;
 		this.time = time;
 		this.completeReport = completeReport;
 	}
