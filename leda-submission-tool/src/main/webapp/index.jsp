@@ -10,10 +10,7 @@ System.out.println(IP + " - " + (new Date()).toString());
 	 && !IP.startsWith("150.165.75")
   	 && !IP.startsWith("0:0:0:0:0:0:0:1")
   	 && !IP.startsWith("127.0.0.1")
-	 && !IP.startsWith("150.165.80.163")
-	 && !IP.startsWith("150.165.80.143")
-	 && !IP.startsWith("150.165.80.75")
-	 && !IP.startsWith("150.165.80.17")
+	 && !IP.startsWith("150.165.80.186")
     ){
 	  //if(false){
 %>
@@ -30,16 +27,16 @@ System.out.println(IP + " - " + (new Date()).toString());
 <body>
 <h3>Antes de baixar, verifique se seu nome aparece na lista dos alunos para enviar! </h3><br>
 
-<!--      
-<a href="1oEstagioRep-environment.zip">Baixe aqui</a> os arquivos da reposicao do 1o estagio .<br>
-<a href="2oEstagioRep-environment.zip">Baixe aqui</a> os arquivos da reposicao do 2o estagio .<br>
-<a href="3oEstagioRep-environment.zip">Baixe aqui</a> os arquivos da reposicao do 3o estagio .<br>
+     
+<a href="Prova-QuickSelect-Reposicao-environment.zip">Baixe aqui</a> os arquivos da reposicao do 1o estagio .<br>
+<a href="Prova-ProcessScheduler-Reposicao-environment.zip">Baixe aqui</a> os arquivos da reposicao do 2o estagio .<br>
+<a href="Prova-OneStepSplayTree-environment.zip">Baixe aqui</a> os arquivos da reposicao do 3o estagio .<br>
 
- --> 
-  
-<a href="Prova-QueueComHeap-environment.zip">Baixe os arquivos da prova.</a><br>
+ 
+ <!--  
+<a href="Prova-SkipListFromBST-environment.zip">Baixe os arquivos da prova.</a><br>
 
-
+ -->
 Escolha seu nome, seu arquivo contendo sua resposta e clique em enviar.<br>
 <font color="#FF0000">Voce tem direito de enviar apenas uma vez. Portanto, teste seu arquivo antes, selecione corretamente seu arquivo e seu nome.</font><br>
 <br><form method="POST" action="processUpload.jsp" enctype="multipart/form-data">  
