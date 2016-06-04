@@ -10,7 +10,7 @@ System.out.println(IP + " - " + (new Date()).toString());
 	 && !IP.startsWith("150.165.75")
   	 && !IP.startsWith("0:0:0:0:0:0:0:1")
   	 && !IP.startsWith("127.0.0.1")
-	 && !IP.startsWith("150.165.80.186")
+	 && !IP.startsWith("150.165.80.87")
     ){
 	  //if(false){
 %>
