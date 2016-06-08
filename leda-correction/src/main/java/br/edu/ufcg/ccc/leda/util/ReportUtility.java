@@ -32,6 +32,8 @@ public class ReportUtility {
 			});
 			for (File subFolder : subFolders) {
 				File xmlFile = this.getSurefireReportFile(subFolder);
+				URL mavenOutputLog = new File(subFolder.getAbsolutePath() + File.separator + MavenUtility.MAVEN_OUTPUT_LOG).toURI().toURL();
+
 				if(xmlFile != null){
 					XMLFileUtility fu = new XMLFileUtility();
 					Document xml = fu.loadXMLFile(xmlFile);
@@ -50,11 +52,11 @@ public class ReportUtility {
 					URL completeReport = new File(generatedReport).toURI().toURL();
 					int errors = Integer.parseInt(testSuite.getAttributeValue("errors"));
 					int skipped = Integer.parseInt(testSuite.getAttributeValue("skipped"));
-					TestReportItem item = new TestReportItem(xmlFile, studentName, tests, errors, failures, skipped, time, completeReport);
+					TestReportItem item = new TestReportItem(xmlFile, studentName, tests, errors, failures, skipped, time, completeReport,mavenOutputLog);
 					report.getReportItems().add(item);
 				} else{
 					String studentName = subFolder.getName();
-					TestReportErrorItem errorItem = new TestReportErrorItem(studentName);
+					TestReportErrorItem errorItem = new TestReportErrorItem(studentName,mavenOutputLog);
 					report.getReportItems().add(errorItem);
 				}
 			}

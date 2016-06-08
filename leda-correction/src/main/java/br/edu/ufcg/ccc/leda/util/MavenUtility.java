@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.jdom2.JDOMException;
@@ -15,10 +16,11 @@ import org.jdom2.JDOMException;
 public class MavenUtility {
 	
 	public static final String SOURCE_FOLDER = "src/main/java";
-	public static final String RESOURCE_FOLDER = "src/main/resources";
+	//public static final String RESOURCE_FOLDER = "src/main/resources";
 	public static final String TEST_FOLDER = "src/test/java";
-	public static final String TEST_RESOURCE_FOLDER = "src/test/resources";
-	public static final String SITE_FOLDER = "src/site/";
+	//public static final String TEST_RESOURCE_FOLDER = "src/test/resources";
+	//public static final String SITE_FOLDER = "src/site/";
+	public static final String MAVEN_OUTPUT_LOG = "target/maven-output.log";
 	
 	private FilesUtility filesUtility;
 	private ReportUtility reportUtility;
@@ -81,7 +83,7 @@ public class MavenUtility {
 			InvocationRequest request = new DefaultInvocationRequest();
 			//request.setPomFile(new File(projectFoder, "./pom.xml"));
 			//request.setGoals(Arrays.asList("surefire-report:report-only"));
-			request.setGoals(Arrays.asList("site"));
+			request.setGoals(Arrays.asList("site","-l " + MAVEN_OUTPUT_LOG));
 			request.setBaseDirectory(projectFolder);
 			try {
 				invoker.execute(request);
@@ -115,16 +117,16 @@ public class MavenUtility {
         }
 		
         File sourceFolder = new File(projectDir,SOURCE_FOLDER);
-        File resourceFolder = new File(projectDir,RESOURCE_FOLDER);
+        //File resourceFolder = new File(projectDir,RESOURCE_FOLDER);
         File testFolder = new File(projectDir,TEST_FOLDER);
-        File testResourceFolder = new File(projectDir,TEST_RESOURCE_FOLDER);
-        File siteFolder = new File(projectDir,SITE_FOLDER);
+        //File testResourceFolder = new File(projectDir,TEST_RESOURCE_FOLDER);
+        //File siteFolder = new File(projectDir,SITE_FOLDER);
         
         sourceFolder.mkdirs();
-        resourceFolder.mkdirs();
+        //resourceFolder.mkdirs();
         testFolder.mkdirs();
-        testResourceFolder.mkdirs();
-        siteFolder.mkdirs();
+        //testResourceFolder.mkdirs();
+        //siteFolder.mkdirs();
         
         filesUtility.unzip(envZipFile, projectDir);
 		

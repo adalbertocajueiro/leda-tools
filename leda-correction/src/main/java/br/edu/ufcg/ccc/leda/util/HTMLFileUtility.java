@@ -79,15 +79,24 @@ public class HTMLFileUtility {
 		tableHeader.appendChild(headerStudent);
 		
 		Element pass = new Element(Tag.valueOf("th"),"");
-		pass.appendText("Pass");
+		Element font = new Element(Tag.valueOf("font"), "");
+		font.attr("color", "green");
+		font.appendText("Pass");
+		pass.appendChild(font);
 		tableHeader.appendChild(pass);
 		
 		Element errors = new Element(Tag.valueOf("th"),"");
-		errors.appendText("Errors");
+		font = new Element(Tag.valueOf("font"), "");
+		font.attr("color", "red");
+		font.appendText("Errors");
+		errors.appendChild(font);
 		tableHeader.appendChild(errors);
 		
 		Element failures = new Element(Tag.valueOf("th"),"");
-		failures.appendText("Failures");
+		font = new Element(Tag.valueOf("font"), "");
+		font.attr("color", "blue");
+		font.appendText("Failures");
+		failures.appendChild(font);
 		tableHeader.appendChild(failures);
 		
 		Element skipped = new Element(Tag.valueOf("th"),"");
@@ -118,20 +127,28 @@ public class HTMLFileUtility {
 		tableLine.appendChild(name);
 		
 		Element pass = new Element(Tag.valueOf("td"),"");
+		Element font = new Element(Tag.valueOf("font"), "");
+		font.attr("color", "green");
 		if(item instanceof TestReportErrorItem){
-			pass.appendText(String.valueOf(0));
+			font.appendText(String.valueOf(0));
 		}else{
-			//pass.appendText(String.valueOf(tests - item.getErrors() - item.getFailures()));
-			pass.appendText(String.valueOf(item.getTotalTests() - item.getErrors() - item.getFailures() - item.getSkipped()));
+			font.appendText(String.valueOf(item.getTotalTests() - item.getErrors() - item.getFailures() - item.getSkipped()));
 		}
+		pass.appendChild(font);
 		tableLine.appendChild(pass);
 		
 		Element errors = new Element(Tag.valueOf("td"),"");
-		errors.appendText(String.valueOf(item.getErrors()));
+		font = new Element(Tag.valueOf("font"), "");
+		font.attr("color", "red");
+		font.appendText(String.valueOf(item.getErrors()));
+		errors.appendChild(font);
 		tableLine.appendChild(errors);
 		
 		Element failures = new Element(Tag.valueOf("td"),"");
-		failures.appendText(String.valueOf(item.getFailures()));
+		font = new Element(Tag.valueOf("font"), "");
+		font.attr("color", "blue");
+		font.appendText(String.valueOf(item.getFailures()));
+		failures.appendChild(font);
 		tableLine.appendChild(failures);
 		
 		Element skipped = new Element(Tag.valueOf("td"),"");
@@ -144,16 +161,26 @@ public class HTMLFileUtility {
 		
 		Element detailedReport = new Element(Tag.valueOf("td"),"");
 		if(item instanceof TestReportErrorItem){
-			Element font = new Element(Tag.valueOf("font"), "");
+			font = new Element(Tag.valueOf("font"), "");
 			font.attr("color", "red");
-			font.appendText("Report not generated. Possible compilation error.");
+			font.appendText("Report not generated. Possible compilation error. ");
 			detailedReport.appendChild(font);
 		}else{
 			Element link = new Element(Tag.valueOf("a"), "");
 			link.attr("href", item.getCompleteReport().toString());
-			link.appendText("See detailed report");
+			link.appendText("See detailed report. ");
 			detailedReport.appendChild(link);
+			
+			//Element linkMvnOutput = new Element(Tag.valueOf("a"), "");
+			//linkMvnOutput.attr("href", item.getMavenOutputLog().toString());
+			//linkMvnOutput.appendText("See maven output.");
+			//detailedReport.appendChild(linkMvnOutput);
 		}
+		Element linkMvnOutput = new Element(Tag.valueOf("a"), "");
+		linkMvnOutput.attr("href", item.getMavenOutputLog().toString());
+		linkMvnOutput.appendText(" See maven output.");
+		detailedReport.appendChild(linkMvnOutput);
+		
 		tableLine.appendChild(detailedReport);
 		
 		return tableLine;

@@ -12,9 +12,11 @@ public class TestReportItem {
 	private int skipped;
 	private double time;
 	private URL completeReport;
+	private URL mavenOutputLog;
 	
 	public TestReportItem(File testResultXMLFile, String studentName,
-			int totalTests, int errors, int failures, int skiped, double time, URL completeReport) {
+			int totalTests, int errors, int failures, int skiped, double time, URL completeReport,
+			URL mavenOutputLog) {
 		super();
 		this.testResultXMLFile = testResultXMLFile;
 		this.studentName = studentName;
@@ -24,6 +26,7 @@ public class TestReportItem {
 		this.skipped = skiped;
 		this.time = time;
 		this.completeReport = completeReport;
+		this.mavenOutputLog = mavenOutputLog;
 	}
 
 	public File getTestResultXMLFile() {
@@ -88,6 +91,14 @@ public class TestReportItem {
 
 	public void setSkipped(int skipped) {
 		this.skipped = skipped;
+	}
+
+	public URL getMavenOutputLog() {
+		return mavenOutputLog;
+	}
+
+	public void setMavenOutputLog(URL mavenOutputLog) {
+		this.mavenOutputLog = mavenOutputLog;
 	} 
 	
 }
