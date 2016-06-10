@@ -1,0 +1,12 @@
+- mudar a tabela geral para ser igual a tabela gerada pelo surefire - OK
+- colocar cores nas colunas da tabela central para distinguir os testes que passaram, os erros, as falhas, skipped - OK
+- colocar uma coluna com o percentual dos testes que tiveram sucesso - NAO PRECISA
+- Tentar capturar da suite a quantidade de testes que ela tem. NAO IMPLEMENTADO
+- Tentar guardar a saida do maven em algum lugar (arquivo ou stream). Ver o InvocationResult que tem um 
+  InvocationOutputHandler. ver a opcao "-l,--log-file <arg>" - OK
+  setar programaticamente: System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("/location/to/console.out")), true));  
+
+- Tentar colocar informacao de possivel loop infinito quando der timeout.
+- Quando der erro de compilação, colocar link para o output do maven. - OK
+- Nao precisa gerar tantas pastas quando vai criar a pasta base para os projetos a serem corrigidos. - OK
+- Verificar a possibilidade de integração como check style.

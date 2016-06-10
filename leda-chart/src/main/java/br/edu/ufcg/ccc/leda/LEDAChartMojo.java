@@ -84,17 +84,17 @@ public class LEDAChartMojo extends AbstractMojo {
 				
 				Class<?> loaded = Class.forName(string,true,loader);
 				classes.add(loaded);
-				System.out.println("Classes loaded: " + loaded.getSimpleName());
+				//System.out.println("Classes loaded: " + loaded.getSimpleName());
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				throw new MojoExecutionException("Informed class could not be instantiated", e);
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				throw new MojoExecutionException("Illegal argument. Problems in arguments in method call", e);
 			} 
 		}
 		
-		System.out.println("Classes loaded: " + classes.size());
+		//System.out.println("Classes loaded: " + classes.size());
 		 try {
 			drawer.setSortingList(classes);
 			drawer.instantiateAndRunImplementations();

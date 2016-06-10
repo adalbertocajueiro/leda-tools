@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import br.edu.ufcg.ccc.leda.graph.Point;
 import br.edu.ufcg.ccc.leda.graph.GraphData;
@@ -60,7 +62,7 @@ public class Drawer {
 
 	public void instantiateAndRunImplementations() throws InstantiationException, IllegalAccessException, IOException, IllegalArgumentException, InvocationTargetException{
 		int colorCode = 0;
-		System.out.println("Sorting list size: " + sortingList.size());
+		//System.out.println("Sorting list size: " + sortingList.size());
 		for (Class<?> sortingClass : sortingList) {
 			Object sortImplementation = (Object) sortingClass.newInstance();
 			Serie<Integer,Double> serie = new Serie<Integer,Double>(sortImplementation.getClass().getSimpleName(),colorCode);
@@ -81,15 +83,35 @@ public class Drawer {
 		List<List<Integer>> inputs = generator.generateWorstCases();
 
 		Method sortMethod = getSortMethod(sortImplementation);
-		//Parameter[] paramtype = getParameterType(sortMethod);
 		
 		for (List<Integer> list : inputs) {
 				long start = System.nanoTime();
-				sortMethod.invoke(sortImplementation, new Object[] { list.toArray(new Integer[0]) });
+				//sortMethod.invoke(sortImplementation, new Object[] { list.toArray(new Integer[0]) });
 				double elapsedTime = (System.nanoTime() - start) / 1000000F;
+				try {
+					SortTimeoutExecutor.invoke(sortImplementation, sortMethod, list);
+					elapsedTime = (System.nanoTime() - start) / 1000000F;
+					//TODO no futuro as excexoes podem sumir.
+				} catch (InterruptedException e) {
+					//e.printStackTrace();
+				} catch (ExecutionException e) {
+					//e.printStackTrace();
+					elapsedTime = 0;
+				} catch (TimeoutException e) {
+					//e.printStackTrace();
+					elapsedTime = SortTimeoutExecutor.TIMEOUT;
+				}
+				
 				Point<Integer,Double> point = new Point<Integer,Double>(list.size(), elapsedTime);
 				serie.add(point);
 		}
+	}
+
+
+	private void invoke(Object sortImplementation, Method sortMethod,
+			List<Integer> list) throws IllegalAccessException,
+			InvocationTargetException {
+		sortMethod.invoke(sortImplementation, new Object[] { list.toArray(new Integer[0]) });
 	}
 
 	
