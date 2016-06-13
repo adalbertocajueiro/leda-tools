@@ -10,3 +10,4 @@
 - Quando der erro de compilação, colocar link para o output do maven. - OK
 - Nao precisa gerar tantas pastas quando vai criar a pasta base para os projetos a serem corrigidos. - OK
 - Verificar a possibilidade de integração como check style.
+- Verificar se ao ocorrer um timeout a execucao dos demais pára.
