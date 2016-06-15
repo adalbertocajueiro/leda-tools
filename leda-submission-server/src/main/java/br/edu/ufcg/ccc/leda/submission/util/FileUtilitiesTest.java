@@ -18,7 +18,7 @@ public class FileUtilitiesTest {
 		File xls = new File("D:\\UFCG\\2015.2\\disciplinas\\eda\\frequencia_2015.2_1411172-01_094420877.xlsx");
 		Map<String,String> map = new HashMap<String,String>();
  		//fu.loadXLS(xls, map);
-		map = fu.loadExcelFile(xls);
+		map = fu.loadStudentsFromExcelFile(xls);
 		Set<String> keys = map.keySet();
  		for (String key : keys) {
 			System.out.println(key + " - " + map.get(key));

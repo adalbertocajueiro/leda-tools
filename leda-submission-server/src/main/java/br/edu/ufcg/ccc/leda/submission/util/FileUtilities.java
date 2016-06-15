@@ -61,10 +61,10 @@ public class FileUtilities {
 		return result;
 	}
 
-	protected void loadXLS(File xls, Map<String, String> map)
+	protected void loadStudentsFromXLS(File xlsFile, Map<String, String> map)
 			throws BiffException, IOException {
 		// le de um arquivo e coloca no map
-		Workbook workbook = Workbook.getWorkbook(xls);
+		Workbook workbook = Workbook.getWorkbook(xlsFile);
 		Sheet sheet = workbook.getSheet(0);
 			
 		int linhas = sheet.getRows();
@@ -78,18 +78,18 @@ public class FileUtilities {
 		}
 		workbook.close();
 	}
-	protected Map<String,String> loadExcelFile(File excelFile) throws IOException, BiffException{
+	protected Map<String,String> loadStudentsFromExcelFile(File excelFile) throws IOException, BiffException{
 		HashMap<String,String> map = new HashMap<String, String>();
 		if(excelFile.getName().endsWith(".xlsx")){
-			loadXLSX(excelFile, map);
+			loadStudentsFromXLSX(excelFile, map);
 		} else if(excelFile.getName().endsWith(".xls")){
-			loadXLS(excelFile, map);
+			loadStudentsFromXLS(excelFile, map);
 		}
 		return map;
 	}
 
-	protected void loadXLSX(File excelFile,Map<String, String> map) throws IOException {
-		FileInputStream fis = new FileInputStream(excelFile);
+	protected void loadStudentsFromXLSX(File xlsxFile,Map<String, String> map) throws IOException {
+		FileInputStream fis = new FileInputStream(xlsxFile);
 		
 		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
 		org.apache.poi.ss.usermodel.Sheet mySheet = null;
@@ -107,33 +107,14 @@ public class FileUtilities {
 		while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
-            int i =0;
             if(cellIterator.hasNext()){
             	org.apache.poi.ss.usermodel.Cell cell0 = row.getCell(0);
             	if(cell0 != null){
-            		//if(cell0.getCellType() == org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC){
             			org.apache.poi.ss.usermodel.Cell cell1 = row.getCell(1);
             			org.apache.poi.ss.usermodel.Cell cell2 = row.getCell(2);
             			map.put(cell1.getStringCellValue(), cell2.getStringCellValue());
-            		//}
             	}
             }
-            /*while (cellIterator.hasNext()) { 
-            	org.apache.poi.ss.usermodel.Cell cell = cellIterator.next(); 
-            	switch (cell.getCellType()) { 
-            		case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_STRING: 
-            			//System.out.print(cell.getStringCellValue() + "\t"); 
-            			break; 
-            		case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC: 
-            			System.out.print(cell.getNumericCellValue() + "\t"); 
-            			break; //penas celulas que comecam com numerico sao consideradas
-            		case org.apache.poi.ss.usermodel.Cell.CELL_TYPE_BOOLEAN: 
-            			System.out.print(cell.getBooleanCellValue() + "\t"); 
-            			break; 
-            		default : 
-            	} 
-            }
-            System.out.println("\n");*/
 		}
 		myWorkBook.close();
 	}
