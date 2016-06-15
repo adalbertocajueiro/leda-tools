@@ -2,10 +2,12 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 
 
 
@@ -15,8 +17,9 @@ public class FileUtilitiesTest {
 
 	public static void main(String[] args) throws BiffException, IOException {
 		FileUtilities fu = new FileUtilities();
-		File xls = new File("D:\\UFCG\\2015.2\\disciplinas\\eda\\frequencia_2015.2_1411172-01_094420877.xlsx");
-		Map<String,String> map = new HashMap<String,String>();
+		File pub = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		File xls = new File(pub,"frequencia_2015.2_1411179-01_153008308.xlsx");
+		Map<String,Student> map = new HashMap<String,Student>();
  		//fu.loadXLS(xls, map);
 		map = fu.loadStudentsFromExcelFile(xls);
 		Set<String> keys = map.keySet();

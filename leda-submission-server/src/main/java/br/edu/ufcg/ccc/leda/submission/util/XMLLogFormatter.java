@@ -8,27 +8,12 @@ import java.util.logging.XMLFormatter;
 
 public class XMLLogFormatter extends XMLFormatter {
 
-	public XMLLogFormatter() {
-		// TODO Auto-generated constructor stub
-	}
-
 	// Append the time and date in ISO 8601 format
     private void appendISO8601(StringBuilder sb, long millis) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTimeInMillis(millis);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         sb.append(formatter.format(cal.getTime()));
-        /*sb.append(cal.get(Calendar.YEAR));
-        sb.append('-');
-        a2(sb, cal.get(Calendar.MONTH) + 1);
-        sb.append('-');
-        a2(sb, cal.get(Calendar.DAY_OF_MONTH));
-        sb.append('T');
-        a2(sb, cal.get(Calendar.HOUR_OF_DAY));
-        sb.append(':');
-        a2(sb, cal.get(Calendar.MINUTE));
-        sb.append(':');
-        a2(sb, cal.get(Calendar.SECOND));*/
     }
     
  // Append to the given StringBuilder an escaped version of the
@@ -60,14 +45,6 @@ public class XMLLogFormatter extends XMLFormatter {
         appendISO8601(sb, record.getMillis());
         sb.append("</date>\n");
 
-        //sb.append("  <millis>");
-        //sb.append(record.getMillis());
-        //sb.append("</millis>\n");
-
-        //sb.append("  <sequence>");
-        //sb.append(record.getSequenceNumber());
-        //sb.append("</sequence>\n");
-
         String name = record.getLoggerName();
         if (name != null) {
             sb.append("  <logger>");
@@ -78,22 +55,6 @@ public class XMLLogFormatter extends XMLFormatter {
         sb.append("  <level>");
         escape(sb, record.getLevel().toString());
         sb.append("</level>\n");
-
-        //if (record.getSourceClassName() != null) {
-        //    sb.append("  <class>");
-        //    escape(sb, record.getSourceClassName());
-        //    sb.append("</class>\n");
-        //}
-
-        //if (record.getSourceMethodName() != null) {
-        //    sb.append("  <method>");
-        //    escape(sb, record.getSourceMethodName());
-        //    sb.append("</method>\n");
-        //}
-
-        //sb.append("  <thread>");
-        //sb.append(record.getThreadID());
-        //sb.append("</thread>\n");
 
         if (record.getMessage() != null) {
             // Format the message string and its accompanying parameters.
