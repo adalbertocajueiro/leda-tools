@@ -29,6 +29,10 @@ public class Student {
 	public void setTurma(String turma) {
 		this.turma = turma;
 	}
-
+	@Override
+	public String toString() {
+		return this.nome;
+	}
+	
 	
 }

@@ -1,6 +1,8 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -12,9 +14,10 @@ public class StudentLogger{
 	private String studentName; 
 	private File logFolder;
 	
-	public StudentLogger(String studentName){
-		logFolder = new File("D:\\trash"); //TODO
+	public StudentLogger(String studentName, File logFolder){
+		this.logFolder = logFolder;
 		this.studentName = studentName;
+		
 		try {
 			fh = new FileHandler(logFolder.getAbsolutePath() + File.separator + studentName + ".log",true);
 			fh.setFormatter(new XMLLogFormatter());
@@ -32,18 +35,35 @@ public class StudentLogger{
 	}
 
 	
-	public void log(String content){
+	public String completeLog(String content) throws IOException{
+		StringBuilder sb = new StringBuilder();
+		
 		logger.fine(content);
-	}
-	
-	public void close(){
+		sb = readLogFile();
 		fh.close();
+		
+		return sb.toString();
 	}
 	
+	private StringBuilder readLogFile() throws IOException{
+		StringBuilder sb = new StringBuilder();
+		File studentLogFile = new File(logFolder.getAbsolutePath() + File.separator + studentName + ".log");
+		FileReader fr = new FileReader(studentLogFile);
+		BufferedReader br = new BufferedReader(fr);
+		String line = "";
+		while( (line = br.readLine()) != null){
+			sb.append(line + "\n");
+		}
+		br.close();
+		fr.close();
+		
+		return sb;
+	}
+		
 	public static void main(String[] args) {
-		StudentLogger sl = new StudentLogger("Adalberto");
-		sl.log("teste: " + System.nanoTime() + "\n");
-		System.out.println("end");
+		//StudentLogger sl = new StudentLogger("Adalberto");
+		//sl.log("teste: " + System.nanoTime() + "\n");
+		//System.out.println("end");
 	}
 	
 }

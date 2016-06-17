@@ -2,6 +2,10 @@ package br.edu.ufcg.ccc.leda.submission.server;
 
 import org.jooby.Jooby;
 import org.jooby.Upload;
+
+import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
+import br.edu.ufcg.ccc.leda.submission.util.UploadConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,6 +42,19 @@ public class SubmissionServer extends Jooby {
 	  System.out.println("moved to: " + moved);
       resp.send(name + " " + upload.name() + " " + upload.type());
     });
+	
+	post("/submit3",(req,resp) -> {
+	      String matricula = req.param("matricula").value();
+	      String semestre = req.param("semestre").value();
+	      String turma = req.param("turma").value();
+	      String roteiro = req.param("roteiro").value();
+	      Upload upload = req.param("arquivo").toUpload();
+		  //System.out.println("upload " + upload);
+		  UploadConfiguration config = new UploadConfiguration(matricula, semestre, turma, roteiro);
+		  File uploaded = upload.file();
+		  String result = FileUtilities.saveUpload(uploaded, config);
+	      resp.send(result);
+	    });
   }
   
   public static void main(final String[] args) throws Throwable {

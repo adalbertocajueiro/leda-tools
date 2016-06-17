@@ -13,6 +13,7 @@ public class UploadConfiguration {
 	private String semestre;
 	private String turma;
 	private String roteiro;
+
 	
 	public UploadConfiguration(String matricula, String semestre, String turma,
 			String roteiro) {
@@ -54,7 +55,7 @@ public class UploadConfiguration {
 	public void setRoteiro(String roteiro) {
 		this.roteiro = roteiro;
 	}
-	
-	
+
+		
 
 }

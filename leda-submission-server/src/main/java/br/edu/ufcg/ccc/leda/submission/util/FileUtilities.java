@@ -5,6 +5,9 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,25 +26,58 @@ import jxl.read.biff.BiffException;
 public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
-	public static String BASE_UPLOAD_FOLDER;
+	public static String UPLOAD_FOLDER = "upload";
+	private static Validator validator;
+	
+	
+	public FileUtilities() {
+		validator = new Validator();
+	}
 
 	/**
 	 * Salva um arquivo recebido em upload numa pasta especifica e com o nome do
 	 * aluno, recuperado de um mapeamento (arquivo excel do controle academico).
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public File saveUpload(File uploaded, UploadConfiguration config) {
-		File result = null;
+	public static String saveUpload(File uploaded, UploadConfiguration config) throws Exception {
+		String result = null;
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
+		if(!validator.validateStudent(config)){
+			throw new StudentException();
+		}
+		Map<String,Student> students = Configuration.getInstance().getStudents();
+		Student student = students.get(config.getMatricula());
 		
-		// precisa criar as pastas onde o arquivo vai ser uploaded
+		// precisa criar as pastas onde o arquivo vai ser uploaded. as pastas sao criadas 
+		//na past default de uploads e seguem o padrao: <default>/semestre/roteiro/turma
+		//nela sao colocadas as submissoes dos alunos e feito um log da submissao
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		if(!uploadFolder.exists()){
+			uploadFolder.mkdirs();
+		}
 		
-		// precisa fazer um historico das submissoes de cada estudante para cada
-		// roteiro.
+		//o nome do arquivo eh o nome do aluno cadastrado no sistema
+		//String uploadFileName = config.getSemestre() + File.separator + config.getRoteiro() 
+		//		+ File.separator + config.getTurma() + File.separator + uploaded.getName().substring(uploaded.getName().indexOf(".") + 1);
+		String uploadSubFolder = config.getSemestre() + File.separator + config.getRoteiro() 
+				+ File.separator + config.getTurma();
+		String uploadFileName =  uploadSubFolder + File.separator + student.getNome() + ".zip";
+
+		File fout = new File(uploadFolder,uploadFileName);
+		if (!fout.exists()) {
+			fout.mkdirs();
+		}
+		Files.move(uploaded.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		//PRECISA LOGAR OPERACOES DA APLICACAO???????
+		//TODO
+		
+		// precisa fazer um historico das submissoes de cada estudante para cada roteiro.
 		// quando acontece uma submissao, o sistema retorna um ticket com o
-		// historico de todas as submissoes
-		// do aluno
+		// historico de todas as submissoes do aluno
+		result = UploadLogger.logSubmission(fout, config,student.getNome());
+		
 		return result;
 	}
 
@@ -59,12 +95,13 @@ public class FileUtilities {
 	 * @throws IOException 
 	 * @throws BiffException 
 	 */
-	private Map<String, Student> loadStudentLists() throws BiffException, IOException {
+	public static Map<String, Student> loadStudentLists() throws Exception {
 		Map<String, Student> result = new HashMap<String, Student>();
 		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		if(!configFolder.exists()){
 			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 		}
+		//System.out.println("%%%%%%CONFIG FOLDER: " + configFolder.getAbsolutePath());
 		File[] excelFiles = configFolder.listFiles(new FileFilter() {
 			
 			@Override
@@ -72,14 +109,18 @@ public class FileUtilities {
 				return pathname.getAbsolutePath().endsWith(".xls") || pathname.getAbsolutePath().endsWith(".xlsx");
 			}
 		});
-		
+		//System.out.println("%%%%%%%%% EXCEL FILES: " + excelFiles.length);
 		for (int i = 0; i < excelFiles.length; i++) {
-			result = loadStudentsFromExcelFile(excelFiles[i]);
+			try {
+				loadStudentsFromExcelFile(excelFiles[i],result);
+			} catch (BiffException e) {
+				throw new Exception(e);
+			}
 		}
 		return result;
 	}
 
-	private String extractTurmaFromExcelFile(File excelFile){
+	private static String extractTurmaFromExcelFile(File excelFile){
 		String turma = "0";
 		String nomeArquivo = excelFile.getName();
 		if(nomeArquivo.indexOf("-01_") != -1){
@@ -93,16 +134,14 @@ public class FileUtilities {
 		return turma;
 	}
 	
-	protected Map<String,Student> loadStudentsFromExcelFile(File excelFile) throws IOException, BiffException{
-		HashMap<String,Student> map = new HashMap<String, Student>();
+	protected static void loadStudentsFromExcelFile(File excelFile, Map<String,Student> map) throws IOException, BiffException{
 		if(excelFile.getName().endsWith(".xlsx")){
 			loadStudentsFromXLSX(excelFile, map);
 		} else if(excelFile.getName().endsWith(".xls")){
 			loadStudentsFromXLS(excelFile, map);
 		}
-		return map;
 	}
-	private void loadStudentsFromXLS(File xlsFile, Map<String, Student> map)
+	private static void loadStudentsFromXLS(File xlsFile, Map<String, Student> map)
 			throws BiffException, IOException {
 		// le de um arquivo e coloca no map
 		Workbook workbook = Workbook.getWorkbook(xlsFile);
@@ -125,7 +164,7 @@ public class FileUtilities {
 	}
 	
 
-	private void loadStudentsFromXLSX(File xlsxFile,Map<String, Student> map) throws IOException {
+	private static void loadStudentsFromXLSX(File xlsxFile,Map<String, Student> map) throws IOException {
 		FileInputStream fis = new FileInputStream(xlsxFile);
 		
 		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
