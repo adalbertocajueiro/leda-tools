@@ -1,5 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class Configuration {
@@ -8,10 +9,10 @@ public class Configuration {
 
 	private static Configuration instance;
 	
-	private Configuration() throws Exception{
+	private Configuration() throws ConfigurationException, IOException {
 		students = FileUtilities.loadStudentLists();
 	}
-	public static Configuration getInstance() throws Exception{
+	public static Configuration getInstance() throws ConfigurationException, IOException {
 		if(instance == null){
 			instance = new Configuration();
 		}

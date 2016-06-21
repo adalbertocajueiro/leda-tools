@@ -3,7 +3,9 @@ package br.edu.ufcg.ccc.leda.submission.server;
 import org.jooby.Jooby;
 import org.jooby.Upload;
 
+import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
+import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.UploadConfiguration;
 
 import java.io.File;
@@ -52,8 +54,21 @@ public class SubmissionServer extends Jooby {
 		  //System.out.println("upload " + upload);
 		  UploadConfiguration config = new UploadConfiguration(matricula, semestre, turma, roteiro);
 		  File uploaded = upload.file();
-		  String result = FileUtilities.saveUpload(uploaded, config);
-	      resp.send(result);
+		  String result = "default response";
+		  try {
+			result = FileUtilities.saveUpload(uploaded, config);
+			resp.send(result);
+		} catch (StudentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
 	    });
   }
   

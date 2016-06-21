@@ -39,12 +39,15 @@ public class FileUtilities {
 	 * aluno, recuperado de um mapeamento (arquivo excel do controle academico).
 	 * 
 	 * @return
+	 * @throws StudentException 
+	 * @throws ConfigurationException 
+	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public static String saveUpload(File uploaded, UploadConfiguration config) throws Exception {
+	public static String saveUpload(File uploaded, UploadConfiguration config) throws StudentException, ConfigurationException, IOException {
 		String result = null;
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
-		if(!validator.validateStudent(config)){
+		if(!Validator.validateStudent(config)){
 			throw new StudentException();
 		}
 		Map<String,Student> students = Configuration.getInstance().getStudents();
@@ -92,10 +95,11 @@ public class FileUtilities {
 	 * com o nome frequencia.
 	 * 
 	 * @return
+	 * @throws ConfigurationException 
 	 * @throws IOException 
 	 * @throws BiffException 
 	 */
-	public static Map<String, Student> loadStudentLists() throws Exception {
+	public static Map<String, Student> loadStudentLists() throws ConfigurationException, IOException {
 		Map<String, Student> result = new HashMap<String, Student>();
 		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		if(!configFolder.exists()){
@@ -114,7 +118,7 @@ public class FileUtilities {
 			try {
 				loadStudentsFromExcelFile(excelFiles[i],result);
 			} catch (BiffException e) {
-				throw new Exception(e);
+				throw new ConfigurationException("",e);
 			}
 		}
 		return result;
