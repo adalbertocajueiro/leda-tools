@@ -57,18 +57,24 @@ public class SubmissionServer extends Jooby {
 		  String result = "default response";
 		  try {
 			result = FileUtilities.saveUpload(uploaded, config);
-			resp.send(result);
+			
 		} catch (StudentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			result = e.getMessage();
+			
 		}catch (ConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			result = e.getMessage();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			result = e.getMessage();
+			
 		}
-	      
+		resp.send(result);  
 	    });
   }
   

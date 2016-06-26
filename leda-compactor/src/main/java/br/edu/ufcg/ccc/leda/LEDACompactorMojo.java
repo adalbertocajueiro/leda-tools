@@ -21,6 +21,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
+import br.edu.ufcg.ccc.leda.util.Sender;
 
 import java.io.File;
 
@@ -45,22 +46,50 @@ public class LEDACompactorMojo extends AbstractMojo {
      * @parameter 
      * @required
      */
-    private String studentName;
+    private String matricula;
+    
+    /**
+     * @parameter 
+     * @required
+     */
+    private String semestre;
+    
+    /**
+     * @parameter 
+     * @required
+     */
+    private String turma;
+    
+    /**
+     * @parameter 
+     * @required
+     */
+    private String roteiro;
+    
+    /**
+     * @parameter 
+     * @required
+     */
+    private String url;
+    
+    private Sender sender;
     
     public void execute() throws MojoExecutionException {
     	
     	System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
     	System.out.println("Folder to be compacted: " + project.getBuild().getSourceDirectory());
-    	System.out.println("Student name: " + this.studentName);
-    	System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n");
     	
     	Compactor compactor = new Compactor();
     	File srcFolder = new File(project.getBuild().getSourceDirectory());
     	//System.out.println("Source folder: " + srcFolder);
-    	File destZipFile = new File(project.getBuild().getDirectory(),studentName + ".zip");
+    	File destZipFile = new File(project.getBuild().getDirectory(),matricula + ".zip");
     	try {
 			compactor.zipFolder(srcFolder, destZipFile);
-			System.out.println("File to be sent: " + destZipFile);
+			System.out.println("Compaction sucess: " + destZipFile.getName());
+			sender = new Sender(destZipFile,matricula,semestre,turma,roteiro, url);
+			System.out.println("Submitting file... " );
+			sender.send();
+			System.out.println("Please check you log file");
 		} catch (Exception e) {
 			//e.printStackTrace();
 			throw new MojoExecutionException("Compaction error", e);
