@@ -16,6 +16,7 @@ package br.edu.ufcg.ccc.leda;
  * limitations under the License.
  */
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -24,6 +25,7 @@ import br.edu.ufcg.ccc.leda.util.Compactor;
 import br.edu.ufcg.ccc.leda.util.Sender;
 
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -89,11 +91,13 @@ public class LEDACompactorMojo extends AbstractMojo {
 			sender = new Sender(destZipFile,matricula,semestre,turma,roteiro, url);
 			System.out.println("Submitting file... " );
 			sender.send();
-			System.out.println("Please check you log file");
-		} catch (Exception e) {
+			System.out.println("Please check you log file to see the confirmation from the server (last record)");
+		} catch (ClientProtocolException e){
+			throw new MojoExecutionException("Send error", e);
+		} catch (IOException e) {
 			//e.printStackTrace();
 			throw new MojoExecutionException("Compaction error", e);
-		}
-    	
+		} 
+    	System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     }
 }

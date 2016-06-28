@@ -68,7 +68,7 @@ public class Sender {
 	            System.out.println(response.getStatusLine());
 	            HttpEntity resEntity = response.getEntity();
 	            if (resEntity != null) {
-	                System.out.println("Response content length: " + resEntity.getContentLength());
+	                //System.out.println("Response content length: " + resEntity.getContentLength());
 	                InputStreamReader isr = new InputStreamReader(resEntity.getContent());
 	                BufferedReader br =  new BufferedReader(isr);
 	                String line = "";

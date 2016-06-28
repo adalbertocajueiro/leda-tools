@@ -2,7 +2,9 @@ package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
  
@@ -12,7 +14,7 @@ import java.util.zip.ZipOutputStream;
  */
 public class Compactor{
    
-    public void zipFolder(File srcFolder, File destZipFile) throws Exception {
+    public void zipFolder(File srcFolder, File destZipFile) throws IOException {
         ZipOutputStream zip = null;
         FileOutputStream fileWriter = null;
 
@@ -24,8 +26,8 @@ public class Compactor{
         zip.close();
       }
     
-    private void addFileToZip(String path, File srcFile, ZipOutputStream zip)
-    	      throws Exception {
+    private void addFileToZip(String path, File srcFile, ZipOutputStream zip) throws IOException
+    	     {
 
     	    File folder = srcFile;
     	    if (folder.isDirectory()) {
@@ -38,11 +40,12 @@ public class Compactor{
     	      while ((len = in.read(buf)) > 0) {
     	        zip.write(buf, 0, len);
     	      }
+    	      in.close();
     	    }
     	  }
     
-    private void addFolderToZip(String path, File srcFolder, ZipOutputStream zip)
-    	      throws Exception {
+    private void addFolderToZip(String path, File srcFolder, ZipOutputStream zip) throws IOException
+    	      {
     	    File folder = srcFolder;
 
     	    for (String fileName : folder.list()) {
