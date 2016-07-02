@@ -26,7 +26,7 @@ import jxl.read.biff.BiffException;
 public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
-	public static String UPLOAD_FOLDER = "upload";
+	public static String UPLOAD_FOLDER = "D:\\trash\\upload";
 	private static Validator validator;
 	
 	

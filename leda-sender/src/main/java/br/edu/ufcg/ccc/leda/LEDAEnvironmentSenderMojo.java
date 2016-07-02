@@ -21,7 +21,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
-import br.edu.ufcg.ccc.leda.util.Compactor;
+import br.edu.ufcg.ccc.leda.util.ProfessorSender;
 import br.edu.ufcg.ccc.leda.util.Sender;
 
 import java.io.File;
@@ -31,11 +31,11 @@ import java.io.IOException;
 /**
  * Goal which compacts a student's submission.
  *
- * @goal compact
+ * @goal send-environment
  * 
- * @phase process-sources
+ * @phase install
  */
-public class LEDACompactorMojo extends AbstractMojo {
+public class LEDAEnvironmentSenderMojo extends AbstractMojo {
 	
 	/**
 	 * @parameter default-value="${project}"
@@ -48,25 +48,7 @@ public class LEDACompactorMojo extends AbstractMojo {
      * @parameter 
      * @required
      */
-    private String matricula;
-    
-    /**
-     * @parameter 
-     * @required
-     */
-    private String semestre;
-    
-    /**
-     * @parameter 
-     * @required
-     */
-    private String turma;
-    
-    /**
-     * @parameter 
-     * @required
-     */
-    private String roteiro;
+    private String idRoteiro;
     
     /**
      * @parameter 
@@ -79,17 +61,13 @@ public class LEDACompactorMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
     	
     	System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-    	System.out.println("Folder to be compacted: " + project.getBuild().getSourceDirectory());
-    	
-    	Compactor compactor = new Compactor();
-    	File srcFolder = new File(project.getBuild().getSourceDirectory());
+    	File targetFolder = new File(project.getBuild().getOutputDirectory());
+    	String environmentName = project.getArtifactId() + "-environment.zip";
     	//System.out.println("Source folder: " + srcFolder);
-    	File destZipFile = new File(project.getBuild().getDirectory(),matricula + ".zip");
+    	File envZipFile = new File(targetFolder,environmentName);
     	try {
-			compactor.zipFolder(srcFolder, destZipFile);
-			System.out.println("Compaction sucess: " + destZipFile.getName());
-			sender = new Sender(destZipFile,matricula,semestre,turma,roteiro, url);
-			System.out.println("Submitting file... " );
+			sender = new ProfessorSender(envZipFile,idRoteiro,url);
+			System.out.println("Submitting environment file: " + envZipFile.getAbsolutePath());
 			sender.send();
 			System.out.println("Please check your log file to see the confirmation from the server (last record)");
 		} catch (ClientProtocolException e){

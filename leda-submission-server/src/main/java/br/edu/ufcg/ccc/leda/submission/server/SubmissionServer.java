@@ -1,6 +1,7 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
 import org.jooby.Jooby;
+import org.jooby.MediaType;
 import org.jooby.Upload;
 
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
@@ -29,21 +30,20 @@ public class SubmissionServer extends Jooby {
 	
 	get("/teste", () -> "Hello World Teste!");
 	
+	get("/roteiro",(req,resp) -> {
+		String rId = req.param("numeroRoteiro").value();
+		System.out.println("Id do roteiro: " + rId);
+		File fileToSend = new File("D:\\trash\\roteiros\\Rot-SimpleSorting-Bidirectional-Bubble-environment.zip");
+		resp.type(MediaType.octetstream);
+	    resp.download(fileToSend);
+	});
+	
   }
 
   {
 	post("/submit", req -> "File " + req.param("bin") + "  was received from " + req.param("name"));  
 	
-	post("/submit2",(req,resp) -> {
-      String name = req.param("name").value();
-      Upload upload = req.param("bin").toUpload();
-	  System.out.println("upload " + upload);
-	  File f = upload.file();
-	  System.out.println("file: " + f.getName().substring(f.getName().indexOf(".") + 1));
-	  Path moved = saveUpload(f,"D:\\tmp");
-	  System.out.println("moved to: " + moved);
-      resp.send(name + " " + upload.name() + " " + upload.type());
-    });
+	
 	
 	post("/submit3",(req,resp) -> {
 	      String matricula = req.param("matricula").value();

@@ -16,11 +16,11 @@
 
 	<modules>
 		<module>leda-compactor</module>
+		<module>leda-sender</module>
 		<module>leda-chart</module>
 		<module>leda-correction</module>
-		<!-- module>leda-submission</module -->
-		<module>leda-submission-tool</module>
 		<module>leda-submission-server</module>
+		<module>leda-submission-tool</module>		
 	</modules>
 	<build>
 		<plugins>
