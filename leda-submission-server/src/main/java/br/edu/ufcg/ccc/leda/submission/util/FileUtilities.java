@@ -27,7 +27,7 @@ public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
-	public static String UPLOAD_FOLDER = "home/ubuntu/leda-upload";
+	public static String UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
 	private static Validator validator;
 	
 	
