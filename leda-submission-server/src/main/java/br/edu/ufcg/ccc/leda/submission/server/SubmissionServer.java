@@ -30,9 +30,10 @@ public class SubmissionServer extends Jooby {
 	
 	get("/teste", () -> "Hello World Teste!");
 	
-	get("/roteiro",(req,resp) -> {
-		String rId = req.param("numeroRoteiro").value();
+	get("/downloadRoteiro",(req,resp) -> {
+		String rId = req.param("idRoteiro").value();
 		System.out.println("Id do roteiro: " + rId);
+		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
 		File fileToSend = new File("D:\\trash\\roteiros\\Rot-SimpleSorting-Bidirectional-Bubble-environment.zip");
 		resp.type(MediaType.octetstream);
 	    resp.download(fileToSend);
@@ -41,11 +42,13 @@ public class SubmissionServer extends Jooby {
   }
 
   {
-	post("/submit", req -> "File " + req.param("bin") + "  was received from " + req.param("name"));  
+	post("/uploadRoteiro", (req,resp) -> {
+		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
+	});  
 	
 	
 	
-	post("/submit3",(req,resp) -> {
+	post("/submitRoteiro",(req,resp) -> {
 	      String matricula = req.param("matricula").value();
 	      String semestre = req.param("semestre").value();
 	      String turma = req.param("turma").value();

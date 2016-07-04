@@ -22,7 +22,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
-import br.edu.ufcg.ccc.leda.util.Sender;
+import br.edu.ufcg.ccc.leda.util.StudentSubmissionSender;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +74,7 @@ public class LEDACompactorMojo extends AbstractMojo {
      */
     private String url;
     
-    private Sender sender;
+    private StudentSubmissionSender sender;
     
     public void execute() throws MojoExecutionException {
     	
@@ -88,7 +88,7 @@ public class LEDACompactorMojo extends AbstractMojo {
     	try {
 			compactor.zipFolder(srcFolder, destZipFile);
 			System.out.println("Compaction sucess: " + destZipFile.getName());
-			sender = new Sender(destZipFile,matricula,semestre,turma,roteiro, url);
+			sender = new StudentSubmissionSender(destZipFile,matricula,semestre,turma,roteiro, url);
 			System.out.println("Submitting file... " );
 			sender.send();
 			System.out.println("Please check your log file to see the confirmation from the server (last record)");

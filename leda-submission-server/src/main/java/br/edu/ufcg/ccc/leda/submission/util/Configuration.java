@@ -6,6 +6,7 @@ import java.util.Map;
 public class Configuration {
 
 	private Map<String, Student> students;
+	private Map<String,Roteiro> roteiros;
 
 	private static Configuration instance;
 	

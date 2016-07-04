@@ -35,7 +35,7 @@ import java.io.IOException;
  * 
  * @phase install
  */
-public class LEDAEnvironmentSenderMojo extends AbstractMojo {
+public class LEDARoteiroSenderMojo extends AbstractMojo {
 	
 	/**
 	 * @parameter default-value="${project}"
@@ -56,17 +56,20 @@ public class LEDAEnvironmentSenderMojo extends AbstractMojo {
      */
     private String url;
     
-    private Sender sender;
+    private ProfessorSender sender;
     
     public void execute() throws MojoExecutionException {
     	
     	System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
     	File targetFolder = new File(project.getBuild().getOutputDirectory());
     	String environmentName = project.getArtifactId() + "-environment.zip";
+    	String correctionProjectName = project.getArtifactId() + "-correction-proj.zip";
+    	
     	//System.out.println("Source folder: " + srcFolder);
     	File envZipFile = new File(targetFolder,environmentName);
+    	File corrProjZipFile = new File(targetFolder,correctionProjectName);
     	try {
-			sender = new ProfessorSender(envZipFile,idRoteiro,url);
+			sender = new ProfessorSender(envZipFile,corrProjZipFile, idRoteiro,url);
 			System.out.println("Submitting environment file: " + envZipFile.getAbsolutePath());
 			sender.send();
 			System.out.println("Please check your log file to see the confirmation from the server (last record)");

@@ -19,13 +19,16 @@ import org.apache.http.util.EntityUtils;
 
 public class ProfessorSender extends Sender {
 
-	public ProfessorSender(File arquivo, String roteiro, String url) {
-		super(arquivo, roteiro, url);
+	private File arquivoProjetoCorrecao;
+	
+	public ProfessorSender(File ambiente, File arquivoProjCorrecao, String roteiro, String url) {
+		super(ambiente, roteiro, url);
 	}
 
 	@Override
 	public void send() throws ClientProtocolException, IOException {
 		FileBody arq = new FileBody(arquivo,ContentType.MULTIPART_FORM_DATA);
+		FileBody corrArq = new FileBody(arquivoProjetoCorrecao,ContentType.MULTIPART_FORM_DATA);
 	    StringBody rot = new StringBody(roteiro,ContentType.TEXT_PLAIN);
 	    
 	    CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -35,6 +38,7 @@ public class ProfessorSender extends Sender {
 	        HttpEntity reqEntity = MultipartEntityBuilder.create()
 	                .addPart("arquivo", arq)
 	                .addPart("roteiro", rot)
+	                .addPart("arquivoProjCorrecao", corrArq)
 	                .build();
 
 	        httppost.setEntity(reqEntity);

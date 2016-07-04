@@ -6,8 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,7 +26,8 @@ import jxl.read.biff.BiffException;
 public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
-	public static String UPLOAD_FOLDER = "D:\\trash\\upload";
+	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
+	public static String UPLOAD_FOLDER = "home/ubuntu/leda-upload";
 	private static Validator validator;
 	
 	
@@ -110,7 +111,9 @@ public class FileUtilities {
 			
 			@Override
 			public boolean accept(File pathname) {
-				return pathname.getAbsolutePath().endsWith(".xls") || pathname.getAbsolutePath().endsWith(".xlsx");
+				boolean frequencia = pathname.getName().startsWith("frequencia");
+				boolean excel = pathname.getName().endsWith(".xls") || pathname.getName().endsWith(".xlsx");
+				return  frequencia && excel;
 			}
 		});
 		//System.out.println("%%%%%%%%% EXCEL FILES: " + excelFiles.length);
@@ -145,6 +148,70 @@ public class FileUtilities {
 			loadStudentsFromXLS(excelFile, map);
 		}
 	}
+	
+	public static Map<String, Roteiro> loadRoteiros() throws IOException, WrongDateHorFormatException{
+		Map<String, Roteiro> result = new HashMap<String, Roteiro>();
+		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		if(!configFolder.exists()){
+			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+		}
+		File excelFileRoteiro = new File(configFolder,EXCEL_FILE_ROTEIRO);
+		
+		//System.out.println("%%%%%%%%% EXCEL FILE ROTEIRO: " + excelFileRoteiro.getAbsolutePath());
+		
+		loadRoteirosFromExcelFile(excelFileRoteiro, result);
+		
+		return result;
+	}
+	private static void loadRoteirosFromExcelFile(File xlsxFile, Map<String,Roteiro> roteiros) throws IOException{
+		FileInputStream fis = new FileInputStream(xlsxFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			//problema na leitura do arquivo excel
+			ex.printStackTrace();
+		}
+	
+		Iterator<Row> rowIterator = mySheet.iterator();
+		
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cellIdRoteiro = row.getCell(0);
+            	if(cellIdRoteiro != null){
+            		String idRoteiro = cellIdRoteiro.getStringCellValue(); //
+            		if(idRoteiro.length() == 3){
+            			org.apache.poi.ss.usermodel.Cell cellDescricao = row.getCell(1); //celula com a descricao
+            			org.apache.poi.ss.usermodel.Cell cellDataLiberacao = row.getCell(2); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellDataLimiteEnvioNormal = row.getCell(3); //celula de datahora limite de envio normal
+            			org.apache.poi.ss.usermodel.Cell cellDataLimiteEnvioAtraso = row.getCell(4); //celula de datahora limite de envio com atraso
+            			org.apache.poi.ss.usermodel.Cell cellNomeMonitor = row.getCell(5); //celula de nome do monitor
+            			org.apache.poi.ss.usermodel.Cell cellDataInicioCorrecao = row.getCell(6); //celula de datahora de atricuicao ao monitor
+            			org.apache.poi.ss.usermodel.Cell cellDataLimiteCorrecao = row.getCell(7); //celula de datahora limite da correcao
+            			
+            			GregorianCalendar dataHoraLiberacao = Util.buildDate(cellDataLiberacao.getDateCellValue());
+            			
+            			GregorianCalendar dataHoraLimiteEnvioNormal = Util.buildDate(cellDataLimiteEnvioNormal.getDateCellValue());
+            			GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cellDataLimiteEnvioAtraso.getDateCellValue());
+            			GregorianCalendar dataInicioCorrecao = Util.buildDate(cellDataInicioCorrecao.getDateCellValue());
+            			GregorianCalendar dataLimiteCorrecao = Util.buildDate(cellDataLimiteCorrecao.getDateCellValue());
+            			
+            			Roteiro roteiro = new Roteiro(idRoteiro,cellDescricao.getStringCellValue(),
+            					dataHoraLiberacao,dataHoraLimiteEnvioNormal,dataHoraLimiteEnvioAtraso,
+            					cellNomeMonitor.getStringCellValue(),dataInicioCorrecao,dataLimiteCorrecao, null,null);
+            			roteiros.put(idRoteiro, roteiro);
+            		}
+            	}
+            }
+		}
+		myWorkBook.close();
+	}
+	
 	private static void loadStudentsFromXLS(File xlsFile, Map<String, Student> map)
 			throws BiffException, IOException {
 		// le de um arquivo e coloca no map
