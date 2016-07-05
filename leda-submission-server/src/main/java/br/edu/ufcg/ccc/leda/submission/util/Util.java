@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.google.common.reflect.TypeToken;
@@ -44,9 +43,8 @@ public class Util {
 		return result;
 	}
 	
-	public static void writeRoteirosToJson(File jsonFile) throws ConfigurationException, IOException{
+	public static void writeRoteirosToJson(Map<String,Roteiro> roteiros, File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
-		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 
 		FileWriter fw = new FileWriter(jsonFile);
 		gson.toJson(roteiros, fw);

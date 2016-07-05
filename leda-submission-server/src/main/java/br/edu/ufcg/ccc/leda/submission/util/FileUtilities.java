@@ -206,11 +206,11 @@ public class FileUtilities {
 			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 		}
 		//tenta ler primeiro do json
-		File jsonRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
+		File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
 		Map<String,Roteiro> roteirosFromJson = new HashMap<String,Roteiro>();
 		
-		if(jsonRoteiros.exists()){
-			roteirosFromJson = Util.loadRoteirosFromJson(jsonRoteiros);
+		if(jsonFileRoteiros.exists()){
+			roteirosFromJson = Util.loadRoteirosFromJson(jsonFileRoteiros);
 		}
 		
 		//carrega os roteiros de acordo com o arquivo excel
@@ -221,7 +221,7 @@ public class FileUtilities {
 		reuseFiles(result,roteirosFromJson);
 		
 		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
-		Util.writeRoteirosToJson(jsonRoteiros);
+		Util.writeRoteirosToJson(result, jsonFileRoteiros);
 		
 		return result;
 	}
