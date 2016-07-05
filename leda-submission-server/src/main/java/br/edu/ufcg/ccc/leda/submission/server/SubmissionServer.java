@@ -9,8 +9,8 @@ import com.typesafe.config.ConfigFactory;
 
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
-import br.edu.ufcg.ccc.leda.submission.util.ProfessorException;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
+import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 
@@ -45,13 +45,19 @@ public class SubmissionServer extends Jooby {
 	  });
 	
 	get("/downloadRoteiro",(req,resp) -> {
-		String rId = req.param("roteiro").value();
+		String roteiro = req.param("roteiro").value();
 		//System.out.println("Id do roteiro: " + rId);
 		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
-		File fileToSend = FileUtilities.getEnvironment(rId);
-		//File fileToSend = new File("D:\\trash\\roteiros\\Rot-SimpleSorting-Bidirectional-Bubble-environment.zip");
-		resp.type(MediaType.octetstream);
-	    resp.download(fileToSend);
+		File fileToSend = null;
+		try {
+			fileToSend = FileUtilities.getEnvironment(roteiro);
+			resp.type(MediaType.octetstream);
+		    resp.download(fileToSend);
+		} catch (ConfigurationException | IOException | RoteiroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			resp.send(e.getMessage());
+		}
 	});
 	
   }
@@ -70,7 +76,7 @@ public class SubmissionServer extends Jooby {
 		File uploadedAmbiente = uploadAmbiente.file();
 		File uploadedCorrecao = uploadCorrecao.file();
 		String result = "default response";
-		  try {
+		try {
 			result = FileUtilities.saveProfessorSubmission(uploadedAmbiente, uploadedCorrecao, config);
 			
 		} catch (ConfigurationException e) {

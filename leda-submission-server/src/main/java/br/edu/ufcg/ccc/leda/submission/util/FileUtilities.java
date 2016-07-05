@@ -33,10 +33,11 @@ public class FileUtilities {
 	public static String UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
 	//public static String UPLOAD_FOLDER = "D:\\trash2\\leda-upload";
 
-	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException{
+	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException{
 		File environment = null;
 		
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
+		Validator.validateDownload(roteiro);
 		
 		//pega o roteiro par aobter o arquivo e mandar de volta
 		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();

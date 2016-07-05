@@ -3,11 +3,24 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Validator {
 
+	public static void validateDownload(String roteiro) throws RoteiroException, ConfigurationException, IOException{
+		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
+		Roteiro rot = roteirosMap.get(roteiro);
+		if(rot == null){
+			throw new RoteiroException("Roteiro " + roteiro + " nao cadastrado.");
+		}
+		GregorianCalendar dataAtual = new GregorianCalendar();
+		if(dataAtual.before(rot.getDataHoraLiberacao()) && 
+				dataAtual.after(rot.getDataHoraLimiteEnvioAtraso())){
+			throw new RoteiroException("Roteiro " + roteiro + " disponivel entre " +
+				rot.getDataHoraLiberacao() + " e " + rot.getDataHoraLimiteEnvioAtraso());
+		}
+	}
+	
 	//realiza validacoes de uma submissao de professor 
 	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException {
 				
