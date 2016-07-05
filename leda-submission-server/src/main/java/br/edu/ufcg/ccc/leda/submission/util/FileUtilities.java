@@ -280,7 +280,7 @@ public class FileUtilities {
             	org.apache.poi.ss.usermodel.Cell cellIdRoteiro = row.getCell(0);
             	if(cellIdRoteiro != null){
             		String idRoteiro = cellIdRoteiro.getStringCellValue(); //
-            		if(idRoteiro.length() == 3){
+            		if(idRoteiro.length() == 6){
             			org.apache.poi.ss.usermodel.Cell cellDescricao = row.getCell(1); //celula com a descricao
             			org.apache.poi.ss.usermodel.Cell cellDataLiberacao = row.getCell(2); //celula de datahora de liberacao
             			org.apache.poi.ss.usermodel.Cell cellDataLimiteEnvioNormal = row.getCell(3); //celula de datahora limite de envio normal
