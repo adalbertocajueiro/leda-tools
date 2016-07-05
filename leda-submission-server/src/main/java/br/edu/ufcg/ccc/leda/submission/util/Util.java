@@ -38,11 +38,20 @@ public class Util {
 	public static String generateFileName(File file, ProfessorUploadConfiguration config){
 		String result = config.getRoteiro();
 		
-		result = result + "-" + config.getTurma() + "-" + file.getName();
+		result = result + "-" + config.getTurma() + "-" + removeTempInfoFromFileName(file.getName());
 		
 		return result;
 	}
 	
+	private static String removeTempInfoFromFileName(String fileName){
+		String result = fileName;
+		int indexDot = fileName.indexOf(".");
+		if(indexDot != -1){
+			result = fileName.substring(indexDot + 1);
+		}
+		
+		return result;
+	}
 	public static void writeRoteirosToJson(Map<String,Roteiro> roteiros, File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 

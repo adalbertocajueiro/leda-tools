@@ -22,63 +22,87 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.util.ProfessorSender;
-import br.edu.ufcg.ccc.leda.util.Sender;
 
 import java.io.File;
 import java.io.IOException;
 
-
 /**
  * Goal which compacts a student's submission.
  *
- * @goal send-environment
+ * @goal enviar-roteiro
  * 
  * @phase install
  */
 public class LEDARoteiroSenderMojo extends AbstractMojo {
-	
+
 	/**
 	 * @parameter default-value="${project}"
 	 * @required
 	 * @readonly
 	 */
 	private MavenProject project;
-	
+
 	/**
-     * @parameter 
-     * @required
-     */
-    private String idRoteiro;
-    
-    /**
-     * @parameter 
-     * @required
-     */
-    private String url;
-    
-    private ProfessorSender sender;
-    
-    public void execute() throws MojoExecutionException {
-    	
-    	System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-    	File targetFolder = new File(project.getBuild().getOutputDirectory());
-    	String environmentName = project.getArtifactId() + "-environment.zip";
-    	String correctionProjectName = project.getArtifactId() + "-correction-proj.zip";
-    	
-    	//System.out.println("Source folder: " + srcFolder);
-    	File envZipFile = new File(targetFolder,environmentName);
-    	File corrProjZipFile = new File(targetFolder,correctionProjectName);
-    	try {
-			sender = new ProfessorSender(envZipFile,corrProjZipFile, idRoteiro,url);
-			System.out.println("Submitting environment file: " + envZipFile.getAbsolutePath());
-			sender.send();
-			System.out.println("Please check your log file to see the confirmation from the server (last record)");
-		} catch (ClientProtocolException e){
-			throw new MojoExecutionException("Send error", e);
-		} catch (IOException e) {
-			//e.printStackTrace();
-			throw new MojoExecutionException("Compaction error", e);
-		} 
-    	System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-    }
+	 * @parameter
+	 * @required
+	 */
+	private String roteiro;
+
+	/**
+	 * @parameter
+	 * @required
+	 */
+	private String semestre;
+
+	/**
+	 * @parameter
+	 * @required
+	 */
+	private String turma;
+
+	/**
+	 * @parameter
+	 * @required
+	 */
+	private String url;
+
+	/**
+	 * @parameter
+	 * @required
+	 */
+	private boolean defaultSend;
+
+	private ProfessorSender sender;
+
+	public void execute() throws MojoExecutionException {
+		if (defaultSend) {
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			File targetFolder = new File(project.getBuild()
+					.getDirectory());
+			String environmentName = project.getArtifactId()
+					+ "-environment.zip";
+			String correctionProjectName = project.getArtifactId()
+					+ "-correction-proj.zip";
+
+			// System.out.println("Source folder: " + srcFolder);
+			File envZipFile = new File(targetFolder, environmentName);
+			File corrProjZipFile = new File(targetFolder, correctionProjectName);
+			try {
+				sender = new ProfessorSender(envZipFile, corrProjZipFile,
+						roteiro, url, semestre, turma);
+				System.out.println("Submitting environment file: "
+						+ envZipFile.getAbsolutePath());
+				sender.send();
+				System.out
+						.println("Please check your log file to see the confirmation from the server (last record)");
+			} catch (ClientProtocolException e) {
+				throw new MojoExecutionException("Send error", e);
+			} catch (IOException e) {
+				// e.printStackTrace();
+				throw new MojoExecutionException("Compaction error", e);
+			}
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+		}
+
+	}
 }

@@ -9,6 +9,8 @@ import com.typesafe.config.ConfigFactory;
 
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
+import br.edu.ufcg.ccc.leda.submission.util.ProfessorException;
+import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 
@@ -43,10 +45,11 @@ public class SubmissionServer extends Jooby {
 	  });
 	
 	get("/downloadRoteiro",(req,resp) -> {
-		String rId = req.param("idRoteiro").value();
-		System.out.println("Id do roteiro: " + rId);
+		String rId = req.param("roteiro").value();
+		//System.out.println("Id do roteiro: " + rId);
 		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
-		File fileToSend = new File("D:\\trash\\roteiros\\Rot-SimpleSorting-Bidirectional-Bubble-environment.zip");
+		File fileToSend = FileUtilities.getEnvironment(rId);
+		//File fileToSend = new File("D:\\trash\\roteiros\\Rot-SimpleSorting-Bidirectional-Bubble-environment.zip");
 		resp.type(MediaType.octetstream);
 	    resp.download(fileToSend);
 	});
@@ -56,8 +59,34 @@ public class SubmissionServer extends Jooby {
   {
 	post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
-	});  
-	
+		System.out.println("pedido de upload de roteiro recebido");
+		String roteiro = req.param("roteiro").value();
+	    String semestre = req.param("semestre").value();
+	    String turma = req.param("turma").value();
+	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
+	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+		  //System.out.println("upload " + upload);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro);
+		File uploadedAmbiente = uploadAmbiente.file();
+		File uploadedCorrecao = uploadCorrecao.file();
+		String result = "default response";
+		  try {
+			result = FileUtilities.saveProfessorSubmission(uploadedAmbiente, uploadedCorrecao, config);
+			
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
+			
+		}
+		resp.send(result);  
+	     
+  	});
 	
 	
 	post("/submitRoteiro",(req,resp) -> {

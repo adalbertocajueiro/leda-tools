@@ -19,26 +19,36 @@ import org.apache.http.util.EntityUtils;
 
 public class ProfessorSender extends Sender {
 
-	private File arquivoProjetoCorrecao;
+	private File arquivoCorrecao;
+	private String semestre;
+	private String turma;
 	
-	public ProfessorSender(File ambiente, File arquivoProjCorrecao, String roteiro, String url) {
+	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro, 
+			String url, String semestre, String turma) {
 		super(ambiente, roteiro, url);
+		this.arquivoCorrecao = arquivoCorrecao;
+		this.semestre = semestre;
+		this.turma = turma;
 	}
 
 	@Override
 	public void send() throws ClientProtocolException, IOException {
 		FileBody arq = new FileBody(arquivo,ContentType.MULTIPART_FORM_DATA);
-		FileBody corrArq = new FileBody(arquivoProjetoCorrecao,ContentType.MULTIPART_FORM_DATA);
+		FileBody corrArq = new FileBody(arquivoCorrecao,ContentType.MULTIPART_FORM_DATA);
 	    StringBody rot = new StringBody(roteiro,ContentType.TEXT_PLAIN);
+	    StringBody tur = new StringBody(turma,ContentType.TEXT_PLAIN);
+	    StringBody sem = new StringBody(semestre,ContentType.TEXT_PLAIN);
 	    
 	    CloseableHttpClient httpclient = HttpClients.createDefault();
 	    StringBuilder confirmation = new StringBuilder();
 	    try {
 	        HttpPost httppost = new HttpPost(url);
 	        HttpEntity reqEntity = MultipartEntityBuilder.create()
-	                .addPart("arquivo", arq)
+	                .addPart("arquivoAmbiente", arq)
 	                .addPart("roteiro", rot)
-	                .addPart("arquivoProjCorrecao", corrArq)
+	                .addPart("turma", tur)
+	                .addPart("semestre", sem)
+	                .addPart("arquivoCorrecao", corrArq)
 	                .build();
 
 	        httppost.setEntity(reqEntity);

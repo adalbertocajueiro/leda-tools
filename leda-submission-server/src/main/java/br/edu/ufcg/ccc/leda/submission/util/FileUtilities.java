@@ -31,7 +31,20 @@ public class FileUtilities {
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
 	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
 	public static String UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
+	//public static String UPLOAD_FOLDER = "D:\\trash2\\leda-upload";
 
+	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException{
+		File environment = null;
+		
+		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
+		
+		//pega o roteiro par aobter o arquivo e mandar de volta
+		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
+		Roteiro rot = roteiros.get(roteiro);
+		environment = rot.getArquivoAmbiente();
+		
+		return environment;
+	}
 	/**
 	 * Salva um roteiro recebido de um upload de professor ou monitor autorizado numa pasta 
 	 * especifica para geração de link de download de ambiente. O arquivo tambem salva num json
@@ -46,7 +59,7 @@ public class FileUtilities {
 	 * @throws Exception 
 	 */
 	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
-		String result = null;
+		String result = "upload nao realizado";
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
 		Validator.validate(config);
 		
@@ -84,8 +97,17 @@ public class FileUtilities {
 		Roteiro roteiro = roteiros.get(config.getRoteiro());
 		roteiro.setArquivoAmbiente(foutEnv);
 		roteiro.setArquivoProjetoCorrecao(foutCorrProj);
+		roteiros.put(config.getRoteiro(), roteiro);
 		
 		//agora eh persistir os dados dos roteiros em JSON
+		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		if(!configFolder.exists()){
+			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+		}
+		File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
+		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
+		
+		result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath(); 
 		
 		return result;
 	}
