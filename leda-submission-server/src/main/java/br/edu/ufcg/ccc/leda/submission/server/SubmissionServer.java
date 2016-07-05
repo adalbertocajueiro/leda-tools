@@ -4,10 +4,13 @@ import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Upload;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
-import br.edu.ufcg.ccc.leda.submission.util.UploadConfiguration;
+import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +32,15 @@ public class SubmissionServer extends Jooby {
     get("/", () -> "Hello World!");
 	
 	get("/teste", () -> "Hello World Teste!");
+	
+	get("/conf", (req,resp) -> {
+	    //Config conf = req.require(Config.class);
+		
+	    Config conf = ConfigFactory.load("application");
+	    String myprop = conf.getString("port");
+	    System.out.println(myprop);
+	    resp.send("porta capturada");
+	  });
 	
 	get("/downloadRoteiro",(req,resp) -> {
 		String rId = req.param("idRoteiro").value();
@@ -55,11 +67,11 @@ public class SubmissionServer extends Jooby {
 	      String roteiro = req.param("roteiro").value();
 	      Upload upload = req.param("arquivo").toUpload();
 		  //System.out.println("upload " + upload);
-		  UploadConfiguration config = new UploadConfiguration(matricula, semestre, turma, roteiro);
+		  StudentUploadConfiguration config = new StudentUploadConfiguration(matricula, semestre, turma, roteiro);
 		  File uploaded = upload.file();
 		  String result = "default response";
 		  try {
-			result = FileUtilities.saveUpload(uploaded, config);
+			result = FileUtilities.saveStudentSubmission(uploaded, config);
 			
 		} catch (StudentException e) {
 			// TODO Auto-generated catch block

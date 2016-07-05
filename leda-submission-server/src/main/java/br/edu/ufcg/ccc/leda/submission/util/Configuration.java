@@ -3,6 +3,8 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.IOException;
 import java.util.Map;
 
+import jxl.read.biff.BiffException;
+
 public class Configuration {
 
 	private Map<String, Student> students;
@@ -11,7 +13,12 @@ public class Configuration {
 	private static Configuration instance;
 	
 	private Configuration() throws ConfigurationException, IOException {
-		students = FileUtilities.loadStudentLists();
+		try {
+			students = FileUtilities.loadStudentLists();
+			roteiros = FileUtilities.loadRoteiros();
+		} catch (BiffException e) {
+			throw new ConfigurationException(e);
+		}
 	}
 	public static Configuration getInstance() throws ConfigurationException, IOException {
 		if(instance == null){
@@ -26,6 +33,10 @@ public class Configuration {
 	public Map<String, Student> getStudents() {
 		return students;
 	}
-	
-	
+	public void reloadRoteiros() throws Exception{
+		roteiros = FileUtilities.loadRoteiros();
+	}
+	public Map<String, Roteiro> getRoteiros() {
+		return roteiros;
+	}
 }

@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 
 
 
@@ -22,14 +24,15 @@ public class FileUtilitiesTest {
 		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
  		//fu.loadXLS(xls, map);
 		//map = fu.loadStudentsFromExcelFile(xls);
-		map = FileUtilities.loadStudentLists();
+		/*map = FileUtilities.loadStudentLists();
 		Set<String> keys = map.keySet();
- 		for (String key : keys) {
+		for (String key : keys) {
 			System.out.println(key + " - " + map.get(key));
-		}
+		}*/
  		
  		roteiros = FileUtilities.loadRoteiros();
  		Set<String> keysRoteiros = roteiros.keySet();
+ 		Collection<Roteiro> values = roteiros.values();
  		for (String key : keysRoteiros) {
  			System.out.println("Roteiro: " + roteiros.get(key));
 		}

@@ -1,17 +1,30 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-import java.text.DateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
+
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 public class Util {
 
 	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 	
+	/**
+	 * dataHora precisa ter o formato DD/MM/YYYY HH:MM:SS
+	 * esse formato pode ser informado na formatacao da celula do excel de forma que
+	 * o valor da calula pode ser extraido como date.
+	 * @param dataHora
+	 * @return
+	 * @throws WrongDateHourFormatException 
+	 */
 	public static GregorianCalendar buildDate(Date dataHora){
 		GregorianCalendar result = null;
 		
@@ -23,18 +36,36 @@ public class Util {
 		return result;
 	}
 	
-	/**
-	 * dataHora precisa ter o formato DD/MM/YYYY HH:MM:SS
-	 * @param dataHora
-	 * @return
-	 * @throws WrongDateHorFormatException 
-	 */
-	public static GregorianCalendar buildDate(String dataHora) throws WrongDateHorFormatException{
+	public static String generateFileName(File file, ProfessorUploadConfiguration config){
+		String result = config.getRoteiro();
+		
+		result = result + "-" + config.getTurma() + "-" + file.getName();
+		
+		return result;
+	}
+	
+	public static void writeRoteirosToJson(File jsonFile) throws ConfigurationException, IOException{
+		Gson gson = new Gson();
+		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
+
+		FileWriter fw = new FileWriter(jsonFile);
+		gson.toJson(roteiros, fw);
+		fw.flush();
+		fw.close();
+	}
+	
+	public static Map<String, Roteiro> loadRoteirosFromJson(File jsonFile) throws ConfigurationException, IOException{
+		Gson gson = new Gson();
+		FileReader fr = new FileReader(jsonFile);
+		Map<String, Roteiro> map = gson.fromJson(fr, new TypeToken<Map<String,Roteiro>>(){}.getType());
+		return map;
+	}
+	/*public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
 		GregorianCalendar result = new GregorianCalendar();
 		//se estiver no formato errado retorna uma excecao
 		//tem que fazer isso com string format provavelmente ou regex
 		if(!PATTERN_DATE_TIME.matcher(dataHora).matches()){
-			throw new WrongDateHorFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
+			throw new WrongDateHourFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
 		}
 		result.set(Calendar.DATE, Integer.parseInt(dataHora.substring(0, 2)));
 		result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)));
@@ -44,17 +75,18 @@ public class Util {
 		result.set(Calendar.SECOND, Integer.parseInt(dataHora.substring(17)));
 		
 		return result;
-	}
+	}*/
 
-	public static void main(String[] args) throws WrongDateHorFormatException {
-		Pattern pattern = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
+	public static void main(String[] args) throws ConfigurationException, IOException {
+		Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
+		/*Pattern pattern = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 		Matcher matcher = pattern.matcher("49/04/1970  14:00:00");
 		System.out.println(matcher.matches());
 		String[] elements = pattern.split("49/04/1970  14:00:00");
 		System.out.println(elements.length);
 		System.out.println(Arrays.toString(elements));
 		System.out.println(matcher.groupCount());
-		GregorianCalendar calendar = buildDate("20/07/2016 14:00:00");
+		GregorianCalendar calendar = new GregorianCalendar(); //buildDate("20/07/2016 14:00:00");
 		System.out.println("ERA: " + calendar.get(Calendar.ERA));
 		 System.out.println("YEAR: " + calendar.get(Calendar.YEAR));
 		 System.out.println("MONTH: " + calendar.get(Calendar.MONTH));
@@ -101,5 +133,5 @@ public class Util {
 		        + (calendar.get(Calendar.ZONE_OFFSET)/(60*60*1000))); // in hours
 		 System.out.println("DST_OFFSET: "
 		        + (calendar.get(Calendar.DST_OFFSET)/(60*60*1000))); // in hours
-	}
+*/	}
 }

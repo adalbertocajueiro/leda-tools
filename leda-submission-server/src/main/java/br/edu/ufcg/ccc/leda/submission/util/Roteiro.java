@@ -94,10 +94,7 @@ public class Roteiro {
 	@Override
 	public boolean equals(Object obj) {
 		return this.hashCode() == obj.hashCode();
-	}
-	
-	
-	
+	}	
 
 	@Override
 	public int hashCode() {
@@ -114,4 +111,88 @@ public class Roteiro {
 		}
 		
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public File getArquivoAmbiente() {
+		return arquivoAmbiente;
+	}
+
+	public void setArquivoAmbiente(File arquivoAmbiente) {
+		this.arquivoAmbiente = arquivoAmbiente;
+	}
+
+	public File getArquivoProjetoCorrecao() {
+		return arquivoProjetoCorrecao;
+	}
+
+	public void setArquivoProjetoCorrecao(File arquivoProjetoCorrecao) {
+		this.arquivoProjetoCorrecao = arquivoProjetoCorrecao;
+	}
+
+	public GregorianCalendar getDataHoraLiberacao() {
+		return dataHoraLiberacao;
+	}
+
+	public void setDataHoraLiberacao(GregorianCalendar dataHoraLiberacao) {
+		this.dataHoraLiberacao = dataHoraLiberacao;
+	}
+
+	public GregorianCalendar getDataHoraLimiteEnvioNormal() {
+		return dataHoraLimiteEnvioNormal;
+	}
+
+	public void setDataHoraLimiteEnvioNormal(
+			GregorianCalendar dataHoraLimiteEnvioNormal) {
+		this.dataHoraLimiteEnvioNormal = dataHoraLimiteEnvioNormal;
+	}
+
+	public GregorianCalendar getDataHoraLimiteEnvioAtraso() {
+		return dataHoraLimiteEnvioAtraso;
+	}
+
+	public void setDataHoraLimiteEnvioAtraso(
+			GregorianCalendar dataHoraLimiteEnvioAtraso) {
+		this.dataHoraLimiteEnvioAtraso = dataHoraLimiteEnvioAtraso;
+	}
+
+	public String getMonitorCorretor() {
+		return monitorCorretor;
+	}
+
+	public void setMonitorCorretor(String monitorCorretor) {
+		this.monitorCorretor = monitorCorretor;
+	}
+
+	public GregorianCalendar getDataInicioCorrecao() {
+		return dataInicioCorrecao;
+	}
+
+	public void setDataInicioCorrecao(GregorianCalendar dataInicioCorrecao) {
+		this.dataInicioCorrecao = dataInicioCorrecao;
+	}
+
+	public GregorianCalendar getDataLimiteCorrecao() {
+		return dataLimiteCorrecao;
+	}
+
+	public void setDataLimiteCorrecao(GregorianCalendar dataLimiteCorrecao) {
+		this.dataLimiteCorrecao = dataLimiteCorrecao;
+	}
+	
+	
 }

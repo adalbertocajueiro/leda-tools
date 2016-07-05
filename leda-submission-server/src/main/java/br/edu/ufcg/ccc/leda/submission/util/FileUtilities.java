@@ -11,9 +11,11 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -27,14 +29,67 @@ public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
+	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
 	public static String UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
-	private static Validator validator;
-	
-	
-	public FileUtilities() {
-		validator = new Validator();
-	}
 
+	/**
+	 * Salva um roteiro recebido de um upload de professor ou monitor autorizado numa pasta 
+	 * especifica para geração de link de download de ambiente. O arquivo tambem salva num json
+	 * o link mapeando o roteiro para os arquivos especificos dele (ambiente e correcao) e tambem
+	 * faz o update disso no mapeamento dos roteiros em Configuration.
+	 * 
+	 * @return
+	 * @throws StudentException 
+	 * @throws ConfigurationException 
+	 * @throws IOException 
+	 * @throws RoteiroException 
+	 * @throws Exception 
+	 */
+	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
+		String result = null;
+		// precisa verificar se o aluno que enviou esta realmente matriculado.
+		Validator.validate(config);
+		
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		if(!uploadFolder.exists()){
+			uploadFolder.mkdirs();
+		}
+		
+		//o nome do arquivo eh enviado. ele deve ser colocado na pasta 
+		//<upload>/semestre/roteiros/<ID_ROTEIRO>NomearquivoEnviado.zip
+		//dois arquivos devem ser salvos:environment e correction-proj.
+		//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.roteiros
+		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
+		String uploadSubFolder = config.getSemestre() + File.separator + "roteiros";
+		String uploadEnvFileName =  uploadSubFolder + File.separator + 
+				Util.generateFileName(ambiente, config);
+		String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
+				Util.generateFileName(projetoCorrecao, config);
+
+		File foutEnv = new File(uploadFolder,uploadEnvFileName);
+		if (!foutEnv.exists()) {
+			foutEnv.mkdirs();
+		}
+		File foutCorrProj = new File(uploadFolder,uploadCorrProjFileName);
+		if (!foutCorrProj.exists()) {
+			foutCorrProj.mkdirs();
+		}
+		Files.move(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		Files.move(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		//PRECISA LOGAR OPERACOES DA APLICACAO???????
+		//TODO
+		
+		//adicionando os arquivos no respectivo roteiro
+		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
+		Roteiro roteiro = roteiros.get(config.getRoteiro());
+		roteiro.setArquivoAmbiente(foutEnv);
+		roteiro.setArquivoProjetoCorrecao(foutCorrProj);
+		
+		//agora eh persistir os dados dos roteiros em JSON
+		
+		return result;
+	}
+	
 	/**
 	 * Salva um arquivo recebido em upload numa pasta especifica e com o nome do
 	 * aluno, recuperado de um mapeamento (arquivo excel do controle academico).
@@ -43,14 +98,13 @@ public class FileUtilities {
 	 * @throws StudentException 
 	 * @throws ConfigurationException 
 	 * @throws IOException 
+	 * @throws RoteiroException 
 	 * @throws Exception 
 	 */
-	public static String saveUpload(File uploaded, UploadConfiguration config) throws StudentException, ConfigurationException, IOException {
+	public static String saveStudentSubmission(File uploaded, StudentUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
 		String result = null;
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
-		if(!Validator.validateStudent(config)){
-			throw new StudentException();
-		}
+		Validator.validate(config);
 		Map<String,Student> students = Configuration.getInstance().getStudents();
 		Student student = students.get(config.getMatricula());
 		
@@ -100,7 +154,7 @@ public class FileUtilities {
 	 * @throws IOException 
 	 * @throws BiffException 
 	 */
-	public static Map<String, Student> loadStudentLists() throws ConfigurationException, IOException {
+	public static Map<String, Student> loadStudentLists() throws IOException, BiffException {
 		Map<String, Student> result = new HashMap<String, Student>();
 		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		if(!configFolder.exists()){
@@ -118,17 +172,13 @@ public class FileUtilities {
 		});
 		//System.out.println("%%%%%%%%% EXCEL FILES: " + excelFiles.length);
 		for (int i = 0; i < excelFiles.length; i++) {
-			try {
-				loadStudentsFromExcelFile(excelFiles[i],result);
-			} catch (BiffException e) {
-				throw new ConfigurationException("",e);
-			}
+			loadStudentsFromExcelFile(excelFiles[i],result);
 		}
 		return result;
 	}
 
 	private static String extractTurmaFromExcelFile(File excelFile){
-		String turma = "0";
+		String turma = "00";
 		String nomeArquivo = excelFile.getName();
 		if(nomeArquivo.indexOf("-01_") != -1){
 			turma = "01";
@@ -149,20 +199,42 @@ public class FileUtilities {
 		}
 	}
 	
-	public static Map<String, Roteiro> loadRoteiros() throws IOException, WrongDateHorFormatException{
+	public static Map<String, Roteiro> loadRoteiros() throws IOException, ConfigurationException{
 		Map<String, Roteiro> result = new HashMap<String, Roteiro>();
 		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		if(!configFolder.exists()){
 			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 		}
+		//tenta ler primeiro do json
+		File jsonRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
+		Map<String,Roteiro> roteirosFromJson = new HashMap<String,Roteiro>();
+		
+		if(jsonRoteiros.exists()){
+			roteirosFromJson = Util.loadRoteirosFromJson(jsonRoteiros);
+		}
+		
+		//carrega os roteiros de acordo com o arquivo excel
 		File excelFileRoteiro = new File(configFolder,EXCEL_FILE_ROTEIRO);
-		
-		//System.out.println("%%%%%%%%% EXCEL FILE ROTEIRO: " + excelFileRoteiro.getAbsolutePath());
-		
 		loadRoteirosFromExcelFile(excelFileRoteiro, result);
+		
+		//sobrescreve os dados lidos do excel com os do json apenas os arquivos de ambiente e correcao
+		reuseFiles(result,roteirosFromJson);
+		
+		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
+		Util.writeRoteirosToJson(jsonRoteiros);
 		
 		return result;
 	}
+	private static void reuseFiles(Map<String,Roteiro> mapExcel, Map<String,Roteiro> mapJson){
+		Set<String> keys = mapJson.keySet();
+		for (String key : keys) {
+			Roteiro roteiroJson = mapJson.get(key);
+			Roteiro roteiroExcel = mapExcel.get(key);
+			roteiroExcel.setArquivoAmbiente(roteiroJson.getArquivoAmbiente());
+			roteiroExcel.setArquivoProjetoCorrecao(roteiroJson.getArquivoProjetoCorrecao());
+			mapExcel.put(key, roteiroExcel);
+		}
+	} 
 	private static void loadRoteirosFromExcelFile(File xlsxFile, Map<String,Roteiro> roteiros) throws IOException{
 		FileInputStream fis = new FileInputStream(xlsxFile);
 		
@@ -177,7 +249,7 @@ public class FileUtilities {
 		}
 	
 		Iterator<Row> rowIterator = mySheet.iterator();
-		
+		FormulaEvaluator evaluator = myWorkBook.getCreationHelper().createFormulaEvaluator();
 		while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
             Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
@@ -195,10 +267,13 @@ public class FileUtilities {
             			org.apache.poi.ss.usermodel.Cell cellDataLimiteCorrecao = row.getCell(7); //celula de datahora limite da correcao
             			
             			GregorianCalendar dataHoraLiberacao = Util.buildDate(cellDataLiberacao.getDateCellValue());
-            			
+            			cellDataLimiteEnvioNormal = evaluator.evaluateInCell(cellDataLimiteEnvioNormal);
             			GregorianCalendar dataHoraLimiteEnvioNormal = Util.buildDate(cellDataLimiteEnvioNormal.getDateCellValue());
+            			cellDataLimiteEnvioAtraso = evaluator.evaluateInCell(cellDataLimiteEnvioAtraso);
             			GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cellDataLimiteEnvioAtraso.getDateCellValue());
+            			cellDataInicioCorrecao = evaluator.evaluateInCell(cellDataInicioCorrecao);
             			GregorianCalendar dataInicioCorrecao = Util.buildDate(cellDataInicioCorrecao.getDateCellValue());
+            			cellDataLimiteCorrecao = evaluator.evaluateInCell(cellDataLimiteCorrecao);
             			GregorianCalendar dataLimiteCorrecao = Util.buildDate(cellDataLimiteCorrecao.getDateCellValue());
             			
             			Roteiro roteiro = new Roteiro(idRoteiro,cellDescricao.getStringCellValue(),

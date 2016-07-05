@@ -1,27 +1,27 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-public class WrongDateHorFormatException extends Exception {
+public class WrongDateHourFormatException extends Exception {
 
-	public WrongDateHorFormatException() {
+	public WrongDateHourFormatException() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public WrongDateHorFormatException(String message) {
+	public WrongDateHourFormatException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public WrongDateHorFormatException(Throwable cause) {
+	public WrongDateHourFormatException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public WrongDateHorFormatException(String message, Throwable cause) {
+	public WrongDateHourFormatException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public WrongDateHorFormatException(String message, Throwable cause,
+	public WrongDateHourFormatException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
