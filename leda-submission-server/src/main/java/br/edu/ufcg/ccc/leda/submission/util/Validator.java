@@ -14,7 +14,7 @@ public class Validator {
 			throw new RoteiroException("Roteiro " + roteiro + " nao cadastrado.");
 		}
 		GregorianCalendar dataAtual = new GregorianCalendar();
-		if(dataAtual.before(rot.getDataHoraLiberacao()) && 
+		if(dataAtual.before(rot.getDataHoraLiberacao()) || 
 				dataAtual.after(rot.getDataHoraLimiteEnvioAtraso())){
 			throw new RoteiroException("Roteiro " + roteiro + " disponivel entre " +
 				rot.getDataHoraLiberacao() + " e " + rot.getDataHoraLimiteEnvioAtraso());
