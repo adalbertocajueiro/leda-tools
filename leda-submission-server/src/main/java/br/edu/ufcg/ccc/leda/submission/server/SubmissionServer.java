@@ -102,7 +102,7 @@ public class SubmissionServer extends Jooby {
 	      String roteiro = req.param("roteiro").value();
 	      Upload upload = req.param("arquivo").toUpload();
 		  //System.out.println("upload " + upload);
-		  StudentUploadConfiguration config = new StudentUploadConfiguration(matricula, semestre, turma, roteiro);
+		  StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula);
 		  File uploaded = upload.file();
 		  String result = "default response";
 		  try {
