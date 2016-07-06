@@ -56,7 +56,7 @@ public class LEDAChartMojo extends AbstractMojo {
 	 */
 	private List<String> qualifiedNames;
 
-	/*
+	/**
 	 * @parameter
 	 * @required
 	 */
@@ -65,6 +65,7 @@ public class LEDAChartMojo extends AbstractMojo {
 	private List<Class<?>> classes;
 	
 	public void execute() throws MojoExecutionException {
+		System.out.println("GENERATE CHART: " + generateGraph);
 		if(generateGraph){
 			//String[] listOfNames = new String[qualifiedNames.size()];
 			classes = new ArrayList<Class<?>>();

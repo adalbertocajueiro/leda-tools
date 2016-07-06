@@ -24,7 +24,7 @@ public class Validator {
 		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
 		if(rot.getArquivoAmbiente() == null){
 			throw new RoteiroException("Arquivo de ambiente para  o roteiro " + roteiro + " nao cadastrado");
-		} else{
+		} else if(!rot.getArquivoAmbiente().exists()){
 			throw new RoteiroException("Arquivo de ambiente para  o roteiro " + roteiro + " nao encontrado no servidor: " + rot.getArquivoAmbiente().getAbsolutePath());
 		}
 	}
