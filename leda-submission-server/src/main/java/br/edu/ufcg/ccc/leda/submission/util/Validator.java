@@ -17,7 +17,8 @@ public class Validator {
 		if(dataAtual.before(rot.getDataHoraLiberacao()) || 
 				dataAtual.after(rot.getDataHoraLimiteEnvioAtraso())){
 			throw new RoteiroException("Roteiro " + roteiro + " disponivel para download apenas entre " +
-				Util.formatDate(rot.getDataHoraLiberacao()) + " e " + Util.formatDate(rot.getDataHoraLimiteEnvioAtraso()));
+				Util.formatDate(rot.getDataHoraLiberacao()) + " e " + Util.formatDate(rot.getDataHoraLimiteEnvioAtraso())+ ".\n"
+				+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 		}
 	}
 	
