@@ -60,59 +60,61 @@ public class LEDAChartMojo extends AbstractMojo {
 	 * @parameter
 	 * @required
 	 */
-	//private String sortingInterface;
+	private boolean generateGraph;
 
 	private List<Class<?>> classes;
 	
 	public void execute() throws MojoExecutionException {
-		//String[] listOfNames = new String[qualifiedNames.size()];
-		classes = new ArrayList<Class<?>>();
-		
-		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-		//File targetFolder = new File(this.project.getBuild().getDirectory() + File.separator + Utilities.WEB_FOLDER);
-		File targetFolder = new File(this.project.getBuild().getDirectory());
-		System.out.println("Target folder: " + targetFolder.getAbsolutePath());
-		if(!targetFolder.exists()){
-			targetFolder.mkdirs();
-		}
-		ClassLoader loader = getClassesPath();
-		Drawer drawer = new Drawer(targetFolder);
-
-		
-		for (String string : qualifiedNames) {
-			try {
-				
-				Class<?> loaded = Class.forName(string,true,loader);
-				classes.add(loaded);
-				//System.out.println("Classes loaded: " + loaded.getSimpleName());
-			} catch (ClassNotFoundException e) {
-				//e.printStackTrace();
-				throw new MojoExecutionException("Informed class could not be instantiated", e);
-			} catch (IllegalArgumentException e) {
-				//e.printStackTrace();
-				throw new MojoExecutionException("Illegal argument. Problems in arguments in method call", e);
-			} 
-		}
-		
-		//System.out.println("Classes loaded: " + classes.size());
-		 try {
-			drawer.setSortingList(classes);
-			drawer.instantiateAndRunImplementations();
-			File webFolder = Utilities.createWebFolder(targetFolder);
-			Utilities.addDataToFinalJavaScript(webFolder, drawer.getGraphData().toString());
-			openBrowser(webFolder);
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-			throw new MojoExecutionException("Instantiation error", e);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new MojoExecutionException("IO error. Problems creating folder and files", e);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			throw new MojoExecutionException("Invocation error. Problems invoking method", e);
+		if(generateGraph){
+			//String[] listOfNames = new String[qualifiedNames.size()];
+			classes = new ArrayList<Class<?>>();
+			
+			System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
+			//File targetFolder = new File(this.project.getBuild().getDirectory() + File.separator + Utilities.WEB_FOLDER);
+			File targetFolder = new File(this.project.getBuild().getDirectory());
+			System.out.println("Target folder: " + targetFolder.getAbsolutePath());
+			if(!targetFolder.exists()){
+				targetFolder.mkdirs();
+			}
+			ClassLoader loader = getClassesPath();
+			Drawer drawer = new Drawer(targetFolder);
+	
+			
+			for (String string : qualifiedNames) {
+				try {
+					
+					Class<?> loaded = Class.forName(string,true,loader);
+					classes.add(loaded);
+					//System.out.println("Classes loaded: " + loaded.getSimpleName());
+				} catch (ClassNotFoundException e) {
+					//e.printStackTrace();
+					throw new MojoExecutionException("Informed class could not be instantiated", e);
+				} catch (IllegalArgumentException e) {
+					//e.printStackTrace();
+					throw new MojoExecutionException("Illegal argument. Problems in arguments in method call", e);
+				} 
+			}
+			
+			//System.out.println("Classes loaded: " + classes.size());
+			 try {
+				drawer.setSortingList(classes);
+				drawer.instantiateAndRunImplementations();
+				File webFolder = Utilities.createWebFolder(targetFolder);
+				Utilities.addDataToFinalJavaScript(webFolder, drawer.getGraphData().toString());
+				openBrowser(webFolder);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Instantiation error", e);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("IO error. Problems creating folder and files", e);
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+				throw new MojoExecutionException("Invocation error. Problems invoking method", e);
+			}
 		}
 		
 	}

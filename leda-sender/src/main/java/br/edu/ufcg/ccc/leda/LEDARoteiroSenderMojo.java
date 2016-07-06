@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Goal which compacts a student's submission.
+ * Goal which sends a student's submission.
  *
  * @goal enviar-roteiro
  * 

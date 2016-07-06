@@ -20,6 +20,13 @@ public class Validator {
 				Util.formatDate(rot.getDataHoraLiberacao()) + " e " + Util.formatDate(rot.getDataHoraLimiteEnvioAtraso())+ ".\n"
 				+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 		}
+		
+		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
+		if(rot.getArquivoAmbiente() == null){
+			throw new RoteiroException("Arquivo de ambiente para  o roteiro " + roteiro + " nao cadastrado");
+		} else{
+			throw new RoteiroException("Arquivo de ambiente para  o roteiro " + roteiro + " nao encontrado no servidor: " + rot.getArquivoAmbiente().getAbsolutePath());
+		}
 	}
 	
 	//realiza validacoes de uma submissao de professor 
