@@ -65,7 +65,7 @@ public class SubmissionServer extends Jooby {
   {
 	post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
-		System.out.println("pedido de upload de roteiro recebido");
+		//System.out.println("pedido de upload de roteiro recebido");
 		String roteiro = req.param("roteiro").value();
 	    String semestre = req.param("semestre").value();
 	    String turma = req.param("turma").value();
