@@ -11,13 +11,13 @@ public class Validator {
 		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteirosMap.get(roteiro);
 		if(rot == null){
-			throw new RoteiroException("Roteiro " + roteiro + " nao cadastrado.");
+			throw new RoteiroException("Roteiro " + roteiro + " nao cadastrado");
 		}
 		GregorianCalendar dataAtual = new GregorianCalendar();
 		if(dataAtual.before(rot.getDataHoraLiberacao()) || 
 				dataAtual.after(rot.getDataHoraLimiteEnvioAtraso())){
-			throw new RoteiroException("Roteiro " + roteiro + " disponivel entre " +
-				rot.getDataHoraLiberacao() + " e " + rot.getDataHoraLimiteEnvioAtraso());
+			throw new RoteiroException("Roteiro " + roteiro + " disponivel para download apenas entre " +
+				Util.formatDate(rot.getDataHoraLiberacao()) + " e " + Util.formatDate(rot.getDataHoraLimiteEnvioAtraso()));
 		}
 	}
 	

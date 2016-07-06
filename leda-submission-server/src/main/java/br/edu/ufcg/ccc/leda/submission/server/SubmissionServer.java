@@ -55,7 +55,7 @@ public class SubmissionServer extends Jooby {
 		    resp.download(fileToSend);
 		} catch (ConfigurationException | IOException | RoteiroException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 			resp.send(e.getMessage());
 		}
 	});

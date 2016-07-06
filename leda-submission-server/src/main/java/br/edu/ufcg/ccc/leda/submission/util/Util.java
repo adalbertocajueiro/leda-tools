@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class Util {
 	public static String generateFileName(File file, ProfessorUploadConfiguration config){
 		String result = config.getRoteiro();
 		
-		result = result + "-" + config.getTurma() + "-" + removeTempInfoFromFileName(file.getName());
+		result = result + "-" + removeTempInfoFromFileName(file.getName());
 		
 		return result;
 	}
@@ -66,6 +67,16 @@ public class Util {
 		FileReader fr = new FileReader(jsonFile);
 		Map<String, Roteiro> map = gson.fromJson(fr, new TypeToken<Map<String,Roteiro>>(){}.getType());
 		return map;
+	}
+	
+	public static String formatDate(GregorianCalendar date){
+		String result = date.getTime().toString();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		result = formatter.format(date.getTime());
+		result = result.replace('T', ' ');
+		result = result.substring(0,19);
+		
+		return result;
 	}
 	/*public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
 		GregorianCalendar result = new GregorianCalendar();
