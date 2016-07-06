@@ -96,10 +96,11 @@ public class FileUtilities {
 		//adicionando os arquivos no respectivo roteiro
 		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 		Roteiro roteiro = roteiros.get(config.getRoteiro());
-		roteiro.setArquivoAmbiente(foutEnv);
-		roteiro.setArquivoProjetoCorrecao(foutCorrProj);
-		roteiros.put(config.getRoteiro(), roteiro);
-		
+		if(roteiro != null){
+			roteiro.setArquivoAmbiente(foutEnv);
+			roteiro.setArquivoProjetoCorrecao(foutCorrProj);
+			roteiros.put(config.getRoteiro(), roteiro);
+		}
 		//agora eh persistir os dados dos roteiros em JSON
 		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		if(!configFolder.exists()){

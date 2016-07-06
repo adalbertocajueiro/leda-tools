@@ -23,7 +23,7 @@ public class Validator {
 	}
 	
 	//realiza validacoes de uma submissao de professor 
-	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException {
+	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException, RoteiroException {
 				
 			Map<String,Student> studentMap = Configuration.getInstance().getStudents();
 			Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
@@ -33,7 +33,10 @@ public class Validator {
 			//se o professor/usuario informado nao esta autorizado 
 			
 			//se roteiro informado nao esta cadastrado
-			
+			Roteiro roteiro = roteirosMap.get(config.getRoteiro());
+			if(roteiro == null){
+				throw new RoteiroException("Roteiro " + config.getRoteiro() + " nao cadastrado.");
+			}
 			
 		}
 		
