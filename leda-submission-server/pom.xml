@@ -19,10 +19,29 @@
 
 	<properties>
 		<jooby.version>1.0.0.CR3</jooby.version>
-
+		
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>server</id>
+			<properties>
+				<upload.folder>/home/ubuntu/leda-upload</upload.folder>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<upload.folder>D:\trash2\leda-upload</upload.folder>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<!-- Jooby -->
@@ -97,6 +116,22 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>write-project-properties</goal>
+						</goals>
+						<configuration>
+							<outputFile>${project.basedir}/conf/app.properties</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

@@ -30,9 +30,20 @@ public class FileUtilities {
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
 	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
-	public static String UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
+	public static String UPLOAD_FOLDER;
 	//public static String UPLOAD_FOLDER = "D:\\trash2\\leda-upload";
 
+	static{
+		try {
+			UPLOAD_FOLDER = Util.loadProperty();
+		} catch (IOException e) {
+			e.printStackTrace();
+			//UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
+			System.out.println("Upload folder not loaded. system will exit");
+			System.exit(0);
+		}
+	}
+	
 	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException{
 		File environment = null;
 		
@@ -143,9 +154,10 @@ public class FileUtilities {
 		//o nome do arquivo eh o nome do aluno cadastrado no sistema
 		//String uploadFileName = config.getSemestre() + File.separator + config.getRoteiro() 
 		//		+ File.separator + config.getTurma() + File.separator + uploaded.getName().substring(uploaded.getName().indexOf(".") + 1);
-		String uploadSubFolder = config.getSemestre() + File.separator + config.getRoteiro() 
-				+ File.separator + config.getTurma();
-		String uploadFileName =  uploadSubFolder + File.separator + student.getNome() + ".zip";
+		String uploadSubFolder = config.getSemestre() + File.separator + config.getRoteiro(); 
+				//+ File.separator + config.getTurma();
+		String uploadFileName =  uploadSubFolder + File.separator + 
+				student.getMatricula() + "-" + student.getNome() + ".zip";
 
 		File fout = new File(uploadFolder,uploadFileName);
 		if (!fout.exists()) {

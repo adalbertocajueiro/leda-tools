@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.google.common.reflect.TypeToken;
@@ -78,6 +80,18 @@ public class Util {
 		
 		return result;
 	}
+	
+	public static String loadProperty() throws IOException{
+		String result = "";
+		Properties p = new Properties();
+		File confFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		FileReader fr = new FileReader(new File(confFolder,"app.properties"));
+		p.load(fr);
+		result = p.getProperty("upload.folder");
+	    
+		return result;
+	}
+	
 	/*public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
 		GregorianCalendar result = new GregorianCalendar();
 		//se estiver no formato errado retorna uma excecao
@@ -96,7 +110,8 @@ public class Util {
 	}*/
 
 	public static void main(String[] args) throws ConfigurationException, IOException {
-		Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
+		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
+		Util.loadProperty();
 		/*Pattern pattern = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 		Matcher matcher = pattern.matcher("49/04/1970  14:00:00");
 		System.out.println(matcher.matches());
