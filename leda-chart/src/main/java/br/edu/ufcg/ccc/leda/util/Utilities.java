@@ -107,9 +107,10 @@ public class Utilities {
 			file = new URL(file.substring(0, bangIndex)).getFile();
 			ZipFile zip = new ZipFile(file);
 			ZipEntry entryWeb = zip.getEntry(jarPath);
-
+			//System.out.println("UNZIP JAR FILE: " + folderOrJar.getFile());
+			//System.out.println("UNZIP: " + folderOrJar.getFile().substring(5, bangIndex));
 			ZipInputStream zipIn = new ZipInputStream(new FileInputStream(
-					new File(folderOrJar.getFile().substring(6, bangIndex))));
+					new File(folderOrJar.getFile().substring(5, bangIndex))));
 			ZipEntry entry = zipIn.getNextEntry();
 
 			// iterates over entries in the zip file

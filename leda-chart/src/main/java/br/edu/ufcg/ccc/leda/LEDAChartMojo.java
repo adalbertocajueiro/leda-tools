@@ -63,61 +63,72 @@ public class LEDAChartMojo extends AbstractMojo {
 	private boolean generateGraph;
 
 	private List<Class<?>> classes;
-	
+
 	public void execute() throws MojoExecutionException {
 		System.out.println("GENERATE CHART: " + generateGraph);
-		if(generateGraph){
-			//String[] listOfNames = new String[qualifiedNames.size()];
+		if (generateGraph) {
+			// String[] listOfNames = new String[qualifiedNames.size()];
 			classes = new ArrayList<Class<?>>();
-			
+
 			System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-			//File targetFolder = new File(this.project.getBuild().getDirectory() + File.separator + Utilities.WEB_FOLDER);
+			// File targetFolder = new
+			// File(this.project.getBuild().getDirectory() + File.separator +
+			// Utilities.WEB_FOLDER);
 			File targetFolder = new File(this.project.getBuild().getDirectory());
-			System.out.println("Target folder: " + targetFolder.getAbsolutePath());
-			if(!targetFolder.exists()){
+			System.out.println("Target folder: "
+					+ targetFolder.getAbsolutePath());
+			if (!targetFolder.exists()) {
 				targetFolder.mkdirs();
 			}
 			ClassLoader loader = getClassesPath();
 			Drawer drawer = new Drawer(targetFolder);
-	
-			
+
 			for (String string : qualifiedNames) {
 				try {
-					
-					Class<?> loaded = Class.forName(string,true,loader);
+
+					Class<?> loaded = Class.forName(string, true, loader);
 					classes.add(loaded);
-					//System.out.println("Classes loaded: " + loaded.getSimpleName());
+					// System.out.println("Classes loaded: " +
+					// loaded.getSimpleName());
 				} catch (ClassNotFoundException e) {
-					//e.printStackTrace();
-					throw new MojoExecutionException("Informed class could not be instantiated", e);
+					// e.printStackTrace();
+					throw new MojoExecutionException(
+							"Informed class could not be instantiated", e);
 				} catch (IllegalArgumentException e) {
-					//e.printStackTrace();
-					throw new MojoExecutionException("Illegal argument. Problems in arguments in method call", e);
-				} 
+					// e.printStackTrace();
+					throw new MojoExecutionException(
+							"Illegal argument. Problems in arguments in method call",
+							e);
+				}
 			}
-			
-			//System.out.println("Classes loaded: " + classes.size());
-			 try {
+
+			// System.out.println("Classes loaded: " + classes.size());
+			try {
 				drawer.setSortingList(classes);
 				drawer.instantiateAndRunImplementations();
 				File webFolder = Utilities.createWebFolder(targetFolder);
-				Utilities.addDataToFinalJavaScript(webFolder, drawer.getGraphData().toString());
+				Utilities.addDataToFinalJavaScript(webFolder, drawer
+						.getGraphData().toString());
 				openBrowser(webFolder);
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 				throw new MojoExecutionException("Instantiation error", e);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
-				throw new MojoExecutionException("Illegal Access Error. Problems executing newInstance()", e);
+				throw new MojoExecutionException(
+						"Illegal Access Error. Problems executing newInstance()",
+						e);
 			} catch (IOException e) {
 				e.printStackTrace();
-				throw new MojoExecutionException("IO error. Problems creating folder and files", e);
+				throw new MojoExecutionException(
+						"IO error. Problems creating folder and files", e);
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
-				throw new MojoExecutionException("Invocation error. Problems invoking method", e);
+				throw new MojoExecutionException(
+						"Invocation error. Problems invoking method", e);
 			}
 		}
-		
+
 	}
 
 	private URLClassLoader getClassesPath() throws MojoExecutionException {
@@ -130,11 +141,13 @@ public class LEDAChartMojo extends AbstractMojo {
 				try {
 					projectClasspathList.add(new File(element).toURI().toURL());
 				} catch (Exception e) {
-					throw new MojoExecutionException(element + " is an invalid classpath element", e);
+					throw new MojoExecutionException(element
+							+ " is an invalid classpath element", e);
 				}
 			}
 
-			URLClassLoader loader = new URLClassLoader(projectClasspathList.toArray(new URL[0]));
+			URLClassLoader loader = new URLClassLoader(
+					projectClasspathList.toArray(new URL[0]));
 
 			return loader;
 
@@ -144,19 +157,35 @@ public class LEDAChartMojo extends AbstractMojo {
 		}
 		return null;
 	}
-	
-	private void openBrowser(File webFolder){
+
+	private void openBrowser(File webFolder) {
 		Desktop desktop = null;
-		if(Desktop.isDesktopSupported()){
+		File file = new File(webFolder, Utilities.HTML_FILE_NAME);
+		if (Desktop.isDesktopSupported()) {
 			desktop = Desktop.getDesktop();
-			if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE)){
+			if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
 				try {
-		        	File file = new File(webFolder,Utilities.HTML_FILE_NAME);
-		            desktop.browse(file.toURI());
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
+					desktop.browse(file.toURI());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("Desktop is null ("+ desktop + ") or desktop.isSupported(Desktop.Action.BROWSE) returned false!");
 			}
+		} else {
+			//System.out.println("Desktop.isDesktopSupported() returned false!");
+			// provavelmetne nao eh prataforma windows. tentando abrir em mac
+			String os = System.getProperty("os.name").toLowerCase();
+			if(os.indexOf( "mac" ) >= 0){
+				Runtime runtime = Runtime.getRuntime();
+				try {
+					runtime.exec("open " + file.toURI());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			//no linux se nao suportar desktop entao o aluno tera que abrir o index.html mesmo
 		}
 	}
 }
