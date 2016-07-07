@@ -21,6 +21,7 @@ public class SortTimeoutExecutor {
 		ExecutorService executor = Executors.newFixedThreadPool(1);
         Future<Integer[]> control = null;
         try {
+        	System.out.println("Invoking " +sortImplementation.getClass().getSimpleName() + " in array of size " + arguments.size());
         	SortCaller caller = new SortCaller(sortImplementation,sortMethod,arguments);
         	control = executor.submit(caller);
             control.get(TIMEOUT, TimeUnit.MILLISECONDS);

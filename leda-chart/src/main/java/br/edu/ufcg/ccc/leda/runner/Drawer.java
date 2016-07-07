@@ -83,18 +83,23 @@ public class Drawer {
 		List<List<Integer>> inputs = generator.generateWorstCases();
 
 		Method sortMethod = getSortMethod(sortImplementation);
-		
+		//System.out.println("NUMBER OF INPUTS: " + inputs.size());
 		for (List<Integer> list : inputs) {
 				long start = System.nanoTime();
 				//sortMethod.invoke(sortImplementation, new Object[] { list.toArray(new Integer[0]) });
 				double elapsedTime = (System.nanoTime() - start) / 1000000F;
 				try {
 					SortTimeoutExecutor.invoke(sortImplementation, sortMethod, list);
+					//sortMethod.invoke(sortImplementation, new Object[] { list.toArray(new Integer[0]) });
 					elapsedTime = (System.nanoTime() - start) / 1000000F;
 					//TODO no futuro as excexoes podem sumir.
+				} catch(UnsupportedOperationException e){
+					System.out.println("UnsupportedOperationException");
+					elapsedTime = 0;
 				} catch (InterruptedException e) {
 					//e.printStackTrace();
 				} catch (ExecutionException e) {
+					System.out.println("ExecutionException: " + e.getMessage());
 					//e.printStackTrace();
 					elapsedTime = 0;
 				} catch (TimeoutException e) {

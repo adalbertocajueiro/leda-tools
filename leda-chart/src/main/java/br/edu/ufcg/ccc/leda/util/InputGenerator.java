@@ -5,7 +5,7 @@ import java.util.List;
 
 public class InputGenerator {
 
-	private Integer[] sizes = {10,100,500,1000,5000,10000,50000,100000,200000, 300000, 400000, 500000};
+	private Integer[] sizes = {10,100,500,1000,2000,4000,6000,10000,15000,20000};
 	//{10,100,500,1000,5000,10000,50000,100000,500000}
 	public List<List<Integer>> generateWorstCases(){
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
