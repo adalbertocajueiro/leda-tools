@@ -1,1 +1,19 @@
-RETIRAR A SUBPASTA DA TURMA DA PASTA DO ROTEIRO
+Parser para arquivo de configuracao de nginx: 
+https://github.com/odiszapc/nginx-java-parser
+
+<dependency>
+    <groupId>com.github.odiszapc</groupId>
+    <artifactId>nginxparser</artifactId>
+    <version>0.9.3</version>
+</dependency>
+
+NgxConfig conf = NgxConfig.read("/etc/nginx/nginx.conf");
+NgxParam workers = conf.findParam("worker_processes");       // Ex.1
+workers.getValue(); // "1"
+NgxParam listen = conf.findParam("http", "server", "listen"); // Ex.2
+listen.getValue(); // "8889"
+List<NgxEntry> rtmpServers = conf.findAll(NgxConfig.BLOCK, "rtmp", "server"); // Ex.3
+for (NgxEntry entry : rtmpServers) {
+    ((NgxBlock)entry).getName(); // "server"
+    ((NgxBlock)entry).findParam("application", "live"); // "on" for the first iter, "off" for the second one
+}
