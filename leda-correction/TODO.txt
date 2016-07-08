@@ -11,3 +11,4 @@
 - Nao precisa gerar tantas pastas quando vai criar a pasta base para os projetos a serem corrigidos. - OK
 - Verificar a possibilidade de integração como check style.
 - Verificar se ao ocorrer um timeout a execucao dos demais pára.
+- Trabalhar com links relativos no relatorio geral (para o especifico).

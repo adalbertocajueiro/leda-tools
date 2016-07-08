@@ -16,7 +16,7 @@ public class StudentSubmissionSenderTest {
 		String matricula = "115110568";
 		String roteiro = "R01";
 		
-		Sender sender = new StudentSubmissionSender(arquivo,matricula,semestre,turma,roteiro,url);
+		Sender sender = new StudentSubmissionSender(arquivo,matricula,semestre,roteiro,url);
 		sender.send();
 		
 	}

@@ -2,7 +2,10 @@ package br.edu.ufcg.ccc.leda.submission.server;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
+import org.jooby.Result;
+import org.jooby.Results;
 import org.jooby.Upload;
+import org.jooby.ftl.Ftl;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -31,9 +34,11 @@ public class SubmissionServer extends Jooby {
 	}
 
   {
-    get("/", () -> "Hello World!");
+	use(new Ftl());
+	  
+	get("/", () -> "Hello World!");
 	
-	get("/teste", () -> "Hello World Teste!");
+	get("/teste", req -> Results.html("local/target/generated-report"));
 	
 	get("/conf", (req,resp) -> {
 	    //Config conf = req.require(Config.class);
@@ -71,6 +76,7 @@ public class SubmissionServer extends Jooby {
 	    String turma = req.param("turma").value();
 	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
 	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+	    
 		  //System.out.println("upload " + upload);
 		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro);
 		File uploadedAmbiente = uploadAmbiente.file();
@@ -100,9 +106,12 @@ public class SubmissionServer extends Jooby {
 	      String semestre = req.param("semestre").value();
 	      String turma = req.param("turma").value();
 	      String roteiro = req.param("roteiro").value();
+	      String ip = req.param("ip").value();
 	      Upload upload = req.param("arquivo").toUpload();
-		  //System.out.println("upload " + upload);
-		  StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula);
+		  
+	      //System.out.println("Request received from " + ip);
+		  
+	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip);
 		  File uploaded = upload.file();
 		  String result = "default response";
 		  try {

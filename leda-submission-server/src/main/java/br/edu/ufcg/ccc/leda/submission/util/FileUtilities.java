@@ -120,7 +120,7 @@ public class FileUtilities {
 		File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
 		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
 		
-		result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath(); 
+		result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
 		
 		return result;
 	}

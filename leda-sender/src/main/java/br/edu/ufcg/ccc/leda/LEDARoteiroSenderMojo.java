@@ -58,12 +58,6 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	 * @parameter
 	 * @required
 	 */
-	private String turma;
-
-	/**
-	 * @parameter
-	 * @required
-	 */
 	private String url;
 
 	/**
@@ -71,7 +65,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	 * @required
 	 */
 	private boolean defaultSend;
-
+	
 	private ProfessorSender sender;
 
 	public void execute() throws MojoExecutionException {
@@ -89,9 +83,9 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
 				sender = new ProfessorSender(envZipFile, corrProjZipFile,
-						roteiro, url, semestre, turma);
+						roteiro, url, semestre);
 				System.out.println("Submitting environment file: "
-						+ envZipFile.getAbsolutePath());
+						+ envZipFile.getAbsolutePath() + " to " + url);
 				sender.send();
 				System.out
 						.println("Please check your log file to see the confirmation from the server (last record)");

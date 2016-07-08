@@ -24,11 +24,12 @@ public class ProfessorSender extends Sender {
 	private String turma;
 	
 	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro, 
-			String url, String semestre, String turma) {
+			String url, String semestre) {
 		super(ambiente, roteiro, url);
 		this.arquivoCorrecao = arquivoCorrecao;
 		this.semestre = semestre;
-		this.turma = turma;
+		//RXX-XX onde os ultimos XX sao a turma
+		this.turma = roteiro.substring(4);
 	}
 
 	@Override

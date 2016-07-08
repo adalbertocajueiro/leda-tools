@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -25,11 +26,12 @@ public class StudentSubmissionSender extends Sender {
 	String turma;
 	
 	public StudentSubmissionSender(File arquivo, String matricula, String semestre,
-			String turma, String roteiro, String url) {
+			String roteiro, String url) {
 		super(arquivo,roteiro,url);
 		this.matricula = matricula;
 		this.semestre = semestre;
-		this.turma = turma;
+		//RXX-XX onde os ultimos XX sao a turma
+		this.turma = roteiro.substring(4);
 	}
 
 	public void send() throws ClientProtocolException, IOException{
@@ -39,6 +41,7 @@ public class StudentSubmissionSender extends Sender {
 	    StringBody sem = new StringBody(semestre,ContentType.TEXT_PLAIN);
 	    StringBody t = new StringBody(turma,ContentType.TEXT_PLAIN);
 	    StringBody rot = new StringBody(roteiro,ContentType.TEXT_PLAIN);
+	    StringBody ip = new StringBody(Inet4Address.getLocalHost().getHostAddress(),ContentType.TEXT_PLAIN);
 	    
 	    CloseableHttpClient httpclient = HttpClients.createDefault();
 	    StringBuilder confirmation = new StringBuilder();
@@ -50,6 +53,7 @@ public class StudentSubmissionSender extends Sender {
 	                .addPart("semestre", sem)
 	                .addPart("turma", t)
 	                .addPart("roteiro", rot)
+	                .addPart("ip", ip)
 	                .build();
 
 	        httppost.setEntity(reqEntity);

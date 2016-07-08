@@ -31,12 +31,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>br.edu.ufcg.computacao</groupId>
-			<artifactId>Templates</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>

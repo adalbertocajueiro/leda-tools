@@ -56,12 +56,7 @@ public class LEDACompactorMojo extends AbstractMojo {
      */
     private String semestre;
     
-    /**
-     * @parameter 
-     * @required
-     */
-    private String turma;
-    
+   
     /**
      * @parameter 
      * @required
@@ -88,8 +83,8 @@ public class LEDACompactorMojo extends AbstractMojo {
     	try {
 			compactor.zipFolder(srcFolder, destZipFile);
 			System.out.println("Compaction sucess: " + destZipFile.getName());
-			sender = new StudentSubmissionSender(destZipFile,matricula,semestre,turma,roteiro, url);
-			System.out.println("Submitting file... " );
+			sender = new StudentSubmissionSender(destZipFile,matricula,semestre,roteiro, url);
+			System.out.println("Submitting file " + destZipFile.getName() + " to " + url);
 			sender.send();
 			System.out.println("Please check your log file to see the confirmation from the server (last record)");
 		} catch (ClientProtocolException e){

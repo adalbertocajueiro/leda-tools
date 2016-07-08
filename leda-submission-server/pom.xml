@@ -19,7 +19,7 @@
 
 	<properties>
 		<jooby.version>1.0.0.CR3</jooby.version>
-		
+
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 	</properties>
@@ -112,6 +112,10 @@
 			<version>2.6.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jooby</groupId>
+			<artifactId>jooby-ftl</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
