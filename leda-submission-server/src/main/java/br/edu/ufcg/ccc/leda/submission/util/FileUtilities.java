@@ -263,9 +263,7 @@ public class FileUtilities {
 		
 		//sobrescreve os dados lidos do excel com os do json apenas os arquivos de ambiente e correcao
 		//reuseFiles(result,roteirosFromJson);
-		File uploadFolder = new File(UPLOAD_FOLDER);
-		File roteirosFolder = new File(uploadFolder,CURRENT_SEMESTER + File.separator + File.separator + ROTEIROS_FOLDER);
-		loadRoteirosFromUploadFolder(roteiros, roteirosFolder);
+		loadRoteirosFromUploadFolder(roteiros);
 		
 		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
 		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
@@ -397,8 +395,8 @@ public class FileUtilities {
 	//Precisa de um metodo que monte a lista dos arquivos para cada roteiro diretamente da pasta
 	//onde foram feitos os uploads. Ele precisa ser por id do roteiro e pegar environment e correction
 	//e fazer as devidas astribuicoes aos roteiros. 
-	public static void loadRoteirosFromUploadFolder(Map<String,Roteiro> roteiros, File uploadFolder){
-		File roteirosFolder = new File(FileUtilities.UPLOAD_FOLDER,ROTEIROS_FOLDER);
+	public static void loadRoteirosFromUploadFolder(Map<String,Roteiro> roteiros){
+		File roteirosFolder = new File(FileUtilities.UPLOAD_FOLDER, CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER);
 		if(roteirosFolder.exists()){
 			Set<String> keys = roteiros.keySet();
 			for (String key : keys) {
