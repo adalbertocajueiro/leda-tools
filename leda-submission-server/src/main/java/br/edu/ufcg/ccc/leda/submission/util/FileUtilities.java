@@ -264,7 +264,7 @@ public class FileUtilities {
 		//sobrescreve os dados lidos do excel com os do json apenas os arquivos de ambiente e correcao
 		//reuseFiles(result,roteirosFromJson);
 		File uploadFolder = new File(UPLOAD_FOLDER);
-		File roteirosFolder = new File(uploadFolder,ROTEIROS_FOLDER);
+		File roteirosFolder = new File(uploadFolder,CURRENT_SEMESTER + File.separator + File.separator + ROTEIROS_FOLDER);
 		loadRoteirosFromUploadFolder(roteiros, roteirosFolder);
 		
 		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
