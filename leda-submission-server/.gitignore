@@ -3,3 +3,5 @@
 .project
 target/
 upload/
+conf/app.properties
+conf/Roteiros.json

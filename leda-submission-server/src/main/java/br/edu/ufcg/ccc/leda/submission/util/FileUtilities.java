@@ -31,15 +31,20 @@ public class FileUtilities {
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
 	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
 	public static String UPLOAD_FOLDER;
+	public static String CURRENT_SEMESTER;
+	public static String ROTEIROS_FOLDER = "roteiros";
 	//public static String UPLOAD_FOLDER = "D:\\trash2\\leda-upload";
 
 	static{
 		try {
-			UPLOAD_FOLDER = Util.loadProperty();
+			UPLOAD_FOLDER = Util.loadProperties().getProperty("upload.folder");
+			CURRENT_SEMESTER = Util.loadProperties().getProperty("semestre.letivo");
+			//System.out.println("Property UPLOAD_FOLDER: " + UPLOAD_FOLDER);
+			//System.out.println("Property CURRENT_SEMESTER: " + CURRENT_SEMESTER);
 		} catch (IOException e) {
+			System.out.println("Properties not loaded. system will exit");
 			e.printStackTrace();
 			//UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
-			System.out.println("Upload folder not loaded. system will exit");
 			System.exit(0);
 		}
 	}
@@ -85,7 +90,7 @@ public class FileUtilities {
 		//dois arquivos devem ser salvos:environment e correction-proj.
 		//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.roteiros
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
-		String uploadSubFolder = config.getSemestre() + File.separator + "roteiros";
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
 		String uploadEnvFileName =  uploadSubFolder + File.separator + 
 				Util.generateFileName(ambiente, config);
 		String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
@@ -154,7 +159,7 @@ public class FileUtilities {
 		//o nome do arquivo eh o nome do aluno cadastrado no sistema
 		//String uploadFileName = config.getSemestre() + File.separator + config.getRoteiro() 
 		//		+ File.separator + config.getTurma() + File.separator + uploaded.getName().substring(uploaded.getName().indexOf(".") + 1);
-		String uploadSubFolder = config.getSemestre() + File.separator + config.getRoteiro(); 
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + config.getRoteiro(); 
 				//+ File.separator + config.getTurma();
 		String uploadFileName =  uploadSubFolder + File.separator + 
 				student.getMatricula() + "-" + student.getNome() + ".zip";
@@ -236,30 +241,36 @@ public class FileUtilities {
 	}
 	
 	public static Map<String, Roteiro> loadRoteiros() throws IOException, ConfigurationException{
-		Map<String, Roteiro> result = new HashMap<String, Roteiro>();
+		Map<String, Roteiro> roteiros = new HashMap<String, Roteiro>();
 		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		if(!configFolder.exists()){
 			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 		}
 		//tenta ler primeiro do json
 		File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
-		Map<String,Roteiro> roteirosFromJson = new HashMap<String,Roteiro>();
+		//Map<String,Roteiro> roteirosFromJson = new HashMap<String,Roteiro>();
 		
-		if(jsonFileRoteiros.exists()){
-			roteirosFromJson = Util.loadRoteirosFromJson(jsonFileRoteiros);
-		}
+		//ver a possibilidade de montar a lista dos arquivos de cada roteiro 
+		//lendo os arquivos diretamente na pasta de upload dos roteiros
+		//isso eliminaria a necessidade do json
+		//if(jsonFileRoteiros.exists()){
+		//	roteirosFromJson = Util.loadRoteirosFromJson(jsonFileRoteiros);
+		//}
 		
 		//carrega os roteiros de acordo com o arquivo excel
 		File excelFileRoteiro = new File(configFolder,EXCEL_FILE_ROTEIRO);
-		loadRoteirosFromExcelFile(excelFileRoteiro, result);
+		loadRoteirosFromExcelFile(excelFileRoteiro, roteiros);
 		
 		//sobrescreve os dados lidos do excel com os do json apenas os arquivos de ambiente e correcao
-		reuseFiles(result,roteirosFromJson);
+		//reuseFiles(result,roteirosFromJson);
+		File uploadFolder = new File(UPLOAD_FOLDER);
+		File roteirosFolder = new File(uploadFolder,ROTEIROS_FOLDER);
+		loadRoteirosFromUploadFolder(roteiros, roteirosFolder);
 		
 		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
-		Util.writeRoteirosToJson(result, jsonFileRoteiros);
+		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
 		
-		return result;
+		return roteiros;
 	}
 	private static void reuseFiles(Map<String,Roteiro> mapExcel, Map<String,Roteiro> mapJson){
 		Set<String> keys = mapJson.keySet();
@@ -381,4 +392,43 @@ public class FileUtilities {
 		}
 		myWorkBook.close();
 	}
+	
+	//TODO
+	//Precisa de um metodo que monte a lista dos arquivos para cada roteiro diretamente da pasta
+	//onde foram feitos os uploads. Ele precisa ser por id do roteiro e pegar environment e correction
+	//e fazer as devidas astribuicoes aos roteiros. 
+	public static void loadRoteirosFromUploadFolder(Map<String,Roteiro> roteiros, File uploadFolder){
+		File roteirosFolder = new File(FileUtilities.UPLOAD_FOLDER,ROTEIROS_FOLDER);
+		if(roteirosFolder.exists()){
+			Set<String> keys = roteiros.keySet();
+			for (String key : keys) {
+				Roteiro roteiro = roteiros.get(key);
+				File[] files = roteirosFolder.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File pathname) {
+						//tem arquivos cadastrado para o roteiro pelo ID
+						return pathname.getName().startsWith(roteiro.getId());
+					}
+				});
+				//tem arquivo cadastrado para o roteiro
+				File environment = null;
+				File correction = null;
+				if(files.length > 0){
+					for (int i = 0; i < files.length; i++) {
+						if(files[i].getName().contains("environment")){
+							environment = files[i];
+						} else{
+							correction = files[i];
+						}
+					}
+				}
+				roteiro.setArquivoAmbiente(environment);
+				roteiro.setArquivoProjetoCorrecao(correction);
+			}
+		}
+	}
+	//TODO
+	//Precisa de um metodo que permita o monitor pegar o arquivo de correcao e depois 
+	//as submissoes para download
 }

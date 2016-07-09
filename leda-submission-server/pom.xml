@@ -19,7 +19,7 @@
 
 	<properties>
 		<jooby.version>1.0.0.CR3</jooby.version>
-
+		<semestre.letivo>2016.1</semestre.letivo>
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 	</properties>

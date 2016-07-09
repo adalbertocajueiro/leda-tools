@@ -85,15 +85,13 @@ public class Util {
 		return result;
 	}
 	
-	public static String loadProperty() throws IOException{
-		String result = "";
+	public static Properties loadProperties() throws IOException{
 		Properties p = new Properties();
 		File confFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 		FileReader fr = new FileReader(new File(confFolder,"app.properties"));
 		p.load(fr);
-		result = p.getProperty("upload.folder");
-	    
-		return result;
+		
+		return p;
 	}
 	
 	/*public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
@@ -115,7 +113,7 @@ public class Util {
 
 	public static void main(String[] args) throws ConfigurationException, IOException {
 		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
-		Util.loadProperty();
+		Util.loadProperties();
 		File folder = new File("public");
 		boolean exists = folder.exists();
 		Path newLink = (new File(folder,"report")).toPath();
