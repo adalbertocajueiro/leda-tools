@@ -113,7 +113,7 @@ public class Util {
 
 	public static void main(String[] args) throws ConfigurationException, IOException {
 		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
-		Util.loadProperties();
+		//Util.loadProperties();
 		File folder = new File("public");
 		boolean exists = folder.exists();
 		Path newLink = (new File(folder,"report")).toPath();
