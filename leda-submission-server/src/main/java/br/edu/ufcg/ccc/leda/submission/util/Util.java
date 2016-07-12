@@ -120,7 +120,7 @@ public class Util {
 		Path target = (new File("/home/ubuntu/leda-upload")).toPath();
 		try {
 			//Files.exists(path, options)
-		    Files.createLink(newLink, target);
+		    Files.createSymbolicLink(newLink, target);
 		} catch (IOException x) {
 		    System.err.println(x);
 		} catch (UnsupportedOperationException x) {
