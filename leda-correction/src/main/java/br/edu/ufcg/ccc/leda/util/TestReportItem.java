@@ -3,6 +3,10 @@ package br.edu.ufcg.ccc.leda.util;
 import java.io.File;
 import java.net.URL;
 
+/**
+ * @author Adalberto
+ *
+ */
 public class TestReportItem {
 	private File testResultXMLFile;
 	private String studentName;
@@ -11,12 +15,12 @@ public class TestReportItem {
 	private int failures;
 	private int skipped;
 	private double time;
-	private URL completeReport;
-	private URL mavenOutputLog;
+	private File completeReport;
+	private File mavenOutputLog;
 	
 	public TestReportItem(File testResultXMLFile, String studentName,
-			int totalTests, int errors, int failures, int skiped, double time, URL completeReport,
-			URL mavenOutputLog) {
+			int totalTests, int errors, int failures, int skiped, double time, File completeReport,
+			File mavenOutputLog) {
 		super();
 		this.testResultXMLFile = testResultXMLFile;
 		this.studentName = studentName;
@@ -61,14 +65,6 @@ public class TestReportItem {
 		this.failures = failures;
 	}
 
-	public URL getCompleteReport() {
-		return completeReport;
-	}
-
-	public void setCompleteReport(URL completeReport) {
-		this.completeReport = completeReport;
-	}
-
 	public double getTime() {
 		return time;
 	}
@@ -93,12 +89,22 @@ public class TestReportItem {
 		this.skipped = skipped;
 	}
 
-	public URL getMavenOutputLog() {
+	public File getCompleteReport() {
+		return completeReport;
+	}
+
+	public void setCompleteReport(File completeReport) {
+		this.completeReport = completeReport;
+	}
+
+	public File getMavenOutputLog() {
 		return mavenOutputLog;
 	}
 
-	public void setMavenOutputLog(URL mavenOutputLog) {
+	public void setMavenOutputLog(File mavenOutputLog) {
 		this.mavenOutputLog = mavenOutputLog;
-	} 
+	}
+
+	
 	
 }

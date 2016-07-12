@@ -1,10 +1,15 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
@@ -35,7 +40,7 @@ public class HTMLFileUtility {
 	}
 	
 	public Document buildMainReport(String htmlFilePath, String testSuiteTag, 
-			String testSuiteName, String testsTag, int tests, TestReport report) throws IOException {
+			String testSuiteName, String testsTag, int tests, TestReport report, File targetFolder) throws IOException {
 		
 		String contentString = this.loadHTMLFile(htmlFilePath);
 		//System.out.println("$$$$$Testsuitetag: " + testSuiteTag);
@@ -48,19 +53,19 @@ public class HTMLFileUtility {
 		//puts the information from the test report of all students in the general report
 		//it first obtains the table of the reports
 		Element table = doc.getElementById("reportTable");
-		buildTestReportTable(table, report, tests);
+		buildTestReportTable(table, report, tests, targetFolder);
 		
 		return doc;
 	}
 	
-	private void buildTestReportTable(Element table, TestReport report, int tests){
+	private void buildTestReportTable(Element table, TestReport report, int tests, File targetFolder){
 		Element tableHeader = buildHeader();
 		table.appendChild(tableHeader);
 		
 		boolean classA = false;
 		ArrayList<TestReportItem> items = report.getReportItems();
 		for (TestReportItem testReportItem : items) {
-			Element line = this.buildTableLine(testReportItem, classA, tests);
+			Element line = this.buildTableLine(testReportItem, classA, tests, targetFolder);
 			table.appendChild(line);
 			if(classA){
 				classA = false;
@@ -114,7 +119,7 @@ public class HTMLFileUtility {
 		return tableHeader;
 	}
 	
-	private Element buildTableLine(TestReportItem item, boolean classA, int tests) {
+	private Element buildTableLine(TestReportItem item, boolean classA, int tests, File targetFolder) {
 		Element tableLine = new Element(Tag.valueOf("tr"),"");
 		if(classA){
 			tableLine.addClass("a");
@@ -167,7 +172,14 @@ public class HTMLFileUtility {
 			detailedReport.appendChild(font);
 		}else{
 			Element link = new Element(Tag.valueOf("a"), "");
-			link.attr("href", item.getCompleteReport().toString());
+			try {
+				Path relativeLink = generateRelativeLink(item.getCompleteReport(),targetFolder);
+				link.attr("href", relativeLink.toString());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				link.attr("href", item.getCompleteReport().toString());
+			}
 			link.appendText("See detailed report. ");
 			detailedReport.appendChild(link);
 			
@@ -177,7 +189,15 @@ public class HTMLFileUtility {
 			//detailedReport.appendChild(linkMvnOutput);
 		}
 		Element linkMvnOutput = new Element(Tag.valueOf("a"), "");
-		linkMvnOutput.attr("href", item.getMavenOutputLog().toString());
+		
+		try {
+			Path relativeLink = generateRelativeLink(item.getMavenOutputLog(), targetFolder);
+			linkMvnOutput.attr("href", relativeLink.toString());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			linkMvnOutput.attr("href", item.getMavenOutputLog().toString());
+		}
 		linkMvnOutput.appendText(" See maven output.");
 		detailedReport.appendChild(linkMvnOutput);
 		
@@ -186,6 +206,36 @@ public class HTMLFileUtility {
 		return tableLine;
 	}
 	
+	/**
+	 * Dados dois arquivos, observa a pasta em que o segundo esta e gera um link
+	 * relativo dele para o primeiro. A ideia é ir subindo pelas pastas parent
+	 * ate encontrar o mesmo parent e a partir dele montar o caminho reverso
+	 * escrevendo a subida de pastas com "..";
+	 * 
+	 * @param referenciado
+	 * @param referenciador
+	 * @return
+	 * @throws MalformedURLException
+	 */
+	private Path generateRelativeLink(File referenciado, File referenciador)
+			throws MalformedURLException {
+		Path pathAbsolute = Paths.get(referenciado.getAbsolutePath());
+		Path pathBase = Paths.get(referenciador.getAbsolutePath());
+		Path pathRelative = pathBase.relativize(pathAbsolute);
+		// System.out.println(pathRelative);
+		return pathRelative;
+	}
+	
+	public static void main(String[] args) throws MalformedURLException {
+		HTMLFileUtility ru = new HTMLFileUtility();
+		File f1 = new File("D:\\trash2\\R2-01-correction\\subs");
+		File f2 = new File("D:\\trash2\\R2-01-correction\\target");
+		Path link = ru.generateRelativeLink(f1, f2);
+		System.out.println(link);
+		//link = ru.generateRelativeLink(f2, f1);
+		//System.out.println(link);
+		//int i = 0;
+	}
 	public void writeXMLFile(Document document, String filePath){
 		try {
 	        FileWriter writer = new FileWriter(filePath);

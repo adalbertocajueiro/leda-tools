@@ -83,7 +83,7 @@ public class MavenUtility {
 			InvocationRequest request = new DefaultInvocationRequest();
 			//request.setPomFile(new File(projectFoder, "./pom.xml"));
 			//request.setGoals(Arrays.asList("surefire-report:report-only"));
-			request.setGoals(Arrays.asList("site","-l " + MAVEN_OUTPUT_LOG));
+			request.setGoals(Arrays.asList("site","--log-file " + MAVEN_OUTPUT_LOG));
 			request.setBaseDirectory(projectFolder);
 			try {
 				invoker.execute(request);
@@ -96,7 +96,7 @@ public class MavenUtility {
 	public void generateReport(File submissionsFolder, File targetFolder) throws IOException, JDOMException{
 		
 		String finalPathHtml = targetFolder.getAbsolutePath() + FINAL_REPORT_NAME;
-		reportUtility.createAndSaveReport(submissionsFolder, BASIC_HTML_FILE, finalPathHtml);
+		reportUtility.createAndSaveReport(submissionsFolder, BASIC_HTML_FILE, targetFolder, finalPathHtml);
 		
 	}
 	

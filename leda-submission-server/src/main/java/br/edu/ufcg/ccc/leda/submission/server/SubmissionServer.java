@@ -32,12 +32,16 @@ public class SubmissionServer extends Jooby {
 		return Files.move(f.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
 
+	{
+		assets("/report/**");
+	}
   {
 	use(new Ftl());
 	  
+	
 	get("/", () -> "Hello World!");
 	
-	get("/teste", req -> Results.html("local/target/generated-report"));
+	//get("/report/", req -> Results.html("report/generated-report"));
 	
 	get("/conf", (req,resp) -> {
 	    //Config conf = req.require(Config.class);
