@@ -118,7 +118,7 @@ public class Util {
 		boolean exists = folder.exists();
 		Path newLink = (new File(folder,"report")).toPath();
 		Path target = (new File("/home/ubuntu/leda-upload")).toPath();
-		Runtime.getRuntime().exec("ln -s " + newLink + " " + target);
+		Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 		System.out.println("link criado de " + newLink + " para " + target);
 		/*Pattern pattern = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 		Matcher matcher = pattern.matcher("49/04/1970  14:00:00");
