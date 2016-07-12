@@ -36,7 +36,6 @@ public class FileUtilities {
 	public static final String SUBMISSIONS_FOLDER = "subs";
 	public static final String REPORTS_FOLDER = "public/reports";
 	public static final String ROTEIROS_FOLDER = "roteiros";
-	//public static String UPLOAD_FOLDER = "D:\\trash2\\leda-upload";
 
 	static{
 		try {
