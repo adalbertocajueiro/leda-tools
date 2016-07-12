@@ -114,7 +114,7 @@ public class Util {
 	public static void main(String[] args) throws ConfigurationException, IOException {
 		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
 		//Util.loadProperties();
-		File folder = new File("home/ubuntu/leda/leda-tools/leda-submission-server/public");
+		File folder = new File("/home/ubuntu/leda/leda-tools/leda-submission-server/public");
 		boolean exists = folder.exists();
 		Path newLink = (new File(folder,"report")).toPath();
 		Path target = (new File("/home/ubuntu/leda-upload")).toPath();
