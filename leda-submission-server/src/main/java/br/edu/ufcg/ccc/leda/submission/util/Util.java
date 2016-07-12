@@ -117,15 +117,17 @@ public class Util {
 		File folder = new File("public");
 		boolean exists = folder.exists();
 		Path newLink = (new File(folder,"report")).toPath();
-		Path target = (new File("D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\T2\\target")).toPath();
+		Path target = (new File("/home/ubuntu/leda-upload")).toPath();
 		try {
-		    Files.createSymbolicLink(newLink, target);
+			//Files.exists(path, options)
+		    Files.createLink(newLink, target);
 		} catch (IOException x) {
 		    System.err.println(x);
 		} catch (UnsupportedOperationException x) {
 		    // Some file systems do not support symbolic links.
 		    System.err.println(x);
 		}
+		System.out.println("link criado de " + newLink + " para " + target);
 		/*Pattern pattern = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 		Matcher matcher = pattern.matcher("49/04/1970  14:00:00");
 		System.out.println(matcher.matches());

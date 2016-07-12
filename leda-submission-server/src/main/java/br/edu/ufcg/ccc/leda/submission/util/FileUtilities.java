@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -32,7 +33,9 @@ public class FileUtilities {
 	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
 	public static String UPLOAD_FOLDER;
 	public static String CURRENT_SEMESTER;
-	public static String ROTEIROS_FOLDER = "roteiros";
+	public static final String SUBMISSIONS_FOLDER = "subs";
+	public static final String REPORTS_FOLDER = "public/reports";
+	public static final String ROTEIROS_FOLDER = "roteiros";
 	//public static String UPLOAD_FOLDER = "D:\\trash2\\leda-upload";
 
 	static{
@@ -90,7 +93,8 @@ public class FileUtilities {
 		//dois arquivos devem ser salvos:environment e correction-proj.
 		//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.roteiros
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
-		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
+		//String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 		String uploadEnvFileName =  uploadSubFolder + File.separator + 
 				Util.generateFileName(ambiente, config);
 		String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
@@ -127,6 +131,28 @@ public class FileUtilities {
 		
 		result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
 		
+		//ja cria também os links simbolicos para possibilitar a correcao
+		String os = System.getProperty("os.name");
+		if(!os.startsWith("Windows")){
+			//windows nao permite a criação de links symbolicos 
+			Path newLink = (new File(REPORTS_FOLDER)).toPath();
+			Path target = new File(uploadSubFolder).toPath();
+			try {
+			    Files.createSymbolicLink(newLink, target);
+			} catch (IOException x) {
+			    System.err.println(x);
+			} catch (UnsupportedOperationException x) {
+			    // Some file systems do not support symbolic links.
+			    System.err.println(x);
+			}
+		}else{
+			//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+			Path newLink = (new File(REPORTS_FOLDER)).toPath();
+			Path target = new File(uploadSubFolder).toPath();
+			Files.createLink(newLink, target);
+			System.out.println("link criado de " + newLink + " para " + target);
+		}
+		
 		return result;
 	}
 	
@@ -159,7 +185,7 @@ public class FileUtilities {
 		//o nome do arquivo eh o nome do aluno cadastrado no sistema
 		//String uploadFileName = config.getSemestre() + File.separator + config.getRoteiro() 
 		//		+ File.separator + config.getTurma() + File.separator + uploaded.getName().substring(uploaded.getName().indexOf(".") + 1);
-		String uploadSubFolder = CURRENT_SEMESTER + File.separator + config.getRoteiro(); 
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + config.getRoteiro() + File.separator + SUBMISSIONS_FOLDER; 
 				//+ File.separator + config.getTurma();
 		String uploadFileName =  uploadSubFolder + File.separator + 
 				student.getMatricula() + "-" + student.getNome() + ".zip";
