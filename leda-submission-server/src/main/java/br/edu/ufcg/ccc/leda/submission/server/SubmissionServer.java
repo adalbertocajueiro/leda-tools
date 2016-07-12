@@ -33,7 +33,7 @@ public class SubmissionServer extends Jooby {
 	}
 
 	{
-		assets("/report/**");
+		assets("/reports/**");
 	}
   {
 	use(new Ftl());

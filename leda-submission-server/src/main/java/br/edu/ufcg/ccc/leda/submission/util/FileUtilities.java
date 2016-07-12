@@ -93,8 +93,8 @@ public class FileUtilities {
 		//dois arquivos devem ser salvos:environment e correction-proj.
 		//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.roteiros
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
-		//String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
-		String uploadSubFolder = CURRENT_SEMESTER + File.separator + config.getRoteiro();
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
+		String uploadSubFolderLink = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 		String uploadEnvFileName =  uploadSubFolder + File.separator + 
 				Util.generateFileName(ambiente, config);
 		String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
@@ -136,21 +136,11 @@ public class FileUtilities {
 		if(!os.startsWith("Windows")){
 			//windows nao permite a criação de links symbolicos 
 			Path newLink = (new File(REPORTS_FOLDER)).toPath();
-			Path target = new File(uploadSubFolder).toPath();
-			try {
-			    Files.createSymbolicLink(newLink, target);
-			} catch (IOException x) {
-			    System.err.println(x);
-			} catch (UnsupportedOperationException x) {
-			    // Some file systems do not support symbolic links.
-			    System.err.println(x);
-			}
+			Path target = new File(uploadSubFolderLink).toPath();
+			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+			
 		}else{
 			//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
-			Path newLink = (new File(REPORTS_FOLDER)).toPath();
-			Path target = new File(uploadSubFolder).toPath();
-			Files.createLink(newLink, target);
-			System.out.println("link criado de " + newLink + " para " + target);
 		}
 		
 		return result;
