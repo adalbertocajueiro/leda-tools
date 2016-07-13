@@ -34,7 +34,7 @@ public class XMLFileUtility {
 		//adds the jar dependencies containing tests (if it is the case)
 		Element dependency = this.getDependency(dependencies, "test");
 		Element systemPath = new Element("systemPath");
-		systemPath.setText("${basedir}/lib/" + jarTestFileName);
+		systemPath.setText("${project.basedir}/lib/" + jarTestFileName);
 		dependency.addContent(systemPath);
 		
 		Element build = this.getElement(rootElement, "build");

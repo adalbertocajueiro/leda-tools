@@ -20,7 +20,7 @@ public class MavenUtility {
 	public static final String TEST_FOLDER = "src/test/java";
 	//public static final String TEST_RESOURCE_FOLDER = "src/test/resources";
 	//public static final String SITE_FOLDER = "src/site/";
-	public static final String MAVEN_OUTPUT_LOG = "target/maven-output.log";
+	public static final String MAVEN_OUTPUT_LOG = "maven-output.txt";
 	
 	private FilesUtility filesUtility;
 	private ReportUtility reportUtility;

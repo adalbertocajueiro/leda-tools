@@ -7,8 +7,10 @@
   setar programaticamente: System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("/location/to/console.out")), true));  
 
 - Tentar colocar informacao de possivel loop infinito quando der timeout.
-- Quando der erro de compilação, colocar link para o output do maven. - OK
+- Quando der erro de compilaï¿½ï¿½o, colocar link para o output do maven. - OK
 - Nao precisa gerar tantas pastas quando vai criar a pasta base para os projetos a serem corrigidos. - OK
-- Verificar a possibilidade de integração como check style.
-- Verificar se ao ocorrer um timeout a execucao dos demais pára.
+- Verificar a possibilidade de integraï¿½ï¿½o como check style.
+- Verificar se ao ocorrer um timeout a execucao dos demais pï¿½ra.
 - Trabalhar com links relativos no relatorio geral (para o especifico).
+
+Tem que usar profiles e injetar informacoes d eservidor nos arquivo xml que vai gerar para os alunos.

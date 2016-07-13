@@ -1,13 +1,13 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-import io.netty.util.internal.MessagePassingQueue.ExitCondition;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +15,8 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -22,6 +24,8 @@ import com.google.gson.Gson;
 public class Util {
 
 	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
+	
+	private static final int BUFFER_SIZE = 4096;
 	
 	/**
 	 * dataHora precisa ter o formato DD/MM/YYYY HH:MM:SS
@@ -111,6 +115,38 @@ public class Util {
 		return result;
 	}*/
 
+	public static void unzip(File correctionZipFile) throws IOException {
+		File destDir = correctionZipFile.getParentFile();
+		ZipInputStream zipIn = new ZipInputStream(new FileInputStream(correctionZipFile));
+        ZipEntry entry = zipIn.getNextEntry();
+        // iterates over entries in the zip file
+        while (entry != null) {
+            
+        	String filePath = destDir.getAbsolutePath() + File.separator + entry.getName();
+            if (!entry.isDirectory()) {
+            	//String submittedFileName = getPureFileName(entry);
+            	//String submittedFilePath = getPathFileName(entry);
+            	//File fileParentDir = new File(destDir.getAbsolutePath() + File.separator + submittedFilePath);
+            	//this.filesFolders.put(submittedFileName, submittedFilePath);
+            	
+           		extractFile(zipIn, filePath);
+            } 
+            zipIn.closeEntry();
+            entry = zipIn.getNextEntry();
+        }
+        zipIn.close();
+    }
+	
+	private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+    	
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+        byte[] bytesIn = new byte[BUFFER_SIZE];
+        int read = 0;
+        while ((read = zipIn.read(bytesIn)) != -1) {
+            bos.write(bytesIn, 0, read);
+        }
+        bos.close();
+    }
 	public static void main(String[] args) throws ConfigurationException, IOException {
 		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
 		//Util.loadProperties();

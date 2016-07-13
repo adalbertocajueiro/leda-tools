@@ -15,18 +15,21 @@ public class XMLFilesUtilityTest {
 	
 	public static void main(String[] args) throws IOException {
 		URL url = URL.class.getClass().getResource("/project_pom.xml"); 
-		InputStream is = url.openStream(); 
+		//InputStream is = url.openStream(); 
 		
 		//InputStream is = XMLFilesUtilityTest.class.getResourceAsStream(xmlFilePath);
-		ResourceBundle rb = ResourceBundle.getBundle(xmlFilePath);
+		//ResourceBundle rb = ResourceBundle.getBundle(xmlFilePath);
 		
 	    SAXBuilder saxBuilder = new SAXBuilder();
 
-        File xmlFile = new File(xmlFilePath);
+        //File xmlFile = new File(xmlFilePath);
 
         try {
         	XMLFileUtility fu = new XMLFileUtility();
-        	Document doc = fu.loadXMLFile(xmlFilePath);
+        	String path = url.getFile().substring(1);
+        	
+        	Document doc = fu.loadXMLFile("/project_pom.xml");
+        	int i = 0;
         	//Object loaded = fu.getElement(doc, "employee");
         	
         	//loaded = fu.getElementList(doc, "employee");
