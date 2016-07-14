@@ -83,8 +83,7 @@ public class FileUtilities {
 	 */
 	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
 		String result = "upload nao realizado";
-		// precisa verificar se o aluno que enviou esta realmente matriculado.
-		Validator.validate(config);
+		
 		
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		if(!uploadFolder.exists()){
@@ -103,15 +102,20 @@ public class FileUtilities {
 			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
 				//Neste caso o id do roteiro vem no formato R01-OX. Precisamos apenas mudar o X
 				String roteiroAtual = new String(config.getRoteiro().getBytes());
-				roteiroAtual.replace("X", String.valueOf(i));
+				roteiroAtual = roteiroAtual.replace("X", String.valueOf(i));
 				ProfessorUploadConfiguration newConfig = 
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
+				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
 				saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
 			}
 			
 		}else{
 			//caso base: processa o upload de um roteiro apenas
+			
+			// precisa verificar se o professor enviou um roteiro cadastrado.
+			Validator.validate(config);
+			
 			String uploadEnvFileName =  uploadSubFolder + File.separator + 
 					Util.generateFileName(ambiente, config);
 			String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
@@ -125,8 +129,11 @@ public class FileUtilities {
 			if (!foutCorrProj.exists()) {
 				foutCorrProj.mkdirs();
 			}
-			Files.move(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			Files.move(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			
+			//Files.move(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			//Files.move(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			//PRECISA LOGAR OPERACOES DA APLICACAO???????
 			//TODO
 			
@@ -180,6 +187,7 @@ public class FileUtilities {
 		String result = null;
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
 		Validator.validate(config);
+		
 		Map<String,Student> students = Configuration.getInstance().getStudents();
 		Student student = students.get(config.getMatricula());
 		

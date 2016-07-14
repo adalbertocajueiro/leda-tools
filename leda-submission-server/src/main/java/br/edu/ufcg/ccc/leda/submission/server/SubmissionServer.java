@@ -9,6 +9,7 @@ import org.jooby.ftl.Ftl;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
+import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
@@ -52,6 +53,13 @@ public class SubmissionServer extends Jooby {
 	    resp.send("porta capturada");
 	  });
 	
+	get("/correct", (req,resp) -> {
+		String roteiro = req.param("roteiro").value();
+		AutomaticCorrector corr = new AutomaticCorrector();
+		corr.corrigirRoteiro(roteiro);
+		resp.send("Corection started");
+	});
+	
 	get("/downloadRoteiro",(req,resp) -> {
 		String roteiro = req.param("roteiro").value();
 		//System.out.println("Id do roteiro: " + rId);
@@ -75,9 +83,13 @@ public class SubmissionServer extends Jooby {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");
 		String roteiro = req.param("roteiro").value();
+		//System.out.println(roteiro);
 	    String semestre = req.param("semestre").value();
+	    //System.out.println(semestre);
 	    String turma = req.param("turma").value();
+	    //System.out.println(turma);
 	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
+	    //System.out.println(numeroTurmas);
 	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
 	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
 	    

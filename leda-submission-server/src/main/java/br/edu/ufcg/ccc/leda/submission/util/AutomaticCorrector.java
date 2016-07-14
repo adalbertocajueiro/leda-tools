@@ -3,9 +3,16 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
@@ -21,8 +28,13 @@ public class AutomaticCorrector {
 	 * 
 	 * @param roteiro - o identificador do roteiro no formaro R0X-0X
 	 * @throws IOException 
+	 * @throws TimeoutException 
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
 	 */
-	public void corrigirRoteiro(String roteiro) throws IOException{
+	public void corrigirRoteiro(String roteiro) throws IOException, InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException{
 		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		//File uploadFolder = new File("D:\\trash2\\leda-upload");
@@ -61,10 +73,10 @@ public class AutomaticCorrector {
 		//Runtime.getRuntime().exec(cdCommand mavenCommand);
 		//ProcessBuilder pb = new ProcessBuilder(cdCommand,mavenCommand);
 		//pb.start();
-		executeMaven(pastaRoteiroCorrigido);
+		runCorrection(pastaRoteiroCorrigido);
 	}
 	
-	public void executeMaven(File projectFolder){
+	public void executeMaven(File projectFolder) throws MavenInvocationException{
 		Invoker invoker = new DefaultInvoker();
 		System.setProperty("maven.home", FileUtilities.MAVEN_HOME_FOLDER);
 		if (projectFolder.isDirectory()) {
@@ -73,17 +85,32 @@ public class AutomaticCorrector {
 			//request.setGoals(Arrays.asList("surefire-report:report-only"));
 			request.setGoals(Arrays.asList("clean", "install", "site","--log-file maven-output.txt" ));
 			request.setBaseDirectory(projectFolder);
-			try {
-				invoker.execute(request);
-			} catch (MavenInvocationException e) {
-				e.printStackTrace();
-			}
+			invoker.execute(request);
 		}
 	}
 	
-	public static void main(String[] args) throws IOException {
+	
+	public void runCorrection(File projectFolder) throws InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException  {
+		Method target = this.getClass().getMethod("executeMaven", new Class[]{File.class});
+
+		Thread mavenThread = new Thread(() -> {
+		     try {
+				target.invoke(this, new Object[]{projectFolder});
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
+		mavenThread.start();
+
+	}
+	
+	
+	
+	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException {
 		AutomaticCorrector ac = new AutomaticCorrector();
+		System.out.println("Corection started");
 		ac.corrigirRoteiro("R01-01");
+		System.out.println("Corection in progress");
 	}
 	
 }

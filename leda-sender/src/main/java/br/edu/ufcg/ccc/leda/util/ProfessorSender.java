@@ -15,7 +15,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 public class ProfessorSender extends Sender {
@@ -26,7 +25,7 @@ public class ProfessorSender extends Sender {
 	//o numero de turmas que o roteiro se aplicará. esse dado faz sentido 
 	//apenas para roteiros que servem para muitas turmas e ai o servidor
 	//precisa apenas replicar o roteiro com id diferente R0X-01, R0X-02, R0X-03, ...
-	private String numeroTurmas;
+	private int numeroTurmas;
 	
 	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro, 
 			String url, String semestre, int numeroTurmas) {
@@ -35,7 +34,7 @@ public class ProfessorSender extends Sender {
 		this.semestre = semestre;
 		//RXX-XX onde os ultimos XX sao a turma
 		this.turma = roteiro.substring(4);
-		this.numeroTurmas = this.numeroTurmas;
+		this.numeroTurmas = numeroTurmas;
 	}
 
 	@Override
@@ -45,7 +44,7 @@ public class ProfessorSender extends Sender {
 	    StringBody rot = new StringBody(roteiro,ContentType.TEXT_PLAIN);
 	    StringBody tur = new StringBody(turma,ContentType.TEXT_PLAIN);
 	    StringBody sem = new StringBody(semestre,ContentType.TEXT_PLAIN);
-	    StringBody numTurmas = new StringBody(numeroTurmas,ContentType.TEXT_PLAIN);
+	    StringBody numTurmas = new StringBody(String.valueOf(numeroTurmas),ContentType.TEXT_PLAIN);
 	    
 	    CloseableHttpClient httpclient = HttpClients.createDefault();
 	    
@@ -90,5 +89,51 @@ public class ProfessorSender extends Sender {
 	    }
 
 	}
+
+	public File getArquivoCorrecao() {
+		return arquivoCorrecao;
+	}
+
+	public void setArquivoCorrecao(File arquivoCorrecao) {
+		this.arquivoCorrecao = arquivoCorrecao;
+	}
+
+	public String getSemestre() {
+		return semestre;
+	}
+
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
+	}
+
+	public String getTurma() {
+		return turma;
+	}
+
+	public void setTurma(String turma) {
+		this.turma = turma;
+	}
+
+	public int getNumeroTurmas() {
+		return numeroTurmas;
+	}
+
+	public void setNumeroTurmas(int numeroTurmas) {
+		this.numeroTurmas = numeroTurmas;
+	}
+
+	@Override
+	public String toString() {
+		return
+				"Ambiente: " + this.getArquivo().getAbsolutePath() + "\n" +
+				"Correcao: " + this.getArquivoCorrecao().getAbsolutePath() + "\n" +
+				"Roteiro: " + this.getRoteiro() + "\n" +
+				"URL: " + this.url + "\n"+
+				"Semestre: " + this.semestre + "\n" +
+				"Turmas: " + this.numeroTurmas;
+	}
+
+	
+	
 	
 }

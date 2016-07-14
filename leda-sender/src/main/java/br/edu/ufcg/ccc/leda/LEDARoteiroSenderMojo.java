@@ -58,18 +58,20 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	 * @parameter
 	 * @required
 	 */
-	private String url;
-
-	/**
-	 * @parameter 
-	 */
-	private int numeroTurmas;
+	private boolean defaultSend;
 	
 	/**
 	 * @parameter
 	 * @required
 	 */
-	private boolean defaultSend;
+	private String url;
+
+	/**
+	 * @parameter
+	 */
+	private int numeroTurmas = 1;
+	
+	
 	
 	private ProfessorSender sender;
 
@@ -83,14 +85,18 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			String correctionProjectName = project.getArtifactId()
 					+ "-correction-proj.zip";
 
-			// System.out.println("Source folder: " + srcFolder);
+			//System.out.println("turmas: " + numeroTurmas);
 			File envZipFile = new File(targetFolder, environmentName);
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
+				
 				sender = new ProfessorSender(envZipFile, corrProjZipFile,
 						roteiro, url, semestre, numeroTurmas);
+				//System.out.println(sender);
 				System.out.println("Submitting environment file: "
 						+ envZipFile.getAbsolutePath() + " to " + url);
+				System.out.println("Submitting correction file: "
+						+ corrProjZipFile.getAbsolutePath() + " to " + url);
 				sender.send();
 				System.out
 						.println("Please check your log file to see the confirmation from the server (last record)");
