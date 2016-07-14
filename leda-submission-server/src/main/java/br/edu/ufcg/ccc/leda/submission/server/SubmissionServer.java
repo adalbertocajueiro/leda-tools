@@ -77,11 +77,12 @@ public class SubmissionServer extends Jooby {
 		String roteiro = req.param("roteiro").value();
 	    String semestre = req.param("semestre").value();
 	    String turma = req.param("turma").value();
+	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
 	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
 	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
 	    
 		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro,numeroTurmas);
 		File uploadedAmbiente = uploadAmbiente.file();
 		File uploadedCorrecao = uploadCorrecao.file();
 		String result = "default response";

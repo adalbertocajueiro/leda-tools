@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.poi.POIXMLException;
@@ -33,14 +34,17 @@ public class FileUtilities {
 	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
 	public static String UPLOAD_FOLDER;
 	public static String CURRENT_SEMESTER;
+	public static String MAVEN_HOME_FOLDER;
 	public static final String SUBMISSIONS_FOLDER = "subs";
 	public static final String REPORTS_FOLDER = "public/reports";
 	public static final String ROTEIROS_FOLDER = "roteiros";
 
 	static{
 		try {
-			UPLOAD_FOLDER = Util.loadProperties().getProperty("upload.folder");
-			CURRENT_SEMESTER = Util.loadProperties().getProperty("semestre.letivo");
+			Properties prop = Util.loadProperties();
+			UPLOAD_FOLDER = prop.getProperty("upload.folder");
+			CURRENT_SEMESTER = prop.getProperty("semestre.letivo");
+			MAVEN_HOME_FOLDER = prop.getProperty("mavenHomeFolder");
 			//System.out.println("Property UPLOAD_FOLDER: " + UPLOAD_FOLDER);
 			//System.out.println("Property CURRENT_SEMESTER: " + CURRENT_SEMESTER);
 		} catch (IOException e) {
@@ -94,53 +98,68 @@ public class FileUtilities {
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
 		String uploadSubFolderLink = CURRENT_SEMESTER + File.separator + config.getRoteiro();
-		String uploadEnvFileName =  uploadSubFolder + File.separator + 
-				Util.generateFileName(ambiente, config);
-		String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
-				Util.generateFileName(projetoCorrecao, config);
-
-		File foutEnv = new File(uploadFolder,uploadEnvFileName);
-		if (!foutEnv.exists()) {
-			foutEnv.mkdirs();
-		}
-		File foutCorrProj = new File(uploadFolder,uploadCorrProjFileName);
-		if (!foutCorrProj.exists()) {
-			foutCorrProj.mkdirs();
-		}
-		Files.move(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		Files.move(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		//PRECISA LOGAR OPERACOES DA APLICACAO???????
-		//TODO
-		
-		//adicionando os arquivos no respectivo roteiro
-		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
-		Roteiro roteiro = roteiros.get(config.getRoteiro());
-		if(roteiro != null){
-			roteiro.setArquivoAmbiente(foutEnv);
-			roteiro.setArquivoProjetoCorrecao(foutCorrProj);
-			roteiros.put(config.getRoteiro(), roteiro);
-		}
-		//agora eh persistir os dados dos roteiros em JSON
-		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
-		if(!configFolder.exists()){
-			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
-		}
-		File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
-		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
-		
-		result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
-		
-		//ja cria também os links simbolicos para possibilitar a correcao
-		String os = System.getProperty("os.name");
-		if(!os.startsWith("Windows")){
-			//windows nao permite a criação de links symbolicos 
-			System.out.println("Link: " + uploadSubFolderLink);
-			Path newLink = (new File(REPORTS_FOLDER)).toPath();
-			Path target = new File(uploadFolder,uploadSubFolderLink).toPath();
-			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+		if(config.getNumeroTurmas() > 1){
+			//replica o roteiro pela quantidade de turmas
+			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
+				//Neste caso o id do roteiro vem no formato R01-OX. Precisamos apenas mudar o X
+				String roteiroAtual = new String(config.getRoteiro().getBytes());
+				roteiroAtual.replace("X", String.valueOf(i));
+				ProfessorUploadConfiguration newConfig = 
+						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
+								roteiroAtual, 1);
+				saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
+			}
 			
 		}else{
-			//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+			//caso base: processa o upload de um roteiro apenas
+			String uploadEnvFileName =  uploadSubFolder + File.separator + 
+					Util.generateFileName(ambiente, config);
+			String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
+					Util.generateFileName(projetoCorrecao, config);
+
+			File foutEnv = new File(uploadFolder,uploadEnvFileName);
+			if (!foutEnv.exists()) {
+				foutEnv.mkdirs();
+			}
+			File foutCorrProj = new File(uploadFolder,uploadCorrProjFileName);
+			if (!foutCorrProj.exists()) {
+				foutCorrProj.mkdirs();
+			}
+			Files.move(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			Files.move(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			//PRECISA LOGAR OPERACOES DA APLICACAO???????
+			//TODO
+			
+			//adicionando os arquivos no respectivo roteiro
+			Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
+			Roteiro roteiro = roteiros.get(config.getRoteiro());
+			if(roteiro != null){
+				roteiro.setArquivoAmbiente(foutEnv);
+				roteiro.setArquivoProjetoCorrecao(foutCorrProj);
+				roteiros.put(config.getRoteiro(), roteiro);
+			}
+			//agora eh persistir os dados dos roteiros em JSON
+			File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+			if(!configFolder.exists()){
+				throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+			}
+			File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
+			Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
+			
+			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
+			
+			//ja cria também os links simbolicos para possibilitar a correcao
+			String os = System.getProperty("os.name");
+			if(!os.startsWith("Windows")){
+				//windows nao permite a criação de links symbolicos 
+				System.out.println("Link: " + uploadSubFolderLink);
+				Path newLink = (new File(REPORTS_FOLDER)).toPath();
+				Path target = new File(uploadFolder,uploadSubFolderLink).toPath();
+				Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+				
+			}else{
+				//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+			}
 		}
 		
 		return result;

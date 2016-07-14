@@ -1,4 +1,4 @@
-- mudar a tabela geral para ser igual a tabela gerada pelo surefire - OK
+﻿- mudar a tabela geral para ser igual a tabela gerada pelo surefire - OK
 - colocar cores nas colunas da tabela central para distinguir os testes que passaram, os erros, as falhas, skipped - OK
 - colocar uma coluna com o percentual dos testes que tiveram sucesso - NAO PRECISA
 - Tentar capturar da suite a quantidade de testes que ela tem. NAO IMPLEMENTADO
@@ -14,3 +14,4 @@
 - Trabalhar com links relativos no relatorio geral (para o especifico).
 
 Tem que usar profiles e injetar informacoes d eservidor nos arquivo xml que vai gerar para os alunos.
+colcoar a correcao numa thread para nao congelar a aplicacao.

@@ -15,6 +15,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 public class ProfessorSender extends Sender {
@@ -22,14 +23,19 @@ public class ProfessorSender extends Sender {
 	private File arquivoCorrecao;
 	private String semestre;
 	private String turma;
+	//o numero de turmas que o roteiro se aplicará. esse dado faz sentido 
+	//apenas para roteiros que servem para muitas turmas e ai o servidor
+	//precisa apenas replicar o roteiro com id diferente R0X-01, R0X-02, R0X-03, ...
+	private String numeroTurmas;
 	
 	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro, 
-			String url, String semestre) {
-		super(ambiente, roteiro, url);
+			String url, String semestre, int numeroTurmas) {
+		super(ambiente, roteiro, url); 
 		this.arquivoCorrecao = arquivoCorrecao;
 		this.semestre = semestre;
 		//RXX-XX onde os ultimos XX sao a turma
 		this.turma = roteiro.substring(4);
+		this.numeroTurmas = this.numeroTurmas;
 	}
 
 	@Override
@@ -39,8 +45,10 @@ public class ProfessorSender extends Sender {
 	    StringBody rot = new StringBody(roteiro,ContentType.TEXT_PLAIN);
 	    StringBody tur = new StringBody(turma,ContentType.TEXT_PLAIN);
 	    StringBody sem = new StringBody(semestre,ContentType.TEXT_PLAIN);
+	    StringBody numTurmas = new StringBody(numeroTurmas,ContentType.TEXT_PLAIN);
 	    
 	    CloseableHttpClient httpclient = HttpClients.createDefault();
+	    
 	    StringBuilder confirmation = new StringBuilder();
 	    try {
 	        HttpPost httppost = new HttpPost(url);
@@ -50,6 +58,7 @@ public class ProfessorSender extends Sender {
 	                .addPart("turma", tur)
 	                .addPart("semestre", sem)
 	                .addPart("arquivoCorrecao", corrArq)
+	                .addPart("numeroTurmas", numTurmas)
 	                .build();
 
 	        httppost.setEntity(reqEntity);
@@ -81,5 +90,5 @@ public class ProfessorSender extends Sender {
 	    }
 
 	}
-
+	
 }

@@ -61,6 +61,11 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	private String url;
 
 	/**
+	 * @parameter 
+	 */
+	private int numeroTurmas;
+	
+	/**
 	 * @parameter
 	 * @required
 	 */
@@ -83,7 +88,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
 				sender = new ProfessorSender(envZipFile, corrProjZipFile,
-						roteiro, url, semestre);
+						roteiro, url, semestre, numeroTurmas);
 				System.out.println("Submitting environment file: "
 						+ envZipFile.getAbsolutePath() + " to " + url);
 				sender.send();

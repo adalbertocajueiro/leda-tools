@@ -66,7 +66,7 @@ public class AutomaticCorrector {
 	
 	public void executeMaven(File projectFolder){
 		Invoker invoker = new DefaultInvoker();
-		System.setProperty("maven.home", "D:\\apache-maven-3.2.5");
+		System.setProperty("maven.home", FileUtilities.MAVEN_HOME_FOLDER);
 		if (projectFolder.isDirectory()) {
 			InvocationRequest request = new DefaultInvocationRequest();
 			//request.setPomFile(new File(projectFoder, "./pom.xml"));
