@@ -22,6 +22,7 @@ import org.apache.maven.shared.invoker.MavenInvocationException;
 
 public class AutomaticCorrector {
 
+	
 	/**
 	 * Corrige automaticamente um roteiro executando o maven no projeto de correcao.
 	 * vamos chamar o maven programaticamente como no leda-correction-tool.
@@ -34,7 +35,7 @@ public class AutomaticCorrector {
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
 	 */
-	public void corrigirRoteiro(String roteiro) throws IOException, InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException{
+	public Thread corrigirRoteiro(String roteiro) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
 		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		//File uploadFolder = new File("D:\\trash2\\leda-upload");
@@ -73,7 +74,9 @@ public class AutomaticCorrector {
 		//Runtime.getRuntime().exec(cdCommand mavenCommand);
 		//ProcessBuilder pb = new ProcessBuilder(cdCommand,mavenCommand);
 		//pb.start();
-		runCorrection(pastaRoteiroCorrigido);
+		Thread task = runCorrection(pastaRoteiroCorrigido);
+		
+		return task;
 	}
 	
 	public void executeMaven(File projectFolder) throws MavenInvocationException{
@@ -90,7 +93,7 @@ public class AutomaticCorrector {
 	}
 	
 	
-	public void runCorrection(File projectFolder) throws InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException  {
+	public Thread runCorrection(File projectFolder) throws InterruptedException, ExecutionException, NoSuchMethodException, SecurityException  {
 		Method target = this.getClass().getMethod("executeMaven", new Class[]{File.class});
 
 		Thread mavenThread = new Thread(() -> {
@@ -100,8 +103,10 @@ public class AutomaticCorrector {
 				throw new RuntimeException(e);
 			}
 		});
+		mavenThread.setName(projectFolder.getName());
 		mavenThread.start();
-
+		//System.out.println("Thread " + mavenThread + " iniciado.");
+		return mavenThread;
 	}
 	
 	

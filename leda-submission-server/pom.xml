@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jooby</groupId>
 		<artifactId>jooby-project</artifactId>
-		<version>1.0.0.CR3</version>
+		<version>1.0.0.CR6</version>
 	</parent>
 
 	<artifactId>leda-submission-server</artifactId>
@@ -18,7 +18,7 @@
 	<description>Submission server used in LEDA</description>
 
 	<properties>
-		<jooby.version>1.0.0.CR3</jooby.version>
+		<jooby.version>${project.parent.version}</jooby.version>
 		<semestre.letivo>2016.1</semestre.letivo>
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>

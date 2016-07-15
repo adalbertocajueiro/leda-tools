@@ -2,7 +2,6 @@ package br.edu.ufcg.ccc.leda.submission.server;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
-import org.jooby.Results;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
 
@@ -10,6 +9,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
+import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
@@ -28,6 +28,25 @@ import java.nio.file.Path;
  */
 public class SubmissionServer extends Jooby {
 	
+	//private static CorrectionManager correctionManager;
+	//private static Configuration configuration;
+	
+	static{
+		try {
+			Configuration.getInstance();
+			//correctionManager = CorrectionManager.getInstance();
+			Thread.sleep(2000);
+		} catch (ConfigurationException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
+	
 	public Path  saveUpload(File f, String folder) throws IOException{
 		File fout = new File(folder + File.separator + f.getName().substring(f.getName().indexOf(".") + 1));
 		return Files.move(f.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -40,7 +59,12 @@ public class SubmissionServer extends Jooby {
 	use(new Ftl());
 	  
 	
-	get("/", () -> "Hello World!");
+	get("/", (req,resp) -> {
+		Configuration.getInstance();
+		System.out.println("configuration instanciated");
+		resp.send("Hello World!");
+	});
+	
 	
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
@@ -57,7 +81,7 @@ public class SubmissionServer extends Jooby {
 		String roteiro = req.param("roteiro").value();
 		AutomaticCorrector corr = new AutomaticCorrector();
 		corr.corrigirRoteiro(roteiro);
-		resp.send("Corection started");
+		resp.send("Correction started");
 	});
 	
 	get("/downloadRoteiro",(req,resp) -> {
