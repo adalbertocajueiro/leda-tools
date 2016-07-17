@@ -204,6 +204,8 @@ public class FileUtilities {
 		//		+ File.separator + config.getTurma() + File.separator + uploaded.getName().substring(uploaded.getName().indexOf(".") + 1);
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + config.getRoteiro() + File.separator + SUBMISSIONS_FOLDER; 
 				//+ File.separator + config.getTurma();
+		//o nome od arquivo recebido eh <MATRICULA>-<NODE DO ESTUDANTE>
+		//o sistema de correcao tambem trabalha comesse formato para montar a tabela geral
 		String uploadFileName =  uploadSubFolder + File.separator + 
 				student.getMatricula() + "-" + student.getNome() + ".zip";
 

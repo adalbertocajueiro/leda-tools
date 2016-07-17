@@ -17,3 +17,5 @@ for (NgxEntry entry : rtmpServers) {
     ((NgxBlock)entry).getName(); // "server"
     ((NgxBlock)entry).findParam("application", "live"); // "on" for the first iter, "off" for the second one
 }
+
+poderia ja mantar a lista d eestudantes no contexto.

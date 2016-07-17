@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
@@ -79,9 +79,17 @@ public class HTMLFileUtility {
 		Element tableHeader = new Element(Tag.valueOf("tr"),"");
 		tableHeader.addClass("a");
 		
+		Element headerMatricula = new Element(Tag.valueOf("th"),"");
+		headerMatricula.appendText("Enrollment");
+		tableHeader.appendChild(headerMatricula);
+		
 		Element headerStudent = new Element(Tag.valueOf("th"),"");
 		headerStudent.appendText("Student");
 		tableHeader.appendChild(headerStudent);
+		
+		Element receptionTime = new Element(Tag.valueOf("th"),"");
+		receptionTime.appendText("Received at");
+		tableHeader.appendChild(receptionTime);
 		
 		Element pass = new Element(Tag.valueOf("th"),"");
 		Element font = new Element(Tag.valueOf("font"), "");
@@ -127,9 +135,18 @@ public class HTMLFileUtility {
 			tableLine.addClass("b");
 		}
 		
+		Element matricula = new Element(Tag.valueOf("td"),"");
+		matricula.appendText(item.getMatricula());
+		tableLine.appendChild(matricula);
+		
 		Element name = new Element(Tag.valueOf("td"),"");
 		name.appendText(item.getStudentName());
 		tableLine.appendChild(name);
+		
+		Element sentTime = new Element(Tag.valueOf("td"),"");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		sentTime.appendText(formatter.format(item.getLastModified()));
+		tableLine.appendChild(sentTime);
 		
 		Element pass = new Element(Tag.valueOf("td"),"");
 		Element font = new Element(Tag.valueOf("font"), "");

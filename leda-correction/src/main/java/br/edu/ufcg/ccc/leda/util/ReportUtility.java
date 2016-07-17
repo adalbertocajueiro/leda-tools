@@ -6,8 +6,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -39,8 +44,10 @@ public class ReportUtility {
 					return pathname.isDirectory();
 				}
 			});
+			//as pastas tem o nome sendo <MATRICULA>-<NOME DO ALUNO>
 			for (File subFolder : subFolders) {
 				File xmlFile = this.getSurefireReportFile(subFolder);
+				
 				File mavenOutputLog = new File(subFolder.getAbsolutePath()
 						+ File.separator + MavenUtility.MAVEN_OUTPUT_LOG);
 
@@ -60,7 +67,8 @@ public class ReportUtility {
 							.getAttributeValue("time"));
 					int failures = Integer.parseInt(testSuite
 							.getAttributeValue("failures"));
-					String studentName = subFolder.getName();
+					String matricula = subFolder.getName().substring(0, subFolder.getName().indexOf("-")).trim();
+					String studentName = subFolder.getName().substring(subFolder.getName().indexOf("-") + 1).trim();
 					String generatedReport = subFolder.getAbsolutePath()
 							+ File.separator + "target" + File.separator
 							+ "site" + File.separator + "project-reports.html";
@@ -69,19 +77,28 @@ public class ReportUtility {
 							.getAttributeValue("errors"));
 					int skipped = Integer.parseInt(testSuite
 							.getAttributeValue("skipped"));
+					
+					File sentZipFile = new File(subFolder.getParent(), subFolder.getName()+ ".zip");
+					
 					TestReportItem item = new TestReportItem(xmlFile,
-							studentName, tests, errors, failures, skipped,
+							matricula, studentName, sentZipFile.lastModified(), tests, errors, failures, skipped,
 							time, completeReport, mavenOutputLog);
 					report.getReportItems().add(item);
 				} else {
+					String matricula = subFolder.getName().substring(0, subFolder.getName().indexOf("-")).trim();
 					String studentName = subFolder.getName();
+					File sentZipFile = new File(subFolder.getName()+ ".zip");
+
 					TestReportErrorItem errorItem = new TestReportErrorItem(
-							studentName, mavenOutputLog);
+							matricula, studentName, sentZipFile.lastModified(), mavenOutputLog);
 					report.getReportItems().add(errorItem);
 				}
 			}
 		}
 
+		//precisa ordenar os itens do report por nome para facilitar 
+		report.getReportItems().sort((s1,s2) -> s1.getStudentName().compareTo(s2.getStudentName()));
+		
 		return report;
 	}
 

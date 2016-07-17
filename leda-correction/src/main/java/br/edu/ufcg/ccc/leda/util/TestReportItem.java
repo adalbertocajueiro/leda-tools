@@ -2,6 +2,7 @@ package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
 import java.net.URL;
+import java.util.GregorianCalendar;
 
 /**
  * @author Adalberto
@@ -9,7 +10,9 @@ import java.net.URL;
  */
 public class TestReportItem {
 	private File testResultXMLFile;
+	private String matricula;
 	private String studentName;
+	private long lastModified;
 	private int totalTests;
 	private int errors;
 	private int failures;
@@ -18,12 +21,14 @@ public class TestReportItem {
 	private File completeReport;
 	private File mavenOutputLog;
 	
-	public TestReportItem(File testResultXMLFile, String studentName,
+	public TestReportItem(File testResultXMLFile, String matricula, String studentName, long lastModified, 
 			int totalTests, int errors, int failures, int skiped, double time, File completeReport,
 			File mavenOutputLog) {
 		super();
 		this.testResultXMLFile = testResultXMLFile;
+		this.matricula = matricula;
 		this.studentName = studentName;
+		this.lastModified = lastModified;
 		this.totalTests = totalTests;
 		this.errors = errors;
 		this.failures = failures;
@@ -105,6 +110,21 @@ public class TestReportItem {
 		this.mavenOutputLog = mavenOutputLog;
 	}
 
-	
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public long getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(long lastModified) {
+		this.lastModified = lastModified;
+	}
+
 	
 }
