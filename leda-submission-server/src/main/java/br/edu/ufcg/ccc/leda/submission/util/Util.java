@@ -81,10 +81,10 @@ public class Util {
 	
 	public static String formatDate(GregorianCalendar date){
 		String result = date.getTime().toString();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		result = formatter.format(date.getTime());
-		result = result.replace('T', ' ');
-		result = result.substring(0,19);
+		//result = result.replace('T', ' ');
+		//result = result.substring(0,19);
 		
 		return result;
 	}
