@@ -39,6 +39,8 @@ public class ProfessorSender extends Sender {
 
 	@Override
 	public void send() throws ClientProtocolException, IOException {
+		//provas tambem sao empacotadas so mesmo jeito e o id delas eh P0X-0X.
+		//entretnato a URL é diferente e o servidor nao preicsa se preocupar com essa diferenca
 		FileBody arq = new FileBody(arquivo,ContentType.MULTIPART_FORM_DATA);
 		FileBody corrArq = new FileBody(arquivoCorrecao,ContentType.MULTIPART_FORM_DATA);
 	    StringBody rot = new StringBody(roteiro,ContentType.TEXT_PLAIN);

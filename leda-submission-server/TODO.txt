@@ -19,3 +19,7 @@ for (NgxEntry entry : rtmpServers) {
 }
 
 poderia ja mantar a lista d eestudantes no contexto.
+- tem que fazer o arquivo Provas.xlxs e carregar as provas no servidor
+- tem que modificar o corretor para tambem corrigir as provas automaticamente.
+- precisa tratar com uma tolerancia para o envio das provas?
+- precisa persistir as provas em um json tambem?

@@ -140,6 +140,42 @@ public class SubmissionServer extends Jooby {
 	     
   	});
 	
+	post("/uploadProva", (req,resp) -> {
+		//toda a logica para receber uma prova e guarda-lo por completo e mante-la no mapeamento
+		//de provas onde se jabe a data de liberacao e a data maxima de envio
+		String prova = req.param("roteiro").value(); //aqui sera o id da prova P0X
+		//System.out.println(roteiro);
+	    String semestre = req.param("semestre").value();
+	    //System.out.println(semestre);
+	    String turma = req.param("turma").value();
+	    //System.out.println(turma);
+	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
+	    //System.out.println(numeroTurmas);
+	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
+	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+	    
+		  //System.out.println("upload " + upload);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,prova,numeroTurmas);
+		File uploadedAmbiente = uploadAmbiente.file();
+		File uploadedCorrecao = uploadCorrecao.file();
+		String result = "default response";
+		try {
+			result = FileUtilities.saveProfessorTestSubmission(uploadedAmbiente, uploadedCorrecao, config);
+			
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
+			
+		}
+		resp.send(result);  
+	     
+  	});
 	
 	post("/submitRoteiro",(req,resp) -> {
 	      String matricula = req.param("matricula").value();

@@ -38,6 +38,7 @@ public class FileUtilities {
 	public static final String SUBMISSIONS_FOLDER = "subs";
 	public static final String REPORTS_FOLDER = "public/reports";
 	public static final String ROTEIROS_FOLDER = "roteiros";
+	public static final String PROVAS_FOLDER = "provas";
 
 	static{
 		try {
@@ -155,6 +156,99 @@ public class FileUtilities {
 			
 			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
 			
+			//ja cria também os links simbolicos para possibilitar a correcao
+			String os = System.getProperty("os.name");
+			if(!os.startsWith("Windows")){
+				//windows nao permite a criação de links symbolicos 
+				System.out.println("Link: " + uploadSubFolderLink);
+				Path newLink = (new File(REPORTS_FOLDER)).toPath();
+				Path target = new File(uploadFolder,uploadSubFolderLink).toPath();
+				Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+				
+			}else{
+				//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+			}
+		}
+		
+		return result;
+	}
+	
+	public static String saveProfessorTestSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
+		String result = "upload nao realizado";
+		
+		
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		if(!uploadFolder.exists()){
+			uploadFolder.mkdirs();
+		}
+		
+		//o nome da prova eh enviada. ela deve ser colocado na pasta 
+		//<upload>/semestre/provas/<ID_PROVA>NomearquivoEnviado.zip
+		//dois arquivos devem ser salvos:environment e correction-proj.
+		//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.provas
+		//e deve ser salvo um arquivo JSON mantendo toda essa estrutura. 
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + PROVAS_FOLDER;
+		//contem o id da prova P0X-0X
+		String uploadSubFolderLink = CURRENT_SEMESTER + File.separator + config.getRoteiro();
+	
+		if(config.getNumeroTurmas() > 1){
+			//replica a prova pela quantidade de turmas
+			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
+				//Neste caso o id do roteiro vem no formato P01-OX. Precisamos apenas mudar o X
+				String roteiroAtual = new String(config.getRoteiro().getBytes());
+				roteiroAtual = roteiroAtual.replace("X", String.valueOf(i));
+				ProfessorUploadConfiguration newConfig = 
+						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
+								roteiroAtual, 1);
+				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
+				result = "";
+				result = result + saveProfessorTestSubmission(ambiente, projetoCorrecao, newConfig);
+			}
+			
+		}else{
+			//caso base: processa o upload de um roteiro apenas
+			
+			// precisa verificar se o professor enviou um roteiro cadastrado.
+			Validator.validate(config);
+			
+			String uploadEnvFileName =  uploadSubFolder + File.separator + 
+					Util.generateFileName(ambiente, config);
+			String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
+					Util.generateFileName(projetoCorrecao, config);
+
+			File foutEnv = new File(uploadFolder,uploadEnvFileName);
+			if (!foutEnv.exists()) {
+				foutEnv.mkdirs();
+			}
+			File foutCorrProj = new File(uploadFolder,uploadCorrProjFileName);
+			if (!foutCorrProj.exists()) {
+				foutCorrProj.mkdirs();
+			}
+			
+			Files.copy(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	
+			
+			//adicionando os arquivos na respectiva prova
+			/*
+			Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
+			Roteiro roteiro = roteiros.get(config.getRoteiro());
+			if(roteiro != null){
+				roteiro.setArquivoAmbiente(foutEnv);
+				roteiro.setArquivoProjetoCorrecao(foutCorrProj);
+				roteiros.put(config.getRoteiro(), roteiro);
+			}
+			//agora eh persistir os dados dos roteiros em JSON
+			File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+			if(!configFolder.exists()){
+				throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+			}
+			File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
+			Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
+			*/
+			
+			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
+			System.out.println(result);
 			//ja cria também os links simbolicos para possibilitar a correcao
 			String os = System.getProperty("os.name");
 			if(!os.startsWith("Windows")){
