@@ -69,12 +69,56 @@ public class AutomaticCorrector {
 		}
 			
 		//executa o maven salvando em um arquivo de log (maven-output.txt) na pasta 
-		String cdCommand = "cd " + pastaRoteiroCorrigido.getAbsolutePath();
-		String mavenCommand = "mvn install site --log-file maven-output.txt";
+		//String cdCommand = "cd " + pastaRoteiroCorrigido.getAbsolutePath();
+		//String mavenCommand = "mvn install site --log-file maven-output.txt";
 		//Runtime.getRuntime().exec(cdCommand mavenCommand);
 		//ProcessBuilder pb = new ProcessBuilder(cdCommand,mavenCommand);
 		//pb.start();
 		Thread task = runCorrection(pastaRoteiroCorrigido);
+		
+		return task;
+	}
+	
+	public Thread corrigirProva(String prova) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
+		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		//File uploadFolder = new File("D:\\trash2\\leda-upload");
+		
+		//pega a subpasta do semestre atual
+		File currentSemesterUploadFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		
+		//pega a pasta contendo os arquivos dos roteiros enviados pelo docente
+		File provasFolder = new File(currentSemesterUploadFolder,FileUtilities.PROVAS_FOLDER);
+		
+		//pega a pasta contendo os uploads do roteiro informado (ela vai ser a pasta do
+		//projeto maven de correcao a ser executado). as submissoes estarao na sub-pasta subs 
+		//para cada pasta de roteiro.
+		File pastaProvaCorrigida = new File(currentSemesterUploadFolder,prova);
+		//PRECISA FAZER UMAS VALIDADOES PRA VER SE A PASTA ESTA OK ANTES DA CORRECAO
+		
+		//pega os arquivos correction-proj 
+		File[] files = provasFolder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				//tem arquivos de correcao cadastrado para o roteiro pelo ID
+				return pathname.getName().startsWith(prova) && pathname.getName().contains("correction");
+			}
+		});
+		//copia o arquivo correction-proj para a pasta de correcao do roteiro e o descompacta
+		if(files.length == 1){
+			File foutCorrProj = new File(pastaProvaCorrigida,files[0].getName());
+			Files.copy(files[0].toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			Util.unzip(foutCorrProj);
+		}
+			
+		//executa o maven salvando em um arquivo de log (maven-output.txt) na pasta 
+		//String cdCommand = "cd " + pastaProvaCorrigida.getAbsolutePath();
+		//String mavenCommand = "mvn install site --log-file maven-output.txt";
+		//Runtime.getRuntime().exec(cdCommand mavenCommand);
+		//ProcessBuilder pb = new ProcessBuilder(cdCommand,mavenCommand);
+		//pb.start();
+		Thread task = runCorrection(pastaProvaCorrigida);
 		
 		return task;
 	}

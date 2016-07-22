@@ -10,6 +10,7 @@ public class FileUtilitiesTest {
 	public static void main(String[] args) throws Exception {
 		Map<String,Student> map = new HashMap<String,Student>();
 		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
+		Map<String,Prova> provas = new HashMap<String,Prova>();
  		//fu.loadXLS(xls, map);
 		//map = fu.loadStudentsFromExcelFile(xls);
 		
@@ -21,11 +22,10 @@ public class FileUtilitiesTest {
 		}
 		*/
  		
- 		roteiros = FileUtilities.loadRoteiros();
- 		Set<String> keysRoteiros = roteiros.keySet();
- 		Collection<Roteiro> values = roteiros.values();
- 		for (String key : keysRoteiros) {
- 			System.out.println("Roteiro: " + roteiros.get(key));
+ 		provas = FileUtilities.loadProvas();
+ 		Set<String> keysProvas = provas.keySet();
+ 		for (String key : keysProvas) {
+ 			System.out.println("Prova: " + provas.get(key));
 		}
  		/*
  		Student[] sorted = map.values().toArray(new Student[0]);

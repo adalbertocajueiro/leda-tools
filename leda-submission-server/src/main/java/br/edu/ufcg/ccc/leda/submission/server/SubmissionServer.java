@@ -1,12 +1,15 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
@@ -17,11 +20,8 @@ import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.Path;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 /**
  * @author jooby generator
@@ -77,6 +77,30 @@ public class SubmissionServer extends Jooby {
 	    resp.send("porta capturada");
 	  });
 	
+	/*get("/redirect", (req,resp) -> {
+	    //req.flash("success", "The item has been created");
+	    //return Results.redirect("http://www.google.com");
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		HttpGet httpget = new HttpGet("http://www.ufcg.edu.br");
+		CloseableHttpResponse response = httpclient.execute(httpget);
+		HttpEntity resEntity = response.getEntity();
+		String content = "";
+		System.out.println("Entity: " + resEntity);
+		if (resEntity != null) {
+            //System.out.println("Response content length: " + resEntity.getContentLength());
+            InputStreamReader isr = new InputStreamReader(resEntity.getContent());
+            BufferedReader br =  new BufferedReader(isr);
+            
+            while( (content = br.readLine()) != null){
+
+            }
+        }
+        EntityUtils.consume(resEntity);
+        response.close();
+        httpclient.close();
+        resp.send(content);
+	  });*/
+	
 	get("/correct", (req,resp) -> {
 		String roteiro = req.param("roteiro").value();
 		AutomaticCorrector corr = new AutomaticCorrector();
@@ -91,6 +115,22 @@ public class SubmissionServer extends Jooby {
 		File fileToSend = null;
 		try {
 			fileToSend = FileUtilities.getEnvironment(roteiro);
+			resp.type(MediaType.octetstream);
+		    resp.download(fileToSend);
+		} catch (ConfigurationException | IOException | RoteiroException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			resp.send(e.getMessage());
+		}
+	});
+	
+	get("/downloadProva",(req,resp) -> {
+		String prova = req.param("prova").value();
+		//System.out.println("Id do roteiro: " + rId);
+		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
+		File fileToSend = null;
+		try {
+			fileToSend = FileUtilities.getEnvironmentProva(prova);
 			resp.type(MediaType.octetstream);
 		    resp.download(fileToSend);
 		} catch (ConfigurationException | IOException | RoteiroException e) {

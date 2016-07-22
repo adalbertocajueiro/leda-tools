@@ -31,7 +31,9 @@ public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
+	public static final String EXCEL_FILE_PROVA = "Provas.xlsx";
 	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
+	public static final String JSON_FILE_PROVA = "Provas.json";
 	public static String UPLOAD_FOLDER;
 	public static String CURRENT_SEMESTER;
 	public static String MAVEN_HOME_FOLDER;
@@ -54,6 +56,20 @@ public class FileUtilities {
 			//UPLOAD_FOLDER = "/home/ubuntu/leda-upload";
 			System.exit(0);
 		}
+	}
+	
+	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException{
+		File environment = null;
+		
+		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
+		Validator.validateProvaDownload(provaId);
+		
+		//pega o roteiro par aobter o arquivo e mandar de volta
+		Map<String,Prova> provas = Configuration.getInstance().getProvas();
+		Prova prova = provas.get(provaId);
+		environment = prova.getArquivoAmbiente();
+		
+		return environment;
 	}
 	
 	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException{
@@ -97,7 +113,7 @@ public class FileUtilities {
 		//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.roteiros
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
-		String uploadSubFolderLink = CURRENT_SEMESTER + File.separator + config.getRoteiro();
+		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 		if(config.getNumeroTurmas() > 1){
 			//replica o roteiro pela quantidade de turmas
 			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
@@ -156,17 +172,32 @@ public class FileUtilities {
 			
 			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
 			
+			
 			//ja cria também os links simbolicos para possibilitar a correcao
 			String os = System.getProperty("os.name");
 			if(!os.startsWith("Windows")){
 				//windows nao permite a criação de links symbolicos 
-				System.out.println("Link: " + uploadSubFolderLink);
+				//System.out.println("Link to: " + uploadSubFolderTarget);
 				Path newLink = (new File(REPORTS_FOLDER)).toPath();
-				Path target = new File(uploadFolder,uploadSubFolderLink).toPath();
+				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
+				//se target nao existe entao ja cria ela
+				if(!Files.exists(target)){
+					Files.createDirectory(target);
+				}
 				Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 				
 			}else{
 				//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+				Path newLink = (new File(REPORTS_FOLDER)).toPath();
+				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
+				//se target nao existe entao ja cria ela
+				if(!Files.exists(newLink)){
+					Files.createDirectory(newLink);
+				}
+				if(!Files.exists(target)){
+					Files.createDirectory(target);
+				}
+				
 			}
 		}
 		
@@ -189,7 +220,7 @@ public class FileUtilities {
 		//e deve ser salvo um arquivo JSON mantendo toda essa estrutura. 
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + PROVAS_FOLDER;
 		//contem o id da prova P0X-0X
-		String uploadSubFolderLink = CURRENT_SEMESTER + File.separator + config.getRoteiro();
+		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 	
 		if(config.getNumeroTurmas() > 1){
 			//replica a prova pela quantidade de turmas
@@ -253,13 +284,22 @@ public class FileUtilities {
 			String os = System.getProperty("os.name");
 			if(!os.startsWith("Windows")){
 				//windows nao permite a criação de links symbolicos 
-				System.out.println("Link: " + uploadSubFolderLink);
+				System.out.println("Link to: " + uploadSubFolderTarget);
 				Path newLink = (new File(REPORTS_FOLDER)).toPath();
-				Path target = new File(uploadFolder,uploadSubFolderLink).toPath();
+				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
 				Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 				
 			}else{
 				//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+				Path newLink = (new File(REPORTS_FOLDER)).toPath();
+				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
+				//se target nao existe entao ja cria ela
+				if(!Files.exists(newLink)){
+					Files.createDirectory(newLink);
+				}
+				if(!Files.exists(target)){
+					Files.createDirectory(target);
+				}
 			}
 		}
 		
@@ -409,7 +449,7 @@ public class FileUtilities {
 		
 		return roteiros;
 	}
-	private static void reuseFiles(Map<String,Roteiro> mapExcel, Map<String,Roteiro> mapJson){
+	/*private static void reuseFiles(Map<String,Roteiro> mapExcel, Map<String,Roteiro> mapJson){
 		Set<String> keys = mapJson.keySet();
 		for (String key : keys) {
 			Roteiro roteiroJson = mapJson.get(key);
@@ -418,7 +458,39 @@ public class FileUtilities {
 			roteiroExcel.setArquivoProjetoCorrecao(roteiroJson.getArquivoProjetoCorrecao());
 			mapExcel.put(key, roteiroExcel);
 		}
-	} 
+	} */
+	
+	public static Map<String, Prova> loadProvas() throws IOException, ConfigurationException{
+		Map<String, Prova> provas = new HashMap<String, Prova>();
+		File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		if(!configFolder.exists()){
+			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+		}
+		//tenta ler primeiro do json
+		File jsonFileProvas = new File(configFolder,JSON_FILE_PROVA);
+		//Map<String,Roteiro> roteirosFromJson = new HashMap<String,Roteiro>();
+		
+		//ver a possibilidade de montar a lista dos arquivos de cada roteiro 
+		//lendo os arquivos diretamente na pasta de upload dos roteiros
+		//isso eliminaria a necessidade do json
+		//if(jsonFileRoteiros.exists()){
+		//	roteirosFromJson = Util.loadRoteirosFromJson(jsonFileRoteiros);
+		//}
+		
+		//carrega os roteiros de acordo com o arquivo excel
+		File excelFileProva = new File(configFolder,EXCEL_FILE_PROVA);
+		loadProvasFromExcelFile(excelFileProva, provas);
+		
+		//sobrescreve os dados lidos do excel com os do json apenas os arquivos de ambiente e correcao
+		//reuseFiles(result,roteirosFromJson);
+		loadProvasFromUploadFolder(provas);
+		
+		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
+		Util.writeProvasToJson(provas, jsonFileProvas);
+		
+		return provas;
+	}
+	
 	private static void loadRoteirosFromExcelFile(File xlsxFile, Map<String,Roteiro> roteiros) throws IOException{
 		FileInputStream fis = new FileInputStream(xlsxFile);
 		
@@ -471,6 +543,47 @@ public class FileUtilities {
 		myWorkBook.close();
 	}
 	
+	private static void loadProvasFromExcelFile(File xlsxFile, Map<String,Prova> provas) throws IOException{
+		FileInputStream fis = new FileInputStream(xlsxFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			//problema na leitura do arquivo excel
+			ex.printStackTrace();
+		}
+	
+		Iterator<Row> rowIterator = mySheet.iterator();
+		FormulaEvaluator evaluator = myWorkBook.getCreationHelper().createFormulaEvaluator();
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cellIdRoteiro = row.getCell(0);
+            	if(cellIdRoteiro != null){
+            		String idProva = cellIdRoteiro.getStringCellValue(); //
+            		if(idProva.length() == 6){ //talvez precise mudar para um regex que casa com o id das provas/roteiros 
+            			org.apache.poi.ss.usermodel.Cell cellDescricao = row.getCell(1); //celula com a descricao
+            			org.apache.poi.ss.usermodel.Cell cellDataLiberacao = row.getCell(2); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellDataLimiteEnvio = row.getCell(3); //celula de datahora limite de envio normal
+            			
+            			GregorianCalendar dataHoraLiberacao = Util.buildDate(cellDataLiberacao.getDateCellValue());
+            			cellDataLimiteEnvio = evaluator.evaluateInCell(cellDataLimiteEnvio);
+            			GregorianCalendar dataHoraLimiteEnvio = Util.buildDate(cellDataLimiteEnvio.getDateCellValue());
+            			
+            			Prova prova = new Prova(idProva,cellDescricao.getStringCellValue(),
+            					null,null,dataHoraLiberacao,dataHoraLimiteEnvio);
+            	
+            			provas.put(idProva, prova);
+            		}
+            	}
+            }
+		}
+		myWorkBook.close();
+	}
 	private static void loadStudentsFromXLS(File xlsFile, Map<String, Student> map)
 			throws BiffException, IOException {
 		// le de um arquivo e coloca no map
@@ -565,7 +678,35 @@ public class FileUtilities {
 			}
 		}
 	}
-	//TODO
-	//Precisa de um metodo que permita o monitor pegar o arquivo de correcao e depois 
-	//as submissoes para download
+	public static void loadProvasFromUploadFolder(Map<String,Prova> provas){
+		File roteirosFolder = new File(FileUtilities.UPLOAD_FOLDER, CURRENT_SEMESTER + File.separator + PROVAS_FOLDER);
+		if(roteirosFolder.exists()){
+			Set<String> keys = provas.keySet();
+			for (String key : keys) {
+				Prova prova = provas.get(key);
+				File[] files = roteirosFolder.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File pathname) {
+						//tem arquivos cadastrado para o roteiro pelo ID
+						return pathname.getName().startsWith(prova.getProvaId());
+					}
+				});
+				//tem arquivo cadastrado para o roteiro
+				File environment = null;
+				File correction = null;
+				if(files.length > 0){
+					for (int i = 0; i < files.length; i++) {
+						if(files[i].getName().contains("environment")){
+							environment = files[i];
+						} else{
+							correction = files[i];
+						}
+					}
+				}
+				prova.setArquivoAmbiente(environment);
+				prova.setArquivoProjetoCorrecao(correction);
+			}
+		}
+	}
 }

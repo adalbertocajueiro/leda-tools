@@ -72,6 +72,15 @@ public class Util {
 		fw.close();
 	}
 	
+	public static void writeProvasToJson(Map<String,Prova> provas, File jsonFile) throws ConfigurationException, IOException{
+		Gson gson = new Gson();
+
+		FileWriter fw = new FileWriter(jsonFile);
+		gson.toJson(provas, fw);
+		fw.flush();
+		fw.close();
+	}
+	
 	public static Map<String, Roteiro> loadRoteirosFromJson(File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(jsonFile);

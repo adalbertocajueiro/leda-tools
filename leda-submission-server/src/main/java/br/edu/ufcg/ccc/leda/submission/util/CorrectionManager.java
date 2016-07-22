@@ -21,6 +21,7 @@ public class CorrectionManager {
 	private File roteirosFolder;
 	private ArrayList<Thread> executing;
 	private static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
+	private static final String GENERATED_REPORT_FILE = "target/generated-report.html";
 	private Configuration configuration;
 	/*private static CorrectionManager instance;
 	static {
@@ -52,20 +53,18 @@ public class CorrectionManager {
 			// filtra as pastas que correspondem a roteiros enviados
 			// cada pasta é o proprio identificador do roteiro.
 			System.out.println("%%%%%%%% Executando Correction Timer Task em: " + Util.formatDate(new GregorianCalendar()));
+			System.out.println("Verificando roteiros a corrigir...");
+			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 			File[] roteiros = roteirosFolder.listFiles(new FileFilter() {
-				@Override
-				public boolean accept(File pathname) {
-					boolean resp = false;
-					if (pathname.isDirectory()) {
-						// na pratica naovai ter roteiro com identificador X
-						// porque ele é substituido quando o upload é feito
-						Pattern patternRoteiro = Pattern
-								.compile("R[0-9]{2}-[0-9][0-9[X]]");
-						resp = patternRoteiro.matcher(pathname.getName())
-								.matches();
+					@Override
+					public boolean accept(File pathname) {
+						boolean resp = false;
+						if (pathname.isDirectory()) {
+							resp = patternRoteiro.matcher(pathname.getName()).matches();
+						}
+						return resp;
 					}
-					return resp;
-				}
+				
 			});
 
 			// procura ver se existe alguma thread que ja terminou e remove
@@ -115,53 +114,119 @@ public class CorrectionManager {
 				}
 			}
 			
-		}
+			System.out.println("Verificando provas a corrigir...");
+			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
+			File[] provas = roteirosFolder.listFiles(new FileFilter() {
+					@Override
+					public boolean accept(File pathname) {
+						boolean resp = false;
+						if (pathname.isDirectory()) {
+							resp = patternProva.matcher(pathname.getName()).matches();
+						}
+						return resp;
+					}
+				
+			});
+			for (int i = 0; i < provas.length; i++) {
+				try {
+					if (canCorrectProva(provas[i])) {
+						// se a thread de correcao nao estiver na lista
+						// entao adiciona ela.
+						if (!executing.stream().map(Thread::getName)
+								.collect(Collectors.toList())
+								.contains(provas[i].getName())) {
 
-		private boolean canCorrect(File roteiro)
-				throws ConfigurationException, IOException {
-			boolean result = false;
-			// tem que ver se a data atual ultrapassou a data limite de envio
-			// com atraso
-			Map<String, Roteiro> roteiros = configuration.getRoteiros();
-			Roteiro rot = roteiros.get(roteiro.getName());
-			if (rot != null) {
-				GregorianCalendar current = new GregorianCalendar();
-				result = current.after(rot.getDataHoraLimiteEnvioAtraso());
-			} else {
-				throw new RuntimeException(
-						"Roteiro nao localizado (CorrectionTimerTask.isReadyTorun)");
+							System.out.println("Iniciando correcao de " + provas[i].getName());
+							AutomaticCorrector corrector = new AutomaticCorrector();
+							Thread task = corrector.corrigirRoteiro(provas[i]
+									.getName());
+							executing.add(task);
+						}
+					}else{
+						System.out.println("Prova " + provas[i] + " nao pode ser corrigido porque ainda nao fechou o envio");
+					}
+				} catch (ConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			// verifica se existe um arquivo maven-output.txt (indicando que ja
-			// foi corrigido)
-			File report = new File(roteiro, MAVEN_OUTPUT_FILE);
-			result = result && !report.exists();
-
-			
-			return result;
 		}
+
+		
 
 	}
+	private boolean canCorrect(File roteiro)
+			throws ConfigurationException, IOException {
+		boolean result = false;
+		// tem que ver se a data atual ultrapassou a data limite de envio
+		// com atraso
+		Map<String, Roteiro> roteiros = configuration.getRoteiros();
+		Roteiro rot = roteiros.get(roteiro.getName());
+		if (rot != null) {
+			GregorianCalendar current = new GregorianCalendar();
+			result = current.after(rot.getDataHoraLimiteEnvioAtraso());
+		} else {
+			throw new RuntimeException(
+					"Roteiro nao localizado (CorrectionTimerTask.canCorrect)");
+		}
+		// verifica se existe um arquivo target/generated-report.html (indicando que ja
+		// foi corrigido)
+		//File targetFolder = new File(roteiro,"target");
+		File report = new File(roteiro, GENERATED_REPORT_FILE);
+		result = result && !report.exists();
+		//File report = new File(roteiro, MAVEN_OUTPUT_FILE);
+		//result = result && !report.exists();
 
-	public static void main(String[] args) throws InterruptedException {
-		Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
-		System.out.println(patternRoteiro.matcher("R01-01").matches());
-		System.out.println(patternRoteiro.matcher("R01-02").matches());
-		System.out.println(patternRoteiro.matcher("R02-02").matches());
-		System.out.println(patternRoteiro.matcher("R17-0X").matches());
-		Timer timer = new Timer("test", true);
-		timer.scheduleAtFixedRate(new TimerTask() {
+		
+		return result;
+	}
+	private boolean canCorrectProva(File prova)
+			throws ConfigurationException, IOException {
+		boolean result = false;
+		// tem que ver se a data atual ultrapassou a data limite de envio
+		// com atraso
+		Map<String, Prova> provas = configuration.getProvas();
+		Prova prov = provas.get(prova.getName());
+		if (prov != null) {
+			GregorianCalendar current = new GregorianCalendar();
+			result = current.after(prov.getDataHoraLimiteEnvio());
+		} else {
+			throw new RuntimeException(
+					"Prova nao localizada (CorrectionTimerTask.canCorrectProva)");
+		}
+		// verifica se existe um arquivo maven-output.txt (indicando que ja
+		// foi corrigido)
+		File targetFolder = new File(prova,"target");
+		if(targetFolder.exists()){
+			File report = new File(targetFolder, GENERATED_REPORT_FILE);
+			result = result && !report.exists();
+		}
 
-			@Override
-			public void run() {
-				System.out.println("Execution of a timer task "
-						+ this.toString());
+		
+		return result;
+	}
 
-			}
-		}, 0, 500);
-		System.out.println("other task 1");
-		System.out.println("other task 2");
-		Thread.sleep(10000);
-		System.out.println("End");
+	public static void main(String[] args) throws InterruptedException, ConfigurationException, IOException {
+		Configuration config = Configuration.getInstance();
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File roteirosFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		CorrectionManager cm = new CorrectionManager(roteirosFolder, config);
+		cm.canCorrect(new File(roteirosFolder,"R01-01"));
 	}
 
 }

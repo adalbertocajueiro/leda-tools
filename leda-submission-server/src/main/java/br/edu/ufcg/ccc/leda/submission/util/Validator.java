@@ -29,6 +29,28 @@ public class Validator {
 		}
 	}
 	
+	public static void validateProvaDownload(String provaId) throws RoteiroException, ConfigurationException, IOException{
+		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
+		Prova prova = provasMap.get(provaId);
+		if(prova == null){
+			throw new RoteiroException("Prova " + provaId + " nao cadastrada");
+		}
+		GregorianCalendar dataAtual = new GregorianCalendar();
+		if(dataAtual.before(prova.getDataHoraLiberacao()) || 
+				dataAtual.after(prova.getDataHoraLimiteEnvio())){
+			throw new RoteiroException("Prova " + provaId + " disponivel para download apenas entre " +
+				Util.formatDate(prova.getDataHoraLiberacao()) + " e " + Util.formatDate(prova.getDataHoraLimiteEnvio())+ ".\n"
+				+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+		}
+		
+		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
+		if(prova.getArquivoAmbiente() == null){
+			throw new RoteiroException("Arquivo de ambiente para  a prova " + provaId + " nao cadastrado");
+		} else if(!prova.getArquivoAmbiente().exists()){
+			throw new RoteiroException("Arquivo de ambiente para  a prova" + provaId + " nao encontrado no servidor: " + prova.getArquivoAmbiente().getAbsolutePath());
+		}
+	}
+	
 	//realiza validacoes de uma submissao de professor 
 	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException, RoteiroException {
 				
