@@ -295,9 +295,12 @@ public class FileUtilities {
 			String os = System.getProperty("os.name");
 			if(!os.startsWith("Windows")){
 				//windows nao permite a criação de links symbolicos 
-				System.out.println("Link to: " + uploadSubFolderTarget);
+				//System.out.println("Link to: " + uploadSubFolderTarget);
 				Path newLink = (new File(REPORTS_FOLDER)).toPath();
 				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
+				if(!Files.exists(target)){
+					Files.createDirectory(target);
+				}
 				Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 				
 			}else{
