@@ -115,6 +115,7 @@ public class FileUtilities {
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
 		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 		if(config.getNumeroTurmas() > 1){
+			//System.out.println("recebido pr amais de uma turma");
 			//replica o roteiro pela quantidade de turmas
 			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
 				//Neste caso o id do roteiro vem no formato R01-OX. Precisamos apenas mudar o X
@@ -138,11 +139,14 @@ public class FileUtilities {
 			String uploadCorrProjFileName =  uploadSubFolder + File.separator + 
 					Util.generateFileName(projetoCorrecao, config);
 
+			
 			File foutEnv = new File(uploadFolder,uploadEnvFileName);
+			//System.out.println("Arquivo ambiente: " + foutEnv.getAbsolutePath());
 			if (!foutEnv.exists()) {
 				foutEnv.mkdirs();
 			}
 			File foutCorrProj = new File(uploadFolder,uploadCorrProjFileName);
+			//System.out.println("Arquivo ambiente: " + foutCorrProj.getAbsolutePath());
 			if (!foutCorrProj.exists()) {
 				foutCorrProj.mkdirs();
 			}
@@ -154,6 +158,7 @@ public class FileUtilities {
 			//PRECISA LOGAR OPERACOES DA APLICACAO???????
 			//TODO
 			
+			//System.out.println("Arquivos copiados");
 			//adicionando os arquivos no respectivo roteiro
 			Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 			Roteiro roteiro = roteiros.get(config.getRoteiro());
@@ -168,10 +173,13 @@ public class FileUtilities {
 				throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 			}
 			File jsonFileRoteiros = new File(configFolder,JSON_FILE_ROTEIRO);
+			//System.out.println("Escrevendo no json: " + jsonFileRoteiros.getAbsolutePath());
+			//System.out.println("Json existe: " + jsonFileRoteiros.exists());
 			Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
+			//System.out.println("Json salvo");
 			
 			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
-			
+			//System.out.println(result);
 			
 			//ja cria também os links simbolicos para possibilitar a correcao
 			String os = System.getProperty("os.name");
@@ -190,6 +198,9 @@ public class FileUtilities {
 				//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
 				Path newLink = (new File(REPORTS_FOLDER)).toPath();
 				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
+				//System.out.println("Link: " + newLink);
+				//System.out.println("Target: " + target);
+				
 				//se target nao existe entao ja cria ela
 				if(!Files.exists(newLink)){
 					Files.createDirectory(newLink);
@@ -279,7 +290,7 @@ public class FileUtilities {
 			*/
 			
 			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
-			System.out.println(result);
+			//System.out.println(result);
 			//ja cria também os links simbolicos para possibilitar a correcao
 			String os = System.getProperty("os.name");
 			if(!os.startsWith("Windows")){
