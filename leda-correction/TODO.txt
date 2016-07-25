@@ -1,4 +1,4 @@
-- mudar a tabela geral para ser igual a tabela gerada pelo surefire - OK
+﻿- mudar a tabela geral para ser igual a tabela gerada pelo surefire - OK
 - colocar cores nas colunas da tabela central para distinguir os testes que passaram, os erros, as falhas, skipped - OK
 - colocar uma coluna com o percentual dos testes que tiveram sucesso - NAO PRECISA
 - Tentar capturar da suite a quantidade de testes que ela tem. NAO IMPLEMENTADO
@@ -13,4 +13,8 @@
 - Verificar se ao ocorrer um timeout a execucao dos demais p�ra.
 - Trabalhar com links relativos no relatorio geral (para o especifico).
 
-Tem que usar profiles e injetar informacoes d eservidor nos arquivo xml que vai gerar para os alunos.
+- Tem que usar profiles e injetar informacoes d eservidor nos arquivo xml que vai gerar para os alunos. - OK
+- colcoar a correcao numa thread para nao congelar a aplicacao. - OK
+- Tem que ordenar os alunos por ordem alfabetica na planilha geral e colocar os alunos que nao enviaram o roteiro no relatorio
+  para facilitar a correcao.
+- poderia manter a lista dos alunos matriculados (vale apena?)

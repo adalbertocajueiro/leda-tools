@@ -1,14 +1,18 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 import org.jooby.Jooby;
 import org.jooby.MediaType;
-import org.jooby.Results;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-
+import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
+import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
@@ -16,16 +20,32 @@ import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.Path;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 /**
  * @author jooby generator
  */
 public class SubmissionServer extends Jooby {
+	
+	//private static CorrectionManager correctionManager;
+	//private static Configuration configuration;
+	
+	static{
+		try {
+			Configuration.getInstance();
+			//correctionManager = CorrectionManager.getInstance();
+			Thread.sleep(2000);
+		} catch (ConfigurationException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
 	
 	public Path  saveUpload(File f, String folder) throws IOException{
 		File fout = new File(folder + File.separator + f.getName().substring(f.getName().indexOf(".") + 1));
@@ -39,7 +59,12 @@ public class SubmissionServer extends Jooby {
 	use(new Ftl());
 	  
 	
-	get("/", () -> "Hello World!");
+	get("/", (req,resp) -> {
+		Configuration.getInstance();
+		System.out.println("configuration instanciated");
+		resp.send("Hello World!");
+	});
+	
 	
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
@@ -51,6 +76,37 @@ public class SubmissionServer extends Jooby {
 	    System.out.println(myprop);
 	    resp.send("porta capturada");
 	  });
+	
+	/*get("/redirect", (req,resp) -> {
+	    //req.flash("success", "The item has been created");
+	    //return Results.redirect("http://www.google.com");
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		HttpGet httpget = new HttpGet("http://www.ufcg.edu.br");
+		CloseableHttpResponse response = httpclient.execute(httpget);
+		HttpEntity resEntity = response.getEntity();
+		String content = "";
+		System.out.println("Entity: " + resEntity);
+		if (resEntity != null) {
+            //System.out.println("Response content length: " + resEntity.getContentLength());
+            InputStreamReader isr = new InputStreamReader(resEntity.getContent());
+            BufferedReader br =  new BufferedReader(isr);
+            
+            while( (content = br.readLine()) != null){
+
+            }
+        }
+        EntityUtils.consume(resEntity);
+        response.close();
+        httpclient.close();
+        resp.send(content);
+	  });*/
+	
+	get("/correct", (req,resp) -> {
+		String roteiro = req.param("roteiro").value();
+		AutomaticCorrector corr = new AutomaticCorrector();
+		corr.corrigirRoteiro(roteiro);
+		resp.send("Correction started");
+	});
 	
 	get("/downloadRoteiro",(req,resp) -> {
 		String roteiro = req.param("roteiro").value();
@@ -68,6 +124,22 @@ public class SubmissionServer extends Jooby {
 		}
 	});
 	
+	get("/downloadProva",(req,resp) -> {
+		String prova = req.param("prova").value();
+		//System.out.println("Id do roteiro: " + rId);
+		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
+		File fileToSend = null;
+		try {
+			fileToSend = FileUtilities.getEnvironmentProva(prova);
+			resp.type(MediaType.octetstream);
+		    resp.download(fileToSend);
+		} catch (ConfigurationException | IOException | RoteiroException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			resp.send(e.getMessage());
+		}
+	});
+	
   }
 
   {
@@ -75,13 +147,18 @@ public class SubmissionServer extends Jooby {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");
 		String roteiro = req.param("roteiro").value();
+		//System.out.println(roteiro);
 	    String semestre = req.param("semestre").value();
+	    //System.out.println(semestre);
 	    String turma = req.param("turma").value();
+	    //System.out.println(turma);
+	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
+	    //System.out.println(numeroTurmas);
 	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
 	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
 	    
 		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro,numeroTurmas);
 		File uploadedAmbiente = uploadAmbiente.file();
 		File uploadedCorrecao = uploadCorrecao.file();
 		String result = "default response";
@@ -103,6 +180,42 @@ public class SubmissionServer extends Jooby {
 	     
   	});
 	
+	post("/uploadProva", (req,resp) -> {
+		//toda a logica para receber uma prova e guarda-lo por completo e mante-la no mapeamento
+		//de provas onde se jabe a data de liberacao e a data maxima de envio
+		String prova = req.param("roteiro").value(); //aqui sera o id da prova P0X
+		//System.out.println(roteiro);
+	    String semestre = req.param("semestre").value();
+	    //System.out.println(semestre);
+	    String turma = req.param("turma").value();
+	    //System.out.println(turma);
+	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
+	    //System.out.println(numeroTurmas);
+	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
+	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+	    
+		  //System.out.println("upload " + upload);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,prova,numeroTurmas);
+		File uploadedAmbiente = uploadAmbiente.file();
+		File uploadedCorrecao = uploadCorrecao.file();
+		String result = "default response";
+		try {
+			result = FileUtilities.saveProfessorTestSubmission(uploadedAmbiente, uploadedCorrecao, config);
+			
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
+			
+		}
+		resp.send(result);  
+	     
+  	});
 	
 	post("/submitRoteiro",(req,resp) -> {
 	      String matricula = req.param("matricula").value();

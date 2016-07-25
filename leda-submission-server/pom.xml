@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jooby</groupId>
 		<artifactId>jooby-project</artifactId>
-		<version>1.0.0.CR3</version>
+		<version>1.0.0.CR6</version>
 	</parent>
 
 	<artifactId>leda-submission-server</artifactId>
@@ -18,7 +18,7 @@
 	<description>Submission server used in LEDA</description>
 
 	<properties>
-		<jooby.version>1.0.0.CR3</jooby.version>
+		<jooby.version>${project.parent.version}</jooby.version>
 		<semestre.letivo>2016.1</semestre.letivo>
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
@@ -29,6 +29,7 @@
 			<id>server</id>
 			<properties>
 				<upload.folder>/home/ubuntu/leda-upload</upload.folder>
+				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
 			</properties>
 		</profile>
 
@@ -39,6 +40,7 @@
 			</activation>
 			<properties>
 				<upload.folder>D:\trash2\leda-upload</upload.folder>
+				<mavenHomeFolder>D:\apache-maven-3.2.5</mavenHomeFolder>
 			</properties>
 		</profile>
 	</profiles>
@@ -109,7 +111,6 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
 		</dependency>
 
 		<dependency>
@@ -153,10 +154,10 @@
 				</configuration>
 			</plugin>
 			<!-- Build fat jar -->
-			<plugin>
+			<!-- plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-			</plugin>
+			</plugin -->
 
 		</plugins>
 	</build>

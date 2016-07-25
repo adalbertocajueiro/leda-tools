@@ -102,10 +102,8 @@ public class Roteiro {
 	}
 	@Override
 	public String toString() {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		if(this.dataHoraLiberacao != null){
-			formatter.setCalendar(this.dataHoraLiberacao);
-			return this.id + " - " + formatter.format(this.dataHoraLiberacao.getTime());
+			return this.id + " - " + Util.formatDate(this.dataHoraLiberacao);
 		}else{
 			return this.id;
 		}

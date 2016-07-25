@@ -72,6 +72,15 @@ public class Util {
 		fw.close();
 	}
 	
+	public static void writeProvasToJson(Map<String,Prova> provas, File jsonFile) throws ConfigurationException, IOException{
+		Gson gson = new Gson();
+
+		FileWriter fw = new FileWriter(jsonFile);
+		gson.toJson(provas, fw);
+		fw.flush();
+		fw.close();
+	}
+	
 	public static Map<String, Roteiro> loadRoteirosFromJson(File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(jsonFile);
@@ -81,10 +90,10 @@ public class Util {
 	
 	public static String formatDate(GregorianCalendar date){
 		String result = date.getTime().toString();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); //SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		result = formatter.format(date.getTime());
-		result = result.replace('T', ' ');
-		result = result.substring(0,19);
+		//result = result.replace('T', ' ');
+		//result = result.substring(0,19);
 		
 		return result;
 	}

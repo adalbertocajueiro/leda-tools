@@ -17,3 +17,9 @@ for (NgxEntry entry : rtmpServers) {
     ((NgxBlock)entry).getName(); // "server"
     ((NgxBlock)entry).findParam("application", "live"); // "on" for the first iter, "off" for the second one
 }
+
+poderia ja mantar a lista d eestudantes no contexto.
+- tem que fazer o arquivo Provas.xlxs e carregar as provas no servidor
+- tem que modificar o corretor para tambem corrigir as provas automaticamente.
+- precisa tratar com uma tolerancia para o envio das provas?
+- precisa persistir as provas em um json tambem?
