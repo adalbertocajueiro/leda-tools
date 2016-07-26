@@ -2,6 +2,7 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import jxl.read.biff.BiffException;
@@ -12,6 +13,7 @@ public class Configuration {
 	private Map<String,Roteiro> roteiros;
 	private Map<String,Prova> provas;
 	private CorrectionManager correctionManager;
+	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
 	
 	private static Configuration instance;
 	
@@ -22,6 +24,8 @@ public class Configuration {
 			provas = FileUtilities.loadProvas();
 			File roteirosFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
 			correctionManager = new CorrectionManager(roteirosFolder, this);
+			ipsAutorizados.add("150.165.74");
+			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
 		}
@@ -33,17 +37,13 @@ public class Configuration {
 		return instance;
 	}
 	
-	public void reloadStudents() throws Exception{
-		students = FileUtilities.loadStudentLists();
+	
+	public void reload() throws Exception{
+		instance = new Configuration();
 	}
+	
 	public Map<String, Student> getStudents() {
 		return students;
-	}
-	public void reloadRoteiros() throws Exception{
-		roteiros = FileUtilities.loadRoteiros();
-	}
-	public void reloadProvas() throws Exception{
-		provas = FileUtilities.loadProvas();
 	}
 	public Map<String, Roteiro> getRoteiros() {
 		return roteiros;
@@ -54,5 +54,21 @@ public class Configuration {
 	public Map<String, Prova> getProvas() {
 		return provas;
 	}
+	public ArrayList<String> getIpsAutorizados() {
+		return ipsAutorizados;
+	}
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		result.append("Roteiros: <br>");
+		roteiros.values().stream().sorted((r1,r2)-> r1.getId().compareTo(r2.getId()))
+			.forEach(r -> result.append(r.toString() + "<br>"));
+		result.append("Provas: <br>");
+		provas.values().stream().sorted((p1,p2)-> p1.getProvaId().compareTo(p2.getProvaId()))
+			.forEach(p -> result.append(p.toString() + "<br>"));
+		
+		return result.toString();
+	}
+	
 	
 }
