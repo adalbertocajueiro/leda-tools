@@ -88,14 +88,14 @@ public class Validator {
 		
 		//se o estudante informa uma matricula invalida
 		if(!studentMap.containsKey(config.getMatricula())){
-			//throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado no sistema");
+			throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado no sistema");
 		}
 		
 		//se o estudante informa a turma errada da cadastrada no sistema
-		//Student student = studentMap.get(config.getMatricula());
-		//if(!student.getTurma().equals(config.getTurma())){
-			//throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado na turma " + config.getTurma());
-		//}
+		Student student = studentMap.get(config.getMatricula());
+		if(!student.getTurma().equals(config.getTurma())){
+			throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado na turma " + config.getTurma());
+		}
 		
 		//se o id do roteiro for PPX, entao valida diretamente nas provas. 
 		String id = config.getRoteiro();
@@ -107,7 +107,7 @@ public class Validator {
 			ArrayList<String> ips = Configuration.getInstance().getIpsAutorizados();
 			Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
 			if(ipStream.count() == 0){ //nao esta nos ips autorizados
-				throw new RoteiroException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + ips.toArray());
+				throw new RoteiroException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
 			}
 			ipStream.close();
 			//se a prova informado nao existe

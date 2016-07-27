@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-
-import java.util.Map;
+import java.util.GregorianCalendar;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
+
 
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
@@ -24,6 +24,7 @@ import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
 import br.edu.ufcg.ccc.leda.submission.util.Prova;
+import br.edu.ufcg.ccc.leda.submission.util.Util;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -66,6 +67,10 @@ public class SubmissionServer extends Jooby {
 	
 	get("/", (req,resp) -> {
 		resp.send("Hello World!");
+	});
+	
+	get("/horaAtual", (req,resp) -> {
+		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
 	get("/reload", (req,resp) -> {
