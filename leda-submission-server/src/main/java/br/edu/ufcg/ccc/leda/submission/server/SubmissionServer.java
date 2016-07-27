@@ -73,6 +73,12 @@ public class SubmissionServer extends Jooby {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
+	get("/submissoesProva", (req,resp) -> {
+		String idProva = req.param("prova").value();
+		StringBuffer submissions = FileUtilities.listSubmissions(idProva);
+		resp.send("Submissoes: <br>\n" + submissions.toString());
+	});
+	
 	get("/reload", (req,resp) -> {
 		Configuration.getInstance().reload();
 		StringBuilder result = new StringBuilder();

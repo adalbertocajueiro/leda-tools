@@ -6,3 +6,4 @@ log/
 conf/app.properties
 conf/Roteiros.json
 public/reports/R*
+public/reports/P*
