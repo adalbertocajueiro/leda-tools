@@ -86,8 +86,7 @@ public class CorrectionManager {
 
 							System.out.println("Iniciando correcao de " + roteiros[i].getName());
 							AutomaticCorrector corrector = new AutomaticCorrector();
-							Thread task = corrector.corrigirRoteiro(roteiros[i]
-									.getName());
+							Thread task = corrector.corrigirRoteiro(roteiros[i].getName());
 							executing.add(task);
 						}
 					}else{
@@ -138,7 +137,7 @@ public class CorrectionManager {
 
 							System.out.println("Iniciando correcao de " + provas[i].getName());
 							AutomaticCorrector corrector = new AutomaticCorrector();
-							Thread task = corrector.corrigirRoteiro(provas[i]
+							Thread task = corrector.corrigirProva(provas[i]
 									.getName());
 							executing.add(task);
 						}
