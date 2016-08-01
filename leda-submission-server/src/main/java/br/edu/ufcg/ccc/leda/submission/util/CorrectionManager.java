@@ -208,14 +208,12 @@ public class CorrectionManager {
 			throw new RuntimeException(
 					"Prova nao localizada (CorrectionTimerTask.canCorrectProva)");
 		}
+		
 		// verifica se existe um arquivo maven-output.txt (indicando que ja
 		// foi corrigido)
-		File targetFolder = new File(prova,"target");
-		if(targetFolder.exists()){
-			File report = new File(targetFolder, GENERATED_REPORT_FILE);
-			result = result && !report.exists();
-		}
 
+		File report = new File(prova, GENERATED_REPORT_FILE);
+		result = result && !report.exists();
 		
 		return result;
 	}
