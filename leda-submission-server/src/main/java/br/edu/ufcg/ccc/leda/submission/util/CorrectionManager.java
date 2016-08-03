@@ -142,7 +142,7 @@ public class CorrectionManager {
 							executing.add(task);
 						}
 					}else{
-						System.out.println("Prova " + provas[i] + " nao pode ser corrigido porque ainda nao fechou o envio");
+						System.out.println("Prova " + provas[i] + " nao pode ser corrigido porque ja foi corrigida ou ainda nao fechou o envio");
 					}
 				} catch (ConfigurationException e) {
 					// TODO Auto-generated catch block

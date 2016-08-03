@@ -128,7 +128,8 @@ public class FileUtilities {
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
 				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
-				saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
+				result = "";
+				result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
 			}
 			
 		}else{
@@ -673,7 +674,7 @@ public class FileUtilities {
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + id + File.separator + SUBMISSIONS_FOLDER; 
 		
 		File submissionsFolder = new File(uploadFolder,uploadSubFolder);
-		System.out.println("pasta de submisoes: " + submissionsFolder.getAbsolutePath() + " existe: " + submissionsFolder.exists());
+		//System.out.println("pasta de submisoes: " + submissionsFolder.getAbsolutePath() + " existe: " + submissionsFolder.exists());
 		if(submissionsFolder.exists()){
 			File[] files = submissionsFolder.listFiles(new FileFilter() {
 

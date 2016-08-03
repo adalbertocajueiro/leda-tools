@@ -31,5 +31,7 @@ poderia ja mantar a lista d eestudantes no contexto.
 - fazer funcionalidade para ler automaticamente as planilhasde roteiros e provas do googledrive
   (http://stackoverflow.com/questions/25151470/upload-files-to-google-drive-from-a-java-application-without-user-interaction)
   (https://developers.google.com/api-client-library/java/apis/drive/v2)
+- mostrar as threads de correcao rodando atualmente
+- implementar a leitura das configuracoes do arquivo application.conf do jooby.
 
   

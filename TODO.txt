@@ -1,0 +1,7 @@
+formatadores de codigo
+
+https://github.com/revelc/formatter-maven-plugin
+http://code.revelc.net/formatter-maven-plugin/usage.html
+http://code.revelc.net/formatter-maven-plugin/plugin-info.html
+https://github.com/gavin-hu/javafmt-maven-plugin
+http://stackoverflow.com/questions/1652012/organize-imports-with-maven2-eclipse-style
