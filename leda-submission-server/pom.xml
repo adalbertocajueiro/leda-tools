@@ -130,8 +130,7 @@
 			<resource>
 				<directory>public</directory>
 				<excludes>
-					<exclude>reports</exclude>
-					<exclude>*.*</exclude>
+					<exclude>**</exclude>
 				</excludes>
 			</resource>
 			<resource>
