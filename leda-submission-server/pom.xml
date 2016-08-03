@@ -117,7 +117,7 @@
 			<groupId>org.jooby</groupId>
 			<artifactId>jooby-ftl</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.maven.shared</groupId>
 			<artifactId>maven-invoker</artifactId>
@@ -126,6 +126,21 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>public</directory>
+				<excludes>
+					<exclude>reports</exclude>
+					<exclude>*.*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>log</directory>
+				<excludes>
+					<exclude>*.*</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -154,10 +169,8 @@
 				</configuration>
 			</plugin>
 			<!-- Build fat jar -->
-			<!-- plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-			</plugin -->
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> 
+				</plugin -->
 
 		</plugins>
 	</build>
