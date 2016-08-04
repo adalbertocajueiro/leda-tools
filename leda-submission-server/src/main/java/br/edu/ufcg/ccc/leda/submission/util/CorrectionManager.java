@@ -86,8 +86,7 @@ public class CorrectionManager {
 
 							System.out.println("Iniciando correcao de " + roteiros[i].getName());
 							AutomaticCorrector corrector = new AutomaticCorrector();
-							Thread task = corrector.corrigirRoteiro(roteiros[i]
-									.getName());
+							Thread task = corrector.corrigirRoteiro(roteiros[i].getName());
 							executing.add(task);
 						}
 					}else{
@@ -138,12 +137,12 @@ public class CorrectionManager {
 
 							System.out.println("Iniciando correcao de " + provas[i].getName());
 							AutomaticCorrector corrector = new AutomaticCorrector();
-							Thread task = corrector.corrigirRoteiro(provas[i]
+							Thread task = corrector.corrigirProva(provas[i]
 									.getName());
 							executing.add(task);
 						}
 					}else{
-						System.out.println("Prova " + provas[i] + " nao pode ser corrigido porque ainda nao fechou o envio");
+						System.out.println("Prova " + provas[i] + " nao pode ser corrigido porque ja foi corrigida ou ainda nao fechou o envio");
 					}
 				} catch (ConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -209,14 +208,12 @@ public class CorrectionManager {
 			throw new RuntimeException(
 					"Prova nao localizada (CorrectionTimerTask.canCorrectProva)");
 		}
+		
 		// verifica se existe um arquivo maven-output.txt (indicando que ja
 		// foi corrigido)
-		File targetFolder = new File(prova,"target");
-		if(targetFolder.exists()){
-			File report = new File(targetFolder, GENERATED_REPORT_FILE);
-			result = result && !report.exists();
-		}
 
+		File report = new File(prova, GENERATED_REPORT_FILE);
+		result = result && !report.exists();
 		
 		return result;
 	}

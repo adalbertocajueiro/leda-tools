@@ -95,7 +95,7 @@ public class AutomaticCorrector {
 		//para cada pasta de roteiro.
 		File pastaProvaCorrigida = new File(currentSemesterUploadFolder,prova);
 		//PRECISA FAZER UMAS VALIDADOES PRA VER SE A PASTA ESTA OK ANTES DA CORRECAO
-		
+		//System.out.println("Tentanto corrigir prova: " + pastaProvaCorrigida.getAbsolutePath());
 		//pega os arquivos correction-proj 
 		File[] files = provasFolder.listFiles(new FileFilter() {
 			

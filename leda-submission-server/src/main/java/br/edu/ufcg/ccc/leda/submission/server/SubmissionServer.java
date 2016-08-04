@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.GregorianCalendar;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
+
+
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
@@ -19,6 +22,9 @@ import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
+import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
+import br.edu.ufcg.ccc.leda.submission.util.Prova;
+import br.edu.ufcg.ccc.leda.submission.util.Util;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -60,11 +66,27 @@ public class SubmissionServer extends Jooby {
 	  
 	
 	get("/", (req,resp) -> {
-		Configuration.getInstance();
-		System.out.println("configuration instanciated");
 		resp.send("Hello World!");
 	});
 	
+	get("/horaAtual", (req,resp) -> {
+		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
+	});
+	
+	get("/submissoesProva", (req,resp) -> {
+		String idProva = req.param("prova").value();
+		StringBuffer submissions = FileUtilities.listSubmissions(idProva);
+		resp.send("Submissoes: <br>\n" + submissions.toString());
+	});
+	
+	get("/reload", (req,resp) -> {
+		Configuration.getInstance().reload();
+		StringBuilder result = new StringBuilder();
+		result.append("Configuration instance reloaded! New values bellow...<br>");
+		result.append(Configuration.getInstance().toString());
+		
+		resp.send(result.toString());
+	});
 	
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
@@ -227,6 +249,9 @@ public class SubmissionServer extends Jooby {
 	      //R0X-0X
 	      String turma = roteiro.substring(4);
 		  
+	      //se o id do roteiro for PPX, entao é submissao de prova e deve validar o ip e salvar
+	      //em outra pasta. Isso vai ser feito pelo FileUtilities.saveStudentSubmission
+	      
 	      //System.out.println("Request received from " + ip);
 		  
 	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip);
@@ -250,10 +275,18 @@ public class SubmissionServer extends Jooby {
 			e.printStackTrace();
 			result = e.getMessage();
 			
+		} catch (RoteiroException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = e.getMessage();
 		}
 		resp.send(result);  
 	    });
+	
+	
   }
+  
+  
   
   public static void main(final String[] args) throws Throwable {
     run(SubmissionServer::new, args);

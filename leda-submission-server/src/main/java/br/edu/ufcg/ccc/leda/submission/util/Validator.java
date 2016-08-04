@@ -2,8 +2,11 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Validator {
 
@@ -79,10 +82,11 @@ public class Validator {
 			
 		Map<String,Student> studentMap = Configuration.getInstance().getStudents();
 		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
+		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
 		//System.out.println("STUDENT: " + config.getMatricula());
 		//studentMap.keySet().forEach(key -> System.out.println("CADASTRADO: " + key));
 		
-		//se o estudante informauma matricula invalida
+		//se o estudante informa uma matricula invalida
 		if(!studentMap.containsKey(config.getMatricula())){
 			throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado no sistema");
 		}
@@ -93,16 +97,49 @@ public class Validator {
 			throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado na turma " + config.getTurma());
 		}
 		
-		//se o roteiro informado nao existe
-		if(!roteirosMap.containsKey(config.getRoteiro())){
-			throw new RoteiroException("Roteiro " + config.getRoteiro() + " não cadastrado no sistema");
-		}
-		//se roteiro informado esta fora do prazo de recebimento
-		Roteiro roteiro = roteirosMap.get(config.getRoteiro());
-		GregorianCalendar dataAtual = new GregorianCalendar();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		if(roteiro.getDataHoraLimiteEnvioAtraso().before(dataAtual)){
-			throw new RoteiroException("Limite de envio ro roteiro " + config.getRoteiro() + " terminou em " + formatter.format(dataAtual.getTime()));
+		//se o id do roteiro for PPX, entao valida diretamente nas provas. 
+		String id = config.getRoteiro();
+		
+		if(id.startsWith("PP")){ //eh prova
+			//se o aluno submete de um IP invalido
+			String ipCaller = config.getIp();
+			System.out.println("Validator.IP: " + ipCaller);
+			ArrayList<String> ips = Configuration.getInstance().getIpsAutorizados();
+			Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
+			if(ipStream.count() == 0){ //nao esta nos ips autorizados
+				throw new RoteiroException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
+			}
+			ipStream.close();
+			//se a prova informado nao existe
+			if(!provasMap.containsKey(id)){
+				throw new RoteiroException("Prova " + id + " não cadastrada no sistema");
+			}
+			//se prova informado esta fora do prazo de recebimento
+			Prova prova = provasMap.get(id);
+			GregorianCalendar dataAtual = new GregorianCalendar();
+			if(prova.getDataHoraLiberacao().after(dataAtual) ||
+					prova.getDataHoraLimiteEnvio().before(dataAtual)){
+	
+				throw new RoteiroException("Envio da prova " + id + " possivel apenas entre " + Util.formatDate(prova.getDataHoraLiberacao())
+						+ " e " + Util.formatDate(prova.getDataHoraLimiteEnvio()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+			}
+		} else{ //eh roteiro
+					
+			//se o roteiro informado nao existe
+			if(!roteirosMap.containsKey(id)){
+				throw new RoteiroException("Roteiro " + id + " não cadastrado no sistema");
+			}
+			
+			
+			//se roteiro informado esta fora do prazo de recebimento
+			Roteiro roteiro = roteirosMap.get(id);
+			GregorianCalendar dataAtual = new GregorianCalendar();
+			if(roteiro.getDataHoraLiberacao().after(dataAtual) ||
+					roteiro.getDataHoraLimiteEnvioAtraso().before(dataAtual)){
+	
+				throw new RoteiroException("Envio do roteiro " + id + " possivel apenas entre " + Util.formatDate(roteiro.getDataHoraLiberacao())
+						+ " e " + Util.formatDate(roteiro.getDataHoraLimiteEnvioAtraso()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+			}
 		}
 	}
 }

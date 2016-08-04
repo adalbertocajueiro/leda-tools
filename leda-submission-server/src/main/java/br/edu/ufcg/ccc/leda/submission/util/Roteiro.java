@@ -102,11 +102,14 @@ public class Roteiro {
 	}
 	@Override
 	public String toString() {
-		if(this.dataHoraLiberacao != null){
-			return this.id + " - " + Util.formatDate(this.dataHoraLiberacao);
-		}else{
-			return this.id;
+		StringBuilder result = new StringBuilder();
+		result.append("ID: " + this.id + " | ");
+		result.append("Data liberacao: " + Util.formatDate(this.dataHoraLiberacao) + " | ");
+		if(this.dataHoraLimiteEnvioAtraso != null){
+			result.append("Data limite envio: " + Util.formatDate(this.dataHoraLimiteEnvioAtraso) + "\n");
 		}
+
+		return result.toString();
 		
 	}
 

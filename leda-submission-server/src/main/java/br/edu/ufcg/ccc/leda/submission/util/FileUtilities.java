@@ -8,12 +8,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -125,7 +128,8 @@ public class FileUtilities {
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
 				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
-				saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
+				result = "";
+				result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
 			}
 			
 		}else{
@@ -295,9 +299,12 @@ public class FileUtilities {
 			String os = System.getProperty("os.name");
 			if(!os.startsWith("Windows")){
 				//windows nao permite a criação de links symbolicos 
-				System.out.println("Link to: " + uploadSubFolderTarget);
+				//System.out.println("Link to: " + uploadSubFolderTarget);
 				Path newLink = (new File(REPORTS_FOLDER)).toPath();
 				Path target = new File(uploadFolder,uploadSubFolderTarget).toPath();
+				if(!Files.exists(target)){
+					Files.createDirectory(target);
+				}
 				Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 				
 			}else{
@@ -654,7 +661,42 @@ public class FileUtilities {
 		myWorkBook.close();
 	}
 	
-	//TODO
+	/**
+	 * Mostra a listagem das submissoes de prova ou roteiro. vai depender do id que tem o formato 
+	 * R0X-0X ou PXX-XX
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static StringBuffer listSubmissions(String id){
+		StringBuffer result = new StringBuffer();
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		String uploadSubFolder = CURRENT_SEMESTER + File.separator + id + File.separator + SUBMISSIONS_FOLDER; 
+		
+		File submissionsFolder = new File(uploadFolder,uploadSubFolder);
+		//System.out.println("pasta de submisoes: " + submissionsFolder.getAbsolutePath() + " existe: " + submissionsFolder.exists());
+		if(submissionsFolder.exists()){
+			File[] files = submissionsFolder.listFiles(new FileFilter() {
+
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.getName().endsWith(".zip");
+				}
+			});
+			ArrayList<File> list = new ArrayList<File>();
+			list.addAll(Arrays.asList(files));
+			Stream<File> sorted = list.stream().sorted(
+					(f1, f2) -> f1.getName().compareTo(f2.getName()));
+			sorted.forEach(f -> result.append(f.getName() + "<br>\n"));
+		}
+		return result;
+	}
+
+
+	
+	//list.addAll(Arrays.asList(files));
+	
+    //TODO
 	//Precisa de um metodo que monte a lista dos arquivos para cada roteiro diretamente da pasta
 	//onde foram feitos os uploads. Ele precisa ser por id do roteiro e pegar environment e correction
 	//e fazer as devidas astribuicoes aos roteiros. 

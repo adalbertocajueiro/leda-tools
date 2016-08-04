@@ -19,7 +19,19 @@ for (NgxEntry entry : rtmpServers) {
 }
 
 poderia ja mantar a lista d eestudantes no contexto.
-- tem que fazer o arquivo Provas.xlxs e carregar as provas no servidor
-- tem que modificar o corretor para tambem corrigir as provas automaticamente.
+- tem que fazer o arquivo Provas.xlxs e carregar as provas no servidor - OK
+- tem que modificar o corretor para tambem corrigir as provas automaticamente. - OK
 - precisa tratar com uma tolerancia para o envio das provas?
-- precisa persistir as provas em um json tambem?
+- precisa persistir as provas em um json tambem? - OK
+- nao permitir o envio de roteiro que ainda nao esta aberto para recebimento/submissao - OK
+- fazer funcionalidade para fazer o reload dos dados de configuracao automaticamente e salvar no singleton - OK
+- fazer funcionalidade para avisar o monitor automaticamente quando o roteiro for corrigido e estiver pronto para o monitor
+  (http://crunchify.com/java-mailapi-example-send-an-email-via-gmail-smtp/)
+- fazer funcionalidade que compacta todas as submissoes e manda para googledrive (ou dropbox)
+- fazer funcionalidade para ler automaticamente as planilhasde roteiros e provas do googledrive
+  (http://stackoverflow.com/questions/25151470/upload-files-to-google-drive-from-a-java-application-without-user-interaction)
+  (https://developers.google.com/api-client-library/java/apis/drive/v2)
+- mostrar as threads de correcao rodando atualmente
+- implementar a leitura das configuracoes do arquivo application.conf do jooby.
+
+  
