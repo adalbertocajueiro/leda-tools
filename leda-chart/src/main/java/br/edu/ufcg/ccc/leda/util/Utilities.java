@@ -41,8 +41,8 @@ public class Utilities {
 
 	public static File createWebFolder(File targetFolder) throws IOException {
 		URL file = Utilities.class.getResource(RESOURCES_WEB_FOLDER);
-		//boolean dir = isDirectory(file);
-		//System.out.println("Local folder: " + dir + " : " + file.getPath());
+		// boolean dir = isDirectory(file);
+		// System.out.println("Local folder: " + dir + " : " + file.getPath());
 		File webFolder = unzip(file, targetFolder);
 		return webFolder;
 	}
@@ -87,7 +87,7 @@ public class Utilities {
 		if (!destDir.exists()) {
 			destDir.mkdir();
 		}
-		if(folderOrJar.getProtocol().equals("file")){
+		if (folderOrJar.getProtocol().equals("file")) {
 			File localfolder = new File(folderOrJar.getPath());
 			copyFolder(localfolder, webFolder);
 		} else if (folderOrJar.getProtocol().equals("jar")) {
@@ -98,8 +98,9 @@ public class Utilities {
 			file = new URL(file.substring(0, bangIndex)).getFile();
 			ZipFile zip = new ZipFile(file);
 			ZipEntry entryWeb = zip.getEntry(jarPath);
-			//System.out.println("UNZIP JAR FILE: " + folderOrJar.getFile());
-			//System.out.println("UNZIP: " + folderOrJar.getFile().substring(5, bangIndex));
+			// System.out.println("UNZIP JAR FILE: " + folderOrJar.getFile());
+			// System.out.println("UNZIP: " + folderOrJar.getFile().substring(5,
+			// bangIndex));
 			ZipInputStream zipIn = new ZipInputStream(new FileInputStream(
 					new File(folderOrJar.getFile().substring(5, bangIndex))));
 			ZipEntry entry = zipIn.getNextEntry();
@@ -165,24 +166,24 @@ public class Utilities {
 		StringBuilder result = new StringBuilder();
 		InputStream is = Utilities.class.getResourceAsStream(filePath);
 		InputStreamReader isr = null;
-		FileInputStream fis  = null;
-		if(is == null){
+		FileInputStream fis = null;
+		if (is == null) {
 			fis = new FileInputStream(filePath);
 			isr = new InputStreamReader(fis);
-		}else{
+		} else {
 			isr = new InputStreamReader(is);
 		}
-		
+
 		BufferedReader br = new BufferedReader(isr);
 		String line = "";
 		while ((line = br.readLine()) != null) {
 			result.append(line);
 			result.append("\n");
 		}
-		if(is != null){
+		if (is != null) {
 			is.close();
 		}
-		if(fis != null){
+		if (fis != null) {
 			fis.close();
 		}
 		br.close();
@@ -194,12 +195,12 @@ public class Utilities {
 			throws IOException {
 		URL fileURL = Utilities.class.getResource(filePath);
 		File file = null;
-		if(fileURL == null){
+		if (fileURL == null) {
 			file = new File(filePath);
-		} else{
+		} else {
 			file = new File(fileURL.getFile());
 		}
-		
+
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(content.toString());

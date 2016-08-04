@@ -59,7 +59,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	 * @required
 	 */
 	private boolean defaultSend;
-	
+
 	/**
 	 * @parameter
 	 * @required
@@ -70,29 +70,26 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	private int numeroTurmas = 1;
-	
-	
-	
+
 	private ProfessorSender sender;
 
 	public void execute() throws MojoExecutionException {
 		if (defaultSend) {
 			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%");
-			File targetFolder = new File(project.getBuild()
-					.getDirectory());
+			File targetFolder = new File(project.getBuild().getDirectory());
 			String environmentName = project.getArtifactId()
 					+ "-environment.zip";
 			String correctionProjectName = project.getArtifactId()
 					+ "-correction-proj.zip";
 
-			//System.out.println("turmas: " + numeroTurmas);
+			// System.out.println("turmas: " + numeroTurmas);
 			File envZipFile = new File(targetFolder, environmentName);
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
-				
+
 				sender = new ProfessorSender(envZipFile, corrProjZipFile,
 						roteiro, url, semestre, numeroTurmas);
-				//System.out.println(sender);
+				// System.out.println(sender);
 				System.out.println("Submitting environment file: "
 						+ envZipFile.getAbsolutePath() + " to " + url);
 				System.out.println("Submitting correction file: "

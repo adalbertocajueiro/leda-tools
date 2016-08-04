@@ -102,7 +102,7 @@ public class FileUtilities {
 	 * @throws Exception 
 	 */
 	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
-		String result = "upload nao realizado";
+		String result = "";
 		
 		
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
@@ -128,8 +128,8 @@ public class FileUtilities {
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
 				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
-				result = "";
-				result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
+				//result = "";
+				result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig) + "\n<br>";
 			}
 			
 		}else{
@@ -220,7 +220,7 @@ public class FileUtilities {
 	}
 	
 	public static String saveProfessorTestSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
-		String result = "upload nao realizado";
+		String result = "";
 		
 		
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
@@ -247,8 +247,8 @@ public class FileUtilities {
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
 				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
-				result = "";
-				result = result + saveProfessorTestSubmission(ambiente, projetoCorrecao, newConfig);
+				
+				result = result + saveProfessorTestSubmission(ambiente, projetoCorrecao, newConfig) + "\n<br>";
 			}
 			
 		}else{

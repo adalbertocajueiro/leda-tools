@@ -27,8 +27,9 @@ public class ReportUtility {
 	 *            the folder containing all students projects folder generated
 	 *            by the correction tool. Normally this folder is the same as
 	 *            the folder containing all submissions (zip files).
-	 * @param targetFolder a pasta onde se encontra o relatorio final que contera links 
-	 * 			relativos para os relatorios especificos
+	 * @param targetFolder
+	 *            a pasta onde se encontra o relatorio final que contera links
+	 *            relativos para os relatorios especificos
 	 * @return
 	 * @throws IOException
 	 * @throws JDOMException
@@ -44,10 +45,10 @@ public class ReportUtility {
 					return pathname.isDirectory();
 				}
 			});
-			//as pastas tem o nome sendo <MATRICULA>-<NOME DO ALUNO>
+			// as pastas tem o nome sendo <MATRICULA>-<NOME DO ALUNO>
 			for (File subFolder : subFolders) {
 				File xmlFile = this.getSurefireReportFile(subFolder);
-				
+
 				File mavenOutputLog = new File(subFolder.getAbsolutePath()
 						+ File.separator + MavenUtility.MAVEN_OUTPUT_LOG);
 
@@ -67,8 +68,12 @@ public class ReportUtility {
 							.getAttributeValue("time"));
 					int failures = Integer.parseInt(testSuite
 							.getAttributeValue("failures"));
-					String matricula = subFolder.getName().substring(0, subFolder.getName().indexOf("-")).trim();
-					String studentName = subFolder.getName().substring(subFolder.getName().indexOf("-") + 1).trim();
+					String matricula = subFolder.getName()
+							.substring(0, subFolder.getName().indexOf("-"))
+							.trim();
+					String studentName = subFolder.getName()
+							.substring(subFolder.getName().indexOf("-") + 1)
+							.trim();
 					String generatedReport = subFolder.getAbsolutePath()
 							+ File.separator + "target" + File.separator
 							+ "site" + File.separator + "project-reports.html";
@@ -77,42 +82,46 @@ public class ReportUtility {
 							.getAttributeValue("errors"));
 					int skipped = Integer.parseInt(testSuite
 							.getAttributeValue("skipped"));
-					
-					File sentZipFile = new File(subFolder.getParent(), subFolder.getName()+ ".zip");
-					
+
+					File sentZipFile = new File(subFolder.getParent(),
+							subFolder.getName() + ".zip");
+
 					TestReportItem item = new TestReportItem(xmlFile,
-							matricula, studentName, sentZipFile.lastModified(), tests, errors, failures, skipped,
-							time, completeReport, mavenOutputLog);
+							matricula, studentName, sentZipFile.lastModified(),
+							tests, errors, failures, skipped, time,
+							completeReport, mavenOutputLog);
 					report.getReportItems().add(item);
 				} else {
-					String matricula = subFolder.getName().substring(0, subFolder.getName().indexOf("-")).trim();
+					String matricula = subFolder.getName()
+							.substring(0, subFolder.getName().indexOf("-"))
+							.trim();
 					String studentName = subFolder.getName();
-					File sentZipFile = new File(subFolder.getName()+ ".zip");
+					File sentZipFile = new File(subFolder.getName() + ".zip");
 
 					TestReportErrorItem errorItem = new TestReportErrorItem(
-							matricula, studentName, sentZipFile.lastModified(), mavenOutputLog);
+							matricula, studentName, sentZipFile.lastModified(),
+							mavenOutputLog);
 					report.getReportItems().add(errorItem);
 				}
 			}
 		}
 
-		//precisa ordenar os itens do report por nome para facilitar 
-		report.getReportItems().sort((s1,s2) -> s1.getStudentName().compareTo(s2.getStudentName()));
-		
+		// precisa ordenar os itens do report por nome para facilitar
+		report.getReportItems().sort(
+				(s1, s2) -> s1.getStudentName().compareTo(s2.getStudentName()));
+
 		return report;
 	}
-
-	
 
 	public static void main(String[] args) throws MalformedURLException {
 		ReportUtility ru = new ReportUtility();
 		File f1 = new File("D:\\trash2\\R2-01-correction\\subs");
 		File f2 = new File("D:\\trash2\\R2-01-correction\\target");
-		//Path link = ru.generateRelativeLink(f1, f2);
-		//System.out.println(link);
-		//link = ru.generateRelativeLink(f2, f1);
-		//System.out.println(link);
-		//int i = 0;
+		// Path link = ru.generateRelativeLink(f1, f2);
+		// System.out.println(link);
+		// link = ru.generateRelativeLink(f2, f1);
+		// System.out.println(link);
+		// int i = 0;
 	}
 
 	public void createAndSaveReport(File submissionsFolder,

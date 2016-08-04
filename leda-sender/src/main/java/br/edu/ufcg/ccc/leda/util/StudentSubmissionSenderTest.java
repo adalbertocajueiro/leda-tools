@@ -7,18 +7,20 @@ import org.apache.http.client.ClientProtocolException;
 
 public class StudentSubmissionSenderTest {
 
-	public static void main(String[] args) throws ClientProtocolException, IOException {
-		
+	public static void main(String[] args) throws ClientProtocolException,
+			IOException {
+
 		String url = "http://localhost/submit3";
 		String semestre = "2016.1";
 		String turma = "01";
 		File arquivo = new File("D:\\trash\\115110563.zip");
 		String matricula = "115110568";
 		String roteiro = "R01";
-		
-		Sender sender = new StudentSubmissionSender(arquivo,matricula,semestre,roteiro,url);
+
+		Sender sender = new StudentSubmissionSender(arquivo, matricula,
+				semestre, roteiro, url);
 		sender.send();
-		
+
 	}
 
 }

@@ -18,19 +18,20 @@ public abstract class Sender {
 		this.roteiro = roteiro;
 		this.url = url;
 	}
+
 	public abstract void send() throws ClientProtocolException, IOException;
-	
-	void writeTicket(String logFileName, String content) throws IOException{
-		
+
+	void writeTicket(String logFileName, String content) throws IOException {
+
 		File file = new File(logFileName);
-		if(!file.exists()){
+		if (!file.exists()) {
 			file.createNewFile();
 		}
 		FileWriter fr = new FileWriter(file);
 		fr.write(content);
 		fr.close();
 	}
-	
+
 	public File getArquivo() {
 		return arquivo;
 	}
