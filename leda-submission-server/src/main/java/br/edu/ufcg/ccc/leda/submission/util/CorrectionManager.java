@@ -218,6 +218,11 @@ public class CorrectionManager {
 		return result;
 	}
 
+	
+	public ArrayList<Thread> getExecuting() {
+		return executing;
+	}
+	
 	public static void main(String[] args) throws InterruptedException, ConfigurationException, IOException {
 		Configuration config = Configuration.getInstance();
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);

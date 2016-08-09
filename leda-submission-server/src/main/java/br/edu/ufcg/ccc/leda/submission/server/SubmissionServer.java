@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
+
 
 
 
@@ -79,6 +81,20 @@ public class SubmissionServer extends Jooby {
 		resp.send("Submissoes: <br>\n" + submissions.toString());
 	});
 	
+	get("/correctionThreads", (req,resp) -> {
+		ArrayList<Thread> threads = Configuration.getInstance().getCorrectionManager().getExecuting();
+		StringBuilder result = new StringBuilder();
+		if(threads.size() == 0){
+			result.append("Sem threads ativos de correcao");
+		}else{
+			threads.forEach(t -> result.append(t.getName() + " - STATE: " + t.getState().name() + "<br>\n"));
+		}
+		//result.append("Configuration instance reloaded! New values bellow...<br>");
+		//result.append(Configuration.getInstance().toString());
+		
+		resp.send(result.toString());
+	});
+	
 	get("/reload", (req,resp) -> {
 		Configuration.getInstance().reload();
 		StringBuilder result = new StringBuilder();
@@ -87,7 +103,6 @@ public class SubmissionServer extends Jooby {
 		
 		resp.send(result.toString());
 	});
-	
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
 	get("/conf", (req,resp) -> {
