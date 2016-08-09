@@ -1,10 +1,7 @@
 package br.edu.ufcg.ccc.leda.util;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 import org.jdom2.Document;
 import org.jdom2.JDOMException;

@@ -1,6 +1,5 @@
 package com.mycompany;
 
-import org.junit.Test;
 
 /**
  * @author jooby generator

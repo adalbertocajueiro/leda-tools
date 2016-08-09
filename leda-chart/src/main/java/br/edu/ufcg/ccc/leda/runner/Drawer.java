@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import br.edu.ufcg.ccc.leda.graph.Point;
 import br.edu.ufcg.ccc.leda.graph.GraphData;
+import br.edu.ufcg.ccc.leda.graph.Point;
 import br.edu.ufcg.ccc.leda.graph.Serie;
 import br.edu.ufcg.ccc.leda.util.InputGenerator;
 import br.edu.ufcg.ccc.leda.util.Utilities;

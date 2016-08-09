@@ -1,7 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;

@@ -16,6 +16,9 @@ package br.edu.ufcg.ccc.leda;
  * limitations under the License.
  */
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -23,9 +26,6 @@ import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
 import br.edu.ufcg.ccc.leda.util.StudentSubmissionSender;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Goal which compacts a student's submission.

@@ -13,9 +13,6 @@ import org.jooby.MediaType;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
 
-
-
-
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
@@ -24,8 +21,6 @@ import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
-import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
-import br.edu.ufcg.ccc.leda.submission.util.Prova;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 
 import com.typesafe.config.Config;

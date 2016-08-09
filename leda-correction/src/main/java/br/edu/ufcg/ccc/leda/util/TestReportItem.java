@@ -1,8 +1,6 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
-import java.net.URL;
-import java.util.GregorianCalendar;
 
 /**
  * @author Adalberto

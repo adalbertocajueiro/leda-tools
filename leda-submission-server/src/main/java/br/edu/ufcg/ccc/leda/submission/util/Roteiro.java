@@ -1,7 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 

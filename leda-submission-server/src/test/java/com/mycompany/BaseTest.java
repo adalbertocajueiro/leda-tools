@@ -1,11 +1,5 @@
 package com.mycompany;
 
-import org.jooby.test.AppRule;
-import org.jooby.test.Client;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import br.edu.ufcg.ccc.leda.submission.server.SubmissionServer;
 
 /**
  * @author jooby generator
