@@ -14,13 +14,14 @@ public class Configuration {
 	private Map<String,Prova> provas;
 	private CorrectionManager correctionManager;
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
-	
+	private static String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
 	private static Configuration instance;
 	
-	private Configuration() throws ConfigurationException, IOException {
+	private Configuration() throws ConfigurationException, IOException{
 		try {
 			students = FileUtilities.loadStudentLists();
-			roteiros = FileUtilities.loadRoteiros();
+			//roteiros = FileUtilities.loadRoteiros();
+			roteiros = Util.loadSpreadsheet(ID_ROTEIROS_SHEET);
 			provas = FileUtilities.loadProvas();
 			File roteirosFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
 			correctionManager = new CorrectionManager(roteirosFolder, this);

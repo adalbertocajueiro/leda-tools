@@ -8,10 +8,13 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -19,6 +22,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.google.common.reflect.TypeToken;
+import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.spreadsheet.CustomElementCollection;
+import com.google.gdata.data.spreadsheet.ListEntry;
+import com.google.gdata.data.spreadsheet.ListFeed;
+import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 public class Util {
@@ -107,7 +115,7 @@ public class Util {
 		return p;
 	}
 	
-	/*public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
+	public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
 		GregorianCalendar result = new GregorianCalendar();
 		//se estiver no formato errado retorna uma excecao
 		//tem que fazer isso com string format provavelmente ou regex
@@ -115,14 +123,14 @@ public class Util {
 			throw new WrongDateHourFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
 		}
 		result.set(Calendar.DATE, Integer.parseInt(dataHora.substring(0, 2)));
-		result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)));
+		result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)) - 1); //janeiro eh considerado mes 0
 		result.set(Calendar.YEAR, Integer.parseInt(dataHora.substring(6, 10)));
 		result.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dataHora.substring(11, 13)));
 		result.set(Calendar.MINUTE, Integer.parseInt(dataHora.substring(14, 16)));
 		result.set(Calendar.SECOND, Integer.parseInt(dataHora.substring(17)));
 		
 		return result;
-	}*/
+	}
 
 	public static void unzip(File correctionZipFile) throws IOException {
 		File destDir = correctionZipFile.getParentFile();
@@ -156,15 +164,66 @@ public class Util {
         }
         bos.close();
     }
-	public static void main(String[] args) throws ConfigurationException, IOException {
+	
+	public static Map<String,Roteiro> loadSpreadsheet(String idGoogleDrive) throws WrongDateHourFormatException{
+		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
+		SpreadsheetService service = new SpreadsheetService("Sheet1");
+        try {
+            String sheetUrl =
+                "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
+
+            // Use this String as url
+            URL url = new URL(sheetUrl);
+
+            // Get Feed of Spreadsheet url
+            ListFeed lf = service.getFeed(url, ListFeed.class);
+
+            //Iterate over feed to get cell value
+            for (ListEntry le : lf.getEntries()) {
+                CustomElementCollection cec = le.getCustomElements();
+                //Pass column name to access it's cell values
+                String idRoteiro = cec.getValue("Roteiro".toLowerCase());
+                //System.out.println(val);
+                String descricao = cec.getValue("Descrição".toLowerCase());
+                //System.out.println(val2);
+                GregorianCalendar dataHoraLiberacao = Util.buildDate(cec.getValue("Data-HoraLiberação".toLowerCase()));
+                //System.out.println(val3);
+                GregorianCalendar dataHoraEnvioNormal = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioNormal".toLowerCase()));
+                //System.out.println(val4);
+                GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioAtraso".toLowerCase()));
+                //System.out.println(val5);
+                String monitorCorretor = cec.getValue("MonitorCorretor".toLowerCase());
+                //System.out.println(val6);
+                GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cec.getValue("DataInicioCorrecao".toLowerCase()));
+                //System.out.println(val7);
+                GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cec.getValue("DataEntregaCorrecao".toLowerCase()));
+                //System.out.println(val8);
+                Roteiro roteiro = new Roteiro(idRoteiro,descricao,dataHoraLiberacao,
+                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitorCorretor,
+                		dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);
+                roteiros.put(roteiro.getId(), roteiro);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return roteiros;
+	}
+	
+	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException {
 		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
 		//Util.loadProperties();
-		File folder = new File("/home/ubuntu/leda/leda-tools/leda-submission-server/public");
+		/*File folder = new File("/home/ubuntu/leda/leda-tools/leda-submission-server/public");
 		boolean exists = folder.exists();
 		Path newLink = (new File(folder,"report")).toPath();
 		Path target = (new File("/home/ubuntu/leda-upload")).toPath();
 		Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
-		System.out.println("link criado de " + newLink + " para " + target);
+		System.out.println("link criado de " + newLink + " para " + target);*/
+		Map<String,Roteiro> roteiros = Util.loadSpreadsheet("19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA");
+		//roteiros.forEach((id,r) -> System.out.println(r));
+		roteiros.values().stream().sorted((r1,r2) -> r1.getId().compareTo(r2.getId()))
+			.forEach(r -> System.out.println(r));
 		/*Pattern pattern = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 		Matcher matcher = pattern.matcher("49/04/1970  14:00:00");
 		System.out.println(matcher.matches());
