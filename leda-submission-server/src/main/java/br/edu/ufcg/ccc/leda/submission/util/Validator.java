@@ -7,9 +7,11 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.google.gdata.util.ServiceException;
+
 public class Validator {
 
-	public static void validateDownload(String roteiro) throws RoteiroException, ConfigurationException, IOException{
+	public static void validateDownload(String roteiro) throws RoteiroException, ConfigurationException, IOException, ServiceException{
 		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteirosMap.get(roteiro);
 		if(rot == null){
@@ -31,7 +33,7 @@ public class Validator {
 		}
 	}
 	
-	public static void validateProvaDownload(String provaId) throws RoteiroException, ConfigurationException, IOException{
+	public static void validateProvaDownload(String provaId) throws RoteiroException, ConfigurationException, IOException, ServiceException{
 		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
 		Prova prova = provasMap.get(provaId);
 		if(prova == null){
@@ -54,7 +56,7 @@ public class Validator {
 	}
 	
 	//realiza validacoes de uma submissao de professor 
-	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException, RoteiroException {
+	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException, RoteiroException, ServiceException {
 				
 			Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
 			//System.out.println("STUDENT: " + config.getMatricula());
@@ -77,7 +79,7 @@ public class Validator {
 		}
 		
 	//realiza validacoes e retorna excecoes caso alguma delas nao seja satisfeita 
-	public static void validate(StudentUploadConfiguration config) throws ConfigurationException, IOException, StudentException, RoteiroException {
+	public static void validate(StudentUploadConfiguration config) throws ConfigurationException, IOException, StudentException, RoteiroException, ServiceException {
 			
 		Map<String,Student> studentMap = Configuration.getInstance().getStudents();
 		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Set;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
@@ -23,6 +24,7 @@ import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 
+import com.google.gdata.util.ServiceException;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -44,6 +46,9 @@ public class SubmissionServer extends Jooby {
 			e.printStackTrace();
 			System.exit(1);
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
@@ -102,11 +107,11 @@ public class SubmissionServer extends Jooby {
 	
 	get("/conf", (req,resp) -> {
 	    //Config conf = req.require(Config.class);
-		
-	    Config conf = ConfigFactory.load("application");
-	    String myprop = conf.getString("port");
-	    System.out.println(myprop);
-	    resp.send("porta capturada");
+		StringBuilder sb = new StringBuilder();
+	    ConfigFactory.defaultReference().root().entrySet().stream().forEach(v -> sb.append(v.toString()));
+	    //String myprop = conf.getString("port");
+	    //System.out.println(myprop);
+	    resp.send(sb.toString());
 	  });
 	
 	/*get("/redirect", (req,resp) -> {

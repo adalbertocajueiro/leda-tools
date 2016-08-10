@@ -14,6 +14,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.google.gdata.util.ServiceException;
+
 public class CorrectionManager {
 
 	private Timer scheduler;
@@ -223,7 +225,7 @@ public class CorrectionManager {
 		return executing;
 	}
 	
-	public static void main(String[] args) throws InterruptedException, ConfigurationException, IOException {
+	public static void main(String[] args) throws InterruptedException, ConfigurationException, IOException, ServiceException {
 		Configuration config = Configuration.getInstance();
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		File roteirosFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);

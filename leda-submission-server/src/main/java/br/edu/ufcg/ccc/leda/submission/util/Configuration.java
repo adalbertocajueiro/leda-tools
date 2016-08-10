@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.google.gdata.util.ServiceException;
+
 import jxl.read.biff.BiffException;
 
 public class Configuration {
@@ -17,7 +19,7 @@ public class Configuration {
 	private static String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
 	private static Configuration instance;
 	
-	private Configuration() throws ConfigurationException, IOException{
+	private Configuration() throws ConfigurationException, IOException, ServiceException{
 		try {
 			students = FileUtilities.loadStudentLists();
 			//roteiros = FileUtilities.loadRoteiros();
@@ -31,7 +33,7 @@ public class Configuration {
 			throw new ConfigurationException(e);
 		}
 	}
-	public static Configuration getInstance() throws ConfigurationException, IOException {
+	public static Configuration getInstance() throws ConfigurationException, IOException, ServiceException {
 		if(instance == null){
 			instance = new Configuration();
 		}

@@ -4,10 +4,12 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -164,10 +166,10 @@ public class Util {
         bos.close();
     }
 	
-	public static Map<String,Roteiro> loadSpreadsheet(String idGoogleDrive) throws WrongDateHourFormatException{
+	public static Map<String,Roteiro> loadSpreadsheet(String idGoogleDrive) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
-        try {
+        
             String sheetUrl =
                 "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
 
@@ -202,15 +204,23 @@ public class Util {
                 		dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);
                 roteiros.put(roteiro.getId(), roteiro);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+            
+            File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+    		if(!configFolder.exists()){
+    			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+    		}
+    		File jsonFileRoteiros = new File(configFolder,FileUtilities.JSON_FILE_ROTEIRO);
+
+    		//sobrescreve os dados lidos da spreadsheet
+    		FileUtilities.loadRoteirosFromUploadFolder(roteiros);
+    		
+    		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
+    		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
+        
         return roteiros;
 	}
 	
-	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException {
+	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException {
 		//Util.loadRoteirosFromJson(new File("D:\\trash2\\file.json"));
 		//Util.loadProperties();
 		/*File folder = new File("/home/ubuntu/leda/leda-tools/leda-submission-server/public");

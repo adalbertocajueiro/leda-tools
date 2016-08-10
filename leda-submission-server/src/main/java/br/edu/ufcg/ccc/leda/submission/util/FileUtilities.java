@@ -30,6 +30,8 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.google.gdata.util.ServiceException;
+
 public class FileUtilities {
 
 	public static final String DEFAULT_CONFIG_FOLDER = "conf";
@@ -61,7 +63,7 @@ public class FileUtilities {
 		}
 	}
 	
-	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException{
+	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
@@ -75,7 +77,7 @@ public class FileUtilities {
 		return environment;
 	}
 	
-	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException{
+	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
@@ -99,9 +101,10 @@ public class FileUtilities {
 	 * @throws ConfigurationException 
 	 * @throws IOException 
 	 * @throws RoteiroException 
+	 * @throws ServiceException 
 	 * @throws Exception 
 	 */
-	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
+	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException, ServiceException {
 		String result = "";
 		
 		
@@ -219,7 +222,7 @@ public class FileUtilities {
 		return result;
 	}
 	
-	public static String saveProfessorTestSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
+	public static String saveProfessorTestSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException, ServiceException {
 		String result = "";
 		
 		
@@ -333,9 +336,10 @@ public class FileUtilities {
 	 * @throws ConfigurationException 
 	 * @throws IOException 
 	 * @throws RoteiroException 
+	 * @throws ServiceException 
 	 * @throws Exception 
 	 */
-	public static String saveStudentSubmission(File uploaded, StudentUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
+	public static String saveStudentSubmission(File uploaded, StudentUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException, ServiceException {
 		String result = null;
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
 		Validator.validate(config);
