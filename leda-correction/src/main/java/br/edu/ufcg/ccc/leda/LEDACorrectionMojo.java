@@ -119,50 +119,55 @@ public class LEDACorrectionMojo extends AbstractMojo {
 				this.project.getName(), this.testCasesJarFileName,
 				this.testSuiteClassName);
 
-		File[] submissions = submissionsDirectory.listFiles(new FileFilter() {
-
-			@Override
-			public boolean accept(File pathname) {
-				boolean result = false;
-				result = pathname.getName().endsWith("zip")
-						|| pathname.getName().endsWith("ZIP");
-				return result;
-			}
-		});
-
-		if (submissions.length > 0) {
-			for (int i = 0; i < submissions.length; i++) {
-				File studZipFile = submissions[i];
-
-				try {
-					// File projectFolder =
-					// mu.createCompleteProjectFolder(environmentZipFile,
-					// studentZipFile, fileNames);
-					File projectFolder = mu.createCompleteProjectFolder(
-							correctionEnvZipFile, studZipFile, fileNames);
-					System.out
-							.println("CREATING AND RUNNING MAVEN FOR FOLDER: "
-									+ projectFolder.getAbsolutePath());
-					// run maven
-					mu.executeMaven(projectFolder);
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new MojoExecutionException(
-							"Error creating project folder", e);
+		if(submissionsDirectory.exists()){
+			File[] submissions = submissionsDirectory.listFiles(new FileFilter() {
+	
+				@Override
+				public boolean accept(File pathname) {
+					boolean result = false;
+					result = pathname.getName().endsWith("zip")
+							|| pathname.getName().endsWith("ZIP");
+					return result;
 				}
+			});
+	
+			if (submissions.length > 0) {
+				for (int i = 0; i < submissions.length; i++) {
+					File studZipFile = submissions[i];
+	
+					try {
+						// File projectFolder =
+						// mu.createCompleteProjectFolder(environmentZipFile,
+						// studentZipFile, fileNames);
+						File projectFolder = mu.createCompleteProjectFolder(
+								correctionEnvZipFile, studZipFile, fileNames);
+						System.out
+								.println("CREATING AND RUNNING MAVEN FOR FOLDER: "
+										+ projectFolder.getAbsolutePath());
+						// run maven
+						mu.executeMaven(projectFolder);
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new MojoExecutionException(
+								"Error creating project folder", e);
+					}
+				}
+				System.out.println("GENERATING FINAL REPORT");
+				File targetFolder = new File(this.project.getBuild().getDirectory());
+				try {
+					mu.generateReport(submissionsDirectory, targetFolder);
+				} catch (IOException | JDOMException e) {
+					e.printStackTrace();
+					throw new MojoExecutionException("Error geenrating report", e);
+				}
+	
+			} else {
+				throw new MojoExecutionException(
+						"Submissions folder does not contain zip files");
 			}
-			System.out.println("GENERATING FINAL REPORT");
-			File targetFolder = new File(this.project.getBuild().getDirectory());
-			try {
-				mu.generateReport(submissionsDirectory, targetFolder);
-			} catch (IOException | JDOMException e) {
-				e.printStackTrace();
-				throw new MojoExecutionException("Error geenrating report", e);
-			}
-
-		} else {
+		}else{
 			throw new MojoExecutionException(
-					"Submissions folder does not contain zip files");
+					"Submission directory: " + submissionsDirectory.getAbsolutePath() + "does not exist");
 		}
 
 	}

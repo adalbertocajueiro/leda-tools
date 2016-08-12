@@ -17,14 +17,16 @@ public class Configuration {
 	private CorrectionManager correctionManager;
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
 	private static String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
+	private static String ID_PROVAS_SHEET = "1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI";
 	private static Configuration instance;
 	
 	private Configuration() throws ConfigurationException, IOException, ServiceException{
 		try {
 			students = FileUtilities.loadStudentLists();
 			//roteiros = FileUtilities.loadRoteiros();
-			roteiros = Util.loadSpreadsheet(ID_ROTEIROS_SHEET);
-			provas = FileUtilities.loadProvas();
+			roteiros = Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET);
+			//provas = FileUtilities.loadProvas();
+			provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
 			File roteirosFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
 			correctionManager = new CorrectionManager(roteirosFolder, this);
 			ipsAutorizados.add("150.165.74");

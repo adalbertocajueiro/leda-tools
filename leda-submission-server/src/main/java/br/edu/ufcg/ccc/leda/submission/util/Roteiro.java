@@ -107,6 +107,9 @@ public class Roteiro {
 		if(this.dataHoraLimiteEnvioAtraso != null){
 			result.append("Data limite envio: " + Util.formatDate(this.dataHoraLimiteEnvioAtraso) + "\n");
 		}
+		if(this.arquivoAmbiente != null && this.arquivoAmbiente.exists()){
+			result.append("Ambiente: " + this.arquivoAmbiente.getName() + "\n");
+		}
 
 		return result.toString();
 		

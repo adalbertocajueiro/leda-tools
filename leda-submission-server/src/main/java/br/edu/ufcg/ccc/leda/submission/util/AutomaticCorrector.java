@@ -119,7 +119,7 @@ public class AutomaticCorrector {
 		return task;
 	}
 	
-	public void executeMaven(File projectFolder) throws MavenInvocationException{
+	public void executeMaven(File projectFolder) throws MavenInvocationException, IOException{
 		Invoker invoker = new DefaultInvoker();
 		System.setProperty("maven.home", FileUtilities.MAVEN_HOME_FOLDER);
 		if (projectFolder.isDirectory()) {
@@ -130,6 +130,9 @@ public class AutomaticCorrector {
 			request.setBaseDirectory(projectFolder);
 			invoker.execute(request);
 		}
+		//depois de rodar o amven a thread compacta a pasta
+		File zipFile = Util.compact(projectFolder);
+		//depois de comapctar, manda para o google driver
 	}
 	
 	

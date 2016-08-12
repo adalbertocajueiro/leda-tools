@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Set;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
@@ -25,8 +24,6 @@ import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 
 import com.google.gdata.util.ServiceException;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 
 /**
  * @author jooby generator
@@ -75,9 +72,10 @@ public class SubmissionServer extends Jooby {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
-	get("/submissoesProva", (req,resp) -> {
-		String idProva = req.param("prova").value();
-		StringBuffer submissions = FileUtilities.listSubmissions(idProva);
+
+	get("/listSubmissions", (req,resp) -> {
+		String id = req.param("id").value();
+		StringBuffer submissions = FileUtilities.listSubmissions(id);
 		resp.send("Submissoes: <br>\n" + submissions.toString());
 	});
 	
@@ -105,13 +103,18 @@ public class SubmissionServer extends Jooby {
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
-	get("/conf", (req,resp) -> {
+	get("/config", (req,resp) -> {
 	    //Config conf = req.require(Config.class);
-		StringBuilder sb = new StringBuilder();
-	    ConfigFactory.defaultReference().root().entrySet().stream().forEach(v -> sb.append(v.toString()));
+		//StringBuilder sb = new StringBuilder();
+	    //ConfigFactory.load("application.conf").entrySet().stream().forEach(v -> sb.append(v.toString()));
 	    //String myprop = conf.getString("port");
 	    //System.out.println(myprop);
-	    resp.send(sb.toString());
+	    //resp.send(sb.toString());
+		StringBuilder result = new StringBuilder();
+		result.append("Configuration information! <br>");
+		result.append(Configuration.getInstance().toString());
+		
+		resp.send(result.toString());
 	  });
 	
 	/*get("/redirect", (req,resp) -> {

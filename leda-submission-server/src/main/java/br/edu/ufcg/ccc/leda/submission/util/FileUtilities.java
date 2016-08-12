@@ -736,12 +736,12 @@ public class FileUtilities {
 		}
 	}
 	public static void loadProvasFromUploadFolder(Map<String,Prova> provas){
-		File roteirosFolder = new File(FileUtilities.UPLOAD_FOLDER, CURRENT_SEMESTER + File.separator + PROVAS_FOLDER);
-		if(roteirosFolder.exists()){
+		File provasFolder = new File(FileUtilities.UPLOAD_FOLDER, CURRENT_SEMESTER + File.separator + PROVAS_FOLDER);
+		if(provasFolder.exists()){
 			Set<String> keys = provas.keySet();
 			for (String key : keys) {
 				Prova prova = provas.get(key);
-				File[] files = roteirosFolder.listFiles(new FileFilter() {
+				File[] files = provasFolder.listFiles(new FileFilter() {
 					
 					@Override
 					public boolean accept(File pathname) {
