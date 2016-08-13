@@ -20,7 +20,7 @@ public class CorrectionManager {
 
 	private Timer scheduler;
 	public static final long CORRECTION_TIMER_DELAY = 30 * 60 * 1000;
-	private File roteirosFolder;
+	private File currentSemesterFolder;
 	private ArrayList<Thread> executing;
 	private static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
 	private static final String GENERATED_REPORT_FILE = "target/generated-report.html";
@@ -33,8 +33,8 @@ public class CorrectionManager {
 		executing = new ArrayList<Thread>();
 	}*/
 
-	protected CorrectionManager(File roteirosFolder, Configuration config) {
-		this.roteirosFolder = roteirosFolder;
+	protected CorrectionManager(File currentSemesterFolder, Configuration config) {
+		this.currentSemesterFolder = currentSemesterFolder;
 		this.configuration = config;
 		executing = new ArrayList<Thread>();
 		scheduler = new Timer("Correction timer", false);
@@ -57,7 +57,7 @@ public class CorrectionManager {
 			System.out.println("%%%%%%%% Executando Correction Timer Task em: " + Util.formatDate(new GregorianCalendar()));
 			System.out.println("Verificando roteiros a corrigir...");
 			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
-			File[] roteiros = roteirosFolder.listFiles(new FileFilter() {
+			File[] roteiros = currentSemesterFolder.listFiles(new FileFilter() {
 					@Override
 					public boolean accept(File pathname) {
 						boolean resp = false;
@@ -117,7 +117,7 @@ public class CorrectionManager {
 			
 			System.out.println("Verificando provas a corrigir...");
 			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
-			File[] provas = roteirosFolder.listFiles(new FileFilter() {
+			File[] provas = currentSemesterFolder.listFiles(new FileFilter() {
 					@Override
 					public boolean accept(File pathname) {
 						boolean resp = false;

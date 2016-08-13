@@ -38,6 +38,10 @@ poderia ja mantar a lista d eestudantes no contexto.
   (https://developers.google.com/sheets/quickstart/java)
 - mostrar as threads de correcao rodando atualmente - OK
 - implementar a leitura das configuracoes do arquivo application.conf do jooby.
+- funcionalidade de ler planilhas dos alunos diretamente do google driver (usar a planilha NotasLEDAXXXX.X). 
+  precisa acessar mais de uma aba.
+- tentar juntar as infos de constantes em algum lugar da internet para facilitar o carregamento remoto.
+- colocar construcao de uma pagina html baseado nas informacoes de configuracao.
 
 para fazer download 
 https://templth.wordpress.com/2014/11/19/interacting-with-google-spreadsheet-with-java/

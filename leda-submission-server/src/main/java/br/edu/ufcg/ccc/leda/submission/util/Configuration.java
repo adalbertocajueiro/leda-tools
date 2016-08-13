@@ -27,8 +27,8 @@ public class Configuration {
 			roteiros = Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET);
 			//provas = FileUtilities.loadProvas();
 			provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
-			File roteirosFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
-			correctionManager = new CorrectionManager(roteirosFolder, this);
+			File currentSemesterFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
+			correctionManager = new CorrectionManager(currentSemesterFolder, this);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
