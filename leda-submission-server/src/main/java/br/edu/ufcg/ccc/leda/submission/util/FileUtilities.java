@@ -691,7 +691,7 @@ public class FileUtilities {
 			list.addAll(Arrays.asList(files));
 			Stream<File> sorted = list.stream().sorted(
 					(f1, f2) -> f1.getName().compareTo(f2.getName()));
-			sorted.forEach(f -> result.append(f.getName() + "<br>\n"));
+			sorted.forEach(f -> result.append(f.getName() + " (submetido em :" + Util.formatDate(f.lastModified()) + ")<br>\n"));
 		}
 		return result;
 	}
