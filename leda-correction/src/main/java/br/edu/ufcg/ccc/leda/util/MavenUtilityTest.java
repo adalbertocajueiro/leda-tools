@@ -9,20 +9,27 @@ import org.jdom2.JDOMException;
 public class MavenUtilityTest {
 	public static void main(String[] args) throws IOException, JDOMException {
 		File mavenHomeFolder = new File("D:\\apache-maven-3.2.5");
-		File projectsFolder = new File("D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\subs");
-		MavenUtility mu = new MavenUtility(projectsFolder,mavenHomeFolder,
-				"br.edu.ufcg.ccc.leda","Correction Tool Client", "Prova-BSTComComparator-tests.jar", "RunTests.java");
-		//File correctionZipFile = new File("D:\\tmp\\submissions\\Gnomesort-Combsort-environment.zip");
-		File correctionZipFile = new File("D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\Prova-BSTComComparator-correction-env.zip");
+		File projectsFolder = new File(
+				"D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\subs");
+		MavenUtility mu = new MavenUtility(projectsFolder, mavenHomeFolder,
+				"br.edu.ufcg.ccc.leda", "Correction Tool Client",
+				"Prova-BSTComComparator-tests.jar", "RunTests.java");
+		// File correctionZipFile = new
+		// File("D:\\tmp\\submissions\\Gnomesort-Combsort-environment.zip");
+		File correctionZipFile = new File(
+				"D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\Prova-BSTComComparator-correction-env.zip");
 		ArrayList<String> al = new ArrayList<String>();
 		al.add("BSTWithComparatorImpl.java");
-		//al.add("Combsort.java");
-		File studentZipFile = new File("D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\subs\\ADSON CESAR DA SILVA.zip");
+		// al.add("Combsort.java");
+		File studentZipFile = new File(
+				"D:\\UFCG\\2015.2\\disciplinas\\leda\\PP2\\subs\\ADSON CESAR DA SILVA.zip");
 		mu.createCompleteProjectFolder(correctionZipFile, studentZipFile, al);
 		System.out.println("Creation completed");
-		/*File projectFoder =  mu.createCompleteProjectFolder(envZipFile, studentZipFile, al);
-		System.out.println("Folder created: " + projectFoder.getAbsolutePath());
-		mu.executeMaven(projectFoder);
-		System.out.println("Finished...");*/
+		/*
+		 * File projectFoder = mu.createCompleteProjectFolder(envZipFile,
+		 * studentZipFile, al); System.out.println("Folder created: " +
+		 * projectFoder.getAbsolutePath()); mu.executeMaven(projectFoder);
+		 * System.out.println("Finished...");
+		 */
 	}
 }

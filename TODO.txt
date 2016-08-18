@@ -5,3 +5,28 @@ http://code.revelc.net/formatter-maven-plugin/usage.html
 http://code.revelc.net/formatter-maven-plugin/plugin-info.html
 https://github.com/gavin-hu/javafmt-maven-plugin
 http://stackoverflow.com/questions/1652012/organize-imports-with-maven2-eclipse-style
+
+walkmod:
+http://walkmod.com/getstarted
+https://github.com/walkmod/maven-walkmod-plugin
+
+exemplo de uso:
+<plugin>
+				<groupId>org.walkmod</groupId>
+				<artifactId>maven-walkmod-plugin</artifactId>
+				<version>1.3</version>
+				<configuration>
+					<transformation type="imports-cleaner" />
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+						<configuration>
+							<skipWalkmod>false</skipWalkmod>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>

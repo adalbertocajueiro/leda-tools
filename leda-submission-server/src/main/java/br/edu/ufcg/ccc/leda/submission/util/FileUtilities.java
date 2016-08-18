@@ -18,17 +18,19 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.biff.EmptyCell;
+import jxl.read.biff.BiffException;
+
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.biff.EmptyCell;
-import jxl.read.biff.BiffException;
+import com.google.gdata.util.ServiceException;
 
 public class FileUtilities {
 
@@ -61,7 +63,7 @@ public class FileUtilities {
 		}
 	}
 	
-	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException{
+	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
@@ -75,7 +77,7 @@ public class FileUtilities {
 		return environment;
 	}
 	
-	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException{
+	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
@@ -99,10 +101,11 @@ public class FileUtilities {
 	 * @throws ConfigurationException 
 	 * @throws IOException 
 	 * @throws RoteiroException 
+	 * @throws ServiceException 
 	 * @throws Exception 
 	 */
-	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
-		String result = "upload nao realizado";
+	public static String saveProfessorSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException, ServiceException {
+		String result = "";
 		
 		
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
@@ -128,8 +131,8 @@ public class FileUtilities {
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
 				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
-				result = "";
-				result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig);
+				//result = "";
+				result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig) + "\n<br>";
 			}
 			
 		}else{
@@ -219,8 +222,8 @@ public class FileUtilities {
 		return result;
 	}
 	
-	public static String saveProfessorTestSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
-		String result = "upload nao realizado";
+	public static String saveProfessorTestSubmission(File ambiente, File projetoCorrecao, ProfessorUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException, ServiceException {
+		String result = "";
 		
 		
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
@@ -247,8 +250,8 @@ public class FileUtilities {
 						new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
 								roteiroAtual, 1);
 				//System.out.println("Roteiro atual: " + newConfig.getRoteiro());
-				result = "";
-				result = result + saveProfessorTestSubmission(ambiente, projetoCorrecao, newConfig);
+				
+				result = result + saveProfessorTestSubmission(ambiente, projetoCorrecao, newConfig) + "\n<br>";
 			}
 			
 		}else{
@@ -333,9 +336,10 @@ public class FileUtilities {
 	 * @throws ConfigurationException 
 	 * @throws IOException 
 	 * @throws RoteiroException 
+	 * @throws ServiceException 
 	 * @throws Exception 
 	 */
-	public static String saveStudentSubmission(File uploaded, StudentUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException {
+	public static String saveStudentSubmission(File uploaded, StudentUploadConfiguration config) throws StudentException, ConfigurationException, IOException, RoteiroException, ServiceException {
 		String result = null;
 		// precisa verificar se o aluno que enviou esta realmente matriculado.
 		Validator.validate(config);
@@ -687,7 +691,7 @@ public class FileUtilities {
 			list.addAll(Arrays.asList(files));
 			Stream<File> sorted = list.stream().sorted(
 					(f1, f2) -> f1.getName().compareTo(f2.getName()));
-			sorted.forEach(f -> result.append(f.getName() + "<br>\n"));
+			sorted.forEach(f -> result.append(f.getName() + " (submetido em :" + Util.formatDate(f.lastModified()) + ")<br>\n"));
 		}
 		return result;
 	}
@@ -732,12 +736,12 @@ public class FileUtilities {
 		}
 	}
 	public static void loadProvasFromUploadFolder(Map<String,Prova> provas){
-		File roteirosFolder = new File(FileUtilities.UPLOAD_FOLDER, CURRENT_SEMESTER + File.separator + PROVAS_FOLDER);
-		if(roteirosFolder.exists()){
+		File provasFolder = new File(FileUtilities.UPLOAD_FOLDER, CURRENT_SEMESTER + File.separator + PROVAS_FOLDER);
+		if(provasFolder.exists()){
 			Set<String> keys = provas.keySet();
 			for (String key : keys) {
 				Prova prova = provas.get(key);
-				File[] files = roteirosFolder.listFiles(new FileFilter() {
+				File[] files = provasFolder.listFiles(new FileFilter() {
 					
 					@Override
 					public boolean accept(File pathname) {

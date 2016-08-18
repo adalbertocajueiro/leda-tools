@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Upload;
 import org.jooby.ftl.Ftl;
-
-
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
@@ -22,12 +21,9 @@ import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
-import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
-import br.edu.ufcg.ccc.leda.submission.util.Prova;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
+import com.google.gdata.util.ServiceException;
 
 /**
  * @author jooby generator
@@ -47,6 +43,9 @@ public class SubmissionServer extends Jooby {
 			e.printStackTrace();
 			System.exit(1);
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
@@ -73,10 +72,25 @@ public class SubmissionServer extends Jooby {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
-	get("/submissoesProva", (req,resp) -> {
-		String idProva = req.param("prova").value();
-		StringBuffer submissions = FileUtilities.listSubmissions(idProva);
+
+	get("/listSubmissions", (req,resp) -> {
+		String id = req.param("id").value();
+		StringBuffer submissions = FileUtilities.listSubmissions(id);
 		resp.send("Submissoes: <br>\n" + submissions.toString());
+	});
+	
+	get("/correctionThreads", (req,resp) -> {
+		ArrayList<Thread> threads = Configuration.getInstance().getCorrectionManager().getExecuting();
+		StringBuilder result = new StringBuilder();
+		if(threads.size() == 0){
+			result.append("Sem threads ativos de correcao");
+		}else{
+			threads.forEach(t -> result.append(t.getName() + " - STATE: " + t.getState().name() + "<br>\n"));
+		}
+		//result.append("Configuration instance reloaded! New values bellow...<br>");
+		//result.append(Configuration.getInstance().toString());
+		
+		resp.send(result.toString());
 	});
 	
 	get("/reload", (req,resp) -> {
@@ -87,16 +101,20 @@ public class SubmissionServer extends Jooby {
 		
 		resp.send(result.toString());
 	});
-	
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
-	get("/conf", (req,resp) -> {
+	get("/config", (req,resp) -> {
 	    //Config conf = req.require(Config.class);
+		//StringBuilder sb = new StringBuilder();
+	    //ConfigFactory.load("application.conf").entrySet().stream().forEach(v -> sb.append(v.toString()));
+	    //String myprop = conf.getString("port");
+	    //System.out.println(myprop);
+	    //resp.send(sb.toString());
+		StringBuilder result = new StringBuilder();
+		result.append("Configuration information! <br>");
+		result.append(Configuration.getInstance().toString());
 		
-	    Config conf = ConfigFactory.load("application");
-	    String myprop = conf.getString("port");
-	    System.out.println(myprop);
-	    resp.send("porta capturada");
+		resp.send(result.toString());
 	  });
 	
 	/*get("/redirect", (req,resp) -> {

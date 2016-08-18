@@ -170,13 +170,16 @@ public class LEDAChartMojo extends AbstractMojo {
 					e.printStackTrace();
 				}
 			} else {
-				System.out.println("Desktop is null ("+ desktop + ") or desktop.isSupported(Desktop.Action.BROWSE) returned false!");
+				System.out
+						.println("Desktop is null ("
+								+ desktop
+								+ ") or desktop.isSupported(Desktop.Action.BROWSE) returned false!");
 			}
 		} else {
-			//System.out.println("Desktop.isDesktopSupported() returned false!");
+			// System.out.println("Desktop.isDesktopSupported() returned false!");
 			// provavelmetne nao eh prataforma windows. tentando abrir em mac
 			String os = System.getProperty("os.name").toLowerCase();
-			if(os.indexOf( "mac" ) >= 0){
+			if (os.indexOf("mac") >= 0) {
 				Runtime runtime = Runtime.getRuntime();
 				try {
 					runtime.exec("open " + file.toURI());
@@ -185,7 +188,8 @@ public class LEDAChartMojo extends AbstractMojo {
 					e.printStackTrace();
 				}
 			}
-			//no linux se nao suportar desktop entao o aluno tera que abrir o index.html mesmo
+			// no linux se nao suportar desktop entao o aluno tera que abrir o
+			// index.html mesmo
 		}
 	}
 }

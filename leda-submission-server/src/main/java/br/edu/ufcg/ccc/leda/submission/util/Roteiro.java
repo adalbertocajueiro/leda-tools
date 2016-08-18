@@ -1,7 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -107,6 +106,9 @@ public class Roteiro {
 		result.append("Data liberacao: " + Util.formatDate(this.dataHoraLiberacao) + " | ");
 		if(this.dataHoraLimiteEnvioAtraso != null){
 			result.append("Data limite envio: " + Util.formatDate(this.dataHoraLimiteEnvioAtraso) + "\n");
+		}
+		if(this.arquivoAmbiente != null && this.arquivoAmbiente.exists()){
+			result.append("Ambiente: " + this.arquivoAmbiente.getName() + "\n");
 		}
 
 		return result.toString();

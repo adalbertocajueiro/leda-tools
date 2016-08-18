@@ -27,11 +27,35 @@ poderia ja mantar a lista d eestudantes no contexto.
 - fazer funcionalidade para fazer o reload dos dados de configuracao automaticamente e salvar no singleton - OK
 - fazer funcionalidade para avisar o monitor automaticamente quando o roteiro for corrigido e estiver pronto para o monitor
   (http://crunchify.com/java-mailapi-example-send-an-email-via-gmail-smtp/)
+  (http://www.tutorialspoint.com/java/java_sending_email.htm)
+  (http://unix.stackexchange.com/questions/1449/lightweight-outgoing-smtp-server)
+  (https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-14-04)
 - fazer funcionalidade que compacta todas as submissoes e manda para googledrive (ou dropbox)
-- fazer funcionalidade para ler automaticamente as planilhasde roteiros e provas do googledrive
+- fazer funcionalidade para ler automaticamente as planilhasde roteiros e provas do googledrive - OK
   (http://stackoverflow.com/questions/25151470/upload-files-to-google-drive-from-a-java-application-without-user-interaction)
   (https://developers.google.com/api-client-library/java/apis/drive/v2)
-- mostrar as threads de correcao rodando atualmente
+  (https://github.com/google/google-api-java-client-samples/tree/master/drive-cmdline-sample)
+  (https://developers.google.com/sheets/quickstart/java)
+- mostrar as threads de correcao rodando atualmente - OK
 - implementar a leitura das configuracoes do arquivo application.conf do jooby.
+- funcionalidade de ler planilhas dos alunos diretamente do google driver (usar a planilha NotasLEDAXXXX.X). 
+  precisa acessar mais de uma aba.
+- tentar juntar as infos de constantes em algum lugar da internet para facilitar o carregamento remoto.
+- colocar construcao de uma pagina html baseado nas informacoes de configuracao.
+
+para fazer download 
+https://templth.wordpress.com/2014/11/19/interacting-with-google-spreadsheet-with-java/
+http://www.awasthiashish.com/2015/10/read-data-from-google-spreadsheet.html
+
+String fileId = "1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo";
+OutputStream outputStream = new ByteArrayOutputStream();
+driveService.files().export(fileId, "application/pdf")
+        .executeMediaAndDownloadTo(outputStream);
+MIME: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+ID: 19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA
+
+GET https://www.googleapis.com/drive/v3/files/0B9jNhSvVjoIVM3dKcGRKRmVIOVU?alt=media
+Authorization: Bearer ya29.AHESVbXTUv5mHMo3RYfmS1YJonjzzdTOFZwvyOAUVhrs
+
 
   

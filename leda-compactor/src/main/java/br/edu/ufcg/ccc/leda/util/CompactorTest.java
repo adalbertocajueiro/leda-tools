@@ -6,8 +6,8 @@ public class CompactorTest {
 
 	public static void main(String[] args) throws Exception {
 		Compactor fu = new Compactor();
-		File folder = new File("D:\\tmp\\Rot1\\subs\\Aluno1\\src");
-		File destZipFile = new File("D:\\tmp\\aluno1 da silva.zip");
+		File folder = new File("D:\\trash2\\leda-upload\\2016.1\\PP1-01");
+		File destZipFile = new File("D:\\trash2\\leda-upload\\2016.1\\PP1-01.zip");
 		fu.zipFolder(folder, destZipFile);
 		System.out.println("Compaction finished!!!");
 	}

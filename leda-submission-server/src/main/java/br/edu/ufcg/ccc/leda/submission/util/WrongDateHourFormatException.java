@@ -1,6 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-public class WrongDateHourFormatException extends Exception {
+public class WrongDateHourFormatException extends RuntimeException {
 
 	public WrongDateHourFormatException() {
 		// TODO Auto-generated constructor stub

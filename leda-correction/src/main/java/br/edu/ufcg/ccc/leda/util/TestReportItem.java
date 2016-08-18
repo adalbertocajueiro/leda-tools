@@ -1,8 +1,6 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
-import java.net.URL;
-import java.util.GregorianCalendar;
 
 /**
  * @author Adalberto
@@ -20,9 +18,10 @@ public class TestReportItem {
 	private double time;
 	private File completeReport;
 	private File mavenOutputLog;
-	
-	public TestReportItem(File testResultXMLFile, String matricula, String studentName, long lastModified, 
-			int totalTests, int errors, int failures, int skiped, double time, File completeReport,
+
+	public TestReportItem(File testResultXMLFile, String matricula,
+			String studentName, long lastModified, int totalTests, int errors,
+			int failures, int skiped, double time, File completeReport,
 			File mavenOutputLog) {
 		super();
 		this.testResultXMLFile = testResultXMLFile;
@@ -126,5 +125,4 @@ public class TestReportItem {
 		this.lastModified = lastModified;
 	}
 
-	
 }

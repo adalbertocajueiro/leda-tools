@@ -16,7 +16,6 @@ package br.edu.ufcg.ccc.leda;
  * limitations under the License.
  */
 
-
 /**
  * Goal para mandar uma prova ao servidor.
  *
@@ -26,5 +25,4 @@ package br.edu.ufcg.ccc.leda;
  */
 public class LEDAProvaSenderMojo extends LEDARoteiroSenderMojo {
 
-	
 }

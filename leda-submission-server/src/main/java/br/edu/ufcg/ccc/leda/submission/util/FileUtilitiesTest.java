@@ -1,6 +1,5 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
