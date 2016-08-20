@@ -5,3 +5,5 @@ exemplos/
 jooby/
 google-api-java-client-samples-master.zip
 drive-cmdline-sample/
+apache*.*
+apache*/

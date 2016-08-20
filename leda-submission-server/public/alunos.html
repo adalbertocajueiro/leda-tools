@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alunos cadastrados em LEDA</title>
+<!-- Le styles -->
+<link href="./bootstrap4/css/bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-------->
+<div id="content">
+    <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
+        <li class="nav-item"><a class="nav-link active" href="#t1" role="tab" data-toggle="tab">T1</a></li>
+        <li class="nav-item"><a class="nav-link" href="#t2" role="tab" data-toggle="tab">T2</a></li>
+    </ul>
+	<#assign gray = 'true'>
+    <div id="my-tab-content" class="tab-content">
+        <div  role="tabpanel" class="tab-pane fade in active" id="t1">
+            <h2>Turma 1</h2>
+            <table class="table table-hover">
+				<thead class="bg-success">
+					<th>Estudante</th>
+					<th>Matricula</th>	
+				</thead>
+				<tbody>
+				<#list alunos as student>
+					<#if gray == 'true' && student.turma == "01">
+						<tr class="table-warning"><td>${student.nome} <td>${student.matricula}
+						<#assign gray = 'false'>
+					<#elseif gray == 'false' && student.turma == "01">
+						<tr class="table-info"><td>${student.nome} <td>${student.matricula}
+						<#assign gray = 'true'>
+					</#if>
+				</#list>
+				</tbody>
+			</table>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="t2">
+            <h2>Turma 2</h2>
+            <table class="table table-hover">
+				<thead class="bg-success">
+					<th>Estudante</th>
+					<th>Matricula</th>	
+				</thead>
+				<tbody>
+				<#list alunos as student>
+					<#if gray == 'true' && student.turma == "02">
+						<tr class="table-warning"><td>${student.nome} <td>${student.matricula}
+						<#assign gray = 'false'>
+					<#elseif gray == 'false' && student.turma == "02">
+						<tr class="table-info"><td>${student.nome} <td>${student.matricula}
+						<#assign gray = 'true'>
+					</#if>
+				</#list>
+				</tbody>
+			</table>
+        </div>
+	</div>
+
+
+<script type="text/javascript">
+    $('#tabs a').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>    
+</div> <!-- container -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+
+</body>
+</html>

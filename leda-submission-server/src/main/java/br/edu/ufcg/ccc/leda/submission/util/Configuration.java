@@ -14,7 +14,6 @@ public class Configuration {
 	private Map<String, Student> students;
 	private Map<String,Roteiro> roteiros;
 	private Map<String,Prova> provas;
-	private CorrectionManager correctionManager;
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
 	private static String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
 	private static String ID_PROVAS_SHEET = "1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI";
@@ -28,7 +27,6 @@ public class Configuration {
 			//provas = FileUtilities.loadProvas();
 			provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
 			File currentSemesterFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
-			correctionManager = new CorrectionManager(currentSemesterFolder, this);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
@@ -52,9 +50,6 @@ public class Configuration {
 	}
 	public Map<String, Roteiro> getRoteiros() {
 		return roteiros;
-	}
-	public CorrectionManager getCorrectionManager() {
-		return correctionManager;
 	}
 	public Map<String, Prova> getProvas() {
 		return provas;
