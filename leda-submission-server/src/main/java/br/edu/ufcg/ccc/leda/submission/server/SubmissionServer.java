@@ -72,7 +72,6 @@ public class SubmissionServer extends Jooby {
 		assets("/reports/**");
 		assets("/site/**");
 		assets("/*.ico");
-		assets("bootstrap-3.3.7-dist/**");
 		assets("bootstrap4/**");
 		
 	}
@@ -141,18 +140,18 @@ public class SubmissionServer extends Jooby {
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
-	get("/config", (req,resp) -> {
-	    //Config conf = req.require(Config.class);
-		//StringBuilder sb = new StringBuilder();
-	    //ConfigFactory.load("application.conf").entrySet().stream().forEach(v -> sb.append(v.toString()));
-	    //String myprop = conf.getString("port");
-	    //System.out.println(myprop);
-	    //resp.send(sb.toString());
-		StringBuilder result = new StringBuilder();
-		result.append("Configuration information! <br>");
-		result.append(Configuration.getInstance().toString());
-		
-		resp.send(result.toString());
+	get("/config", (req) -> {
+
+		//StringBuilder result = new StringBuilder();
+		//result.append("Configuration information! <br>");
+		//result.append(Configuration.getInstance().toString());
+
+        View html = Results.html("configuration");
+        html.put("config",Configuration.getInstance());
+        
+        return html;
+        
+		//resp.send(result.toString());
 	  });
 	
 	/*get("/redirect", (req,resp) -> {

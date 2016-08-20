@@ -19,18 +19,19 @@ public class Configuration {
 	private static String ID_PROVAS_SHEET = "1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI";
 	private static Configuration instance;
 	
-	private Configuration() throws ConfigurationException, IOException, ServiceException{
+	private Configuration() throws ConfigurationException, IOException {
 		try {
 			students = FileUtilities.loadStudentLists();
-			//roteiros = FileUtilities.loadRoteiros();
 			roteiros = Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET);
-			//provas = FileUtilities.loadProvas();
 			provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
-			File currentSemesterFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			roteiros = FileUtilities.loadRoteiros();
+			provas = FileUtilities.loadProvas();
 		}
 	}
 	public static Configuration getInstance() throws ConfigurationException, IOException, ServiceException {
