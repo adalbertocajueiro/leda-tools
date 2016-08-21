@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -110,10 +111,15 @@ public class SubmissionServer extends Jooby {
         return html;
     });
 
-	get("/listSubmissions", (req,resp) -> {
-		String id = req.param("id").value();
+	get("/submissoes", (req) -> {
+		Map<String,File[]> submissoes = FileUtilities.allSubmissions();
+		View html = Results.html("submissoes");
+		html.put("submissoes",submissoes);
+	
+		return html;
+		/*String id = req.param("id").value();
 		StringBuffer submissions = FileUtilities.listSubmissions(id);
-		resp.send("Submissoes: <br>\n" + submissions.toString());
+		resp.send("Submissoes: <br>\n" + submissions.toString());*/
 	});
 	
 	get("/correctionThreads", (req,resp) -> {

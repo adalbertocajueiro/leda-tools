@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import jxl.Cell;
@@ -665,15 +666,52 @@ public class FileUtilities {
 		myWorkBook.close();
 	}
 	
+	public static Map<String,File[]> allSubmissions(){
+		Map<String,File[]> result = new HashMap<String,File[]>();
+
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,CURRENT_SEMESTER);
+		if(currentSemester.exists()){
+			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
+			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
+			File[] folders = currentSemester.listFiles(new FileFilter() {
+				
+				@Override
+				public boolean accept(File arg0) {
+					return patternRoteiro.matcher(arg0.getName()).matches() 
+							|| patternProva.matcher(arg0.getName()).matches();
+				}
+			});
+			for (int i = 0; i < folders.length; i++) {
+				String folderName = folders[i].getName();
+				File[] submissions = listSubmissions(folders[i]);
+				result.put(folderName,submissions);
+			}
+		}
+		
+		return result;
+	}
+	
 	/**
-	 * Mostra a listagem das submissoes de prova ou roteiro. vai depender do id que tem o formato 
-	 * R0X-0X ou PXX-XX
-	 * 
-	 * @param id
+	 * Mostra a listagem das submissoes de prova ou roteiro. 
+	 * @param folder a pasta raiz de um roteiro ou prova
 	 * @return
 	 */
-	public static StringBuffer listSubmissions(String id){
-		StringBuffer result = new StringBuffer();
+	public static File[] listSubmissions(File folder){
+		File[] result = new File[0];
+		File submissionsFolder = new File(folder, SUBMISSIONS_FOLDER); 
+		
+		if(submissionsFolder.exists()){
+			result = submissionsFolder.listFiles(new FileFilter() {
+
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.getName().endsWith(".zip");
+				}
+			});
+		}
+		return result;
+		/*StringBuffer result = new StringBuffer();
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + id + File.separator + SUBMISSIONS_FOLDER; 
 		
@@ -693,7 +731,7 @@ public class FileUtilities {
 					(f1, f2) -> f1.getName().compareTo(f2.getName()));
 			sorted.forEach(f -> result.append(f.getName() + " (submetido em :" + Util.formatDate(f.lastModified()) + ")<br>\n"));
 		}
-		return result;
+		return result;*/
 	}
 
 
