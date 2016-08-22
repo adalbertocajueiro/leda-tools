@@ -23,7 +23,7 @@
 <div id="content">
     <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
 		<#assign active = 'true'>
-		<#list submissoes?keys?sort as submissao>
+		<#list chavesOrdenadas as submissao>
 			<#if active='true'> 
 				<li class="nav-item"><a class="nav-link active" href="#${submissao}" role="tab" data-toggle="tab">${submissao}</a></li>
 				<#assign active='false'>

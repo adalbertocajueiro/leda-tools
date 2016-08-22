@@ -3,7 +3,9 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.google.gdata.util.ServiceException;
 
@@ -22,16 +24,19 @@ public class Configuration {
 	private Configuration() throws ConfigurationException, IOException {
 		try {
 			students = FileUtilities.loadStudentLists();
-			roteiros = Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET);
-			provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
+			roteiros = new TreeMap<String,Roteiro>(Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET));
+			provas = new TreeMap<String, Prova> (Util.comparatorProvas());
+			provas.putAll(Util.loadSpreadsheetProvas(ID_PROVAS_SHEET));
+			//provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			roteiros = FileUtilities.loadRoteiros();
-			provas = FileUtilities.loadProvas();
+			roteiros = new TreeMap<String,Roteiro>(FileUtilities.loadRoteiros());
+			provas = new TreeMap<String, Prova>(Util.comparatorProvas());
+			provas.putAll(FileUtilities.loadProvas());
 		}
 	}
 	public static Configuration getInstance() throws ConfigurationException, IOException, ServiceException {

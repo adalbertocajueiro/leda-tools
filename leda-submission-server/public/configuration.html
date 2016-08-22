@@ -38,7 +38,7 @@
 					<th class="text-xs-center">Ambiente</th>
 				</thead>
 				<tbody>
-				<#list config.roteiros?values?sort_by("id") as roteiro>
+				<#list config.roteiros?values as roteiro>
 						<tr><td>${roteiro.id} <td>${roteiro.descricao}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLiberacao.time)}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
