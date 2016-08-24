@@ -116,49 +116,7 @@ public class SubmissionServer extends Jooby {
 	get("/submissoes", (req) -> {
 		Map<String,File[]> submissoes = FileUtilities.allSubmissions();
 		
-		Collection<String> orderedKeys = submissoes.keySet().stream().sorted((name1,name2)-> {
-			int result = 0;
-			Pattern patternProvaPratica = Pattern.compile("PP[1-3]-[0-9][0-9[X]]");
-			Pattern patternProvaReposicao = Pattern.compile("PR[1-3]-[0-9][0-9[X]]");
-			Pattern patternProvaFinal = Pattern.compile("PF[1-3]-[0-9][0-9[X]]");
-			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
-			if (patternRoteiro.matcher(name1).matches()){
-				if(patternRoteiro.matcher(name2).matches()){
-					result = name1.compareTo(name2);
-				}else{
-					result = -1;
-				}
-			} else{
-				if(patternProvaPratica.matcher(name1).matches()){
-					if(patternProvaPratica.matcher(name2).matches()){
-						result = name1.compareTo(name2);
-					}else if (patternProvaReposicao.matcher(name2).matches()){
-						result = -1;
-					} else if (patternProvaFinal.matcher(name2).matches()){
-						result = -2;
-					}
-				} else if (patternProvaReposicao.matcher(name1).matches()){
-					if(patternProvaReposicao.matcher(name2).matches()){
-						result = name1.compareTo(name2);
-					}else if (patternProvaPratica.matcher(name2).matches()){
-						result = 1;
-					} else if (patternProvaFinal.matcher(name2).matches()){
-						result = -1;
-					}
-				} else if (patternProvaFinal.matcher(name1).matches()){
-					if(patternProvaFinal.matcher(name2).matches()){
-						result = name1.compareTo(name2);
-					}else if (patternProvaPratica.matcher(name2).matches()){
-						result = 2;
-					} else if (patternProvaReposicao.matcher(name2).matches()){
-						result = 1;
-					}
-				}
-			}
-			
-			
-			return result;
-		}).collect(Collectors.toList());
+		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
 		html.put("chavesOrdenadas",orderedKeys);

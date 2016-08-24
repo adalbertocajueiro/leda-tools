@@ -34,8 +34,8 @@
     </ul>
 	<div id="my-tab-content" class="tab-content">
 	<#assign active = 'true'>
-	<#list submissoes?keys?sort as submissao>
-		<#assign id = submissao>
+	<#list chavesOrdenadas as id>
+		<#assign submissao = submissoes[id]>
 		<#if active='true'> 
 			<div  role="tabpanel" class="tab-pane fade in active" id="${id}"> 
 			<#assign active='false'>
