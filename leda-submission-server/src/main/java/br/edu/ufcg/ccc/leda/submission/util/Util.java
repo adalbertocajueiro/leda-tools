@@ -101,6 +101,8 @@ public class Util {
 								result = -1;
 							} else if (patternProvaFinal.matcher(name2).matches()){
 								result = -2;
+							} else if (patternRoteiro.matcher(name2).matches()){
+								result = 3;
 							}
 						} else if (patternProvaReposicao.matcher(name1).matches()){
 							if(patternProvaReposicao.matcher(name2).matches()){
@@ -109,6 +111,8 @@ public class Util {
 								result = 1;
 							} else if (patternProvaFinal.matcher(name2).matches()){
 								result = -1;
+							} else if (patternRoteiro.matcher(name2).matches()){
+								result = 3;
 							}
 						} else if (patternProvaFinal.matcher(name1).matches()){
 							if(patternProvaFinal.matcher(name2).matches()){
@@ -117,6 +121,8 @@ public class Util {
 								result = 2;
 							} else if (patternProvaReposicao.matcher(name2).matches()){
 								result = 1;
+							} else if (patternRoteiro.matcher(name2).matches()){
+								result = 3;
 							}
 						}
 					}
