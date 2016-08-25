@@ -141,13 +141,15 @@ public class SubmissionServer extends Jooby {
 		resp.send(result.toString());
 	});
 	
-	get("/reload", (req,resp) -> {
+	get("/reload", (req,resp,chain) -> {
 		Configuration.getInstance().reload();
+		//chain.next("/config",req,resp);
 		StringBuilder result = new StringBuilder();
 		result.append("Configuration instance reloaded! New values bellow...<br>");
 		result.append(Configuration.getInstance().toString());
 		
 		resp.send(result.toString());
+		
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
 	

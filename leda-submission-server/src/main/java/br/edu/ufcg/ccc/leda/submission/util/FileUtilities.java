@@ -121,6 +121,16 @@ public class FileUtilities {
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
 		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
+
+		File folderRoteiros = new File(uploadFolder,uploadSubFolder);
+		String id = config.getRoteiro();
+		if (config.getRoteiro().contains("X")) {
+			id = id.substring(0, id.indexOf("X"));
+		}
+		// remove os arquivos de prova antes cadastrados (baseado no id da prova)
+		Util.removeFilesByPrefix(folderRoteiros, id);
+		
+		
 		if(config.getNumeroTurmas() > 1){
 			//System.out.println("recebido pr amais de uma turma");
 			//replica o roteiro pela quantidade de turmas
@@ -241,6 +251,23 @@ public class FileUtilities {
 		//contem o id da prova P0X-0X
 		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 	
+		File folderProvas = new File(uploadFolder,uploadSubFolder);
+		String id = config.getRoteiro();
+		if (config.getRoteiro().contains("X")) {
+			id = id.substring(0, id.indexOf("X"));
+		}
+		// remove os arquivos de prova antes cadastrados (baseado no id da prova)
+		Util.removeFilesByPrefix(folderProvas, id);
+		/*
+		// remove os arquivos de prova antes cadastrados (baseado no id da
+		// prova)
+		if (!os.startsWith("Windows")) {
+			Runtime.getRuntime().exec("rm " + folderRoteiros.getAbsolutePath() + File.separator + id + "*.*");
+		} else {
+			System.out.println("RODANDO: " + "del " + folderRoteiros.getAbsolutePath() + File.separator + id + "*.*");
+			Runtime.getRuntime().exec("del " + folderRoteiros.getAbsolutePath() + File.separator + id + "*.*");
+		}*/
+		
 		if(config.getNumeroTurmas() > 1){
 			//replica a prova pela quantidade de turmas
 			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
@@ -275,6 +302,7 @@ public class FileUtilities {
 				foutCorrProj.mkdirs();
 			}
 			
+					
 			Files.copy(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			Files.copy(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	
@@ -298,6 +326,9 @@ public class FileUtilities {
 			*/
 			
 			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
+			
+			
+			
 			//System.out.println(result);
 			//ja cria também os links simbolicos para possibilitar a correcao
 			String os = System.getProperty("os.name");
