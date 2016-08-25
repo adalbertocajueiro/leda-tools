@@ -24,29 +24,21 @@ public class CorrectionManager {
 	private ArrayList<Thread> executing;
 	private static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
 	private static final String GENERATED_REPORT_FILE = "target/generated-report.html";
-	private Configuration configuration;
-	/*private static CorrectionManager instance;
-	static {
-		scheduler = new Timer("Correction timer", true);
-		roteirosFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),
-				FileUtilities.CURRENT_SEMESTER);
-		executing = new ArrayList<Thread>();
-	}*/
-
-	protected CorrectionManager(File currentSemesterFolder, Configuration config) {
-		this.currentSemesterFolder = currentSemesterFolder;
-		this.configuration = config;
+	private static CorrectionManager instance;
+	
+	protected CorrectionManager() {
+		this.currentSemesterFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
 		executing = new ArrayList<Thread>();
 		scheduler = new Timer("Correction timer", false);
-		scheduler.scheduleAtFixedRate(new CorrectionTimerTask(), 1000, CORRECTION_TIMER_DELAY);
+		scheduler.scheduleAtFixedRate(new CorrectionTimerTask(), 2000, CORRECTION_TIMER_DELAY);
 	}
 
-	/*public static CorrectionManager getInstance() {
+	public static CorrectionManager getInstance() {
 		if (instance == null) {
 			instance = new CorrectionManager();
 		}
 		return instance;
-	}*/
+	}
 
 	private class CorrectionTimerTask extends TimerTask {
 
@@ -112,6 +104,9 @@ public class CorrectionManager {
 				} catch (ExecutionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 			
@@ -164,6 +159,9 @@ public class CorrectionManager {
 				} catch (ExecutionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
@@ -172,11 +170,11 @@ public class CorrectionManager {
 
 	}
 	private boolean canCorrect(File roteiro)
-			throws ConfigurationException, IOException {
+			throws ConfigurationException, IOException, ServiceException {
 		boolean result = false;
 		// tem que ver se a data atual ultrapassou a data limite de envio
 		// com atraso
-		Map<String, Roteiro> roteiros = configuration.getRoteiros();
+		Map<String, Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteiros.get(roteiro.getName());
 		if (rot != null) {
 			GregorianCalendar current = new GregorianCalendar();
@@ -197,11 +195,11 @@ public class CorrectionManager {
 		return result;
 	}
 	private boolean canCorrectProva(File prova)
-			throws ConfigurationException, IOException {
+			throws ConfigurationException, IOException, ServiceException {
 		boolean result = false;
 		// tem que ver se a data atual ultrapassou a data limite de envio
 		// com atraso
-		Map<String, Prova> provas = configuration.getProvas();
+		Map<String, Prova> provas = Configuration.getInstance().getProvas();
 		Prova prov = provas.get(prova.getName());
 		if (prov != null) {
 			GregorianCalendar current = new GregorianCalendar();
@@ -229,7 +227,7 @@ public class CorrectionManager {
 		Configuration config = Configuration.getInstance();
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		File roteirosFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
-		CorrectionManager cm = new CorrectionManager(roteirosFolder, config);
+		CorrectionManager cm = new CorrectionManager();
 		cm.canCorrect(new File(roteirosFolder,"R01-01"));
 	}
 

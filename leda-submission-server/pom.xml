@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jooby</groupId>
 		<artifactId>jooby-project</artifactId>
-		<version>1.0.0.CR6</version>
+		<version>1.0.0.CR7</version>
 	</parent>
 
 	<artifactId>leda-submission-server</artifactId>
@@ -152,7 +152,13 @@
 			<artifactId>nginxparser</artifactId>
 			<version>0.9.6</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/org.jooby/jooby-jade -->
+<dependency>
+    <groupId>org.jooby</groupId>
+    <artifactId>jooby-jade</artifactId>
+    <version>1.0.0.CR7</version>
+</dependency>
+		
 
 	</dependencies>
 

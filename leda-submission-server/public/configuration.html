@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configurações</title>
+<!-- Le styles -->
+<link href="./bootstrap4/css/bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+<!-------->
+<div id="content">
+    <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
+        <li class="nav-item"><a class="nav-link active" href="#roteiros" role="tab" data-toggle="tab">Roteiros</a></li>
+        <li class="nav-item"><a class="nav-link" href="#provas" role="tab" data-toggle="tab">Provas</a></li>
+		<li class="nav-item"><a class="nav-link" href="#ips" role="tab" data-toggle="tab">IPs</a></li>
+    </ul>
+	<#-- Create constructor object -->
+	<#assign objectConstructor = "freemarker.template.utility.ObjectConstructor"?new()>
+	<#-- Call formatter constructor -->
+	<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
+    <div id="my-tab-content" class="tab-content">
+        <div  role="tabpanel" class="tab-pane fade in active" id="roteiros">
+            <p><h5>Roteiros</h5>
+            <table id="roteiros" class="table table-hover table-bordered">
+				<thead class="bg-success">
+					<th class="text-xs-center">ID</th>
+					<th class="text-xs-center">Descrição</th>
+					<th class="text-xs-center">Data Liberação</th>
+					<th class="text-xs-center">Data Limite</th>
+					<th class="text-xs-center">Monitor</th>
+					<th class="text-xs-center">Ambiente</th>
+				</thead>
+				<tbody>
+				<#list config.roteiros?values as roteiro>
+						<tr><td>${roteiro.id} <td>${roteiro.descricao}
+						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLiberacao.time)}
+						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
+						<td>${(roteiro.monitorCorretor)!""}
+						<td class="text-xs-center"><#if roteiro.arquivoAmbiente??> Sim </#if>
+				</#list>
+				</tbody>
+			</table>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="provas">
+            <p><h5>Provas</h5>
+            <table id="provas" class="table table-hover table-bordered">
+				<thead class="bg-success">
+					<th class="text-xs-center">ID</th>
+					<th class="text-xs-center">Descrição</th>
+					<th class="text-xs-center">Liberação</th>
+					<th class="text-xs-center">Limite Envio</th>
+				</thead>
+				<tbody>
+				<#list config.provas?values as prova>
+						<tr><td>${prova.provaId} <td>${prova.descricao}
+						<td class="text-xs-center">${formatter.format(prova.dataHoraLiberacao.time)}
+						<td class="text-xs-center">${formatter.format(prova.dataHoraLimiteEnvio.time)}
+				</#list>
+				</tbody>
+			</table>
+        </div>
+		<div role="tabpanel" class="tab-pane fade" id="ips">
+            <p><h5>IPs Autorizados para envio de prova</h5>
+			<ul>
+				<#list config.ipsAutorizados as ip>
+						<li>${ip}
+				</#list>
+			</ul>
+        </div>
+	</div>
+
+
+<script type="text/javascript">
+    $('#tabs a').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>  
+
+</div> <!-- container -->
+
+<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+
+</body>
+</html>

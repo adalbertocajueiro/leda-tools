@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configurações</title>
+<!-- Le styles -->
+<link href="./bootstrap4/css/bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+<#-- Create constructor object -->
+<#assign objectConstructor = "freemarker.template.utility.ObjectConstructor"?new()>
+<#-- Call formatter constructor -->
+<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
+ 
+<!-------->
+<div id="content">
+    <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
+		<#assign active = 'true'>
+		<#list chavesOrdenadas as submissao>
+			<#if active='true'> 
+				<li class="nav-item"><a class="nav-link active" href="#${submissao}" role="tab" data-toggle="tab">${submissao}</a></li>
+				<#assign active='false'>
+			<#else>
+				<li class="nav-item"><a class="nav-link" href="#${submissao}" role="tab" data-toggle="tab">${submissao}</a></li>
+			</#if>
+		</#list>
+    </ul>
+	<div id="my-tab-content" class="tab-content">
+	<#assign active = 'true'>
+	<#list chavesOrdenadas as id>
+		<#assign submissao = submissoes[id]>
+		<#if active='true'> 
+			<div  role="tabpanel" class="tab-pane fade in active" id="${id}"> 
+			<#assign active='false'>
+		<#else>
+			<div  role="tabpanel" class="tab-pane fade" id="${id}"> 
+		</#if>
+            <p><h5>Submissoes de ${id}</h5>
+            <table id="${id}" class="table table-hover table-bordered">
+				<thead class="bg-success">
+					<th class="text-xs-center">Aluno</th>
+					<th class="text-xs-center">Data de Submissão</th>
+				</thead>
+				<tbody>
+				<#list submissoes[id] as file>
+					<tr><td>${file?keep_after_last("-")?keep_before_last(".")}<td>${formatter.format(file.lastModified()?number_to_datetime)}
+				</#list>
+				</tbody>
+			</table>
+        </div>
+	</#list>
+    </div>
+	
+
+<script type="text/javascript">
+    $('#tabs').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>  
+
+</div> <!-- container -->
+
+<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+
+</body>
+</html>

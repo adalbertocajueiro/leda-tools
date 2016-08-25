@@ -3,7 +3,9 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.google.gdata.util.ServiceException;
 
@@ -14,25 +16,27 @@ public class Configuration {
 	private Map<String, Student> students;
 	private Map<String,Roteiro> roteiros;
 	private Map<String,Prova> provas;
-	private CorrectionManager correctionManager;
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
 	private static String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
 	private static String ID_PROVAS_SHEET = "1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI";
 	private static Configuration instance;
 	
-	private Configuration() throws ConfigurationException, IOException, ServiceException{
+	private Configuration() throws ConfigurationException, IOException {
 		try {
 			students = FileUtilities.loadStudentLists();
-			//roteiros = FileUtilities.loadRoteiros();
-			roteiros = Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET);
-			//provas = FileUtilities.loadProvas();
-			provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
-			File currentSemesterFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
-			correctionManager = new CorrectionManager(currentSemesterFolder, this);
+			roteiros = new TreeMap<String,Roteiro>(Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET));
+			provas = new TreeMap<String, Prova> (Util.comparatorProvas());
+			provas.putAll(Util.loadSpreadsheetProvas(ID_PROVAS_SHEET));
+			//provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			roteiros = new TreeMap<String,Roteiro>(FileUtilities.loadRoteiros());
+			provas = new TreeMap<String, Prova>(Util.comparatorProvas());
+			provas.putAll(FileUtilities.loadProvas());
 		}
 	}
 	public static Configuration getInstance() throws ConfigurationException, IOException, ServiceException {
@@ -52,9 +56,6 @@ public class Configuration {
 	}
 	public Map<String, Roteiro> getRoteiros() {
 		return roteiros;
-	}
-	public CorrectionManager getCorrectionManager() {
-		return correctionManager;
 	}
 	public Map<String, Prova> getProvas() {
 		return provas;

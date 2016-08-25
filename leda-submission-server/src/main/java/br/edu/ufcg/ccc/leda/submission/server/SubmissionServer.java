@@ -1,29 +1,42 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
+import org.jooby.Results;
 import org.jooby.Upload;
+import org.jooby.View;
 import org.jooby.ftl.Ftl;
+import org.jooby.jade.Jade;
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
+import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
+import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 
 import com.google.gdata.util.ServiceException;
+import com.google.gson.Gson;
 
 /**
  * @author jooby generator
@@ -38,6 +51,7 @@ public class SubmissionServer extends Jooby {
 			Configuration.getInstance();
 			//correctionManager = CorrectionManager.getInstance();
 			Thread.sleep(2000);
+			CorrectionManager.getInstance();
 		} catch (ConfigurationException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,10 +73,14 @@ public class SubmissionServer extends Jooby {
 
 	{
 		assets("/reports/**");
+		assets("/site/**");
+		assets("/*.ico");
+		assets("bootstrap4/**");
+		
 	}
   {
 	use(new Ftl());
-	  
+	//use(new Jade());
 	
 	get("/", (req,resp) -> {
 		resp.send("Hello World!");
@@ -72,15 +90,45 @@ public class SubmissionServer extends Jooby {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
+	get("/alunos", (req) -> {
+        //List<String> alunos = new ArrayList<String>();
+        Map<String,Student> alunos = Configuration.getInstance().getStudents();
+        View html = Results.html("alunos");
+        html.put("pageName", "Alunos cadastrados em LEDA");
+        
+        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
+        
+        return html;
+    });
+	
+	get("/alunosOrdenados", (req) -> {
+        //List<String> alunos = new ArrayList<String>();
+        Map<String,Student> alunos = Configuration.getInstance().getStudents();
+        View html = Results.html("alunosOrdenados");
+        html.put("pageName", "Alunos cadastrados em LEDA");
+        
+        //html.put("listaEstudantes",jsonContent);
+        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
+        
+        return html;
+    });
 
-	get("/listSubmissions", (req,resp) -> {
-		String id = req.param("id").value();
+	get("/submissoes", (req) -> {
+		Map<String,File[]> submissoes = FileUtilities.allSubmissions();
+		
+		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
+		View html = Results.html("submissoes");
+		html.put("submissoes",submissoes);
+		html.put("chavesOrdenadas",orderedKeys);
+	
+		return html;
+		/*String id = req.param("id").value();
 		StringBuffer submissions = FileUtilities.listSubmissions(id);
-		resp.send("Submissoes: <br>\n" + submissions.toString());
+		resp.send("Submissoes: <br>\n" + submissions.toString());*/
 	});
 	
 	get("/correctionThreads", (req,resp) -> {
-		ArrayList<Thread> threads = Configuration.getInstance().getCorrectionManager().getExecuting();
+		ArrayList<Thread> threads = CorrectionManager.getInstance().getExecuting();
 		StringBuilder result = new StringBuilder();
 		if(threads.size() == 0){
 			result.append("Sem threads ativos de correcao");
@@ -103,18 +151,18 @@ public class SubmissionServer extends Jooby {
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
-	get("/config", (req,resp) -> {
-	    //Config conf = req.require(Config.class);
-		//StringBuilder sb = new StringBuilder();
-	    //ConfigFactory.load("application.conf").entrySet().stream().forEach(v -> sb.append(v.toString()));
-	    //String myprop = conf.getString("port");
-	    //System.out.println(myprop);
-	    //resp.send(sb.toString());
-		StringBuilder result = new StringBuilder();
-		result.append("Configuration information! <br>");
-		result.append(Configuration.getInstance().toString());
-		
-		resp.send(result.toString());
+	get("/config", (req) -> {
+
+		//StringBuilder result = new StringBuilder();
+		//result.append("Configuration information! <br>");
+		//result.append(Configuration.getInstance().toString());
+
+        View html = Results.html("configuration");
+        html.put("config",Configuration.getInstance());
+        
+        return html;
+        
+		//resp.send(result.toString());
 	  });
 	
 	/*get("/redirect", (req,resp) -> {
