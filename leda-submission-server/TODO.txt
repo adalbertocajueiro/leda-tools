@@ -42,7 +42,7 @@ poderia ja mantar a lista d eestudantes no contexto.
   precisa acessar mais de uma aba.
 - tentar juntar as infos de constantes em algum lugar da internet para facilitar o carregamento remoto.
 - colocar construcao de uma pagina html baseado nas informacoes de configuracao. - OK
-- pagina para mostrar os envios num so html.
+- pagina para mostrar os envios num so html. - OK
 
 para fazer download 
 https://templth.wordpress.com/2014/11/19/interacting-with-google-spreadsheet-with-java/
@@ -57,6 +57,29 @@ ID: 19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA
 
 GET https://www.googleapis.com/drive/v3/files/0B9jNhSvVjoIVM3dKcGRKRmVIOVU?alt=media
 Authorization: Bearer ya29.AHESVbXTUv5mHMo3RYfmS1YJonjzzdTOFZwvyOAUVhrs
+
+
+Trabalhar com login no servidor: usar http://jooby.org/doc/pac4j/
+<dependency>
+  <groupId>org.jooby</groupId>
+  <artifactId>jooby-pac4j</artifactId>
+  <version>1.0.0.CR7</version>
+</dependency>
+
+Uso
+{
+
+  get("/public", () -> ..);
+
+  use(new Auth()); //Previous example adds a very basic but ready to use form login auth every time you try to access to /private or any route defined below the auth module.
+
+  get("/private", () -> ..);
+}
+
+demo em: https://github.com/pac4j/jooby-pac4j-demo
+
+docs em https://github.com/jooby-project/jooby/blob/master/jooby-pac4j/src/main/java/org/jooby/pac4j/Auth.java
+https://jar-download.com/explore-java-source-code-detail.php?file=./javaSource/org.jooby/jooby-pac4j/1.0.0.CR3/org/jooby/pac4j/Auth.java&key=f0992af949b4cbe28f62c138cd85bb06
 
 
   

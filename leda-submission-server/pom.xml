@@ -153,13 +153,15 @@
 			<version>0.9.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jooby/jooby-jade -->
-<dependency>
-    <groupId>org.jooby</groupId>
-    <artifactId>jooby-jade</artifactId>
-    <version>1.0.0.CR7</version>
-</dependency>
-		
-
+		<dependency>
+			<groupId>org.jooby</groupId>
+			<artifactId>jooby-jade</artifactId>
+			<version>1.0.0.CR7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jooby</groupId>
+			<artifactId>jooby-pac4j</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
