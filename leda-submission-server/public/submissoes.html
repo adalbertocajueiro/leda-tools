@@ -52,7 +52,7 @@
 				<tbody>
 				<#list submissoes[id] as file>
 					<tr><td>${file?keep_after_last("-")?keep_before_last(".")}<td>${formatter.format(file.lastModified()?number_to_datetime)}
-						<td align="center"><a href="../reports/${id}${file?keep_after_last(id)}"><img src="download.svg" width="16" height="16"/></a>
+						<td align="center"><a href="./reports/${id}${file?keep_after_last(id)}"><img src="download.svg" width="16" height="16"/></a>
 				</#list>
 				</tbody>
 			</table>
