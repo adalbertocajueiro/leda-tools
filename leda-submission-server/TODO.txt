@@ -82,4 +82,4 @@ docs em https://github.com/jooby-project/jooby/blob/master/jooby-pac4j/src/main/
 https://jar-download.com/explore-java-source-code-detail.php?file=./javaSource/org.jooby/jooby-pac4j/1.0.0.CR3/org/jooby/pac4j/Auth.java&key=f0992af949b4cbe28f62c138cd85bb06
 
 
-  
+na planilha de submissoes, os arquivos podem ser ordenados por nome do estudante. isso pdoe ser feito no servidor ainda, odernando antes de colocar a variavel submissoes no modelo. OK  

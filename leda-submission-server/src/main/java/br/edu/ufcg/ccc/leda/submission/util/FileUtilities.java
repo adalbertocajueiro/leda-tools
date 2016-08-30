@@ -724,7 +724,8 @@ public class FileUtilities {
 	}
 	
 	/**
-	 * Mostra a listagem das submissoes de prova ou roteiro. 
+	 * Mostra a listagem das submissoes de prova ou roteiro ordenadas por nome
+	 * do aluno. 
 	 * @param folder a pasta raiz de um roteiro ou prova
 	 * @return
 	 */
@@ -741,6 +742,20 @@ public class FileUtilities {
 				}
 			});
 		}
+		Arrays.sort(result, (f1,f2) -> {
+			int res = f1.getName().compareTo(f2.getName());
+			int indexOfDash = f1.getName().lastIndexOf("-");
+			if(indexOfDash != -1){
+				String nameF1 = f1.getName().substring(indexOfDash + 1);
+				indexOfDash = f2.getName().lastIndexOf("-");
+				if(indexOfDash != -1){
+					String nameF2 = f2.getName().substring(indexOfDash + 1);
+					res = nameF1.compareTo(nameF2);
+				}
+			}
+			
+			return res;
+		});
 		return result;
 		/*StringBuffer result = new StringBuffer();
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
