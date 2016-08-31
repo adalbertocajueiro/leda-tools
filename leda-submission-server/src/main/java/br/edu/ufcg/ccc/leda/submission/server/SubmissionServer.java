@@ -71,6 +71,7 @@ public class SubmissionServer extends Jooby {
 	{
 		assets("/reports/**");
 		assets("/site/**");
+		assets("css/**");
 		assets("/*.ico");
 		assets("/*.svg");
 		assets("bootstrap4/**");
