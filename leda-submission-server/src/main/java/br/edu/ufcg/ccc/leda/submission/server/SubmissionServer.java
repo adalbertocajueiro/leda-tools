@@ -200,26 +200,39 @@ public class SubmissionServer extends Jooby {
 		}
 	});
 	
-	get("/downloadProva",(req,resp) -> {
+	get("/requestDownloadProva",(req) -> {
 		String prova = req.param("prova").value();
-		//System.out.println("Id do roteiro: " + rId);
-		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
-		File fileToSend = null;
-		try {
-			fileToSend = FileUtilities.getEnvironmentProva(prova);
-			resp.type(MediaType.octetstream);
-		    resp.download(fileToSend);
-		} catch (ConfigurationException | IOException | RoteiroException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			resp.send(e.getMessage());
-		}
+
+		View html = Results.html("modal-downloadProva");
+	    html.put("prova",prova);
+	    
+	    return html;
+
 	});
+	
 	
   }
 
   {
-	post("/uploadRoteiro", (req,resp) -> {
+		post("/downloadProva",(req,resp) -> {
+			String prova = req.param("prova").value();
+			String matricula = req.param("matricula").value();
+
+			//verifica se a amtricula é de aluno cadastrado e a prova que pede eh da turma 
+			//do aluno
+			File fileToSend = null;
+			try {
+				fileToSend = FileUtilities.getEnvironmentProva(prova, matricula);
+				resp.type(MediaType.octetstream);
+			    resp.download(fileToSend);
+			} catch (ConfigurationException | IOException | RoteiroException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				resp.send(e.getMessage());
+			}
+		});
+
+	 post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");
 		String roteiro = req.param("roteiro").value();

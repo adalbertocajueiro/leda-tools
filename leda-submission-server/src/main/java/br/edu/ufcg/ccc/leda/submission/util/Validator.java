@@ -33,7 +33,16 @@ public class Validator {
 		}
 	}
 	
-	public static void validateProvaDownload(String provaId) throws RoteiroException, ConfigurationException, IOException, ServiceException{
+	public static void validateProvaDownload(String provaId,String matricula) throws RoteiroException, ConfigurationException, IOException, ServiceException{
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		String turma = provaId.substring(4);
+		if(requester == null){
+			throw new RoteiroException("Matricula " + matricula + " nao cadastrada");
+		}else if(!turma.equals(requester.getTurma())){
+			throw new RoteiroException("Estudante " + matricula + " nao pode fazer download da prova da turma " + turma);			
+		}
+				
 		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
 		Prova prova = provasMap.get(provaId);
 		if(prova == null){

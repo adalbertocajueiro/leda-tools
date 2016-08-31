@@ -64,16 +64,25 @@ public class FileUtilities {
 		}
 	}
 	
-	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException, ServiceException{
+	public static File getEnvironmentProva(String provaId, String matricula) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-		Validator.validateProvaDownload(provaId);
+		Validator.validateProvaDownload(provaId,matricula);
 		
 		//pega o roteiro par aobter o arquivo e mandar de volta
 		Map<String,Prova> provas = Configuration.getInstance().getProvas();
 		Prova prova = provas.get(provaId);
 		environment = prova.getArquivoAmbiente();
+		
+		//faz o registro do download feito pelo aluno.
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File provaUploadFolder = new File(currentSemester,provaId);
+		
+		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
+		String content = "Download de prova " + provaId + " feito pelo estudante " + matricula; 
+		logger.log(content);
 		
 		return environment;
 	}
