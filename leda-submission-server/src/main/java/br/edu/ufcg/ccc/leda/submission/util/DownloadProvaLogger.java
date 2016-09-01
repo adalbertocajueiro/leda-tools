@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class DownloadProvaLogger{
 	private Logger logger;
@@ -16,7 +17,8 @@ public class DownloadProvaLogger{
 		
 		try {
 			fh = new FileHandler(logFolder.getAbsolutePath() + File.separator + logFolder.getName() + ".log",true);
-			fh.setFormatter(new XMLLogFormatter());
+			//fh.setFormatter(new XMLLogFormatter());
+			fh.setFormatter(new SimpleFormatter());
 			logger = Logger.getLogger(logFolder.getName());
 			logger.setLevel(Level.FINE);
 			logger.addHandler(fh);  

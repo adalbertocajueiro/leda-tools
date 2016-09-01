@@ -67,21 +67,31 @@ public class FileUtilities {
 	public static File getEnvironmentProva(String provaId, String matricula) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
+		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File provaUploadFolder = new File(currentSemester,provaId);
+
+		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
+		String content = "VAZIO"; 
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-		Validator.validateProvaDownload(provaId,matricula);
+
+		try {
+			Validator.validateProvaDownload(provaId,matricula);
+		} catch (RoteiroException e) {
+			content = "[ERRO]:aluno " + matricula + " tentou fazer download da prova " + provaId + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
+			logger.log(content);
+			throw e;
+		}
 		
 		//pega o roteiro par aobter o arquivo e mandar de volta
 		Map<String,Prova> provas = Configuration.getInstance().getProvas();
 		Prova prova = provas.get(provaId);
 		environment = prova.getArquivoAmbiente();
-		
-		//faz o registro do download feito pelo aluno.
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
-		File provaUploadFolder = new File(currentSemester,provaId);
-		
-		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
-		String content = "Download de prova " + provaId + " feito pelo estudante " + matricula; 
+
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		content = "[DOWNLOAD]:prova " + provaId + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
 		logger.log(content);
 		
 		return environment;
