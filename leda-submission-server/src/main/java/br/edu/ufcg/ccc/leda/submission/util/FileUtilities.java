@@ -776,27 +776,6 @@ public class FileUtilities {
 			return res;
 		});
 		return result;
-		/*StringBuffer result = new StringBuffer();
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		String uploadSubFolder = CURRENT_SEMESTER + File.separator + id + File.separator + SUBMISSIONS_FOLDER; 
-		
-		File submissionsFolder = new File(uploadFolder,uploadSubFolder);
-		//System.out.println("pasta de submisoes: " + submissionsFolder.getAbsolutePath() + " existe: " + submissionsFolder.exists());
-		if(submissionsFolder.exists()){
-			File[] files = submissionsFolder.listFiles(new FileFilter() {
-
-				@Override
-				public boolean accept(File pathname) {
-					return pathname.getName().endsWith(".zip");
-				}
-			});
-			ArrayList<File> list = new ArrayList<File>();
-			list.addAll(Arrays.asList(files));
-			Stream<File> sorted = list.stream().sorted(
-					(f1, f2) -> f1.getName().compareTo(f2.getName()));
-			sorted.forEach(f -> result.append(f.getName() + " (submetido em :" + Util.formatDate(f.lastModified()) + ")<br>\n"));
-		}
-		return result;*/
 	}
 
 

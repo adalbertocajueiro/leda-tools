@@ -2,6 +2,7 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -392,6 +396,141 @@ public class Util {
 		//    ((NgxBlock)entry).findParam("application", "live"); // "on" for the first iter, "off" for the second one
 		//}
 	}
+	
+	/**
+	 * Retorna a lista dos alunos que fizeram o download de um roteiro ou prova. Essa lista
+	 * será utilizada para saber quem fez o download mas não submeteu a resposta.
+	 * @param id
+	 * @return
+	 * @throws IOException 
+	 */
+	public static List<String> alunosDownload(String id) throws IOException{
+		ArrayList<String> alunosComDownload = new ArrayList<String>();
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File provaUploadFolder = new File(currentSemester,id);
+		File downloadLogFile = new File(provaUploadFolder, id + ".log");
+		
+		if(downloadLogFile.exists()){
+			FileReader fr = new FileReader(downloadLogFile);
+			BufferedReader br = new BufferedReader(fr);
+			String line = "";
+			while( (line = br.readLine()) != null ){
+					if(line.contains("[DOWNLOAD]")){
+						int indexEstudante = line.indexOf("estudante");
+						int indexDash = line.indexOf("-",indexEstudante);
+						String matricula = line.substring(indexEstudante + "estudante".length(), indexDash).trim();
+						alunosComDownload.add(matricula);
+					}
+			}
+			br.close();
+			fr.close();
+		}
+		
+		return alunosComDownload;
+	}
+	
+	public static Map<String,List<Submission>> allSubmissions() throws ConfigurationException, IOException, ServiceException{
+		Map<String,List<Submission>> result = new HashMap<String,List<Submission>>();
+
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		if(currentSemester.exists()){
+			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
+			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
+			File[] folders = currentSemester.listFiles(new FileFilter() {
+				
+				@Override
+				public boolean accept(File arg0) {
+					return patternRoteiro.matcher(arg0.getName()).matches() 
+							|| patternProva.matcher(arg0.getName()).matches();
+				}
+			});
+			for (int i = 0; i < folders.length; i++) {
+				String folderName = folders[i].getName();
+				List<Submission> submissions = submissions(folders[i]);
+				result.put(folderName,submissions);
+			}
+		}
+		
+		return result;
+	}
+	
+	public static List<Submission> submissions(File atividadeFolder) throws ConfigurationException, IOException, ServiceException{
+		Map<String,Student> alunos = Configuration.getInstance().getStudents();
+		List<Submission> result = new ArrayList<Submission>();
+	
+		if(atividadeFolder.exists()){
+			File submissionsFolder = new File(atividadeFolder,FileUtilities.SUBMISSIONS_FOLDER);
+			List<File> files = new ArrayList<File>();
+			if(submissionsFolder.exists()){
+				files = filesAsList(submissionsFolder);
+			}
+			String id = atividadeFolder.getName();
+			alunos = alunos.values().stream()
+				.filter( a -> a.getTurma().equals(id.substring(4)))
+				.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toMap( a -> a.getMatricula(), a -> a));
+			//inserir na lista de submissoes
+			alunos.values().stream()
+				.forEach( a -> {
+					Submission sub;
+					try {
+						sub = new Submission(id, a.getMatricula());
+						result.add(sub);
+					} catch (ConfigurationException | IOException | ServiceException | RoteiroException
+							| StudentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				});
+		
+		}
+		return result.stream().sorted( (s1,s2) -> s1.getAluno().getNome().compareTo(s2.getAluno().getNome())).collect(Collectors.toList());
+		
+		//return result;
+	}
+
+	/**
+	 * Mostra a listagem das submissoes de prova ou roteiro ordenadas por nome
+	 * do aluno. 
+	 * @param folder a pasta raiz de um roteiro ou prova
+	 * @return
+	 */
+	public static List<File> filesAsList(File folder){
+		ArrayList<File> result = new ArrayList<File>();
+		File[] files = folder.listFiles(new FileFilter() {
+
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.getName().endsWith(".zip");
+				}
+			});
+		if(files != null){
+			for (File file : files) {
+				result.add(file);
+			}
+		}
+		
+/*		Arrays.sort(result, (f1,f2) -> {
+			int res = f1.getName().compareTo(f2.getName());
+			int indexOfDash = f1.getName().lastIndexOf("-");
+			if(indexOfDash != -1){
+				String nameF1 = f1.getName().substring(indexOfDash + 1);
+				indexOfDash = f2.getName().lastIndexOf("-");
+				if(indexOfDash != -1){
+					String nameF2 = f2.getName().substring(indexOfDash + 1);
+					res = nameF1.compareTo(nameF2);
+				}
+			}
+			
+			return res;
+		});
+*/		return result;
+	}
+
+	
 	public static void sendEmail(String fromAddr, String toAddr, String subject, String body, String user, String passwd)
 	{
 	    Properties props = new Properties();
@@ -579,8 +718,19 @@ public class Util {
 		//System.out.println("Email enviado");
 		//Util.loadConfig("conf/application.conf");
 		//https://docs.google.com/spreadsheets/d//pubhtml
-		Map<String,Prova> provas = Util.loadSpreadsheetProvas("1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI");
-		provas.forEach((id,p) -> System.out.println(p));
+		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI");
+		//provas.forEach((id,p) -> System.out.println(p));
+		Util.submissions(new File("D:\\trash2\\leda-upload\\2016.1\\R01-01"));
+		
+		Map<String,List<Submission>> allSubmissions = Util.allSubmissions();
+		allSubmissions.forEach( (id,ls) -> {
+			System.out.println("Atividade: " + id);
+			ls.forEach( s -> {
+				if(s.getArquivoSubmetido() != null){
+					System.out.println(" - " + s.getArquivoSubmetido().getName());
+				}
+			} );
+		});
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA");
 		//provas.forEach((id,p) -> System.out.println(p));
 		//File target = Util.compact(new File("D:\\trash2\\leda-upload\\2016.1\\R01-02"));

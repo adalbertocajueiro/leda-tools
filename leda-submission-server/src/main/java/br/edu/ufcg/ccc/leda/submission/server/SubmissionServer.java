@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 
 import com.google.gdata.util.ServiceException;
 
+import br.edu.ufcg.ccc.leda.submission.util.Submission;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
@@ -101,8 +103,7 @@ public class SubmissionServer extends Jooby {
     });
 	
 	get("/submissoes", (req) -> {
-		Map<String,File[]> submissoes = FileUtilities.allSubmissions();
-		
+		Map<String,List<Submission>> submissoes = Util.allSubmissions();
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
