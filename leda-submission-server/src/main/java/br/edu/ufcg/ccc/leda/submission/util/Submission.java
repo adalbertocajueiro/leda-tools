@@ -46,6 +46,7 @@ public class Submission {
 		boolean fezDownload = true;
 		List<String> alunosDownload = Util.alunosDownload(idAtividade);
 		fezDownload = alunosDownload.contains(matricula);
+		
 		return fezDownload;
 	}
 
