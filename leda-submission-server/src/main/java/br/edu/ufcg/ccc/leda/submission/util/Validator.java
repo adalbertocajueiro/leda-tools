@@ -11,7 +11,16 @@ import com.google.gdata.util.ServiceException;
 
 public class Validator {
 
-	public static void validateDownload(String roteiro) throws RoteiroException, ConfigurationException, IOException, ServiceException{
+	public static void validateDownload(String roteiro, String matricula) throws RoteiroException, ConfigurationException, IOException, ServiceException{
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		String turma = roteiro.substring(4);
+		if(requester == null){
+			throw new RoteiroException("Matricula " + matricula + " nao cadastrada");
+		}else if(!turma.equals(requester.getTurma())){
+			throw new RoteiroException("Estudante " + matricula + " nao pode fazer download da prova da turma " + turma);			
+		}
+
 		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteirosMap.get(roteiro);
 		if(rot == null){

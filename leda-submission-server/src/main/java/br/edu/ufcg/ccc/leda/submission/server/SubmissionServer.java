@@ -186,27 +186,11 @@ public class SubmissionServer extends Jooby {
 	
 	
 	
-	get("/downloadRoteiro",(req,resp) -> {
-		String roteiro = req.param("roteiro").value();
-		//System.out.println("Id do roteiro: " + rId);
-		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
-		File fileToSend = null;
-		try {
-			fileToSend = FileUtilities.getEnvironment(roteiro);
-			resp.type(MediaType.octetstream);
-		    resp.download(fileToSend);
-		} catch (ConfigurationException | IOException | RoteiroException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			resp.send(e.getMessage());
-		}
-	});
-	
-	get("/requestDownloadProva",(req) -> {
-		String prova = req.param("prova").value();
+	get("/requestDownload",(req) -> {
+		String id = req.param("id").value();
 
-		View html = Results.html("modal-downloadProva");
-	    html.put("prova",prova);
+		View html = Results.html("modal-download");
+	    html.put("id",id);
 	    
 	    return html;
 
@@ -234,6 +218,29 @@ public class SubmissionServer extends Jooby {
 			}
 		});
 
+		post("/download",(req,resp) -> {
+			String id = req.param("id").value();
+			String matricula = req.param("matricula").value();
+
+			//verifica se a amtricula é de aluno cadastrado e a prova que pede eh da turma 
+			//do aluno
+			File fileToSend = null;
+			try {
+				if(id.startsWith("R")){ //solicitado downlaod de roteiro
+					fileToSend = FileUtilities.getEnvironment(id, matricula);
+					resp.type(MediaType.octetstream);
+				    resp.download(fileToSend);
+				} else if (id.startsWith("P")){ //solicitado download de prova
+					fileToSend = FileUtilities.getEnvironmentProva(id, matricula);
+					resp.type(MediaType.octetstream);
+				    resp.download(fileToSend);					
+				}
+			} catch (ConfigurationException | IOException | RoteiroException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				resp.send(e.getMessage());
+			}
+		});
 	 post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");

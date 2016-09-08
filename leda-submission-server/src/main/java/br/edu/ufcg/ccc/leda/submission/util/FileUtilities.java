@@ -97,12 +97,32 @@ public class FileUtilities {
 		return environment;
 	}
 	
-	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException, ServiceException{
+	public static File getEnvironment(String roteiro, String matricula) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
-		
+
+		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File provaUploadFolder = new File(currentSemester,roteiro);
+
+		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
+		String content = "VAZIO"; 
+
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-		Validator.validateDownload(roteiro);
+		try {
+			Validator.validateDownload(roteiro,matricula);
+		} catch (RoteiroException e) {
+			content = "[ERRO]:aluno " + matricula + " tentou fazer download da prova " + roteiro + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
+			logger.log(content);
+			throw e;
+		}
 		
+		//pega o roteiro par aobter o arquivo e mandar de volta
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		content = "[DOWNLOAD]:roteiro " + roteiro + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
+		logger.log(content);
+
 		//pega o roteiro par aobter o arquivo e mandar de volta
 		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteiros.get(roteiro);
