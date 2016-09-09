@@ -20,3 +20,6 @@
 - poderia manter a lista dos alunos matriculados (vale apena?)
 - quando da erro de compilacao no projeto do aluno e nao gera a pasta site o generate final report retorna nullpointer. consertar isso.
 - fazer uma ferramenta que mostra as similaridades dos resultados baseados nos testes de correcao.
+- alterar o compactor para que ele adicione atributos do dono do arquivo nos arquivos java antes de compactar e enviar
+  http://stackoverflow.com/questions/15906793/is-it-possible-to-set-custom-metadata-on-files-using-java
+  https://docs.oracle.com/javase/tutorial/essential/io/fileAttr.html
