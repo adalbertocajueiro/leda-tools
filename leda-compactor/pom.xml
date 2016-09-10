@@ -48,6 +48,11 @@
 			<version>4.5.2</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-sender-tool</artifactId>
 			<version>1.0.0-SNAPSHOT</version>

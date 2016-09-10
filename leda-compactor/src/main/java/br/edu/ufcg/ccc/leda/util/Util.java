@@ -1,13 +1,27 @@
 package br.edu.ufcg.ccc.leda.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 public class Util {
 	public static final String AUTHOR = "author";
@@ -63,5 +77,34 @@ public class Util {
 				files.add(folder);
 			}
 		} 
+	}
+	public static Map<String,Student> getAllStudents(String url) throws ClientProtocolException, IOException{
+		Map<String,Student> students = new HashMap<String,Student>();
+		
+		CloseableHttpClient client = HttpClientBuilder.create().build();
+	    try {
+	        HttpGet request = new HttpGet(url);
+	        CloseableHttpResponse response = client.execute(request);
+
+	        System.out.println("Response Code : "
+	                        + response.getStatusLine().getStatusCode());
+
+	        BufferedReader rd = new BufferedReader(
+	        	new InputStreamReader(response.getEntity().getContent()));
+
+	        StringBuffer result = new StringBuffer();
+	        String line = "";
+	        while ((line = rd.readLine()) != null) {
+	        	result.append(line);
+	        }
+	        
+	        Gson gson = new Gson();
+			students = gson.fromJson(result.toString(), new TypeToken<Map<String,Student>>(){}.getType());
+
+	        
+	    } finally {
+	        client.close();
+	    }
+		return students;
 	}
 }

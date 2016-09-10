@@ -1,6 +1,7 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +24,7 @@ import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 
 import com.google.gdata.util.ServiceException;
+import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.submission.util.Submission;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
@@ -90,6 +92,12 @@ public class SubmissionServer extends Jooby {
 	get("/horaAtual", (req,resp) -> {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
+	
+	get("/alunosJson", req -> {
+		Gson gson = new Gson();
+		
+	    return gson.toJson(Configuration.getInstance().getStudents());
+	}).produces("json");
 	
 	get("/alunos", (req) -> {
         //List<String> alunos = new ArrayList<String>();
