@@ -18,6 +18,7 @@ package br.edu.ufcg.ccc.leda;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.maven.plugin.AbstractMojo;
@@ -26,6 +27,7 @@ import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
 import br.edu.ufcg.ccc.leda.util.StudentSubmissionSender;
+import br.edu.ufcg.ccc.leda.util.Util;
 
 /**
  * Goal which compacts a student's submission.
@@ -77,6 +79,15 @@ public class LEDACompactorMojo extends AbstractMojo {
 
 		Compactor compactor = new Compactor();
 		File srcFolder = new File(project.getBuild().getSourceDirectory());
+		//TODO poderia fazer algumas validacoes na matricula e turma antes de compactar
+		System.out.println("Injecting author information...");
+		List<File> files = Util.getFiles(srcFolder, ".java");
+		try {
+			Util.addAuthorToFiles(files, matricula);
+		} catch (IOException e1) {
+			System.out.println("Author information could not be injected: " + e1.getMessage());
+			//e1.printStackTrace();
+		}
 		// System.out.println("Source folder: " + srcFolder);
 		File destZipFile = new File(project.getBuild().getDirectory(),
 				matricula + ".zip");

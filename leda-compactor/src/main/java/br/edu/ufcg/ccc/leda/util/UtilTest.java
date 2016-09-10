@@ -1,0 +1,42 @@
+package br.edu.ufcg.ccc.leda.util;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+import java.util.List;
+
+public class UtilTest {
+	public static void main(String[] args) throws URISyntaxException, IOException {
+		//Path file = new File("D:\\trash2\\BSTVerifiable.java").toPath();
+		//Path file = Paths.get(FileAttributeUtil.class.getResource("README.md").toURI()).toAbsolutePath();
+	    //UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
+	    //List<String> att = view.list();
+	    //att.forEach(s -> System.out.println(s));
+	    //Util.writeAuthor(file,"123456");
+		//System.out.println(Util.readAuthor(file));
+		List<File> files = Util.getFiles(new File("D:\\trash2\\avl\\main"), ".java");
+		files.forEach(f -> {
+			UserDefinedFileAttributeView view = Files.getFileAttributeView(f.toPath(), UserDefinedFileAttributeView.class);
+			try {
+				System.out.println(f.getAbsolutePath() + " tem atributo author: " + (view.list().contains(Util.AUTHOR)?Util.readAuthor(f.toPath()):"null"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		Util.addAuthorToFiles(files, "4321");//nao vai mudar se ja contiver a informação de autor
+		files.forEach(f -> {
+			UserDefinedFileAttributeView view = Files.getFileAttributeView(f.toPath(), UserDefinedFileAttributeView.class);
+			try {
+				System.out.println(f.getAbsolutePath() + " tem atributo author: " + (view.list().contains(Util.AUTHOR)?Util.readAuthor(f.toPath()):"null"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+
+}
