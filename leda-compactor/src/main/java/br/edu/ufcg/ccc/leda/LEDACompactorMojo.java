@@ -105,7 +105,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 		System.out.println("Injecting author information...");
 		List<File> files = Util.getFiles(srcFolder, ".java");
 		try {
-			Util.addAuthorToFiles(files, matricula);
+			Util.addAuthorToFiles(files, aluno.getMatricula(), aluno.getNome());
 		} catch (IOException e1) {
 			System.out.println("Author information could not be injected: " + e1.getMessage());
 			//e1.printStackTrace();

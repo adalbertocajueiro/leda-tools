@@ -2,7 +2,6 @@ package br.edu.ufcg.ccc.leda.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
@@ -24,41 +23,57 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 public class Util {
-	public static final String AUTHOR = "author";
+	public static final String AUTOR_MATRICULA = "autor.matricula";
+	public static final String AUTOR_NOME = "autor.nome";
 	
-	public static void addAuthorToFiles(List<File> files, String author) throws IOException{
+	public static void addAuthorToFiles(List<File> files, String matricula, String nome) throws IOException{
 		for (File file : files) {
-			writeAuthor(file.toPath(), author);
+			writeAuthor(file.toPath(), matricula, nome);
 		}
 	}
-	public static void writeAuthor(Path file, String value) throws IOException{
+	public static void writeAuthor(Path file, String matricula, String nome) throws IOException{
 
 		    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
 
 		    // The file attribute
-		    String name = AUTHOR;
+		    
 		    List<String> attributes = view.list();
-		    if(!attributes.contains(name)){
+		    if(!attributes.contains(AUTOR_MATRICULA)){
 			    // Write the properties
-			    byte[] bytes = value.getBytes("UTF-8");
-			    ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
-			    writeBuffer.put(bytes);
+			    byte[] bytesMatricula = matricula.getBytes("UTF-8");
+			    ByteBuffer writeBuffer = ByteBuffer.allocate(bytesMatricula.length);
+			    writeBuffer.put(bytesMatricula);
 			    writeBuffer.flip();
-			    view.write(name, writeBuffer);
+			    view.write(AUTOR_MATRICULA, writeBuffer);
+
+			    byte[] bytesNome = nome.getBytes("UTF-8");
+			    ByteBuffer writeBufferNome = ByteBuffer.allocate(bytesNome.length);
+			    writeBufferNome.put(bytesNome);
+			    writeBufferNome.flip();
+			    view.write(AUTOR_NOME, writeBufferNome);
+
 		    }
 
 	}
 	
-	public static String readAuthor(Path file) throws IOException{
-		String valueFromAttributes = null;
+	public static Student readAuthor(Path file) throws IOException{
+		Student proprietario = new Student(null,null,null);
+
 	    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
-	    String name = AUTHOR;
-	    ByteBuffer readBuffer = ByteBuffer.allocate(view.size(name));
-	    view.read(name, readBuffer);
-	    readBuffer.flip();
-	    valueFromAttributes = new String(readBuffer.array(), "UTF-8");
 	    
-	    return valueFromAttributes;
+	    String matricula = AUTOR_MATRICULA;
+	    ByteBuffer readBuffer = ByteBuffer.allocate(view.size(matricula));
+	    view.read(matricula, readBuffer);
+	    readBuffer.flip();
+	    proprietario.setMatricula(new String(readBuffer.array(), "UTF-8"));
+
+	    String nome = AUTOR_NOME;
+	    readBuffer = ByteBuffer.allocate(view.size(nome));
+	    view.read(nome, readBuffer);
+	    readBuffer.flip();
+	    proprietario.setNome(new String(readBuffer.array(), "UTF-8"));
+	    
+	    return proprietario;
 	}
 	
 	public static List<File> getFiles(File folder, String extension){

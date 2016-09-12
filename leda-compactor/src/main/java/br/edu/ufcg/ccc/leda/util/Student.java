@@ -31,7 +31,7 @@ public class Student {
 	}
 	@Override
 	public String toString() {
-		return this.nome;
+		return this.matricula + "-" + this.nome;
 	}
 	
 	
