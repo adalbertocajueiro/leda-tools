@@ -43,7 +43,7 @@
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLiberacao.time)}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
 						<td>${(roteiro.monitorCorretor)!""}
-						<td class="text-xs-center"><#if roteiro.arquivoAmbiente??> Sim </#if>
+						<td class="text-xs-center"><#if roteiro.arquivoAmbiente??> ${formatter.format(roteiro.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
 				</#list>
 				</tbody>
 			</table>

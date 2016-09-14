@@ -1,19 +1,15 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.regex.Pattern;
 
 import org.jooby.Jooby;
 import org.jooby.MediaType;
@@ -21,7 +17,11 @@ import org.jooby.Results;
 import org.jooby.Upload;
 import org.jooby.View;
 import org.jooby.ftl.Ftl;
-import org.jooby.jade.Jade;
+import org.pac4j.core.exception.CredentialsException;
+import org.pac4j.http.credentials.UsernamePasswordCredentials;
+import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
+
+import com.google.gdata.util.ServiceException;
 
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
@@ -30,13 +30,10 @@ import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
-import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
+import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
-
-import com.google.gdata.util.ServiceException;
-import com.google.gson.Gson;
 
 /**
  * @author jooby generator
@@ -74,7 +71,9 @@ public class SubmissionServer extends Jooby {
 	{
 		assets("/reports/**");
 		assets("/site/**");
+		assets("css/**");
 		assets("/*.ico");
+		assets("/*.svg");
 		assets("bootstrap4/**");
 		
 	}
@@ -101,18 +100,6 @@ public class SubmissionServer extends Jooby {
         return html;
     });
 	
-	get("/alunosOrdenados", (req) -> {
-        //List<String> alunos = new ArrayList<String>();
-        Map<String,Student> alunos = Configuration.getInstance().getStudents();
-        View html = Results.html("alunosOrdenados");
-        html.put("pageName", "Alunos cadastrados em LEDA");
-        
-        //html.put("listaEstudantes",jsonContent);
-        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
-        
-        return html;
-    });
-
 	get("/submissoes", (req) -> {
 		Map<String,File[]> submissoes = FileUtilities.allSubmissions();
 		
@@ -141,13 +128,20 @@ public class SubmissionServer extends Jooby {
 		resp.send(result.toString());
 	});
 	
-	get("/reload", (req,resp) -> {
+	get("/reload", (req) -> {
 		Configuration.getInstance().reload();
-		StringBuilder result = new StringBuilder();
-		result.append("Configuration instance reloaded! New values bellow...<br>");
-		result.append(Configuration.getInstance().toString());
+		//chain.next("config",req,resp);
 		
-		resp.send(result.toString());
+		//StringBuilder result = new StringBuilder();
+		//result.append("Configuration instance reloaded! New values bellow...<br>");
+		//result.append(Configuration.getInstance().toString());
+		
+		//resp.send(result.toString());
+		View html = Results.html("configuration");
+        html.put("config",Configuration.getInstance());
+        
+        return html;
+		
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
@@ -163,7 +157,7 @@ public class SubmissionServer extends Jooby {
         return html;
         
 		//resp.send(result.toString());
-	  });
+	  }).name("config");
 	
 	/*get("/redirect", (req,resp) -> {
 	    //req.flash("success", "The item has been created");
@@ -189,12 +183,7 @@ public class SubmissionServer extends Jooby {
         resp.send(content);
 	  });*/
 	
-	get("/correct", (req,resp) -> {
-		String roteiro = req.param("roteiro").value();
-		AutomaticCorrector corr = new AutomaticCorrector();
-		corr.corrigirRoteiro(roteiro);
-		resp.send("Correction started");
-	});
+	
 	
 	get("/downloadRoteiro",(req,resp) -> {
 		String roteiro = req.param("roteiro").value();
@@ -212,26 +201,39 @@ public class SubmissionServer extends Jooby {
 		}
 	});
 	
-	get("/downloadProva",(req,resp) -> {
+	get("/requestDownloadProva",(req) -> {
 		String prova = req.param("prova").value();
-		//System.out.println("Id do roteiro: " + rId);
-		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
-		File fileToSend = null;
-		try {
-			fileToSend = FileUtilities.getEnvironmentProva(prova);
-			resp.type(MediaType.octetstream);
-		    resp.download(fileToSend);
-		} catch (ConfigurationException | IOException | RoteiroException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			resp.send(e.getMessage());
-		}
+
+		View html = Results.html("modal-downloadProva");
+	    html.put("prova",prova);
+	    
+	    return html;
+
 	});
+	
 	
   }
 
   {
-	post("/uploadRoteiro", (req,resp) -> {
+		post("/downloadProva",(req,resp) -> {
+			String prova = req.param("prova").value();
+			String matricula = req.param("matricula").value();
+
+			//verifica se a amtricula é de aluno cadastrado e a prova que pede eh da turma 
+			//do aluno
+			File fileToSend = null;
+			try {
+				fileToSend = FileUtilities.getEnvironmentProva(prova, matricula);
+				resp.type(MediaType.octetstream);
+			    resp.download(fileToSend);
+			} catch (ConfigurationException | IOException | RoteiroException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				resp.send(e.getMessage());
+			}
+		});
+
+	 post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");
 		String roteiro = req.param("roteiro").value();
@@ -349,9 +351,32 @@ public class SubmissionServer extends Jooby {
 		resp.send(result);  
 	    });
 	
+	//use(new Auth().basic("*", MyUserClientLoginValidator.class));
+	//new SimpleTestTokenAuthenticator(){
+	//	@override
+	//};
+	//use(new Auth().basic());
+	//use(new Auth().basic("/config2/**",MyUserClientLoginValidator.class));
+	get("/correct", (req,resp) -> {
+		String roteiro = req.param("roteiro").value();
+		AutomaticCorrector corr = new AutomaticCorrector();
+		corr.corrigirRoteiro(roteiro);
+		resp.send("Correction started");
+	});
+	
 	
   }
   
+  static class MyUserClientLoginValidator implements UsernamePasswordAuthenticator{
+
+	@Override
+	public void validate(UsernamePasswordCredentials arg0) {
+		if(!arg0.getUsername().equals("leda") 
+				|| !arg0.getPassword().equals("ledaserver")){
+			throw new CredentialsException("Login ou senha incoretos");
+		}
+	}
+  }
   
   
   public static void main(final String[] args) throws Throwable {

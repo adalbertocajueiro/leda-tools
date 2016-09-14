@@ -42,18 +42,18 @@
     <div id="my-tab-content" class="tab-content">
         <div  role="tabpanel" class="tab-pane fade in active" id="t1">
             <h3>Turma 1</h3>
-            <table id="t1" class="table table-hover">
+            <table id="t1" class="table table-hover table-bordered">
 				<thead class="bg-success">
-					<th>Estudante</th>
-					<th>Matricula</th>	
+					<th class="text-xs-center">Estudante</th>
+					<!-- th class="text-xs-center">Matricula</th -->	
 				</thead>
 				<tbody>
 				<#list alunos as student>
 					<#if gray == 'true' && student.turma == "01">
-						<tr class="table-warning"><td>${student.nome} <td>${student.matricula}
+						<tr class="table-warning"><td>${student.nome} <!-- td>${student.matricula} -->
 						<#assign gray = 'false'>
 					<#elseif gray == 'false' && student.turma == "01">
-						<tr class="table-info"><td>${student.nome} <td>${student.matricula}
+						<tr class="table-info"><td>${student.nome} <!-- td>${student.matricula} -->
 						<#assign gray = 'true'>
 					</#if>
 				</#list>

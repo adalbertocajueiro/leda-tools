@@ -64,16 +64,35 @@ public class FileUtilities {
 		}
 	}
 	
-	public static File getEnvironmentProva(String provaId) throws ConfigurationException, IOException, RoteiroException, ServiceException{
+	public static File getEnvironmentProva(String provaId, String matricula) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
 		
+		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File provaUploadFolder = new File(currentSemester,provaId);
+
+		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
+		String content = "VAZIO"; 
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-		Validator.validateProvaDownload(provaId);
+
+		try {
+			Validator.validateProvaDownload(provaId,matricula);
+		} catch (RoteiroException e) {
+			content = "[ERRO]:aluno " + matricula + " tentou fazer download da prova " + provaId + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
+			logger.log(content);
+			throw e;
+		}
 		
 		//pega o roteiro par aobter o arquivo e mandar de volta
 		Map<String,Prova> provas = Configuration.getInstance().getProvas();
 		Prova prova = provas.get(provaId);
 		environment = prova.getArquivoAmbiente();
+
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		content = "[DOWNLOAD]:prova " + provaId + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
+		logger.log(content);
 		
 		return environment;
 	}
@@ -121,6 +140,16 @@ public class FileUtilities {
 		//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
 		String uploadSubFolder = CURRENT_SEMESTER + File.separator + ROTEIROS_FOLDER;
 		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
+
+		File folderRoteiros = new File(uploadFolder,uploadSubFolder);
+		String id = config.getRoteiro();
+		if (config.getRoteiro().contains("X")) {
+			id = id.substring(0, id.indexOf("X"));
+		}
+		// remove os arquivos de prova antes cadastrados (baseado no id da prova)
+		Util.removeFilesByPrefix(folderRoteiros, id);
+		
+		
 		if(config.getNumeroTurmas() > 1){
 			//System.out.println("recebido pr amais de uma turma");
 			//replica o roteiro pela quantidade de turmas
@@ -241,6 +270,23 @@ public class FileUtilities {
 		//contem o id da prova P0X-0X
 		String uploadSubFolderTarget = CURRENT_SEMESTER + File.separator + config.getRoteiro();
 	
+		File folderProvas = new File(uploadFolder,uploadSubFolder);
+		String id = config.getRoteiro();
+		if (config.getRoteiro().contains("X")) {
+			id = id.substring(0, id.indexOf("X"));
+		}
+		// remove os arquivos de prova antes cadastrados (baseado no id da prova)
+		Util.removeFilesByPrefix(folderProvas, id);
+		/*
+		// remove os arquivos de prova antes cadastrados (baseado no id da
+		// prova)
+		if (!os.startsWith("Windows")) {
+			Runtime.getRuntime().exec("rm " + folderRoteiros.getAbsolutePath() + File.separator + id + "*.*");
+		} else {
+			System.out.println("RODANDO: " + "del " + folderRoteiros.getAbsolutePath() + File.separator + id + "*.*");
+			Runtime.getRuntime().exec("del " + folderRoteiros.getAbsolutePath() + File.separator + id + "*.*");
+		}*/
+		
 		if(config.getNumeroTurmas() > 1){
 			//replica a prova pela quantidade de turmas
 			for (int i = 1; i <= config.getNumeroTurmas(); i++) {
@@ -275,6 +321,7 @@ public class FileUtilities {
 				foutCorrProj.mkdirs();
 			}
 			
+					
 			Files.copy(ambiente.toPath(), foutEnv.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			Files.copy(projetoCorrecao.toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	
@@ -298,6 +345,9 @@ public class FileUtilities {
 			*/
 			
 			result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
+			
+			
+			
 			//System.out.println(result);
 			//ja cria também os links simbolicos para possibilitar a correcao
 			String os = System.getProperty("os.name");
@@ -693,7 +743,8 @@ public class FileUtilities {
 	}
 	
 	/**
-	 * Mostra a listagem das submissoes de prova ou roteiro. 
+	 * Mostra a listagem das submissoes de prova ou roteiro ordenadas por nome
+	 * do aluno. 
 	 * @param folder a pasta raiz de um roteiro ou prova
 	 * @return
 	 */
@@ -710,6 +761,20 @@ public class FileUtilities {
 				}
 			});
 		}
+		Arrays.sort(result, (f1,f2) -> {
+			int res = f1.getName().compareTo(f2.getName());
+			int indexOfDash = f1.getName().lastIndexOf("-");
+			if(indexOfDash != -1){
+				String nameF1 = f1.getName().substring(indexOfDash + 1);
+				indexOfDash = f2.getName().lastIndexOf("-");
+				if(indexOfDash != -1){
+					String nameF2 = f2.getName().substring(indexOfDash + 1);
+					res = nameF1.compareTo(nameF2);
+				}
+			}
+			
+			return res;
+		});
 		return result;
 		/*StringBuffer result = new StringBuffer();
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);

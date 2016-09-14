@@ -3,6 +3,7 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -364,6 +366,18 @@ public class Util {
 		return target;
 	}
 	
+	public static void removeFilesByPrefix(File folder, String prefix) throws IOException{
+		File[] files = folder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isFile() && pathname.getName().startsWith(prefix);
+			}
+		});
+		for (int i = 0; i < files.length; i++) {
+			Files.deleteIfExists(files[i].toPath());
+		}
+	}
 	public static void loadConfig(String path) throws IOException{
 		NgxConfig conf = NgxConfig.read(path);
 		NgxBlock app = conf.findBlock("application");

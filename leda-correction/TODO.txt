@@ -11,11 +11,12 @@
 - Nao precisa gerar tantas pastas quando vai criar a pasta base para os projetos a serem corrigidos. - OK
 - Verificar a possibilidade de integra��o como check style.
 - Verificar se ao ocorrer um timeout a execucao dos demais p�ra.
-- Trabalhar com links relativos no relatorio geral (para o especifico).
+- Trabalhar com links relativos no relatorio geral (para o especifico). - OK
 
 - Tem que usar profiles e injetar informacoes d eservidor nos arquivo xml que vai gerar para os alunos. - OK
 - colcoar a correcao numa thread para nao congelar a aplicacao. - OK
 - Tem que ordenar os alunos por ordem alfabetica na planilha geral e colocar os alunos que nao enviaram o roteiro no relatorio
-  para facilitar a correcao.
+  para facilitar a correcao. - OK
 - poderia manter a lista dos alunos matriculados (vale apena?)
 - quando da erro de compilacao no projeto do aluno e nao gera a pasta site o generate final report retorna nullpointer. consertar isso.
+- fazer uma ferramenta que mostra as similaridades dos resultados baseados nos testes de correcao.

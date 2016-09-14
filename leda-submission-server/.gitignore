@@ -5,5 +5,7 @@ target/
 log/
 conf/app.properties
 conf/Roteiros.json
+conf/Provas.json
 public/reports/R*
 public/reports/P*
+passos para usar jade.txt
