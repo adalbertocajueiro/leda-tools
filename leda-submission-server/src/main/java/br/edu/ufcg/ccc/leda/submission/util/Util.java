@@ -12,10 +12,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -53,6 +55,9 @@ import com.google.gson.Gson;
 import br.edu.ufcg.ccc.leda.util.Compactor;
 
 public class Util {
+
+	public static final String AUTOR_MATRICULA = "autor.matricula";
+	public static final String AUTOR_NOME = "autor.nome";
 
 	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 	
@@ -528,6 +533,90 @@ public class Util {
 			return res;
 		});
 */		return result;
+	}
+	public static List<List<FileCopy>> listAllCopies(String id) throws ConfigurationException, IOException, ServiceException{
+		ArrayList<List<FileCopy>> result = new ArrayList<List<FileCopy>>();
+		
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File folder = new File(currentSemester,id);
+		File submissionsFolder = new File(folder,FileUtilities.SUBMISSIONS_FOLDER);
+		
+		File[] subfolders = submissionsFolder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isDirectory();
+			}
+		});
+
+		for (File file : subfolders) {
+			List<FileCopy> copies = listCopies(file);
+			result.add(copies);
+		}
+		return result;
+	}
+	
+	public static List<FileCopy> listCopies(File projectStudentFolder) throws ConfigurationException, IOException, ServiceException{
+		List<FileCopy> result = new ArrayList<FileCopy>();
+
+		if(projectStudentFolder.getName().contains("-")){
+			String matricula = projectStudentFolder.getName().substring(0,projectStudentFolder.getName().indexOf("-"));
+			Student copier = Configuration.getInstance().getStudents().get(matricula);
+			List<File> files = getFiles(projectStudentFolder, ".java");
+			for (File file : files) {
+				try {
+					Student owner = readAuthor(file.toPath());
+					if(owner.getMatricula() != null){
+						if(!owner.getMatricula().equals(matricula)){
+							result.add(new FileCopy(file,owner,copier));
+						}
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		return result;
+	}
+	public static Student readAuthor(Path file) throws IOException{
+		Student proprietario = new Student(null,null,null);
+
+	    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
+	    
+	    String matricula = AUTOR_MATRICULA;
+	    ByteBuffer readBuffer = ByteBuffer.allocate(view.size(matricula));
+	    view.read(matricula, readBuffer);
+	    readBuffer.flip();
+	    proprietario.setMatricula(new String(readBuffer.array(), "UTF-8"));
+
+	    String nome = AUTOR_NOME;
+	    readBuffer = ByteBuffer.allocate(view.size(nome));
+	    view.read(nome, readBuffer);
+	    readBuffer.flip();
+	    proprietario.setNome(new String(readBuffer.array(), "UTF-8"));
+	    
+	    return proprietario;
+	}
+
+	public static List<File> getFiles(File folder, String extension){
+		ArrayList<File> files = new ArrayList<File>();
+		addFile(folder, files, extension);
+		return files; 
+	}
+	private static void addFile(File folder, List<File> files, String extension){
+		if(folder.isDirectory()){
+			File[] subFiles = folder.listFiles();
+			for (int i = 0; i < subFiles.length; i++) {
+				addFile(subFiles[i], files, extension);
+			}
+		} else if (folder.getName().endsWith(extension)){
+			if(!files.contains(folder)){
+				files.add(folder);
+			}
+		} 
 	}
 
 	
