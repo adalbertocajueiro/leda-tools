@@ -1,7 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.server;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +37,7 @@ import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 
 /**
  * @author jooby generator
@@ -109,6 +109,19 @@ public class SubmissionServer extends Jooby {
         
         return html;
     });
+	
+	get("/listCopies", (req) -> {
+		String id = req.param("id").value();
+		List<List<FileCopy>> copias = Util.listAllCopies(id);
+        View html = Results.html("copias");
+        html.put("copias",copias);
+        html.put("id",id);
+        
+        return html;
+		
+        
+		//resp.send(copies.toString());
+	  });
 	
 	get("/submissoes", (req) -> {
 		Map<String,List<Submission>> submissoes = Util.allSubmissions();

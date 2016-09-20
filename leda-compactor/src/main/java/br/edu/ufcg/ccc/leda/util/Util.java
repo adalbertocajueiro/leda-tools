@@ -31,8 +31,8 @@ public class Util {
 		for (File file : files) {
 			writeAuthor(file.toPath(), matricula, nome, filesOwners);
 		}
-		System.out.println("%%%% Util.addAuthorToFiles"); 
-		filesOwners.forEach((arq,autor) -> System.out.println("%%%%% arquivo: " + arq + " tem autor " + autor));
+		//System.out.println("%%%% Util.addAuthorToFiles"); 
+		//filesOwners.forEach((arq,autor) -> System.out.println("%%%%% arquivo: " + arq + " tem autor " + autor));
 		return filesOwners;
 	}
 	public static void writeAuthor(Path file, String matricula, String nome, Map<String,String> filesOwners) throws IOException{
@@ -61,10 +61,6 @@ public class Util {
 			    filesOwners.put(file.toFile().getName(), owner.getMatricula() + "-" + owner.getNome());		    	
 		    }
 
-	}
-	
-	public static void buildFileOwnerList(List<File> files){
-		
 	}
 	
 	public static Student readAuthor(Path file) throws IOException{

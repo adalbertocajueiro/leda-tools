@@ -107,8 +107,8 @@ public class LEDACompactorMojo extends AbstractMojo {
 		Map<String,String> filesOwners = new HashMap<String,String>();
 		try {
 			filesOwners = Util.addAuthorToFiles(files, aluno.getMatricula(), aluno.getNome());
-			System.out.println("%%%% LEDACompactorMojo.addAuthorToFiles");
-			filesOwners.forEach((arq,autor) -> System.out.println("%%%%% arquivo: " + arq + " tem autor " + autor));
+			//System.out.println("%%%% LEDACompactorMojo.addAuthorToFiles");
+			//filesOwners.forEach((arq,autor) -> System.out.println("%%%%% arquivo: " + arq + " tem autor " + autor));
 		} catch (IOException e1) {
 			System.out.println("Author information could not be injected: " + e1.getMessage());
 			//e1.printStackTrace();

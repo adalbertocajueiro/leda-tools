@@ -11,9 +11,15 @@ public class FileCopy {
 		this.owner = owner;
 		this.copier = copier;
 	}
+	@Override
+	public String toString() {
+		return "Arquivo: " + this.fileName + " enviado por " + copier.getMatricula() + "-" + copier.getNome() + " tem como proprietario original " + this.owner;
+	}
+	
 	public String getFileName() {
 		return fileName;
 	}
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}

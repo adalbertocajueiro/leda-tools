@@ -550,26 +550,12 @@ public class Util {
 */		return result;
 	}
 	public static List<List<FileCopy>> listAllCopies(String id) throws ConfigurationException, IOException, ServiceException{
-		ArrayList<List<FileCopy>> result = new ArrayList<List<FileCopy>>();
 		
 		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
 		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
 		File folder = new File(currentSemester,id);
-		File submissionsFolder = new File(folder,FileUtilities.SUBMISSIONS_FOLDER);
-		
-		File[] subfolders = submissionsFolder.listFiles(new FileFilter() {
-			
-			@Override
-			public boolean accept(File pathname) {
-				return pathname.isDirectory();
-			}
-		});
 
-		for (File file : subfolders) {
-			List<FileCopy> copies = listCopies(file);
-			result.add(copies);
-		}
-		return result;
+		return listAllCopies(folder);
 	}
 	
 	/**
