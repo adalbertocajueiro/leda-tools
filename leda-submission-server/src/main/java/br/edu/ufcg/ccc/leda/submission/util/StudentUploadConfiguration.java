@@ -1,5 +1,11 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
+import java.util.Map;
+
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+
 /**
  * Classe que representa a configuracao de um upload, contendo informacoes sobre semestre, turma, 
  * matricula do aluno, etc. 
@@ -11,14 +17,17 @@ public class StudentUploadConfiguration extends UploadConfiguration {
 
 	private String matricula;
 	private String ip;
+	private Map<String,String> filesOwners;
 	
 	public StudentUploadConfiguration(String semestre, String turma,
-			String roteiro,String matricula,String ip) {
+			String roteiro,String matricula,String ip, String files) {
 
 		super(semestre,turma,roteiro);
 		
 		this.matricula = matricula;
 		this.ip = ip;
+		Gson gson = new Gson();
+		filesOwners = gson.fromJson(files, new TypeToken<Map<String,String>>(){}.getType());
 	}
 
 	public String getMatricula() {
@@ -35,6 +44,15 @@ public class StudentUploadConfiguration extends UploadConfiguration {
 
 	public void setIp(String ip) {
 		this.ip = ip;
-	}	
+	}
+
+	public Map<String, String> getFilesOwners() {
+		return filesOwners;
+	}
+
+	public void setFilesOwners(Map<String, String> filesOwners) {
+		this.filesOwners = filesOwners;
+	}
+	
 	
 }

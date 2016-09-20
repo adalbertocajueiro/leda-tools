@@ -171,10 +171,25 @@ public class Util {
 		fw.close();
 	}
 	
+	public static void writeFilesOwnersToJson(Map<String,String> filesOwners,File jsonFile) throws IOException{
+		Gson gson = new Gson();
+
+		FileWriter fw = new FileWriter(jsonFile);
+		gson.toJson(filesOwners, fw);
+		fw.flush();
+		fw.close();
+	}
 	public static Map<String, Roteiro> loadRoteirosFromJson(File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(jsonFile);
 		Map<String, Roteiro> map = gson.fromJson(fr, new TypeToken<Map<String,Roteiro>>(){}.getType());
+		return map;
+	}
+	
+	public static Map<String, String> loadFilesOwnersFromJson(File jsonFile) throws FileNotFoundException {
+		Gson gson = new Gson();
+		FileReader fr = new FileReader(jsonFile);
+		Map<String, String> map = gson.fromJson(fr, new TypeToken<Map<String,String>>(){}.getType());
 		return map;
 	}
 	
@@ -557,50 +572,53 @@ public class Util {
 		return result;
 	}
 	
-	public static List<FileCopy> listCopies(File projectStudentFolder) throws ConfigurationException, IOException, ServiceException{
-		List<FileCopy> result = new ArrayList<FileCopy>();
+	/**
+	 * 
+	 * @param folderId a pasta do roteiro no qual vai ser fazer o relatorio de 
+	 * todas as possiveis copias.
+	 * @return
+	 * @throws ConfigurationException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
+	//PPPP testar a aexecucao desse metodo.
+	public static List<List<FileCopy>> listAllCopies(File folderId) throws ConfigurationException, IOException, ServiceException{
+		List<List<FileCopy>> result = new ArrayList<List<FileCopy>>();
 
-		if(projectStudentFolder.getName().contains("-")){
-			String matricula = projectStudentFolder.getName().substring(0,projectStudentFolder.getName().indexOf("-"));
-			Student copier = Configuration.getInstance().getStudents().get(matricula);
-			List<File> files = getFiles(projectStudentFolder, ".java");
-			for (File file : files) {
-				try {
-					Student owner = readAuthor(file.toPath());
-					if(owner.getMatricula() != null){
-						if(!owner.getMatricula().equals(matricula)){
-							result.add(new FileCopy(file,owner,copier));
-						}
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+		File submissionsFolder = new File(folderId,FileUtilities.SUBMISSIONS_FOLDER);
+		File[] jsons = submissionsFolder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.getName().endsWith(".json");
 			}
+		});
+		
+		for (File file : jsons) {
+			result.add(listCopies(file));
 		}
+		
 		return result;
 	}
-	public static Student readAuthor(Path file) throws IOException{
-		Student proprietario = new Student(null,null,null);
 
-	    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
-	    
-	    String matricula = AUTOR_MATRICULA;
-	    ByteBuffer readBuffer = ByteBuffer.allocate(view.size(matricula));
-	    view.read(matricula, readBuffer);
-	    readBuffer.flip();
-	    proprietario.setMatricula(new String(readBuffer.array(), "UTF-8"));
-
-	    String nome = AUTOR_NOME;
-	    readBuffer = ByteBuffer.allocate(view.size(nome));
-	    view.read(nome, readBuffer);
-	    readBuffer.flip();
-	    proprietario.setNome(new String(readBuffer.array(), "UTF-8"));
-	    
-	    return proprietario;
+	public static List<FileCopy> listCopies(File jsonFile) throws IOException{
+		List<FileCopy> result = new ArrayList<FileCopy>();
+		String matriculaCopier = jsonFile.getName().substring(0,jsonFile.getName().indexOf("-"));
+		String nomeCopier = jsonFile.getName().substring(jsonFile.getName().indexOf("-") + 1, jsonFile.getName().indexOf("."));
+		
+		Student copier = new Student(matriculaCopier,nomeCopier,null);
+		
+		Map<String,String> filesOwners = Util.loadFilesOwnersFromJson(jsonFile);
+		filesOwners.forEach((fName,fOwner) -> {
+			String matricula = fOwner.substring(0,fOwner.indexOf("-"));
+			if(!matricula.equals(matriculaCopier)){
+				FileCopy copy = new FileCopy(fName,fOwner,copier);
+				result.add(copy);
+			}
+		});
+		
+		return result;
 	}
-
 	public static List<File> getFiles(File folder, String extension){
 		ArrayList<File> files = new ArrayList<File>();
 		addFile(folder, files, extension);

@@ -26,15 +26,18 @@ public class Util {
 	public static final String AUTOR_MATRICULA = "autor.matricula";
 	public static final String AUTOR_NOME = "autor.nome";
 	
-	public static void addAuthorToFiles(List<File> files, String matricula, String nome) throws IOException{
+	public static Map<String,String> addAuthorToFiles(List<File> files, String matricula, String nome) throws IOException{
+		Map<String,String> filesOwners = new HashMap<String,String>();
 		for (File file : files) {
-			writeAuthor(file.toPath(), matricula, nome);
+			writeAuthor(file.toPath(), matricula, nome, filesOwners);
 		}
+		System.out.println("%%%% Util.addAuthorToFiles"); 
+		filesOwners.forEach((arq,autor) -> System.out.println("%%%%% arquivo: " + arq + " tem autor " + autor));
+		return filesOwners;
 	}
-	public static void writeAuthor(Path file, String matricula, String nome) throws IOException{
+	public static void writeAuthor(Path file, String matricula, String nome, Map<String,String> filesOwners) throws IOException{
 
 		    UserDefinedFileAttributeView view = Files.getFileAttributeView(file, UserDefinedFileAttributeView.class);
-
 		    // The file attribute
 		    
 		    List<String> attributes = view.list();
@@ -52,8 +55,16 @@ public class Util {
 			    writeBufferNome.flip();
 			    view.write(AUTOR_NOME, writeBufferNome);
 
+			    filesOwners.put(file.toFile().getName(), matricula + "-" + nome);
+		    }else{
+		    	Student owner = readAuthor(file);
+			    filesOwners.put(file.toFile().getName(), owner.getMatricula() + "-" + owner.getNome());		    	
 		    }
 
+	}
+	
+	public static void buildFileOwnerList(List<File> files){
+		
 	}
 	
 	public static Student readAuthor(Path file) throws IOException{

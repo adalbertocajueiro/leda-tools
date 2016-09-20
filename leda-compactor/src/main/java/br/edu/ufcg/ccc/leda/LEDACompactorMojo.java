@@ -104,8 +104,11 @@ public class LEDACompactorMojo extends AbstractMojo {
 		//TODO poderia fazer algumas validacoes na matricula e turma antes de compactar
 		System.out.println("Injecting author information...");
 		List<File> files = Util.getFiles(srcFolder, ".java");
+		Map<String,String> filesOwners = new HashMap<String,String>();
 		try {
-			Util.addAuthorToFiles(files, aluno.getMatricula(), aluno.getNome());
+			filesOwners = Util.addAuthorToFiles(files, aluno.getMatricula(), aluno.getNome());
+			System.out.println("%%%% LEDACompactorMojo.addAuthorToFiles");
+			filesOwners.forEach((arq,autor) -> System.out.println("%%%%% arquivo: " + arq + " tem autor " + autor));
 		} catch (IOException e1) {
 			System.out.println("Author information could not be injected: " + e1.getMessage());
 			//e1.printStackTrace();
@@ -117,7 +120,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 			compactor.zipFolder(srcFolder, destZipFile);
 			System.out.println("Compaction sucess: " + destZipFile.getName());
 			sender = new StudentSubmissionSender(destZipFile, matricula,
-					semestre, roteiro, url);
+					semestre, roteiro, url,filesOwners);
 			System.out.println("Submitting file " + destZipFile.getName()
 					+ " to " + url);
 			sender.send();

@@ -2,6 +2,7 @@ package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -18,7 +19,7 @@ public class StudentSubmissionSenderTest {
 		String roteiro = "R01";
 
 		Sender sender = new StudentSubmissionSender(arquivo, matricula,
-				semestre, roteiro, url);
+				semestre, roteiro, url, new HashMap<String,String>());
 		sender.send();
 
 	}

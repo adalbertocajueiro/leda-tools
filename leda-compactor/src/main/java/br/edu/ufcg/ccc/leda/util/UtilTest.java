@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.List;
-import java.util.Map;
 
 public class UtilTest {
 	public static void main(String[] args) throws URISyntaxException, IOException {
@@ -17,7 +16,7 @@ public class UtilTest {
 	    //att.forEach(s -> System.out.println(s));
 	    //Util.writeAuthor(file,"123456");
 		//System.out.println(Util.readAuthor(file));
-		List<File> files = Util.getFiles(new File("/home/ubuntu/leda-upload/2016.1/R15-02/subs/115110912-ITALO AGUIAR DANTAS/src/main/java"), ".java");
+		List<File> files = Util.getFiles(new File("D:\\trash2\\skip2\\src\\main\\java"), ".java");
 		files.forEach(f -> {
 			UserDefinedFileAttributeView view = Files.getFileAttributeView(f.toPath(), UserDefinedFileAttributeView.class);
 			try {

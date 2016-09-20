@@ -1,28 +1,21 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-import java.io.File;
-
 public class FileCopy {
-	private File file;
-	private Student owner;
+	private String fileName;
+	private String owner;
 	private Student copier;
-	public FileCopy(File file, Student owner, Student copier) {
+	
+	public FileCopy(String fileName, String owner, Student copier) {
 		super();
-		this.file = file;
+		this.fileName = fileName;
 		this.owner = owner;
 		this.copier = copier;
 	}
-	public File getFile() {
-		return file;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFile(File file) {
-		this.file = file;
-	}
-	public Student getOwner() {
-		return owner;
-	}
-	public void setOwner(Student owner) {
-		this.owner = owner;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public Student getCopier() {
 		return copier;
@@ -30,6 +23,11 @@ public class FileCopy {
 	public void setCopier(Student copier) {
 		this.copier = copier;
 	}
-	
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
 	
 }

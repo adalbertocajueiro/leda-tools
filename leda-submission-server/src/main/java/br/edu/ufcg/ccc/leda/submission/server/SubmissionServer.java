@@ -328,7 +328,9 @@ public class SubmissionServer extends Jooby {
 	      String semestre = req.param("semestre").value();
 	      String roteiro = req.param("roteiro").value();
 	      String ip = req.param("ip").value();
+	      String files = req.param("filesOwners").value();
 	      Upload upload = req.param("arquivo").toUpload();
+	      
 	      
 	      //R0X-0X
 	      String turma = roteiro.substring(4);
@@ -338,7 +340,7 @@ public class SubmissionServer extends Jooby {
 	      
 	      //System.out.println("Request received from " + ip);
 		  
-	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip);
+	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip,files);
 		  File uploaded = upload.file();
 		  String result = "default response";
 		  try {

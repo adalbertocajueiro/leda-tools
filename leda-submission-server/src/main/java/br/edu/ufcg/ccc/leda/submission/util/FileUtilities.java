@@ -444,6 +444,10 @@ public class FileUtilities {
 		//PRECISA LOGAR OPERACOES DA APLICACAO???????
 		//TODO
 		
+		//faz o log dos arquivos enviados com seus respectivos owners e salva o json com o nome do aluno
+		File filesOwnersJson = new File(fout.getParentFile(),student.getMatricula() + "-" + student.getNome() + ".json");
+		Util.writeFilesOwnersToJson(config.getFilesOwners(), filesOwnersJson);
+		
 		// precisa fazer um historico das submissoes de cada estudante para cada roteiro.
 		// quando acontece uma submissao, o sistema retorna um ticket com o
 		// historico de todas as submissoes do aluno
