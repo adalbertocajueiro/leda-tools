@@ -112,7 +112,7 @@ public class FileUtilities {
 		try {
 			Validator.validateDownload(roteiro,matricula);
 		} catch (RoteiroException e) {
-			content = "[ERRO]:aluno " + matricula + " tentou fazer download da prova " + roteiro + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
+			content = "[ERRO]:aluno " + matricula + " tentou fazer download do roteiro " + roteiro + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
 			logger.log(content);
 			throw e;
 		}
