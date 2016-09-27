@@ -97,12 +97,32 @@ public class FileUtilities {
 		return environment;
 	}
 	
-	public static File getEnvironment(String roteiro) throws ConfigurationException, IOException, RoteiroException, ServiceException{
+	public static File getEnvironment(String roteiro, String matricula) throws ConfigurationException, IOException, RoteiroException, ServiceException{
 		File environment = null;
-		
+
+		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
+		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File provaUploadFolder = new File(currentSemester,roteiro);
+
+		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
+		String content = "VAZIO"; 
+
 		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-		Validator.validateDownload(roteiro);
+		try {
+			Validator.validateDownload(roteiro,matricula);
+		} catch (RoteiroException e) {
+			content = "[ERRO]:aluno " + matricula + " tentou fazer download do roteiro " + roteiro + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
+			logger.log(content);
+			throw e;
+		}
 		
+		//pega o roteiro par aobter o arquivo e mandar de volta
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		content = "[DOWNLOAD]:roteiro " + roteiro + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
+		logger.log(content);
+
 		//pega o roteiro par aobter o arquivo e mandar de volta
 		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteiros.get(roteiro);
@@ -423,6 +443,10 @@ public class FileUtilities {
 		Files.move(uploaded.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		//PRECISA LOGAR OPERACOES DA APLICACAO???????
 		//TODO
+		
+		//faz o log dos arquivos enviados com seus respectivos owners e salva o json com o nome do aluno
+		File filesOwnersJson = new File(fout.getParentFile(),student.getMatricula() + "-" + student.getNome() + ".json");
+		Util.writeFilesOwnersToJson(config.getFilesOwners(), filesOwnersJson);
 		
 		// precisa fazer um historico das submissoes de cada estudante para cada roteiro.
 		// quando acontece uma submissao, o sistema retorna um ticket com o
@@ -776,27 +800,6 @@ public class FileUtilities {
 			return res;
 		});
 		return result;
-		/*StringBuffer result = new StringBuffer();
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		String uploadSubFolder = CURRENT_SEMESTER + File.separator + id + File.separator + SUBMISSIONS_FOLDER; 
-		
-		File submissionsFolder = new File(uploadFolder,uploadSubFolder);
-		//System.out.println("pasta de submisoes: " + submissionsFolder.getAbsolutePath() + " existe: " + submissionsFolder.exists());
-		if(submissionsFolder.exists()){
-			File[] files = submissionsFolder.listFiles(new FileFilter() {
-
-				@Override
-				public boolean accept(File pathname) {
-					return pathname.getName().endsWith(".zip");
-				}
-			});
-			ArrayList<File> list = new ArrayList<File>();
-			list.addAll(Arrays.asList(files));
-			Stream<File> sorted = list.stream().sorted(
-					(f1, f2) -> f1.getName().compareTo(f2.getName()));
-			sorted.forEach(f -> result.append(f.getName() + " (submetido em :" + Util.formatDate(f.lastModified()) + ")<br>\n"));
-		}
-		return result;*/
 	}
 
 

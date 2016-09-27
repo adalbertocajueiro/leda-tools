@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cópias detectadas</title>
+<!-- Le styles -->
+<link href="./bootstrap4/css/bootstrap.css" rel="stylesheet">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+</head>
+
+<body>
+
+<!-------->
+<div class="container" id="content">
+	<#assign gray = 'true'>
+    <div id="my-tab-content" >
+        <div  id="copias">
+            <h4>Cópias detectadas para ${id}</h4>
+            <table id="t1" class="table table-hover table-bordered">
+				<thead class="bg-success">
+					<th class="text-xs-center">Estudante</th>
+					<th class="text-xs-center">Arquivo</th>
+					<th class="text-xs-center">Proprietario</th>
+					<!-- th class="text-xs-center">Matricula</th -->	
+				</thead>
+				<tbody>
+				<#list copias as listaArquivos>
+					<#if listaArquivos?size != 0>
+						<#list listaArquivos as fileCopy>
+							<tr><td>${fileCopy.copier.nome} <td>${fileCopy.fileName} <td>${fileCopy.owner}
+						</#list>
+					</#if>
+				</#list>
+				</tbody>
+			</table>
+        </div>
+	</div>
+</div> <!-- container -->
+
+<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+
+</body>
+</html>

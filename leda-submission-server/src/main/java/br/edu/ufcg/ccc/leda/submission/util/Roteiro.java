@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Roteiro {
+public class Roteiro extends Atividade{
 
 	private String id;
 	private String descricao;

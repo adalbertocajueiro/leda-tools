@@ -3,7 +3,7 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.File;
 import java.util.GregorianCalendar;
 
-public class Prova {
+public class Prova extends Atividade{
 
 	private String provaId;
 	private String descricao;

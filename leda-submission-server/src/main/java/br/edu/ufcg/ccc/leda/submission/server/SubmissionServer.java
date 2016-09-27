@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,9 @@ import org.pac4j.http.credentials.UsernamePasswordCredentials;
 import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 
 import com.google.gdata.util.ServiceException;
+import com.google.gson.Gson;
 
+import br.edu.ufcg.ccc.leda.submission.util.Submission;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
@@ -34,6 +37,7 @@ import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 
 /**
  * @author jooby generator
@@ -89,6 +93,12 @@ public class SubmissionServer extends Jooby {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
+	get("/alunosJson", req -> {
+		Gson gson = new Gson();
+		
+	    return gson.toJson(Configuration.getInstance().getStudents());
+	}).produces("json");
+	
 	get("/alunos", (req) -> {
         //List<String> alunos = new ArrayList<String>();
         Map<String,Student> alunos = Configuration.getInstance().getStudents();
@@ -100,9 +110,21 @@ public class SubmissionServer extends Jooby {
         return html;
     });
 	
-	get("/submissoes", (req) -> {
-		Map<String,File[]> submissoes = FileUtilities.allSubmissions();
+	get("/listCopies", (req) -> {
+		String id = req.param("id").value();
+		List<List<FileCopy>> copias = Util.listAllCopies(id);
+        View html = Results.html("copias");
+        html.put("copias",copias);
+        html.put("id",id);
+        
+        return html;
 		
+        
+		//resp.send(copies.toString());
+	  });
+	
+	get("/submissoes", (req) -> {
+		Map<String,List<Submission>> submissoes = Util.allSubmissions();
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
@@ -185,27 +207,11 @@ public class SubmissionServer extends Jooby {
 	
 	
 	
-	get("/downloadRoteiro",(req,resp) -> {
-		String roteiro = req.param("roteiro").value();
-		//System.out.println("Id do roteiro: " + rId);
-		//pega os roteiros de um mapeamento e devolve o arquivo environment para os alunos
-		File fileToSend = null;
-		try {
-			fileToSend = FileUtilities.getEnvironment(roteiro);
-			resp.type(MediaType.octetstream);
-		    resp.download(fileToSend);
-		} catch (ConfigurationException | IOException | RoteiroException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			resp.send(e.getMessage());
-		}
-	});
-	
-	get("/requestDownloadProva",(req) -> {
-		String prova = req.param("prova").value();
+	get("/requestDownload",(req) -> {
+		String id = req.param("id").value();
 
-		View html = Results.html("modal-downloadProva");
-	    html.put("prova",prova);
+		View html = Results.html("modal-download");
+	    html.put("id",id);
 	    
 	    return html;
 
@@ -233,6 +239,29 @@ public class SubmissionServer extends Jooby {
 			}
 		});
 
+		post("/download",(req,resp) -> {
+			String id = req.param("id").value();
+			String matricula = req.param("matricula").value();
+
+			//verifica se a amtricula é de aluno cadastrado e a prova que pede eh da turma 
+			//do aluno
+			File fileToSend = null;
+			try {
+				if(id.startsWith("R")){ //solicitado downlaod de roteiro
+					fileToSend = FileUtilities.getEnvironment(id, matricula);
+					resp.type(MediaType.octetstream);
+				    resp.download(fileToSend);
+				} else if (id.startsWith("P")){ //solicitado download de prova
+					fileToSend = FileUtilities.getEnvironmentProva(id, matricula);
+					resp.type(MediaType.octetstream);
+				    resp.download(fileToSend);					
+				}
+			} catch (ConfigurationException | IOException | RoteiroException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				resp.send(e.getMessage());
+			}
+		});
 	 post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");
@@ -312,7 +341,9 @@ public class SubmissionServer extends Jooby {
 	      String semestre = req.param("semestre").value();
 	      String roteiro = req.param("roteiro").value();
 	      String ip = req.param("ip").value();
+	      String files = req.param("filesOwners").value();
 	      Upload upload = req.param("arquivo").toUpload();
+	      
 	      
 	      //R0X-0X
 	      String turma = roteiro.substring(4);
@@ -322,7 +353,7 @@ public class SubmissionServer extends Jooby {
 	      
 	      //System.out.println("Request received from " + ip);
 		  
-	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip);
+	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip,files);
 		  File uploaded = upload.file();
 		  String result = "default response";
 		  try {

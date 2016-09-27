@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -18,19 +19,23 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import com.google.gson.Gson;
+
 public class StudentSubmissionSender extends Sender {
 
 	String matricula;
 	String semestre;
 	String turma;
+	Map<String,String> filesOwners;
 
 	public StudentSubmissionSender(File arquivo, String matricula,
-			String semestre, String roteiro, String url) {
+			String semestre, String roteiro, String url, Map<String,String> files) {
 		super(arquivo, roteiro, url);
 		this.matricula = matricula;
 		this.semestre = semestre;
 		// RXX-XX onde os ultimos XX sao a turma
 		this.turma = roteiro.substring(4);
+		this.filesOwners = files;
 	}
 
 	public void send() throws ClientProtocolException, IOException {
@@ -43,6 +48,9 @@ public class StudentSubmissionSender extends Sender {
 		StringBody ip = new StringBody(Inet4Address.getLocalHost()
 				.getHostAddress(), ContentType.TEXT_PLAIN);
 
+		Gson gson = new Gson();
+		StringBody files = new StringBody(gson.toJson(filesOwners), ContentType.TEXT_PLAIN);
+		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		StringBuilder confirmation = new StringBuilder();
 		try {
@@ -50,7 +58,8 @@ public class StudentSubmissionSender extends Sender {
 			HttpEntity reqEntity = MultipartEntityBuilder.create()
 					.addPart("arquivo", arq).addPart("matricula", mat)
 					.addPart("semestre", sem).addPart("turma", t)
-					.addPart("roteiro", rot).addPart("ip", ip).build();
+					.addPart("roteiro", rot).addPart("ip", ip)
+					.addPart("filesOwners",files).build();
 
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending file: " + httppost.getRequestLine());
@@ -107,5 +116,14 @@ public class StudentSubmissionSender extends Sender {
 	public void setTurma(String turma) {
 		this.turma = turma;
 	}
+
+	public Map<String, String> getFilesOwners() {
+		return filesOwners;
+	}
+
+	public void setFilesOwners(Map<String, String> filesOwners) {
+		this.filesOwners = filesOwners;
+	}
+	
 
 }

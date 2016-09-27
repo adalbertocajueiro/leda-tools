@@ -8,8 +8,12 @@
 <!-- Le styles -->
 <link href="./css/leda.css" rel="stylesheet">
 <link href="./bootstrap4/css/bootstrap.css" rel="stylesheet">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-<script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script -->
+<!-- script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script -->
+<!-- script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.min.js"></script -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -36,14 +40,13 @@
 	<div id="my-tab-content" class="tab-content">
 	<#assign active = 'true'>
 	<#list chavesOrdenadas as id>
-		<#assign submissao = submissoes[id]>
 		<#if active='true'> 
 			<div  role="tabpanel" class="tab-pane fade in active" id="${id}"> 
 			<#assign active='false'>
 		<#else>
 			<div  role="tabpanel" class="tab-pane fade" id="${id}"> 
 		</#if>
-            <p><h5>Submissoes de ${id}: (${submissoes[id]?size})</h5>
+            <p><h5>Submissoes de ${id}:</h5>
             <table id="${id}" class="table table-hover table-bordered">
 				<thead class="bg-success">
 					<th class="text-xs-center">Aluno</th>
@@ -51,15 +54,26 @@
 					<th class="text-xs-center">Download</th>
 				</thead>
 				<tbody>
-				<#list submissoes[id] as file>
-					<tr><td>${file?keep_after_last("-")?keep_before_last(".")}<td>${formatter.format(file.lastModified()?number_to_datetime)}
-						<td align="center">
-						  <a href="./reports/${id}${file?keep_after_last(id)}">
-						    <svg enable-background="new 0 0 141.732 141.732" height="16px" id="icon" version="1.1" viewBox="0 0 141.732 141.732" width="16px" 
-								xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-								<path d="M120.674,125.138H20.793v16.594h99.881V125.138z M119.019,58.776c-2.561-2.562-6.716-2.562-9.275,0L77.21,91.312V6.562   C77.21,2.936,74.269,0,70.648,0c-3.624,0-6.56,2.937-6.56,6.563v84.75L31.992,59.218c-2.562-2.564-6.715-2.564-9.277,0   c-2.565,2.562-2.565,6.716,0,9.279l43.294,43.293c0.15,0.154,0.314,0.299,0.481,0.438c0.076,0.062,0.155,0.113,0.234,0.176   c0.094,0.065,0.186,0.142,0.279,0.206c0.097,0.063,0.192,0.114,0.286,0.174c0.088,0.054,0.174,0.105,0.265,0.153   c0.1,0.056,0.199,0.1,0.298,0.147c0.097,0.045,0.19,0.091,0.283,0.132c0.098,0.04,0.196,0.072,0.295,0.105   c0.104,0.038,0.207,0.078,0.312,0.109c0.101,0.03,0.197,0.052,0.297,0.077c0.108,0.023,0.214,0.058,0.324,0.078   c0.115,0.021,0.231,0.033,0.346,0.054c0.097,0.015,0.192,0.032,0.289,0.042c0.43,0.042,0.865,0.042,1.295,0   c0.1-0.01,0.191-0.027,0.289-0.042c0.114-0.021,0.233-0.029,0.344-0.054c0.109-0.021,0.217-0.055,0.324-0.078   c0.102-0.025,0.199-0.047,0.299-0.077c0.105-0.031,0.207-0.071,0.312-0.109c0.102-0.03,0.195-0.062,0.295-0.105   c0.096-0.041,0.191-0.087,0.283-0.132c0.1-0.048,0.199-0.092,0.297-0.147c0.091-0.048,0.177-0.104,0.264-0.153   c0.098-0.06,0.193-0.11,0.287-0.174c0.096-0.064,0.189-0.141,0.281-0.206c0.076-0.062,0.156-0.113,0.233-0.176   c0.249-0.204,0.479-0.437,0.694-0.67c0.076-0.067,0.154-0.131,0.229-0.203l43.294-43.296   C121.581,65.491,121.581,61.337,119.019,58.776"/>
-							</svg>
-						  </a>
+				<#list submissoes[id] as submissao>
+						<#if submissao.arquivoSubmetido??>
+							<tr><td>${submissao.aluno.nome}<td class="text-xs-center">${formatter.format(submissao.arquivoSubmetido.lastModified()?number_to_datetime)}
+								<td align="center">
+								  <#assign fileURL='./reports/${id}${submissao.arquivoSubmetido?keep_after_last(id)}'>
+								  <a href="#" data-toggle="tooltip" data-placement="top" title="Download is not available anymore">
+									 <svg enable-background="new 0 0 141.732 141.732" height="16px" id="icon" version="1.1" viewBox="0 0 141.732 141.732" width="16px" 
+										xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+										<path d="M120.674,125.138H20.793v16.594h99.881V125.138z M119.019,58.776c-2.561-2.562-6.716-2.562-9.275,0L77.21,91.312V6.562   C77.21,2.936,74.269,0,70.648,0c-3.624,0-6.56,2.937-6.56,6.563v84.75L31.992,59.218c-2.562-2.564-6.715-2.564-9.277,0   c-2.565,2.562-2.565,6.716,0,9.279l43.294,43.293c0.15,0.154,0.314,0.299,0.481,0.438c0.076,0.062,0.155,0.113,0.234,0.176   c0.094,0.065,0.186,0.142,0.279,0.206c0.097,0.063,0.192,0.114,0.286,0.174c0.088,0.054,0.174,0.105,0.265,0.153   c0.1,0.056,0.199,0.1,0.298,0.147c0.097,0.045,0.19,0.091,0.283,0.132c0.098,0.04,0.196,0.072,0.295,0.105   c0.104,0.038,0.207,0.078,0.312,0.109c0.101,0.03,0.197,0.052,0.297,0.077c0.108,0.023,0.214,0.058,0.324,0.078   c0.115,0.021,0.231,0.033,0.346,0.054c0.097,0.015,0.192,0.032,0.289,0.042c0.43,0.042,0.865,0.042,1.295,0   c0.1-0.01,0.191-0.027,0.289-0.042c0.114-0.021,0.233-0.029,0.344-0.054c0.109-0.021,0.217-0.055,0.324-0.078   c0.102-0.025,0.199-0.047,0.299-0.077c0.105-0.031,0.207-0.071,0.312-0.109c0.102-0.03,0.195-0.062,0.295-0.105   c0.096-0.041,0.191-0.087,0.283-0.132c0.1-0.048,0.199-0.092,0.297-0.147c0.091-0.048,0.177-0.104,0.264-0.153   c0.098-0.06,0.193-0.11,0.287-0.174c0.096-0.064,0.189-0.141,0.281-0.206c0.076-0.062,0.156-0.113,0.233-0.176   c0.249-0.204,0.479-0.437,0.694-0.67c0.076-0.067,0.154-0.131,0.229-0.203l43.294-43.296   C121.581,65.491,121.581,61.337,119.019,58.776"/>
+									</svg>
+								  </a>
+						<#else>
+							<#if submissao.fezDownload>
+								<tr> <td><font color="FireBrick" data-placement="top" data-toggle="tooltip"  title="Falta: fez download mas não submeteu">${submissao.aluno.nome}</font><td class="text-xs-center"><font color="FireBrick">F</font>
+									<td align="center">
+							<#else>
+								<tr> <td><font color="SteelBlue" data-placement="top" data-toggle="tooltip"  title="Falta: não fez download">${submissao.aluno.nome}</font><td class="text-xs-center"><font color="SteelBlue">F</font>
+									<td align="center">								
+							</#if>
+						</#if>
 				</#list>
 				</tbody>
 			</table>
@@ -79,8 +93,16 @@
 
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script -->
+<!-- script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
 <script type="text/javascript" src="./bootstrap4/js/bootstrap.js"></script>
+<script type="text/javascript" src="./bootstrap4/js/bootstrap.min.js"></script -->
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 
 </body>
 </html>
