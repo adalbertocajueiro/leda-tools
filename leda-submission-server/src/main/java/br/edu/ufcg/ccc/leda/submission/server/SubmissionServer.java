@@ -93,6 +93,12 @@ public class SubmissionServer extends Jooby {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
 	});
 	
+	get("/addIp", (req,resp) -> {
+		String novoIp = req.param("ip").value();
+		Configuration.getInstance().getIpsAutorizados().add(novoIp);
+		resp.send("IP: " + novoIp + " adicionado. Verifique as configurações");
+	});
+	
 	get("/alunosJson", req -> {
 		Gson gson = new Gson();
 		
