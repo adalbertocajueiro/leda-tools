@@ -119,7 +119,7 @@ public class Validator {
 		//se o id do roteiro for PPX, entao valida diretamente nas provas. 
 		String id = config.getRoteiro();
 		
-		if(id.startsWith("PP")){ //eh prova
+		if(id.startsWith("P")){ //eh prova
 			//se o aluno submete de um IP invalido
 			String ipCaller = config.getIp();
 			System.out.println("Validator.IP: " + ipCaller);

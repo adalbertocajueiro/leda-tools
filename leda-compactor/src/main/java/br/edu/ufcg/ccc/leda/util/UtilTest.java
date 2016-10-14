@@ -1,7 +1,9 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
@@ -16,7 +18,13 @@ public class UtilTest {
 	    //att.forEach(s -> System.out.println(s));
 	    //Util.writeAuthor(file,"123456");
 		//System.out.println(Util.readAuthor(file));
-		List<File> files = Util.getFiles(new File("D:\\trash2\\skip2\\src\\main\\java"), ".java");
+		
+		//Util.changeEncodingToUFT8(notUFT8, "UTF-8");
+		//InputStreamReader r2 = new InputStreamReader(new FileInputStream(notUFT8));
+		//System.out.println(r2.getEncoding());
+		//r2.close();
+		
+		List<File> files = Util.getFiles(new File("D:\\trash2\\p3\\subs\\115111901-Alice"), ".java");
 		files.forEach(f -> {
 			UserDefinedFileAttributeView view = Files.getFileAttributeView(f.toPath(), UserDefinedFileAttributeView.class);
 			try {
@@ -27,6 +35,7 @@ public class UtilTest {
 				e.printStackTrace();
 			}
 		});
+		
 /*		Util.addAuthorToFiles(files, "43210", "Fulanode tal");//nao vai mudar se ja contiver a informação de autor
 		files.forEach(f -> {
 			UserDefinedFileAttributeView view = Files.getFileAttributeView(f.toPath(), UserDefinedFileAttributeView.class);

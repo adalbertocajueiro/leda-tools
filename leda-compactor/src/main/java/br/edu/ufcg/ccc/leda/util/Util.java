@@ -2,8 +2,11 @@ package br.edu.ufcg.ccc.leda.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -128,5 +131,36 @@ public class Util {
 	        client.close();
 	    }
 		return students;
+	}
+	
+	private static String readLines(File f) throws IOException{
+		StringBuilder result = new StringBuilder();
+		FileReader fr = new FileReader(f);
+		BufferedReader br = new BufferedReader(fr);
+		String line = "";
+		while((line = br.readLine()) != null){
+			result.append(line + "\n");
+		}
+		fr.close();
+		br.close();
+		return result.toString();
+	}
+	public static void changeEncoding(File javaFile,String encoding){
+		OutputStreamWriter osw = null;
+		try{
+		//Example to write a file into file system
+		//Charset windows1252 = Charset.forName("windows-1252");
+		String content = Util.readLines(javaFile);
+		FileOutputStream fos = new FileOutputStream(javaFile);
+		osw = new OutputStreamWriter(fos,encoding);
+		osw.write(content);
+		osw.close();
+		System.out.println("Success");
+		fos.close();
+		}
+		catch(Exception e)
+		{
+		System.out.println(e.getMessage());
+		}
 	}
 }

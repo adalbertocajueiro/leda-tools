@@ -56,12 +56,14 @@
 					<th class="text-xs-center">Descrição</th>
 					<th class="text-xs-center">Liberação</th>
 					<th class="text-xs-center">Limite Envio</th>
+					<th class="text-xs-center">Ambiente</th>
 				</thead>
 				<tbody>
 				<#list config.provas?values as prova>
 						<tr><td>${prova.provaId} <td>${prova.descricao}
 						<td class="text-xs-center">${formatter.format(prova.dataHoraLiberacao.time)}
 						<td class="text-xs-center">${formatter.format(prova.dataHoraLimiteEnvio.time)}
+						<td class="text-xs-center"><#if prova.arquivoAmbiente??> ${formatter.format(prova.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
 				</#list>
 				</tbody>
 			</table>
