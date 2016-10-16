@@ -347,14 +347,24 @@ public class FileUtilities {
 	
 			
 			//adicionando os arquivos na respectiva prova
-			/*
-			Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
-			Roteiro roteiro = roteiros.get(config.getRoteiro());
-			if(roteiro != null){
-				roteiro.setArquivoAmbiente(foutEnv);
-				roteiro.setArquivoProjetoCorrecao(foutCorrProj);
-				roteiros.put(config.getRoteiro(), roteiro);
+			Map<String,Prova> provas = Configuration.getInstance().getProvas();
+			Prova prova = provas.get(config.getRoteiro());
+			if(prova != null){
+				prova.setArquivoAmbiente(foutEnv);
+				prova.setArquivoProjetoCorrecao(foutCorrProj);
+				provas.put(config.getRoteiro(), prova);
 			}
+
+			File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+			if(!configFolder.exists()){
+				throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+			}
+			File jsonFileProvas = new File(configFolder,JSON_FILE_PROVA);
+			//System.out.println("Escrevendo no json: " + jsonFileRoteiros.getAbsolutePath());
+			//System.out.println("Json existe: " + jsonFileRoteiros.exists());
+			Util.writeProvasToJson(provas, jsonFileProvas);
+
+			/*
 			//agora eh persistir os dados dos roteiros em JSON
 			File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
 			if(!configFolder.exists()){
