@@ -1,12 +1,12 @@
-id (RXX-0X, PPX-0X, PRX-0X, PF1-0X, RRX-0X, AXX-0X)
-nome (Roteiro, Roteiro revisao, Prova Pratica, Prova Reposicao, Prova Final, Aula)
-descricao (todas)
-data(todas. em roteiros e provas corresponde a data de liberação)
-data-envio-normal (todas exceto aula)
-data-envio-atraso (apenas roteiro)
-monitor-corretor (apenas roteiro)
-data-inicio-correcao (roteiros)
-data-entrega-correcao (roteiros)
-arquivo-ambiente (todos exceto aula e roteiro de revisao)
-arquivo-correcao (todos exceto aula e roteiro de revisao)
-links-video-aula (todos exceto provas)
+0 - id (RXX-0X, PPX-0X, PRX-0X, PF1-0X, RRX-0X, AXX-0X) - OK
+1 - nome (Roteiro, Roteiro revisao, Prova Pratica, Prova Reposicao, Prova Final, Aula) - OK
+2 - descricao (todas) - OK
+3 - data(todas. em roteiros e provas corresponde a data de liberação) - OK
+4 - data-envio-normal (todas exceto aula) - OK
+5 - data-envio-atraso (apenas roteiro) - OK
+6 - monitor-corretor (apenas roteiro) - OK
+7 - data-inicio-correcao (roteiros) - OK
+8 - data-entrega-correcao (roteiros) - OK
+arquivo-ambiente (todos exceto aula e roteiro de revisao) - OK
+arquivo-correcao (todos exceto aula e roteiro de revisao) - OK
+9 - links-video-aula (todos exceto provas) - OK

@@ -32,7 +32,7 @@ import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
-import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
+import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
@@ -238,7 +238,7 @@ public class SubmissionServer extends Jooby {
 				fileToSend = FileUtilities.getEnvironmentProva(prova, matricula);
 				resp.type(MediaType.octetstream);
 			    resp.download(fileToSend);
-			} catch (ConfigurationException | IOException | RoteiroException e) {
+			} catch (ConfigurationException | IOException | AtividadeException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				resp.send(e.getMessage());
@@ -262,7 +262,7 @@ public class SubmissionServer extends Jooby {
 					resp.type(MediaType.octetstream);
 				    resp.download(fileToSend);					
 				}
-			} catch (ConfigurationException | IOException | RoteiroException e) {
+			} catch (ConfigurationException | IOException | AtividadeException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				resp.send(e.getMessage());
@@ -380,7 +380,7 @@ public class SubmissionServer extends Jooby {
 			e.printStackTrace();
 			result = e.getMessage();
 			
-		} catch (RoteiroException e) {
+		} catch (AtividadeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			result = e.getMessage();

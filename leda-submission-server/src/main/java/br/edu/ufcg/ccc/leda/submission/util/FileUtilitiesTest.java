@@ -21,7 +21,7 @@ public class FileUtilitiesTest {
 		}
 		*/
  		
- 		provas = FileUtilities.loadProvas();
+ 		provas = null;
  		Set<String> keysProvas = provas.keySet();
  		for (String key : keysProvas) {
  			System.out.println("Prova: " + provas.get(key));

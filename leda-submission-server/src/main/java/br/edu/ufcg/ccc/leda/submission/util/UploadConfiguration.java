@@ -2,15 +2,15 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 public class UploadConfiguration {
 
+	private String id;
 	private String semestre;
 	private String turma;
-	private String roteiro;
+	
 
-	public UploadConfiguration(String semestre, String turma, String roteiro) {
-		super();
+	public UploadConfiguration(String id, String semestre, String turma) {
+		this.id = id;
 		this.semestre = semestre;
-		this.turma = turma;
-		this.roteiro = roteiro;
+		this.turma = id.trim().substring(4);
 	}
 
 	public String getSemestre() {
@@ -29,12 +29,12 @@ public class UploadConfiguration {
 		this.turma = turma;
 	}
 
-	public String getRoteiro() {
-		return roteiro;
+	public String getId() {
+		return id;
 	}
 
-	public void setRoteiro(String roteiro) {
-		this.roteiro = roteiro;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

@@ -22,12 +22,10 @@ public class CorrectionManager {
 	public static final long CORRECTION_TIMER_DELAY = 30 * 60 * 1000;
 	private File currentSemesterFolder;
 	private ArrayList<Thread> executing;
-	private static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
-	private static final String GENERATED_REPORT_FILE = "target/generated-report.html";
 	private static CorrectionManager instance;
 	
 	protected CorrectionManager() {
-		this.currentSemesterFolder = new File(new File(FileUtilities.UPLOAD_FOLDER),FileUtilities.CURRENT_SEMESTER);
+		this.currentSemesterFolder = new File(new File(Constants.UPLOAD_FOLDER_NAME),Constants.CURRENT_SEMESTER);
 		executing = new ArrayList<Thread>();
 		scheduler = new Timer("Correction timer", false);
 		scheduler.scheduleAtFixedRate(new CorrectionTimerTask(), 2000, CORRECTION_TIMER_DELAY);
@@ -48,13 +46,12 @@ public class CorrectionManager {
 			// cada pasta é o proprio identificador do roteiro.
 			System.out.println("%%%%%%%% Executando Correction Timer Task em: " + Util.formatDate(new GregorianCalendar()));
 			System.out.println("Verificando roteiros a corrigir...");
-			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 			File[] roteiros = currentSemesterFolder.listFiles(new FileFilter() {
 					@Override
 					public boolean accept(File pathname) {
 						boolean resp = false;
 						if (pathname.isDirectory()) {
-							resp = patternRoteiro.matcher(pathname.getName()).matches();
+							resp = Constants.PATTERN_ROTEIRO.matcher(pathname.getName()).matches();
 						}
 						return resp;
 					}
@@ -186,7 +183,7 @@ public class CorrectionManager {
 		// verifica se existe um arquivo target/generated-report.html (indicando que ja
 		// foi corrigido)
 		//File targetFolder = new File(roteiro,"target");
-		File report = new File(roteiro, GENERATED_REPORT_FILE);
+		File report = new File(roteiro,Constants.GENERATED_REPORT_FILE);
 		result = result && !report.exists();
 		//File report = new File(roteiro, MAVEN_OUTPUT_FILE);
 		//result = result && !report.exists();
@@ -203,7 +200,7 @@ public class CorrectionManager {
 		Prova prov = provas.get(prova.getName());
 		if (prov != null) {
 			GregorianCalendar current = new GregorianCalendar();
-			result = current.after(prov.getDataHoraLimiteEnvio());
+			result = current.after(prov.getDataHoraLimiteEnvioNormal());
 		} else {
 			throw new RuntimeException(
 					"Prova nao localizada (CorrectionTimerTask.canCorrectProva)");
@@ -212,7 +209,7 @@ public class CorrectionManager {
 		// verifica se existe um arquivo maven-output.txt (indicando que ja
 		// foi corrigido)
 
-		File report = new File(prova, GENERATED_REPORT_FILE);
+		File report = new File(prova, Constants.GENERATED_REPORT_FILE);
 		result = result && !report.exists();
 		
 		return result;
@@ -225,8 +222,8 @@ public class CorrectionManager {
 	
 	public static void main(String[] args) throws InterruptedException, ConfigurationException, IOException, ServiceException {
 		Configuration config = Configuration.getInstance();
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File roteirosFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File roteirosFolder = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		CorrectionManager cm = new CorrectionManager();
 		cm.canCorrect(new File(roteirosFolder,"R01-01"));
 	}

@@ -11,11 +11,9 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -56,11 +57,6 @@ import br.edu.ufcg.ccc.leda.util.Compactor;
 
 public class Util {
 
-	public static final String AUTOR_MATRICULA = "autor.matricula";
-	public static final String AUTOR_NOME = "autor.nome";
-
-	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
-	
 	private static final int BUFFER_SIZE = 4096;
 	
 	/**
@@ -83,7 +79,7 @@ public class Util {
 	}
 	
 	public static String generateFileName(File file, ProfessorUploadConfiguration config){
-		String result = config.getRoteiro();
+		String result = config.getId();
 		
 		result = result + "-" + removeTempInfoFromFileName(file.getName());
 		
@@ -217,7 +213,7 @@ public class Util {
 	
 	public static Properties loadProperties() throws IOException{
 		Properties p = new Properties();
-		File confFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		File confFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
 		FileReader fr = new FileReader(new File(confFolder,"app.properties"));
 		p.load(fr);
 		
@@ -225,19 +221,21 @@ public class Util {
 	}
 	
 	public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
-		GregorianCalendar result = new GregorianCalendar();
-		//se estiver no formato errado retorna uma excecao
-		//tem que fazer isso com string format provavelmente ou regex
-		if(!PATTERN_DATE_TIME.matcher(dataHora).matches()){
-			throw new WrongDateHourFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
-		}
-		result.set(Calendar.DATE, Integer.parseInt(dataHora.substring(0, 2)));
-		result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)) - 1); //janeiro eh considerado mes 0
-		result.set(Calendar.YEAR, Integer.parseInt(dataHora.substring(6, 10)));
-		result.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dataHora.substring(11, 13)));
-		result.set(Calendar.MINUTE, Integer.parseInt(dataHora.substring(14, 16)));
-		result.set(Calendar.SECOND, Integer.parseInt(dataHora.substring(17)));
-		
+		GregorianCalendar result = null;
+		if(dataHora != null){
+			result = new GregorianCalendar();
+			//se estiver no formato errado retorna uma excecao
+			//tem que fazer isso com string format provavelmente ou regex
+			if(!Constants.PATTERN_DATE_TIME.matcher(dataHora).matches()){
+				throw new WrongDateHourFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
+			}
+			result.set(Calendar.DATE, Integer.parseInt(dataHora.substring(0, 2)));
+			result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)) - 1); //janeiro eh considerado mes 0
+			result.set(Calendar.YEAR, Integer.parseInt(dataHora.substring(6, 10)));
+			result.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dataHora.substring(11, 13)));
+			result.set(Calendar.MINUTE, Integer.parseInt(dataHora.substring(14, 16)));
+			result.set(Calendar.SECOND, Integer.parseInt(dataHora.substring(17)));
+		} 
 		return result;
 	}
 
@@ -274,7 +272,157 @@ public class Util {
         bos.close();
     }
 	
-	public static Map<String,Roteiro> loadSpreadsheetRoteiros(String idGoogleDrive) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+	public static List<Monitor> loadSpreadsheetMonitor(String idGoogleDrive) throws IOException, ServiceException{
+		ArrayList<Monitor> monitores = new ArrayList<Monitor>();
+		
+		SpreadsheetService service = new SpreadsheetService("Sheet1");
+        
+        String sheetUrl =
+            "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
+
+        // Use this String as url
+        URL url = new URL(sheetUrl);
+
+        // Get Feed of Spreadsheet url
+        ListFeed lf = service.getFeed(url, ListFeed.class);
+
+        //Iterate over feed to get cell value
+        for (ListEntry le : lf.getEntries()) {
+            CustomElementCollection cec = le.getCustomElements();
+            //Pass column name to access it's cell values
+            String matricula = cec.getValue("Matricula".toLowerCase());
+            String nome = cec.getValue("Nome".toLowerCase());
+            //System.out.println(val);
+            String email = cec.getValue("Email".toLowerCase());
+            String fone = cec.getValue("Fone".toLowerCase());
+            
+            Monitor monitor = 
+            		new Monitor(matricula, nome, email, fone);
+            
+            monitores.add(monitor);
+        }
+        
+		return monitores;
+	}
+	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Monitor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		SpreadsheetService service = new SpreadsheetService("Sheet1");
+        
+            String sheetUrl =
+                "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
+
+            // Use this String as url
+            URL url = new URL(sheetUrl);
+
+            // Get Feed of Spreadsheet url
+            ListFeed lf = service.getFeed(url, ListFeed.class);
+
+            //Iterate over feed to get cell value
+            for (ListEntry le : lf.getEntries()) {
+                CustomElementCollection cec = le.getCustomElements();
+                //Pass column name to access it's cell values
+                String id = cec.getValue("Roteiro".toLowerCase());
+                String nome = cec.getValue("Nome".toLowerCase());
+                //System.out.println(val);
+                String descricao = cec.getValue("Descrição".toLowerCase());
+                //System.out.println(val2);
+                GregorianCalendar dataHoraLiberacao = Util.buildDate(cec.getValue("Data-HoraLiberação".toLowerCase()));
+                //System.out.println(val3);
+                GregorianCalendar dataHoraEnvioNormal = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioNormal".toLowerCase()));
+                //System.out.println(val4);
+                GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioAtraso".toLowerCase()));
+                //System.out.println(val5);
+                
+                String nomesMonitores = cec.getValue("Monitores".toLowerCase());
+                List<Monitor> monitoresDoRoteiro = listOfMonitores(nomesMonitores,monitores);
+                
+                String nomeMonitor = cec.getValue("Corretor".toLowerCase());
+                Monitor corretor = 
+                		monitores.stream().filter(m -> m.getNome().equals(nomeMonitor)).findAny().orElse(null);
+                
+                //System.out.println(val6);
+                GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cec.getValue("DataInicioCorrecao".toLowerCase()));
+                //System.out.println(val7);
+                GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cec.getValue("DataEntregaCorrecao".toLowerCase()));
+                //System.out.println(val8);
+                String links = cec.getValue("LinksVideoAulas".toLowerCase());
+                List<URL> linksVideoAulas = listOfLinks(links);
+                
+                Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
+                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitores,
+                		corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao);
+                
+                atividades.put(atividade.getId(), atividade);
+            }
+            
+    		//sobrescreve os dados lidos da spreadsheet (apenas os arquivos de ambiente e correcao coletados nas pastas)
+    		Util.loadAtividadesFromUploadFolder(atividades);
+    		
+        return atividades;
+	}
+	
+	
+	private static Atividade createAtividade(String id, String nome, String descricao,
+			GregorianCalendar dataHoraLiberacao, List<URL> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
+			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Monitor corretor,
+			GregorianCalendar dataHoraInicioCorrecao, GregorianCalendar dataHoraEntregaCorrecao) {
+		
+		Atividade result = null;
+		if(Constants.PATTERN_AULA.matcher(id).matches()){
+			result = new Aula(id,nome,descricao,dataHoraLiberacao,linksVideoAulas,monitores);			
+		}else if(Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){
+			result = new RoteiroRevisao(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+		}else if(Constants.PATTERN_ROTEIRO.matcher(id).matches()){
+			result = new Roteiro(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+			
+		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
+			result = new Prova(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+			
+		}
+		return result;
+	}
+
+	public static void loadAtividadesFromUploadFolder(Map<String,Atividade> atividades){
+		
+			Set<String> keys = atividades.keySet();
+			for (String key : keys) {
+				Atividade atividade = atividades.get(key);
+				File[] files = Constants.ROTEIROS_FOLDER.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File pathname) {
+						//tem arquivos cadastrado para o roteiro pelo ID
+						return pathname.getName().startsWith(atividade.getId());
+					}
+				});
+				//tem arquivo cadastrado para o roteiro
+				File environment = null;
+				File correction = null;
+				if(files.length > 0){
+					for (int i = 0; i < files.length; i++) {
+						if(files[i].getName().contains("environment")){
+							environment = files[i];
+						} else{
+							correction = files[i];
+						}
+					}
+				}
+				if(atividade instanceof Roteiro){
+					((Roteiro) atividade).setArquivoAmbiente(environment);
+					((Roteiro) atividade).setArquivoProjetoCorrecao(correction);
+				}else if(atividade instanceof Prova){
+					((Roteiro) atividade).setArquivoAmbiente(environment);
+					((Roteiro) atividade).setArquivoProjetoCorrecao(correction);
+				}
+			}
+	}
+	/*public static Map<String,Roteiro> loadSpreadsheetRoteiros(String idGoogleDrive) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
         
@@ -292,6 +440,7 @@ public class Util {
                 CustomElementCollection cec = le.getCustomElements();
                 //Pass column name to access it's cell values
                 String idRoteiro = cec.getValue("Roteiro".toLowerCase());
+                String nomeRoteiro = cec.getValue("Nome".toLowerCase());
                 //System.out.println(val);
                 String descricao = cec.getValue("Descrição".toLowerCase());
                 //System.out.println(val2);
@@ -301,23 +450,32 @@ public class Util {
                 //System.out.println(val4);
                 GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioAtraso".toLowerCase()));
                 //System.out.println(val5);
-                String monitorCorretor = cec.getValue("MonitorCorretor".toLowerCase());
+                String corretor = cec.getValue("Corretor".toLowerCase());
+                
+                String nomesMonitores = cec.getValue("Monitores".toLowerCase());
+                List<Monitor> monitores = listOfMonitores(nomesMonitores);
+                
                 //System.out.println(val6);
                 GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cec.getValue("DataInicioCorrecao".toLowerCase()));
                 //System.out.println(val7);
                 GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cec.getValue("DataEntregaCorrecao".toLowerCase()));
                 //System.out.println(val8);
-                Roteiro roteiro = new Roteiro(idRoteiro,descricao,dataHoraLiberacao,
-                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitorCorretor,
-                		dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);
+                String links = cec.getValue("LinksVideoAulas".toLowerCase());
+                List<URL> linksVideoAulas = listOfLinks(links);
+                
+                Roteiro roteiro = new Roteiro(idRoteiro,nomeRoteiro,descricao,
+                		dataHoraLiberacao, linksVideoAulas,
+                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitores,
+                		corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,
+                		null,null);
                 roteiros.put(roteiro.getId(), roteiro);
             }
             
-            File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+            File configFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
     		if(!configFolder.exists()){
     			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
     		}
-    		File jsonFileRoteiros = new File(configFolder,FileUtilities.JSON_FILE_ROTEIRO);
+    		File jsonFileRoteiros = new File(configFolder,Constants.JSON_FILE_ROTEIRO);
 
     		//sobrescreve os dados lidos da spreadsheet
     		FileUtilities.loadRoteirosFromUploadFolder(roteiros);
@@ -345,24 +503,40 @@ public class Util {
             for (ListEntry le : lf.getEntries()) {
                 CustomElementCollection cec = le.getCustomElements();
                 //Pass column name to access it's cell values
-                String idProva = cec.getValue("Prova".toLowerCase());
-                //System.out.println(idProva);
+                //Pass column name to access it's cell values
+                String idProva = cec.getValue("Roteiro".toLowerCase());
+                String nomeProva = cec.getValue("Nome".toLowerCase());
+                //System.out.println(val);
                 String descricao = cec.getValue("Descrição".toLowerCase());
                 //System.out.println(val2);
                 GregorianCalendar dataHoraLiberacao = Util.buildDate(cec.getValue("Data-HoraLiberação".toLowerCase()));
                 //System.out.println(val3);
-                GregorianCalendar dataHoraLimiteEnvio = Util.buildDate(cec.getValue("Data-HoraLimiteEnvio".toLowerCase()));
+                GregorianCalendar dataHoraEnvioNormal = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioNormal".toLowerCase()));
                 //System.out.println(val4);
-                Prova prova = new Prova(idProva,descricao,null,null,
-                		dataHoraLiberacao,dataHoraLimiteEnvio);
-                provas.put(prova.getProvaId(), prova);
+                GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioAtraso".toLowerCase()));
+                //System.out.println(val5);
+                String monitorCorretor = cec.getValue("Corretor".toLowerCase());
+                //System.out.println(val6);
+                GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cec.getValue("DataInicioCorrecao".toLowerCase()));
+                //System.out.println(val7);
+                GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cec.getValue("DataEntregaCorrecao".toLowerCase()));
+                //System.out.println(val8);
+                String links = cec.getValue("LinksVideoAulas".toLowerCase());
+                List<URL> linksVideoAulas = listOfLinks(links);
+                
+
+                Prova prova = new Prova(idProva,nomeProva,descricao,
+                		dataHoraLiberacao, linksVideoAulas,
+                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitorCorretor,
+                		dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);
+                provas.put(prova.getId(), prova);
             }
             
-            File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+            File configFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
     		if(!configFolder.exists()){
     			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
     		}
-    		File jsonFileProvas = new File(configFolder,FileUtilities.JSON_FILE_PROVA);
+    		File jsonFileProvas = new File(configFolder,Constants.JSON_FILE_PROVA);
 
     		//sobrescreve os dados lidos da spreadsheet
     		FileUtilities.loadProvasFromUploadFolder(provas);
@@ -372,12 +546,13 @@ public class Util {
         
         return provas;
 	}
+	*/
 	public static File compact(File folder) throws IOException{
 		//id pode ser d euma prova ou de um roteiro
 		File target = null;
 		Compactor compactor = new Compactor();
-		//File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		//File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		//File uploadFolder = new File(Constants.UPLOAD_FOLDER);
+		//File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		//File folder = new File(currentSemester,id);
 		if(folder.exists()){
 			//target = new File(currentSemester,id + ".zip");
@@ -426,8 +601,8 @@ public class Util {
 	 */
 	public static List<String> alunosDownload(String id) throws IOException{
 		ArrayList<String> alunosComDownload = new ArrayList<String>();
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		File provaUploadFolder = new File(currentSemester,id);
 		File downloadLogFile = new File(provaUploadFolder, id + ".log");
 		
@@ -453,8 +628,8 @@ public class Util {
 	public static Map<String,List<Submission>> allSubmissions() throws ConfigurationException, IOException, ServiceException{
 		Map<String,List<Submission>> result = new HashMap<String,List<Submission>>();
 
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		if(currentSemester.exists()){
 			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
@@ -481,7 +656,7 @@ public class Util {
 		List<Submission> result = new ArrayList<Submission>();
 	
 		if(atividadeFolder.exists()){
-			File submissionsFolder = new File(atividadeFolder,FileUtilities.SUBMISSIONS_FOLDER);
+			File submissionsFolder = new File(atividadeFolder,Constants.SUBMISSIONS_FOLDER_NAME);
 			List<File> files = new ArrayList<File>();
 			if(submissionsFolder.exists()){
 				files = filesAsList(submissionsFolder);
@@ -498,7 +673,7 @@ public class Util {
 					try {
 						sub = new Submission(id, a.getMatricula());
 						result.add(sub);
-					} catch (ConfigurationException | IOException | ServiceException | RoteiroException
+					} catch (ConfigurationException | IOException | ServiceException | AtividadeException
 							| StudentException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -551,8 +726,8 @@ public class Util {
 	}
 	public static List<List<FileCopy>> listAllCopies(String id) throws ConfigurationException, IOException, ServiceException{
 		
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		File folder = new File(currentSemester,id);
 
 		return listAllCopies(folder);
@@ -567,11 +742,10 @@ public class Util {
 	 * @throws IOException
 	 * @throws ServiceException
 	 */
-	//PPPP testar a aexecucao desse metodo.
 	public static List<List<FileCopy>> listAllCopies(File folderId) throws ConfigurationException, IOException, ServiceException{
 		List<List<FileCopy>> result = new ArrayList<List<FileCopy>>();
 
-		File submissionsFolder = new File(folderId,FileUtilities.SUBMISSIONS_FOLDER);
+		File submissionsFolder = new File(folderId,Constants.SUBMISSIONS_FOLDER_NAME);
 		File[] jsons = submissionsFolder.listFiles(new FileFilter() {
 			
 			@Override
@@ -804,7 +978,45 @@ public class Util {
 		}
 	}
 		
+	private static List<Monitor> listOfMonitores(String listOfMonitores,List<Monitor> monitores) {
+		ArrayList<Monitor> list = new ArrayList<Monitor>();
+		if(listOfMonitores != null){
+			for (String nome : listOfMonitores.split(",")) {
+				monitores.stream().forEach(m -> {
+					if(m.getNome().equals(nome)){
+						list.add(m);
+					}
+				});
+			}
+		}
+		
+		return list;
+	}
+	private static List<URL> listOfLinks(String listOfLinks){
+		ArrayList<URL> list = new ArrayList<URL>();
+		Function<String[], List<URL>> fill = new Function<String[], List<URL>>() {
+			@Override
+			public List<URL> apply(String[] links) {
+				
+				for (String link : links) {
+					try {
+						URL url = new URL(link);
+						list.add(url);
+					} catch (MalformedURLException e) {
+						//link incorreto nao adiciona na lista de links	
+					}
+					
+				}
+				return list;
+			}
+		};
+		if(listOfLinks != null){
+			fill.apply(listOfLinks.split(","));
+		}
+		return list;
+	}
 	
+
 	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException {
 		//Util.sendEmail("adalberto.cajueiro@gmail.com", "adalberto.cajueiro@gmail.com", "Teste", "conteudo", "adalberto.cajueiro@gmail.com", "acfcaju091401");
 		//Util.send2();
@@ -813,17 +1025,10 @@ public class Util {
 		//https://docs.google.com/spreadsheets/d//pubhtml
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI");
 		//provas.forEach((id,p) -> System.out.println(p));
-		Util.submissions(new File("D:\\trash2\\leda-upload\\2016.1\\R01-01"));
+		List<Monitor> monitores = Util.loadSpreadsheetMonitor(Configuration.ID_MONITORES_SHEET);
+		Map<String,Atividade> atividades = Util.loadSpreadsheetAtividades(Configuration.ID_ATIVIDADES_SHEET, monitores);
+		int i = 0;
 		
-		Map<String,List<Submission>> allSubmissions = Util.allSubmissions();
-		allSubmissions.forEach( (id,ls) -> {
-			System.out.println("Atividade: " + id);
-			ls.forEach( s -> {
-				if(s.getArquivoSubmetido() != null){
-					System.out.println(" - " + s.getArquivoSubmetido().getName());
-				}
-			} );
-		});
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA");
 		//provas.forEach((id,p) -> System.out.println(p));
 		//File target = Util.compact(new File("D:\\trash2\\leda-upload\\2016.1\\R01-02"));
@@ -895,6 +1100,7 @@ public class Util {
 		 System.out.println("DST_OFFSET: "
 		        + (calendar.get(Calendar.DST_OFFSET)/(60*60*1000))); // in hours
 */	}
+
 }
 class SMTPAuthenticator extends javax.mail.Authenticator{
 	public PasswordAuthentication getPasswordAuthentication(){

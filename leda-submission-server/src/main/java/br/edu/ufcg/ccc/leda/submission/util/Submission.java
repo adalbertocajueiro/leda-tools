@@ -20,7 +20,7 @@ public class Submission {
 		this.fezDownload = true;
 	}
 	
-	public Submission(String idAtividade, String matricula) throws ConfigurationException, IOException, ServiceException, RoteiroException, StudentException {
+	public Submission(String idAtividade, String matricula) throws ConfigurationException, IOException, ServiceException, AtividadeException, StudentException {
 		this.atividade = buscarAtividade(idAtividade);
 		this.aluno = buscarAluno(matricula);
 		this.fezDownload = buscarFezDownload(idAtividade,matricula);
@@ -33,10 +33,10 @@ public class Submission {
 
 	private File buscarSubmissao(String idAtividade, String matricula) {
 		File submissao = null;
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		File atividadeFolder = new File(currentSemester,idAtividade);
-		File submissionsFolder = new File(atividadeFolder,FileUtilities.SUBMISSIONS_FOLDER);
+		File submissionsFolder = new File(atividadeFolder,Constants.SUBMISSIONS_FOLDER_NAME);
 		List<File> files = Util.filesAsList(submissionsFolder);
 		submissao = files.stream().filter(f -> f.getName().contains(matricula)).findAny().orElse(null);
 		return submissao;
@@ -60,19 +60,19 @@ public class Submission {
 		return aluno;
 	}
 
-	private Atividade buscarAtividade(String idAtividade) throws ConfigurationException, IOException, ServiceException, RoteiroException {
+	private Atividade buscarAtividade(String idAtividade) throws ConfigurationException, IOException, ServiceException, AtividadeException {
 		Atividade atividade = null;
 		if(idAtividade.startsWith("R")){
 			Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
 			atividade = roteiros.get(idAtividade);
 			if(atividade == null){
-				throw new RoteiroException("Submission.buscarAtividade() - Roteiro " + idAtividade + " nao cadastrado");
+				throw new AtividadeException("Submission.buscarAtividade() - Roteiro " + idAtividade + " nao cadastrado");
 			}
 		} else if (idAtividade.startsWith("P")){
 			Map<String,Prova> provas = Configuration.getInstance().getProvas();
 			atividade = provas.get(idAtividade);
 			if(atividade == null){
-				throw new RoteiroException("Submission.buscarAtividade() - Prova " + idAtividade + " nao cadastrado");
+				throw new AtividadeException("Submission.buscarAtividade() - Prova " + idAtividade + " nao cadastrado");
 			}			
 		}
 		return atividade;
