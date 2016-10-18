@@ -60,7 +60,8 @@
 				</thead>
 				<tbody>
 				<#list config.getProvas()?values as prova>
-						<tr><td>${prova.id} <td><#if prova.nome??>${prova}</#if>
+						<tr><td>${prova.id} 
+						<td>${prova.nome!" "}
 						<td class="text-xs-center">${formatter.format(prova.dataHora.time)}
 						<td class="text-xs-center">${formatter.format(prova.dataHoraLimiteEnvioNormal.time)}
 						<td class="text-xs-center"><#if prova.arquivoAmbiente??> ${formatter.format(prova.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
