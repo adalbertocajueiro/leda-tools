@@ -31,16 +31,16 @@
             <table id="roteiros" class="table table-hover table-bordered">
 				<thead class="bg-success">
 					<th class="text-xs-center">ID</th>
-					<th class="text-xs-center">Descrição</th>
+					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Data Liberação</th>
 					<th class="text-xs-center">Data Limite</th>
 					<th class="text-xs-center">Monitor</th>
 					<th class="text-xs-center">Ambiente</th>
 				</thead>
 				<tbody>
-				<#list config.roteiros?values as roteiro>
-						<tr><td>${roteiro.id} <td>${roteiro.descricao}
-						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLiberacao.time)}
+				<#list config.getRoteiros()?values as roteiro>
+						<tr><td>${roteiro.id} <td><#if roteiro.nome??>${roteiro.nome}</#if>
+						<td class="text-xs-center">${formatter.format(roteiro.dataHora.time)}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
 						<td>${(roteiro.monitorCorretor)!""}
 						<td class="text-xs-center"><#if roteiro.arquivoAmbiente??> ${formatter.format(roteiro.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
@@ -53,16 +53,16 @@
             <table id="provas" class="table table-hover table-bordered">
 				<thead class="bg-success">
 					<th class="text-xs-center">ID</th>
-					<th class="text-xs-center">Descrição</th>
+					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Liberação</th>
 					<th class="text-xs-center">Limite Envio</th>
 					<th class="text-xs-center">Ambiente</th>
 				</thead>
 				<tbody>
-				<#list config.provas?values as prova>
-						<tr><td>${prova.provaId} <td>${prova.descricao}
-						<td class="text-xs-center">${formatter.format(prova.dataHoraLiberacao.time)}
-						<td class="text-xs-center">${formatter.format(prova.dataHoraLimiteEnvio.time)}
+				<#list config.getProvas()?values as prova>
+						<tr><td>${prova.id} <td><#if prova.nome??>${prova}</#if>
+						<td class="text-xs-center">${formatter.format(prova.dataHora.time)}
+						<td class="text-xs-center">${formatter.format(prova.dataHoraLimiteEnvioNormal.time)}
 						<td class="text-xs-center"><#if prova.arquivoAmbiente??> ${formatter.format(prova.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
 				</#list>
 				</tbody>

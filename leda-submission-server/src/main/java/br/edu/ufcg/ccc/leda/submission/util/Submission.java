@@ -61,19 +61,9 @@ public class Submission {
 	}
 
 	private Atividade buscarAtividade(String idAtividade) throws ConfigurationException, IOException, ServiceException, AtividadeException {
-		Atividade atividade = null;
-		if(idAtividade.startsWith("R")){
-			Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
-			atividade = roteiros.get(idAtividade);
-			if(atividade == null){
-				throw new AtividadeException("Submission.buscarAtividade() - Roteiro " + idAtividade + " nao cadastrado");
-			}
-		} else if (idAtividade.startsWith("P")){
-			Map<String,Prova> provas = Configuration.getInstance().getProvas();
-			atividade = provas.get(idAtividade);
-			if(atividade == null){
-				throw new AtividadeException("Submission.buscarAtividade() - Prova " + idAtividade + " nao cadastrado");
-			}			
+		Atividade atividade = Configuration.getInstance().getAtividades().get(idAtividade);
+		if (atividade == null) {
+			throw new AtividadeException("Submission.buscarAtividade() - Atividade " + idAtividade + " nao cadastrada");
 		}
 		return atividade;
 	}

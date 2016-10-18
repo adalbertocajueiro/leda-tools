@@ -86,6 +86,7 @@ public class Util {
 		return result;
 	}
 	
+	
 	public static Comparator<String> comparatorProvas(){
 		Comparator<String> comparator = 
 				(name1,name2)-> {
@@ -573,8 +574,10 @@ public class Util {
 				return pathname.isFile() && pathname.getName().startsWith(prefix);
 			}
 		});
-		for (int i = 0; i < files.length; i++) {
-			Files.deleteIfExists(files[i].toPath());
+		if(files != null){
+			for (int i = 0; i < files.length; i++) {
+				Files.deleteIfExists(files[i].toPath());
+			}
 		}
 	}
 	public static void loadConfig(String path) throws IOException{

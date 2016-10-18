@@ -88,6 +88,7 @@ public class Roteiro extends Atividade{
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		result.append("ID: " + this.id + " | ");
+		result.append("Nome: " + this.nome + " | ");
 		result.append("Data liberacao: " + Util.formatDate(this.dataHora) + " | ");
 		if(this.dataHoraLimiteEnvioAtraso != null){
 			result.append("Data limite envio: " + Util.formatDate(this.dataHoraLimiteEnvioAtraso) + "\n");
@@ -157,5 +158,4 @@ public class Roteiro extends Atividade{
 		this.dataLimiteCorrecao = dataLimiteCorrecao;
 	}
 
-	
 }

@@ -58,7 +58,7 @@ public abstract class Constants {
     		if(!UPLOAD_FOLDER.exists()){
     			UPLOAD_FOLDER.mkdirs();
     		}
-    		CURRENT_SEMESTER_FOLDER = new File(UPLOAD_FOLDER, Constants.DEFAULT_CONFIG_FOLDER_NAME);
+    		CURRENT_SEMESTER_FOLDER = new File(UPLOAD_FOLDER, Constants.CURRENT_SEMESTER);
     		if(!CURRENT_SEMESTER_FOLDER.exists()){
     			CURRENT_SEMESTER_FOLDER.mkdirs();
     		}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import com.google.gdata.util.ServiceException;
 
@@ -61,10 +62,14 @@ public class Configuration {
 	public Map<String, Student> getStudents() {
 		return students;
 	}
-	public Map<String, Roteiro> getRoteiros() {
+	public Map<String, Atividade> getRoteiros() {
+		Map<String,Atividade> roteiros = new TreeMap();
+		roteiros.putAll(atividades.values().stream().filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova))).collect(Collectors.toMap(ativ -> ativ.getId(), ativ -> ativ)));
 		return roteiros;
 	}
-	public Map<String, Prova> getProvas() {
+	public Map<String, Atividade> getProvas() {
+		Map<String,Atividade> provas = new TreeMap(Util.comparatorProvas());
+		provas.putAll(atividades.values().stream().filter(ativ -> (ativ instanceof Prova)).collect(Collectors.toMap(ativ -> ativ.getId(), ativ -> ativ)));
 		return provas;
 	}
 	public ArrayList<String> getIpsAutorizados() {

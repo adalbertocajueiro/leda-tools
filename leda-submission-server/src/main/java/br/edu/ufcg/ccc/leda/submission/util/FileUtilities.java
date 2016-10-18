@@ -90,7 +90,7 @@ public class FileUtilities {
 		}
 		
 		//pega o roteiro par aobter o arquivo e mandar de volta
-		Map<String,Prova> provas = Configuration.getInstance().getProvas();
+		Map<String,Prova> provas = null; //Configuration.getInstance().getProvas();
 		Prova prova = provas.get(provaId);
 		environment = prova.getArquivoAmbiente();
 
@@ -130,7 +130,7 @@ public class FileUtilities {
 		logger.log(content);
 
 		//pega o roteiro par aobter o arquivo e mandar de volta
-		Map<String,Roteiro> roteiros = Configuration.getInstance().getRoteiros();
+		Map<String,Roteiro> roteiros = null; //Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteiros.get(roteiro);
 		environment = rot.getArquivoAmbiente();
 		
@@ -158,11 +158,6 @@ public class FileUtilities {
 		if(Constants.PATTERN_ROTEIRO.matcher(id).matches() || 
 				Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){
 			
-			//o nome do arquivo eh enviado. ele deve ser colocado na pasta 
-			//<upload>/semestre/roteiros/<ID_ROTEIRO>NomearquivoEnviado.zip
-			//dois arquivos devem ser salvos:environment e correction-proj.
-			//eles devem ser inseridos no objeto roteiro que esta no Map  Configuration.roteiros
-			//e deve ser salvo um arquivo JSON mantendo dota essa estrutura. 
 			folderAtividade = new File(Constants.ROTEIROS_FOLDER,id);
 		} 
 		if (config.getId().contains("X")) {
@@ -180,8 +175,7 @@ public class FileUtilities {
 					String atividadeAtual = new String(config.getId().getBytes());
 					atividadeAtual = atividadeAtual.replace("X", String.valueOf(i));
 					ProfessorUploadConfiguration newConfig = 
-							new ProfessorUploadConfiguration(config.getSemestre(), config.getTurma(), 
-									atividadeAtual, 1);
+							new ProfessorUploadConfiguration(atividadeAtual,config.getSemestre(), config.getTurma(),1);
 					result = result + saveProfessorSubmission(ambiente, projetoCorrecao, newConfig) + "\n<br>";
 				}
 				
@@ -192,9 +186,9 @@ public class FileUtilities {
 				Validator.validate(config);
 				
 				
-				String uploadEnvFileName =  folderAtividade.getName() + File.separator + 
+				String uploadEnvFileName =   
 						Util.generateFileName(ambiente, config);
-				String uploadCorrProjFileName =  folderAtividade.getName() + File.separator + 
+				String uploadCorrProjFileName =  
 						Util.generateFileName(projetoCorrecao, config);
 
 				
@@ -228,7 +222,7 @@ public class FileUtilities {
 				if(!configFolder.exists()){
 					throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 				}
-				File jsonFileRoteiros = new File(configFolder,Constants.JSON_FILE_ROTEIRO);
+				//File jsonFileRoteiros = new File(configFolder,Constants.JSON_FILE_ROTEIRO);
 				//Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
 				
 				result = "Uploads realizados: " + foutEnv.getAbsolutePath() + ", " + foutCorrProj.getAbsolutePath() + " em " + Util.formatDate(new GregorianCalendar()); 
@@ -240,7 +234,7 @@ public class FileUtilities {
 					//windows nao permite a criação de links symbolicos 
 					//System.out.println("Link to: " + uploadSubFolderTarget);
 					Path newLink = (new File(Constants.REPORTS_FOLDER_NAME)).toPath();
-					Path target = folderAtividade.toPath();
+					Path target = new File(Constants.CURRENT_SEMESTER_FOLDER,id).toPath();
 					//se target nao existe entao ja cria ela
 					if(!Files.exists(target)){
 						Files.createDirectory(target);
@@ -250,7 +244,7 @@ public class FileUtilities {
 				}else{
 					//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
 					Path newLink = (new File(Constants.REPORTS_FOLDER_NAME)).toPath();
-					Path target = folderAtividade.toPath();
+					Path target = new File(Constants.CURRENT_SEMESTER_FOLDER,id).toPath();
 					//System.out.println("Link: " + newLink);
 					//System.out.println("Target: " + target);
 					
@@ -347,7 +341,7 @@ public class FileUtilities {
 	
 			
 			//adicionando os arquivos na respectiva prova
-			Map<String,Prova> provas = Configuration.getInstance().getProvas();
+			Map<String,Prova> provas = null; //Configuration.getInstance().getProvas();
 			Prova prova = provas.get(config.getId());
 			if(prova != null){
 				prova.setArquivoAmbiente(foutEnv);
@@ -431,24 +425,26 @@ public class FileUtilities {
 		Student student = students.get(config.getMatricula());
 		
 		// precisa criar as pastas onde o arquivo vai ser uploaded. as pastas sao criadas 
-		//na past default de uploads e seguem o padrao: <default>/semestre/roteiro/turma
 		//nela sao colocadas as submissoes dos alunos e feito um log da submissao
-		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
-		if(!uploadFolder.exists()){
-			uploadFolder.mkdirs();
-		}
+		//File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		
+		String id = config.getId();
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(!atividadeFolder.exists()){
+			atividadeFolder.mkdirs();
+		}
+		File submissionsAtividadeFolder = new File(atividadeFolder,Constants.SUBMISSIONS_FOLDER_NAME);
+		if(!submissionsAtividadeFolder.exists()){
+			submissionsAtividadeFolder.mkdirs();
+		}
 		//o nome do arquivo eh o nome do aluno cadastrado no sistema
-		//String uploadFileName = config.getSemestre() + File.separator + config.getRoteiro() 
-		//		+ File.separator + config.getTurma() + File.separator + uploaded.getName().substring(uploaded.getName().indexOf(".") + 1);
 		String uploadSubFolder = Constants.CURRENT_SEMESTER + File.separator + config.getId() + File.separator + Constants.SUBMISSIONS_FOLDER_NAME; 
 				//+ File.separator + config.getTurma();
 		//o nome od arquivo recebido eh <MATRICULA>-<NODE DO ESTUDANTE>
 		//o sistema de correcao tambem trabalha comesse formato para montar a tabela geral
-		String uploadFileName =  uploadSubFolder + File.separator + 
-				student.getMatricula() + "-" + student.getNome() + ".zip";
+		String uploadFileName =  student.getMatricula() + "-" + student.getNome() + ".zip";
 
-		File fout = new File(uploadFolder,uploadFileName);
+		File fout = new File(submissionsAtividadeFolder,uploadFileName);
 		if (!fout.exists()) {
 			fout.mkdirs();
 		}

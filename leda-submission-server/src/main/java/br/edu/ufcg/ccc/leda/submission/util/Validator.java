@@ -64,7 +64,7 @@ public class Validator {
 			throw new AtividadeException("Estudante " + matricula + " nao pode fazer download de ambientes da turma " + turma);			
 		}
 
-		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
+		Map<String,Roteiro> roteirosMap = null; //Configuration.getInstance().getRoteiros();
 		Roteiro rot = roteirosMap.get(id);
 		if(rot == null){
 			throw new AtividadeException("Roteiro " + id + " nao cadastrado");
@@ -96,7 +96,7 @@ public class Validator {
 			throw new AtividadeException("Estudante " + matricula + " nao pode fazer download da prova da turma " + turma);			
 		}
 				
-		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
+		Map<String,Prova> provasMap = null; //Configuration.getInstance().getProvas();
 		Prova prova = provasMap.get(id);
 		if(prova == null){
 			throw new AtividadeException("Prova " + id + " nao cadastrada");

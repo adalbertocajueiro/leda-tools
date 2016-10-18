@@ -271,7 +271,7 @@ public class SubmissionServer extends Jooby {
 	 post("/uploadRoteiro", (req,resp) -> {
 		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 		//System.out.println("pedido de upload de roteiro recebido");
-		String roteiro = req.param("roteiro").value();
+		String id = req.param("roteiro").value();
 		//System.out.println(roteiro);
 	    String semestre = req.param("semestre").value();
 	    //System.out.println(semestre);
@@ -283,7 +283,7 @@ public class SubmissionServer extends Jooby {
 	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
 	    
 		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro,numeroTurmas);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(id,semestre,turma,numeroTurmas);
 		File uploadedAmbiente = uploadAmbiente.file();
 		File uploadedCorrecao = uploadCorrecao.file();
 		String result = "default response";
@@ -308,7 +308,7 @@ public class SubmissionServer extends Jooby {
 	post("/uploadProva", (req,resp) -> {
 		//toda a logica para receber uma prova e guarda-lo por completo e mante-la no mapeamento
 		//de provas onde se jabe a data de liberacao e a data maxima de envio
-		String prova = req.param("roteiro").value(); //aqui sera o id da prova P0X
+		String id = req.param("roteiro").value(); //aqui sera o id da prova P0X
 		//System.out.println(roteiro);
 	    String semestre = req.param("semestre").value();
 	    //System.out.println(semestre);
@@ -320,7 +320,7 @@ public class SubmissionServer extends Jooby {
 	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
 	    
 		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,prova,numeroTurmas);
+		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(id,semestre,turma,numeroTurmas);
 		File uploadedAmbiente = uploadAmbiente.file();
 		File uploadedCorrecao = uploadCorrecao.file();
 		String result = "default response";
