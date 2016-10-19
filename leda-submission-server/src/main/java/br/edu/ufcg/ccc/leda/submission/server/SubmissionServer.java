@@ -78,8 +78,9 @@ public class SubmissionServer extends Jooby {
 		assets("css/**");
 		assets("/*.ico");
 		assets("/*.svg");
-		assets("bootstrap4/**");
-		
+		assets("jquery/**");
+		assets("bootstrap/**");
+		assets("tether/**");
 	}
   {
 	use(new Ftl());
