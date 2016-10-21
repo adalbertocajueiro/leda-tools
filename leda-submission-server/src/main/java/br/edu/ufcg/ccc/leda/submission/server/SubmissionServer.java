@@ -38,6 +38,7 @@ import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
+import br.edu.ufcg.ccc.leda.submission.util.Atividade;
 
 /**
  * @author jooby generator
@@ -113,6 +114,14 @@ public class SubmissionServer extends Jooby {
         html.put("pageName", "Alunos cadastrados em LEDA");
         
         html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
+        
+        return html;
+    });
+	
+	get("/cronograma", (req) -> {
+        Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
+        View html = Results.html("cronograma");
+        html.put("atividades", atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.toList()));
         
         return html;
     });
