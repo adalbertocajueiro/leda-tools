@@ -29,7 +29,7 @@ public class Roteiro extends Atividade{
 	 * @param dataHoraLiberacao
 	 */
 	private Roteiro(String id, String nome, String descricao, 
-			GregorianCalendar dataHoraLiberacao, List<URL> linksVideoAulas, 
+			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, 
 			List<Monitor> monitores, File arquivoAmbiente, File arquivoProjetoCorrecao) {
 		super(id,nome,descricao,dataHoraLiberacao,linksVideoAulas,monitores);
 		this.arquivoAmbiente = arquivoAmbiente;
@@ -53,7 +53,7 @@ public class Roteiro extends Atividade{
 	 * @param dataHoraLimiteEnvioAtraso
 	 */
 	public Roteiro(String id, String nome, String descricao, 
-			GregorianCalendar dataHoraLiberacao, List<URL> linksVideoAulas,
+			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas,
 			GregorianCalendar dataHoraLimiteEnvioNormal,
 			GregorianCalendar dataHoraLimiteEnvioAtraso,
 			List<Monitor> monitores, Monitor monitorCorretor, 

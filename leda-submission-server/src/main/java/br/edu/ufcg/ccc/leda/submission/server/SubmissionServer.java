@@ -39,6 +39,7 @@ import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 import br.edu.ufcg.ccc.leda.submission.util.Atividade;
+import br.edu.ufcg.ccc.leda.submission.util.Constants;
 
 /**
  * @author jooby generator
@@ -121,7 +122,16 @@ public class SubmissionServer extends Jooby {
 	get("/cronograma", (req) -> {
         Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
         View html = Results.html("cronograma");
-        html.put("atividades", atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.toList()));
+        //int turmas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma)).size();
+        //System.out.println("Numero turmas: " + turmas);
+        List<String> turmas = new ArrayList<String>();
+        for (int i = 1; i <= Constants.TURMAS; i++) {
+			turmas.add(String.valueOf(i));
+		}
+        html.put("turmas", turmas);
+        //html.put("atividades", atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.toList()));
+        Map<String,List<Atividade>> atividadesAgrupadas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
+        html.put("atividades", atividadesAgrupadas);
         
         return html;
     });
@@ -193,7 +203,7 @@ public class SubmissionServer extends Jooby {
         Configuration config = Configuration.getInstance();
         //System.out.println(config.getIpsAutorizados());
         html.put("config",config);
-        
+        //System.out.println(config.toString());
         return html;
         
 		//resp.send(result.toString());

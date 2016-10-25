@@ -10,6 +10,8 @@ public abstract class Constants {
 
 	public static final int HORAS_LIMITE_NORMAL = 12;
 	public static final int HORAS_LIMITE_ATRASO = 48;
+	
+	public static final int TURMAS = 2;
 
 	public static final String DEFAULT_CONFIG_FOLDER_NAME = "conf";
 	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
@@ -38,7 +40,7 @@ public abstract class Constants {
 	public static final Pattern PATTERN_AULA = Pattern.compile("A[0-9]{2}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_ROTEIRO = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_ROTEIRO_REVISAO = Pattern.compile("RR[0-9]{1}-[0-9][0-9[X]]");
-	public static final Pattern PATTERN_PROVA = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
+	public static final Pattern PATTERN_PROVA = Pattern.compile("P[PRF][1-9]-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 	public static final String AUTOR_MATRICULA = "autor.matricula";
 	public static final String AUTOR_NOME = "autor.nome";

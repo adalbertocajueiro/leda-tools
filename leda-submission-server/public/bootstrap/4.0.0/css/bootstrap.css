@@ -339,7 +339,8 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  /** margin-bottom: 1rem; **/
+  margin-bottom: 0;
 }
 
 abbr[title],
@@ -1695,7 +1696,7 @@ pre code {
 .table th,
 .table td {
   padding: 0.1rem;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #eceeef;
 }
 
@@ -1718,17 +1719,19 @@ pre code {
 }
 
 .table-bordered {
-  border: 1px solid #eceeef;
+  border: 1px solid #111111 !important;
+  /** border: 1px solid #eceeef; **/
 }
 
 .table-bordered th,
 .table-bordered td {
-  border: 1px solid #eceeef;
+  /** border: 1px solid #eceeef; **/
+  border: 1px solid #111111 !important;
 }
 
 .table-bordered thead th,
 .table-bordered thead td {
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {

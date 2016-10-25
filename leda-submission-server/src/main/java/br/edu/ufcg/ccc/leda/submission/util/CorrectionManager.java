@@ -107,24 +107,24 @@ public class CorrectionManager {
 		}
 
 	}
-	private boolean canCorrect(File atividade)
+	private boolean canCorrect(File atividadeId)
 			throws ConfigurationException, IOException, ServiceException {
 		boolean result = false;
 		// tem que ver se a data atual ultrapassou a data limite de envio
 		// com atraso
 		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
-		Atividade ativ = atividades.get(atividade.getName());
+		Atividade ativ = atividades.get(atividadeId.getName());
 		if (ativ != null && ativ instanceof Roteiro) {
 			GregorianCalendar current = new GregorianCalendar();
 			result = current.after(((Roteiro) ativ).getDataHoraLimiteEnvioAtraso());
 		} else {
 			throw new RuntimeException(
-					"Atividade nao localizada (CorrectionTimerTask.canCorrect)");
+					"Atividade nao localizada (CorrectionTimerTask.canCorrect): " + atividadeId.getName());
 		}
 		// verifica se existe um arquivo target/generated-report.html (indicando que ja
 		// foi corrigido)
 		//File targetFolder = new File(roteiro,"target");
-		File report = new File(atividade,Constants.GENERATED_REPORT_FILE);
+		File report = new File(atividadeId,Constants.GENERATED_REPORT_FILE);
 		result = result && !report.exists();
 		//File report = new File(roteiro, MAVEN_OUTPUT_FILE);
 		//result = result && !report.exists();

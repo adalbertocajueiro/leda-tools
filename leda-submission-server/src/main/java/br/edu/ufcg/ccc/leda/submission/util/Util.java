@@ -101,8 +101,8 @@ public class Util {
 		Comparator<String> comparator = 
 				(name1,name2)-> {
 					int result = 0;
-					Pattern patternProvaPratica = Pattern.compile("PP[1-3]-[0-9][0-9[X]]");
-					Pattern patternProvaReposicao = Pattern.compile("PR[1-3]-[0-9][0-9[X]]");
+					Pattern patternProvaPratica = Pattern.compile("PP[1-9]-[0-9][0-9[X]]");
+					Pattern patternProvaReposicao = Pattern.compile("PR[1-9]-[0-9][0-9[X]]");
 					Pattern patternProvaFinal = Pattern.compile("PF[1-3]-[0-9][0-9[X]]");
 					Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 					if (patternRoteiro.matcher(name1).matches()){
@@ -360,7 +360,7 @@ public class Util {
                 GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cec.getValue("DataEntregaCorrecao".toLowerCase()));
                 //System.out.println(val8);
                 String links = cec.getValue("LinksVideoAulas".toLowerCase());
-                List<URL> linksVideoAulas = listOfLinks(links);
+                List<LinkVideoAula> linksVideoAulas = listOfLinks(links);
                 
                 Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
                 		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitores,
@@ -515,7 +515,7 @@ public class Util {
             			org.apache.poi.ss.usermodel.Cell cellLinksVideoAulas = row.getCell(10); //celula de datahora de liberacao
 
                         String nome = cellNome != null?cellNome.getStringCellValue():"";
-                        String descricao = cellDescricao != cellDescricao?cellDescricao.getStringCellValue():"";
+                        String descricao = cellDescricao != null?cellDescricao.getStringCellValue():"";
                         GregorianCalendar dataHoraLiberacao = Util.buildDate(cellDataHoraLiberacao.getDateCellValue());
                         GregorianCalendar dataHoraEnvioNormal = Util.buildDate(cellDataHoraEnvioNormal.getDateCellValue());
                         GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cellDataHoraLimiteEnvioAtraso.getDateCellValue());
@@ -529,7 +529,7 @@ public class Util {
                         GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cellDataInicioCorrecao.getDateCellValue());
                         GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cellDataEntregaCorrecao.getDateCellValue());
                         String links = cellLinksVideoAulas != null?cellLinksVideoAulas.getStringCellValue():"";
-                        List<URL> linksVideoAulas = listOfLinks(links);
+                        List<LinkVideoAula> linksVideoAulas = listOfLinks(links);
                         
                         Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
                         		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitores,
@@ -603,7 +603,7 @@ public class Util {
 	}
 
 	private static Atividade createAtividade(String id, String nome, String descricao,
-			GregorianCalendar dataHoraLiberacao, List<URL> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
+			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
 			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Monitor corretor,
 			GregorianCalendar dataHoraInicioCorrecao, GregorianCalendar dataHoraEntregaCorrecao) {
 		
@@ -1112,25 +1112,21 @@ public class Util {
 		
 		return list;
 	}
-	private static List<URL> listOfLinks(String listOfLinks){
-		ArrayList<URL> list = new ArrayList<URL>();
-		Function<String[], List<URL>> fill = new Function<String[], List<URL>>() {
+	private static List<LinkVideoAula> listOfLinks(String listOfLinks){
+		ArrayList<LinkVideoAula> list = new ArrayList<LinkVideoAula>();
+		Function<String[], List<LinkVideoAula>> fill = new Function<String[], List<LinkVideoAula>>() {
 			@Override
-			public List<URL> apply(String[] links) {
-				
-				for (String link : links) {
-					try {
-						URL url = new URL(link);
-						list.add(url);
-					} catch (MalformedURLException e) {
-						//link incorreto nao adiciona na lista de links	
-					}
-					
+			public List<LinkVideoAula> apply(String[] links) {
+				for (String textoURL : links) {
+
+					LinkVideoAula link = new LinkVideoAula(textoURL.trim());
+					list.add(link);
+
 				}
 				return list;
 			}
 		};
-		if(listOfLinks != null){
+		if(listOfLinks != null && listOfLinks.length() > 0){
 			fill.apply(listOfLinks.split(","));
 		}
 		return list;

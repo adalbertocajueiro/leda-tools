@@ -43,18 +43,14 @@ public class Configuration {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			//atividades = new TreeMap<String,Atividade>();
-			if(monitores == null){
-				monitores = Util.loadSpreadsheetMonitorFromExcel();
-			}
+			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			//atividades = new TreeMap<String,Atividade>();
-			if(monitores == null){
-				monitores = Util.loadSpreadsheetMonitorFromExcel();
-			}
+			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
@@ -95,12 +91,14 @@ public class Configuration {
 		atividades.values().stream().filter(a -> a instanceof Aula).sorted((r1,r2)-> r1.getId().compareTo(r2.getId()))
 			.forEach(r -> result.append(r.toString() + "<br>"));
 		result.append("Roteiros: <br>");
+		
 		atividades.values().stream().filter(a -> (a instanceof Roteiro) && !(a instanceof Prova)).sorted((r1,r2)-> r1.getId().compareTo(r2.getId()))
 			.forEach(r -> result.append(r.toString() + "<br>"));
 
 		result.append("Provas: <br>");
-		atividades.values().stream().filter(a -> a instanceof Prova).sorted((p1,p2)-> p1.getId().compareTo(p2.getId()))
-			.forEach(p -> result.append(p.toString() + "<br>"));
+		getProvas().values().forEach(p -> result.append(p.toString() + "<br>"));
+		//atividades.values().stream().filter(a -> a instanceof Prova).sorted((p1,p2)-> p1.getId().compareTo(p2.getId()))
+		//	.forEach(p -> result.append(p.toString() + "<br>"));
 		
 		return result.toString();
 	}

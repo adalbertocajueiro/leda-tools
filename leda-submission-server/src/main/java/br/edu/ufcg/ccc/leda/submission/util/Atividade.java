@@ -10,11 +10,11 @@ public abstract class Atividade {
 	protected String nome;
 	protected String descricao;
 	protected GregorianCalendar dataHora;
-	protected List<URL> linksVideoAulas;
+	protected List<LinkVideoAula> linksVideoAulas;
 	private List<Monitor> monitores;
 	
 	public Atividade(String id, String nome, String descricao, 
-			GregorianCalendar dataHora, List<URL> linksVideoAulas,
+			GregorianCalendar dataHora, List<LinkVideoAula> linksVideoAulas,
 			List<Monitor> monitores) {
 		super();
 		this.id = id;
@@ -42,6 +42,9 @@ public abstract class Atividade {
 		return "Atividade " + id + " (" + nome + ")";
 	}
 
+	public String getTurma(){
+		return this.id.substring(4);
+	}
 	public String getId() {
 		return id;
 	}
@@ -50,6 +53,7 @@ public abstract class Atividade {
 		this.id = id;
 	}
 
+	
 	public String getDescricao() {
 		return descricao;
 	}
@@ -66,11 +70,12 @@ public abstract class Atividade {
 		this.dataHora = dataHora;
 	}
 
-	public List<URL> getLinksVideoAulas() {
+	
+	public List<LinkVideoAula> getLinksVideoAulas() {
 		return linksVideoAulas;
 	}
 
-	public void setLinksVideoAulas(List<URL> linksVideoAulas) {
+	public void setLinksVideoAulas(List<LinkVideoAula> linksVideoAulas) {
 		this.linksVideoAulas = linksVideoAulas;
 	}
 

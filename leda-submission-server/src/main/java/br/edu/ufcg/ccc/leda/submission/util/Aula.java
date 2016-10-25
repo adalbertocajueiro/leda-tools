@@ -8,7 +8,7 @@ import java.util.List;
 public class Aula extends Atividade{
 
 	public Aula(String id, String nome, String descricao,
-			GregorianCalendar dataHora, List<URL> linksVideoAulas,
+			GregorianCalendar dataHora, List<LinkVideoAula> linksVideoAulas,
 			List<Monitor> monitores) {
 		super(id, nome, descricao, dataHora, linksVideoAulas, monitores);
 	}
