@@ -370,7 +370,7 @@ public class Util {
                 List<LinkVideoAula> linksVideoAulas = listOfLinks(links);
                 
                 Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
-                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitores,
+                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitoresDoRoteiro,
                 		corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao);
                 
                 atividades.put(atividade.getId(), atividade);
@@ -482,6 +482,7 @@ public class Util {
 		return turma;
 	}
 
+	@Deprecated
 	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(List<Monitor> monitores) throws IOException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		
@@ -547,7 +548,7 @@ public class Util {
                         List<LinkVideoAula> linksVideoAulas = listOfLinks(links);
                         
                         Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
-                        		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitores,
+                        		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitoresDoRoteiro,
                         		corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao);
                         
                         atividades.put(atividade.getId(), atividade);
@@ -601,7 +602,7 @@ public class Util {
 
             			String nome = cellNome != null?cellNome.getStringCellValue():"";
                         String email = cellEmail != null?cellEmail.getStringCellValue():"";
-                        String fone = cellFone != null?cellFone.getStringCellValue():"";
+                        String fone = cellFone != null? (cellFone.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellFone.getNumericCellValue()):cellFone.getStringCellValue():"";
                         
                         Monitor monitor = 
                         		new Monitor(matricula, nome, email, fone);
@@ -1116,9 +1117,10 @@ public class Util {
 	private static List<Monitor> listOfMonitores(String listOfMonitores,List<Monitor> monitores) {
 		ArrayList<Monitor> list = new ArrayList<Monitor>();
 		if(listOfMonitores != null){
-			for (String nome : listOfMonitores.split(",")) {
+			String[] nomes = listOfMonitores.split(",");
+			for (String nome : nomes) {
 				monitores.stream().forEach(m -> {
-					if(m.getNome().equals(nome)){
+					if(m.getNome().equals(nome.trim())){
 						list.add(m);
 					}
 				});
@@ -1157,8 +1159,9 @@ public class Util {
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI");
 		//provas.forEach((id,p) -> System.out.println(p));
 		List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
-		Map<String,Atividade> atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
-		int i = 0;
+		Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
+		int i = 2;
+		int k = 1;
 		
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA");
 		//provas.forEach((id,p) -> System.out.println(p));

@@ -111,7 +111,7 @@
 								<#if atividade.monitores??> 
 									<ul>
 									<#list atividade.monitores as monitor>
-										<li>${monitor.nome} (${monitor.email}) 
+										<li>${monitor.nome!""} (${monitor.email!""}) 
 									</#list>
 									</ul>
 								</#if> 
@@ -160,7 +160,7 @@
 								<#if atividade.monitores??> 
 									<ul>
 									<#list atividade.monitores as monitor>
-										<li>${monitor.nome} (${monitor.email}) 
+										<li>${monitor.nome!""} (${monitor.email!""}) 
 									</#list>
 									</ul>
 								</#if> 
