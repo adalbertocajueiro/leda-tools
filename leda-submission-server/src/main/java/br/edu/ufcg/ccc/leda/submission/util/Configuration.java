@@ -22,16 +22,14 @@ public class Configuration {
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
 	//private static final String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
 	//private static final String ID_PROVAS_SHEET = "1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI";
-	public static final String ID_ATIVIDADES_SHEET = "15rxyKxDJ4-dSIfdh1ZGZvpL7femQG27P_ESTeSseJGA";
-	public static final String ID_MONITORES_SHEET = "15T_KSFA1ABUvZV_p0IVjcxa90yBJUw0794p7GO8OHEA";
 	
 	private static Configuration instance;
 	
 	private Configuration() throws ConfigurationException, IOException {
 		try {
 			students = Util.loadStudentLists();
-			monitores = Util.loadSpreadsheetMonitor(ID_MONITORES_SHEET);
-			atividades = Util.loadSpreadsheetAtividades(ID_ATIVIDADES_SHEET,monitores);
+			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
+			atividades = Util.loadSpreadsheetsAtividades(monitores);
 			//roteiros = new TreeMap<String,Roteiro>(Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET));
 			//provas = new TreeMap<String, Prova> (Util.comparatorProvas());
 			//provas.putAll(Util.loadSpreadsheetProvas(ID_PROVAS_SHEET));

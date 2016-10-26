@@ -318,6 +318,13 @@ public class Util {
 		return monitores;
 	}
 	
+	public static Map<String,Atividade> loadSpreadsheetsAtividades(List<Monitor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T1, monitores));
+		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T2, monitores));
+		
+		return atividades;
+	}
 	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Monitor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
@@ -475,12 +482,20 @@ public class Util {
 		return turma;
 	}
 
-	
-	@Deprecated
 	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(List<Monitor> monitores) throws IOException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		
-		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Cronograma T1.xlsx");
+		atividades.putAll(loadSpreadsheetAtividadeFromExcel("Cronograma T1.xlsx", monitores));
+		atividades.putAll(loadSpreadsheetAtividadeFromExcel("Cronograma T2.xlsx", monitores));
+		
+		return atividades;
+	}
+	
+	@Deprecated
+	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(String excelFileName, List<Monitor> monitores) throws IOException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		
+		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,excelFileName);
 		FileInputStream fis = new FileInputStream(excelFile);
 		
 		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;

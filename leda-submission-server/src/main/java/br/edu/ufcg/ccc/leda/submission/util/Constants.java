@@ -45,6 +45,10 @@ public abstract class Constants {
 	public static final String AUTOR_MATRICULA = "autor.matricula";
 	public static final String AUTOR_NOME = "autor.nome";
 
+	public static final String ID_MONITORES_SHEET = "15T_KSFA1ABUvZV_p0IVjcxa90yBJUw0794p7GO8OHEA";
+	public static final String ID_ATIVIDADES_SHEET_T1 = "15rxyKxDJ4-dSIfdh1ZGZvpL7femQG27P_ESTeSseJGA";
+	public static final String ID_ATIVIDADES_SHEET_T2 = "1S7Ru2RFei-0lgEHTn2L6XRYajiX8Se4yryuw8sR404A";
+
 	static{
 		try {
 			Properties prop = Util.loadProperties();
