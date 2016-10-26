@@ -33,14 +33,14 @@ public class AutomaticCorrector {
 	 */
 	public Thread corrigirRoteiro(String roteiro) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
 		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		//File uploadFolder = new File("D:\\trash2\\leda-upload");
 		
 		//pega a subpasta do semestre atual
-		File currentSemesterUploadFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File currentSemesterUploadFolder = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		
 		//pega a pasta contendo os arquivos dos roteiros enviados pelo docente
-		File roteirosFolder = new File(currentSemesterUploadFolder,FileUtilities.ROTEIROS_FOLDER);
+		File roteirosFolder = new File(currentSemesterUploadFolder,Constants.ROTEIROS_FOLDER_NAME);
 		
 		//pega a pasta contendo os uploads do roteiro informado (ela vai ser a pasta do
 		//projeto maven de correcao a ser executado). as submissoes estarao na sub-pasta subs 
@@ -77,14 +77,14 @@ public class AutomaticCorrector {
 	
 	public Thread corrigirProva(String prova) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
 		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		//File uploadFolder = new File("D:\\trash2\\leda-upload");
 		
 		//pega a subpasta do semestre atual
-		File currentSemesterUploadFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File currentSemesterUploadFolder = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		
 		//pega a pasta contendo os arquivos dos roteiros enviados pelo docente
-		File provasFolder = new File(currentSemesterUploadFolder,FileUtilities.PROVAS_FOLDER);
+		File provasFolder = new File(currentSemesterUploadFolder,Constants.PROVAS_FOLDER_NAME);
 		
 		//pega a pasta contendo os uploads do roteiro informado (ela vai ser a pasta do
 		//projeto maven de correcao a ser executado). as submissoes estarao na sub-pasta subs 
@@ -121,7 +121,7 @@ public class AutomaticCorrector {
 	
 	public void executeMaven(File projectFolder) throws MavenInvocationException, IOException{
 		Invoker invoker = new DefaultInvoker();
-		System.setProperty("maven.home", FileUtilities.MAVEN_HOME_FOLDER);
+		System.setProperty("maven.home", Constants.MAVEN_HOME_FOLDER);
 		if (projectFolder.isDirectory()) {
 			InvocationRequest request = new DefaultInvocationRequest();
 			//request.setPomFile(new File(projectFoder, "./pom.xml"));

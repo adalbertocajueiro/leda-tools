@@ -19,10 +19,10 @@ public class StudentUploadConfiguration extends UploadConfiguration {
 	private String ip;
 	private Map<String,String> filesOwners;
 	
-	public StudentUploadConfiguration(String semestre, String turma,
-			String roteiro,String matricula,String ip, String files) {
+	public StudentUploadConfiguration(String id, String semestre, String turma,
+			String matricula,String ip, String files) {
 
-		super(semestre,turma,roteiro);
+		super(id,semestre,turma);
 		
 		this.matricula = matricula;
 		this.ip = ip;

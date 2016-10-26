@@ -21,7 +21,7 @@ for (NgxEntry entry : rtmpServers) {
 poderia ja mantar a lista d eestudantes no contexto.
 - tem que fazer o arquivo Provas.xlxs e carregar as provas no servidor - OK
 - tem que modificar o corretor para tambem corrigir as provas automaticamente. - OK
-- precisa tratar com uma tolerancia para o envio das provas?
+- precisa tratar com uma tolerancia para o envio das provas? - NAO - OK
 - precisa persistir as provas em um json tambem? - OK
 - nao permitir o envio de roteiro que ainda nao esta aberto para recebimento/submissao - OK
 - fazer funcionalidade para fazer o reload dos dados de configuracao automaticamente e salvar no singleton - OK

@@ -1,26 +1,22 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Roteiro extends Atividade{
 
-	private String id;
-	private String descricao;
 	private File arquivoAmbiente;
 	private File arquivoProjetoCorrecao;
 	
-	private GregorianCalendar dataHoraLiberacao;
 	private GregorianCalendar dataHoraLimiteEnvioNormal;
 	private GregorianCalendar dataHoraLimiteEnvioAtraso;
 	
-	private String monitorCorretor;
+	private Monitor corretor;
 	private GregorianCalendar dataInicioCorrecao;
 	private GregorianCalendar dataLimiteCorrecao;
-	
-	public static final int HORAS_LIMITE_NORMAL = 12;
-	public static final int HORAS_LIMITE_ATRASO = 48;
 	
 	/**
 	 * Construtor que acrescenta automaticamente certa quantidade de horas para determinar
@@ -32,18 +28,16 @@ public class Roteiro extends Atividade{
 	 * @param correctionProj
 	 * @param dataHoraLiberacao
 	 */
-	private Roteiro(String id, String descricao, File arquivoAmbiente,
-			File arquivoProjetoCorrecao, GregorianCalendar dataHoraLiberacao) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
+	private Roteiro(String id, String nome, String descricao, 
+			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, 
+			List<Monitor> monitores, File arquivoAmbiente, File arquivoProjetoCorrecao) {
+		super(id,nome,descricao,dataHoraLiberacao,linksVideoAulas,monitores);
 		this.arquivoAmbiente = arquivoAmbiente;
 		this.arquivoProjetoCorrecao = arquivoProjetoCorrecao;
-		this.dataHoraLiberacao = dataHoraLiberacao;
 		this.dataHoraLimiteEnvioNormal = (GregorianCalendar)dataHoraLiberacao.clone();
-		this.dataHoraLimiteEnvioNormal.add(Calendar.HOUR,HORAS_LIMITE_NORMAL);
+		this.dataHoraLimiteEnvioNormal.add(Calendar.HOUR,Constants.HORAS_LIMITE_NORMAL);
 		this.dataHoraLimiteEnvioAtraso = (GregorianCalendar)dataHoraLiberacao.clone();
-		this.dataHoraLimiteEnvioAtraso.add(Calendar.HOUR,HORAS_LIMITE_ATRASO);
+		this.dataHoraLimiteEnvioAtraso.add(Calendar.HOUR,Constants.HORAS_LIMITE_ATRASO);
 	}
 	
 	/**
@@ -58,19 +52,18 @@ public class Roteiro extends Atividade{
 	 * @param dataHoraLimiteEnvioNormal
 	 * @param dataHoraLimiteEnvioAtraso
 	 */
-	public Roteiro(String id, String descricao, GregorianCalendar dataHoraLiberacao,
+	public Roteiro(String id, String nome, String descricao, 
+			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas,
 			GregorianCalendar dataHoraLimiteEnvioNormal,
 			GregorianCalendar dataHoraLimiteEnvioAtraso,
-			String monitorCorretor, GregorianCalendar dataInicioCorrecao,
-			GregorianCalendar dataLimiteCorrecao, File arquivoAmbiente,
-			File arquivoProjetoCorrecao) {
+			List<Monitor> monitores, Monitor monitorCorretor, 
+			GregorianCalendar dataInicioCorrecao, GregorianCalendar dataLimiteCorrecao, 
+			File arquivoAmbiente, File arquivoProjetoCorrecao) {
 
-		this.id = id;
-		this.descricao = descricao;
-		this.arquivoAmbiente = arquivoAmbiente;
-		this.arquivoProjetoCorrecao = arquivoProjetoCorrecao;
-		this.dataHoraLiberacao = dataHoraLiberacao;
-		this.monitorCorretor = monitorCorretor;
+		this(id,nome,descricao,dataHoraLiberacao,
+				linksVideoAulas,monitores, 
+				arquivoAmbiente,arquivoProjetoCorrecao);
+		this.corretor = monitorCorretor;
 		this.dataInicioCorrecao = dataInicioCorrecao;
 		this.dataLimiteCorrecao = dataLimiteCorrecao;
 		
@@ -78,10 +71,10 @@ public class Roteiro extends Atividade{
 			if(dataHoraLiberacao != null){
 				this.dataHoraLimiteEnvioNormal = new GregorianCalendar();
 				this.dataHoraLimiteEnvioNormal.setTimeInMillis(dataHoraLiberacao.getTimeInMillis());
-				this.dataHoraLimiteEnvioNormal.add(Calendar.HOUR,HORAS_LIMITE_NORMAL);
+				this.dataHoraLimiteEnvioNormal.add(Calendar.HOUR,Constants.HORAS_LIMITE_NORMAL);
 				this.dataHoraLimiteEnvioAtraso = new GregorianCalendar();
 				this.dataHoraLimiteEnvioAtraso.setTimeInMillis(dataHoraLiberacao.getTimeInMillis());
-				this.dataHoraLimiteEnvioAtraso.add(Calendar.HOUR,HORAS_LIMITE_ATRASO);
+				this.dataHoraLimiteEnvioAtraso.add(Calendar.HOUR,Constants.HORAS_LIMITE_ATRASO);
 			}
 		} else{
 			this.dataHoraLimiteEnvioNormal = dataHoraLimiteEnvioNormal;
@@ -90,20 +83,13 @@ public class Roteiro extends Atividade{
 	}
 	
 	
-	@Override
-	public boolean equals(Object obj) {
-		return this.hashCode() == obj.hashCode();
-	}	
-
-	@Override
-	public int hashCode() {
-		return this.id.hashCode();
-	}
+	
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		result.append("ID: " + this.id + " | ");
-		result.append("Data liberacao: " + Util.formatDate(this.dataHoraLiberacao) + " | ");
+		result.append("Nome: " + this.nome + " | ");
+		result.append("Data liberacao: " + Util.formatDate(this.dataHora) + " | ");
 		if(this.dataHoraLimiteEnvioAtraso != null){
 			result.append("Data limite envio: " + Util.formatDate(this.dataHoraLimiteEnvioAtraso) + "\n");
 		}
@@ -113,22 +99,6 @@ public class Roteiro extends Atividade{
 
 		return result.toString();
 		
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	public File getArquivoAmbiente() {
@@ -147,20 +117,11 @@ public class Roteiro extends Atividade{
 		this.arquivoProjetoCorrecao = arquivoProjetoCorrecao;
 	}
 
-	public GregorianCalendar getDataHoraLiberacao() {
-		return dataHoraLiberacao;
-	}
-
-	public void setDataHoraLiberacao(GregorianCalendar dataHoraLiberacao) {
-		this.dataHoraLiberacao = dataHoraLiberacao;
-	}
-
 	public GregorianCalendar getDataHoraLimiteEnvioNormal() {
 		return dataHoraLimiteEnvioNormal;
 	}
 
-	public void setDataHoraLimiteEnvioNormal(
-			GregorianCalendar dataHoraLimiteEnvioNormal) {
+	public void setDataHoraLimiteEnvioNormal(GregorianCalendar dataHoraLimiteEnvioNormal) {
 		this.dataHoraLimiteEnvioNormal = dataHoraLimiteEnvioNormal;
 	}
 
@@ -168,17 +129,17 @@ public class Roteiro extends Atividade{
 		return dataHoraLimiteEnvioAtraso;
 	}
 
-	public void setDataHoraLimiteEnvioAtraso(
-			GregorianCalendar dataHoraLimiteEnvioAtraso) {
+	public void setDataHoraLimiteEnvioAtraso(GregorianCalendar dataHoraLimiteEnvioAtraso) {
 		this.dataHoraLimiteEnvioAtraso = dataHoraLimiteEnvioAtraso;
 	}
 
-	public String getMonitorCorretor() {
-		return monitorCorretor;
+	
+	public Monitor getCorretor() {
+		return corretor;
 	}
 
-	public void setMonitorCorretor(String monitorCorretor) {
-		this.monitorCorretor = monitorCorretor;
+	public void setCorretor(Monitor corretor) {
+		this.corretor = corretor;
 	}
 
 	public GregorianCalendar getDataInicioCorrecao() {
@@ -196,6 +157,5 @@ public class Roteiro extends Atividade{
 	public void setDataLimiteCorrecao(GregorianCalendar dataLimiteCorrecao) {
 		this.dataLimiteCorrecao = dataLimiteCorrecao;
 	}
-	
-	
+
 }
