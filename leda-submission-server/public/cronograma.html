@@ -6,18 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cronograma LEDA</title>
 <!-- Le styles -->
+<link href="./jquery/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
 <link href="./tether/1.3.3/css/tether.css" rel="stylesheet">
 <link href="./bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
 
+
 <script src="./jquery/3.1.1/jquery.min.js"></script>
+<script src="./jquery/ui/1.12.1/jquery-ui.js"></script>
 <script src="./tether/1.3.3/js/tether.min.js"></script>
 <script src="./bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
 <br>
 <div class="container">
-<h4>Informações gerais para todas as turmas:</h4>
+	<div class="content" id="accordion">
+		<h3 data-toggle="tooltip" data-placement="bottom" title='Clique para expandir ou colapsar'>Informações gerais para todas as turmas:</h3>
+		<div>		
+			<br>
+			<p>
+			<b>Prazos dos envios dos roteiros (todas as turmas):</b>
+			</p>
+			<ul>
+			<li>Normal: 12 horas após a liberação.
+			<li>Com atraso: 2 dias após a liberação.
+			<li>Após os prazos acima o sistema NÃO recebe mais submissões.
+			<li>Casos específicos com tempos diferenciados serão informados individualmente na própria descrição do roteiro.
+			</ul>
+
+			<p><b>Recomendações:</b><p>
+			<ul>
+			<li>Baixar a versão mais recente do Eclipse (for Java EE Developers porque já vem com o plugin do Maven) e descompactar em sua conta do DSC. 
+			Usar essa versão em LEDA.
+			<li>Caso queira usar o Maven na linha de comando:
+			<ul>
+			<li>Baixar o maven e descompactar em alguma pasta da sua conta
+			<li>Abrir janela de comando (terminal) e ir para a pasta do projeto
+			<li>Configurar a variavel de ambiente JAVA_HOME para a pasta onde se encontra o JDK instalado (deve ser o JDK 1.8). 
+			Voce pode ver a pasta do JDK nas preferencias do Eclipse "Java->Instaled JREs". No linux isso pode ser feito com o comando "export JAVA_HOME=pasta_instalacao_do_jdk"
+			<li>Execute o comando no terminal: mvn install (para ignorar os testes basta usar mvn install -DskipTests)
+			</ul> 
+			</ul>
+			<p>
+			<b>Vídeo-aulas de familiarização com as ferramentas:</b>
+			<ul>
+			 <li>Eclipse:</li>
+			 <ul>
+			 <li><a href="https://www.youtube.com/watch?v=ioBcjEkjxFE" class="nav-link">Depurando programas em Eclipse</a></li>
+			 <li>Aprenda e exercite o uso do Debugger do Eclipse (essencial para o curso) acessando <a href="https://www.youtube.com/watch?v=v_dkbsVulW0" target="_blank">esse vídeo</a>.</li>
+			 <li><b>O uso do Debugger do Eclipse É ESSENCIAL na disciplina</b> para depurar e retirar os erros das implementações a serem desenvolvidas. 
+			 Quando da implementação dos roteiros a complexidade do código não permitirá o uso de métodos de impressão para depuração do código. 
+			 O Debugger do Eclipse, por outro lado, será muito útil na redução do tempo de depuração do seu programa.</li>
+			 </ul>
+			 
+			 <li>Maven:</li>
+			 <ul><li><a href="http://www.youtube.com/watch?v=vLXDlmnkwQo">Introdução ao Maven</a>.</li>
+			 <li><a href="http://www.youtube.com/watch?v=mSX5rOHrX-w">Ações simples em um projeto Maven</a>.</li>
+			 <li><a href="http://www.youtube.com/watch?v=al7bRZzz4oU&amp;list=PL92E89440B7BFD0F6">Maven tutorial</a> (excelente coleção de videos para dar uma visão geral com bons detalhes sobre Maven).</li>
+			 <li>Dicas extras sobre Maven no Eclipse para a disciplina: <a href="https://youtu.be/6jXPTsJPnZA" target="_blank">parte 01</a>, <a href="https://youtu.be/N-0xoQzFtLA" target="_blank">parte 02</a>, <a href="https://youtu.be/FczI3ruEys8" target="_blank">parte 03</a>.</li>
+			 <li>Vídeo explicativo geral sobre os exercícios de revisão e roteiros para a disciplina.</li>
+			 </ul>
+			 </ul>
+			</p>
+			<br>
+			<p><b>Recomendações para as provas:</b>
+				<ul>
+				<li>Verifique constantemente a <a href="http://web.cloud.lsd.ufcg.edu.br:44174/submission/horaAtual">hora atual do servidor</a>, pois o recebimento de submissões após essa hora NÃO ACONTECERÁ!
+				<li>As notas da prova serão publicadas e os alunos avisados. Até isso acontecer NÃO ENTREM EM CONTATO COM OS PROFESSORES para justificar nada,  querer ver a prova ou querer saber porque deu erro de compilação. Será publicado no site o horário para revisão de provas e será comentado em sala sobre a solução!
+				<li>Procure chegar uns 10 min mais cedo para verificar se sua conta no laboratório e a máquina está funcionando corretamente.
+				<li>Todos os alunos deverão usar os computadores dos laboratórios. Quando for permitido o uso dos próprios laptops, os alunos serão avisados com 
+				antecêencia.
+				<li>Se o aluno usar código de outro aluno (mesma turma, turma diferente ou semestre diferente) terá nota ZERO (quem copiou e quem cedeu).
+				<li>Pegar código pronto da internet é proibido! Durante a prova apenas serão admitidas duas janelas abertas na maquina do aluno: a do eclipse e a do PDF com a descrição da prova. Navegadores só serão permitidos para fazer o download da prova e para o envio das respostas. Programas como messengers, chats, skype e similares estão proibidos.
+				<li>Não será permitido pegar nenhum código pronto! Nos casos em que o aluno precise reutilizar algum código que implementou durante
+				o semestre, o professor avisará com antecedência de 1 ou 2 dias.
+				</ul>
+			</p>
+			</div>
+</div>
 </div>
 <br>
 <div class="container">
@@ -96,6 +163,11 @@
 							<td class="text-nowrap text-xs-center" data-toggle="tooltip" data-placement="left" title='Aula ${atividade?index + 1}'>${atividade.id} 
 							<td class="text-xs-center" data-toggle="tooltip" data-placement="right" title='Atividade inicia em ${formatter2.format(atividade.dataHora.time)}'>${formatter.format(atividade.dataHora.time)}
 							<td class="text-nowrap"><a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+								
+								<p>Corretor: 
+									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
+							<td>${atividade.descricao}
+								
 								<#if (atividade.linksVideoAulas?size>0) >
 								<p> Video-aulas:
 									<ul>
@@ -104,9 +176,6 @@
 									</#list>
 									</ul>
 								</#if>
-								<p>Corretor: 
-									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
-							<td>${atividade.descricao}
 								<p>Monitoria:<br> 
 								<#if atividade.monitores??> 
 									<ul>
@@ -145,6 +214,10 @@
 							<td class="text-nowrap text-xs-center" data-toggle="tooltip" data-placement="left" title='Aula ${atividade?index + 1}'>${atividade.id}
 							<td class="text-xs-center" data-toggle="tooltip" data-placement="right" title='Atividade inicia em ${formatter2.format(atividade.dataHora.time)}'>${formatter.format(atividade.dataHora.time)}
 							<td class="text-nowrap"><a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+								
+								<p>Corretor: 
+									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
+							<td>${atividade.descricao} 
 								<#if (atividade.linksVideoAulas?size>0)>
 								<p> Video-aulas:
 									<ul>
@@ -153,9 +226,6 @@
 									</#list>
 									</ul>
 								</#if>
-								<p>Corretor: 
-									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
-							<td>${atividade.descricao} 
 								<p>Monitoria:<br> 
 								<#if atividade.monitores??> 
 									<ul>
@@ -213,6 +283,15 @@ $(document).ready(function(){
 });
 </script>
 
+<script>
+  $( function() {
+    $( "#accordion" ).accordion({
+      collapsible: true,
+	  active: false
+    });
+  } );
+</script>
+  
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
 
 
