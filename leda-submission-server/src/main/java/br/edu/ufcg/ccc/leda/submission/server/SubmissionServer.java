@@ -150,7 +150,9 @@ public class SubmissionServer extends Jooby {
 	  });
 	
 	get("/submissoes", (req) -> {
-		Map<String,List<Submission>> submissoes = Util.allSubmissions();
+		boolean showAll = Boolean.valueOf(req.param("showAll").value());
+		Map<String,List<Submission>> submissoes = Util.allSubmissions(showAll);
+		
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);

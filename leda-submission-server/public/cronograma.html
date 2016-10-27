@@ -51,21 +51,20 @@
 			<p>
 			<b>Vídeo-aulas de familiarização com as ferramentas:</b>
 			<ul>
+			 <li><a href="https://youtu.be/ref2xaCIeAQ">Interação com o site da disciplina.</a></li>
 			 <li>Eclipse:</li>
 			 <ul>
-			 <li><a href="https://www.youtube.com/watch?v=ioBcjEkjxFE" class="nav-link">Depurando programas em Eclipse</a></li>
-			 <li>Aprenda e exercite o uso do Debugger do Eclipse (essencial para o curso) acessando <a href="https://www.youtube.com/watch?v=v_dkbsVulW0" target="_blank">esse vídeo</a>.</li>
-			 <li><b>O uso do Debugger do Eclipse É ESSENCIAL na disciplina</b> para depurar e retirar os erros das implementações a serem desenvolvidas. 
-			 Quando da implementação dos roteiros a complexidade do código não permitirá o uso de métodos de impressão para depuração do código. 
-			 O Debugger do Eclipse, por outro lado, será muito útil na redução do tempo de depuração do seu programa.</li>
+				 <li><a href="https://www.youtube.com/watch?v=ioBcjEkjxFE" target="_blank">Depurando programas em Eclipse</a></li>
+				 <li>Aprenda e exercite o uso do Debugger do Eclipse (essencial para o curso) acessando <a href="https://www.youtube.com/watch?v=v_dkbsVulW0" target="_blank">esse vídeo</a>.</li>
+				 <li><b>O uso do Debugger do Eclipse É ESSENCIAL na disciplina</b> para depurar e retirar os erros das implementações a serem desenvolvidas, usando 
+				 um tempo bem menor do que com <i>prints</i> no código. 			 
 			 </ul>
 			 
 			 <li>Maven:</li>
-			 <ul><li><a href="http://www.youtube.com/watch?v=vLXDlmnkwQo">Introdução ao Maven</a>.</li>
-			 <li><a href="http://www.youtube.com/watch?v=mSX5rOHrX-w">Ações simples em um projeto Maven</a>.</li>
-			 <li><a href="http://www.youtube.com/watch?v=al7bRZzz4oU&amp;list=PL92E89440B7BFD0F6">Maven tutorial</a> (excelente coleção de videos para dar uma visão geral com bons detalhes sobre Maven).</li>
-			 <li>Dicas extras sobre Maven no Eclipse para a disciplina: <a href="https://youtu.be/6jXPTsJPnZA" target="_blank">parte 01</a>, <a href="https://youtu.be/N-0xoQzFtLA" target="_blank">parte 02</a>, <a href="https://youtu.be/FczI3ruEys8" target="_blank">parte 03</a>.</li>
-			 <li>Vídeo explicativo geral sobre os exercícios de revisão e roteiros para a disciplina.</li>
+			 <ul><li><a href="http://www.youtube.com/watch?v=vLXDlmnkwQo" target="_blank">Introdução ao Maven</a>.</li>
+			 <li><a href="http://www.youtube.com/watch?v=mSX5rOHrX-w" target="_blank">Ações simples em um projeto Maven</a>.</li>
+			 <li><a href="http://www.youtube.com/watch?v=al7bRZzz4oU&amp;list=PL92E89440B7BFD0F6" target="_blank">Maven tutorial</a> (excelente coleção de videos para dar uma visão geral com bons detalhes sobre Maven).</li>
+			 <li>Dicas extras sobre Maven no Eclipse para a disciplina: <a href="https://youtu.be/6jXPTsJPnZA" target="_blank">parte 01</a>, <a href="https://youtu.be/N-0xoQzFtLA" target="_blank">parte 02</a>(atualizar), <a href="https://youtu.be/TOUSSFmWeWA" target="_blank">parte 03</a>.</li>
 			 </ul>
 			 </ul>
 			</p>
@@ -83,6 +82,13 @@
 				o semestre, o professor avisará com antecedência de 1 ou 2 dias.
 				</ul>
 			</p>
+			<br>
+			<p><b>Conferindo os envios:</b> A qualquer momento as submissões podem ser conferidas das seguintes formas:
+				<ul>
+				<li>Aluno pode vizualizar o log dos envios na pasta do projeto (gerado automaticamente com a compilação maven). 
+				<li>O sistema também contém uma <a href="http://web.cloud.lsd.ufcg.edu.br:44174/submission/submissoes?showAll=false"> lista de submissões</a> (roteiros e provas).
+				<li>O sistema também contém uma <a href="http://web.cloud.lsd.ufcg.edu.br:44174/submission/submissoes?showAll=true"> lista de todas as submissões</a> (incluindo roteiros de revisão).
+				</ul>
 			</div>
 </div>
 </div>
@@ -162,10 +168,18 @@
 						<tr class="table-warning">
 							<td class="text-nowrap text-xs-center" data-toggle="tooltip" data-placement="left" title='Aula ${atividade?index + 1}'>${atividade.id} 
 							<td class="text-xs-center" data-toggle="tooltip" data-placement="right" title='Atividade inicia em ${formatter2.format(atividade.dataHora.time)}'>${formatter.format(atividade.dataHora.time)}
-							<td class="text-nowrap"><a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
-								
+							<td class="text-nowrap">
+								<#if atividade.id?starts_with("A")>
+									${(atividade.nome)!""}
+								<#else>
+									<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+								</#if>
 								<p>Corretor: 
 									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
+								<p>
+								<#if atividade.dataHoraLimiteEnvioAtraso??>
+									<a href="./reports/${atividade.id}/target/generated-report.html" data-toggle="tooltip" data-placement="right" title='Disponível a partir de ${formatter2.format(atividade.dataHoraLimiteEnvioAtraso.time)}'}>Planilha de notas dos testes</a>
+								</#if>
 							<td>${atividade.descricao}
 								
 								<#if (atividade.linksVideoAulas?size>0) >
@@ -184,39 +198,24 @@
 									</#list>
 									</ul>
 								</#if> 
-								<!-- p>Corretor: <#if atividade.corretor??>${atividade.corretor.nome} (${atividade.corretor.email})</#if>
-							<!-- td class="text-xs-center"><a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">
-									<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-											  width="16px" viewBox="0 0 33.293 33.293" style="enable-background:new 0 0 33.293 33.293;" xml:space="preserve">
-										<g>
-											<g>
-												<path d="M16.646,24.786L16.646,24.786c-0.276,0-0.5-0.224-0.5-0.5l0.001-11.279c0-0.276,0.224-0.5,0.5-0.5l0,0
-													c0.276,0,0.5,0.224,0.5,0.5l-0.001,11.279C17.146,24.562,16.922,24.786,16.646,24.786z"/>
-												<path d="M16.646,24.786c-0.128,0-0.256-0.049-0.354-0.146l-4.313-4.313c-0.195-0.195-0.195-0.512,0-0.707s0.512-0.195,0.707,0
-													l3.959,3.959l3.959-3.959c0.195-0.195,0.512-0.195,0.707,0s0.195,0.512,0,0.707l-4.313,4.313
-													C16.902,24.737,16.774,24.786,16.646,24.786z"/>
-											</g>
-											<g>
-												<path d="M27.578,33.293H5.715c-1.378,0-2.5-1.121-2.5-2.5V2.5c0-1.379,1.122-2.5,2.5-2.5h15.877c0.276,0,0.5,0.224,0.5,0.5
-													S21.868,1,21.592,1H5.715c-0.827,0-1.5,0.673-1.5,1.5v28.293c0,0.827,0.673,1.5,1.5,1.5h21.863c0.827,0,1.5-0.673,1.5-1.5V8.704
-													c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v22.09C30.078,32.172,28.957,33.293,27.578,33.293z"/>
-												<path d="M29.578,9.204h-7.986c-0.276,0-0.5-0.224-0.5-0.5V0.717c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v7.486h7.486
-													c0.276,0,0.5,0.224,0.5,0.5S29.855,9.204,29.578,9.204z"/>
-												<path d="M29.578,9.204c-0.13,0-0.26-0.051-0.358-0.151l-7.986-8.203c-0.192-0.197-0.188-0.515,0.01-0.707
-													c0.197-0.193,0.514-0.188,0.707,0.01l7.986,8.203c0.192,0.197,0.188,0.515-0.01,0.707C29.83,9.157,29.704,9.204,29.578,9.204z"/>
-											</g>
-										</g>
-										</svg>
-								</a -->
 						<#assign gray = 'false'>
 					<#elseif gray == 'false'>
 						<tr class="table-info">
 							<td class="text-nowrap text-xs-center" data-toggle="tooltip" data-placement="left" title='Aula ${atividade?index + 1}'>${atividade.id}
 							<td class="text-xs-center" data-toggle="tooltip" data-placement="right" title='Atividade inicia em ${formatter2.format(atividade.dataHora.time)}'>${formatter.format(atividade.dataHora.time)}
-							<td class="text-nowrap"><a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
-								
+							<td class="text-nowrap">
+								<#if atividade.id?starts_with("A")>
+									${(atividade.nome)!""}
+								<#else>
+									<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+								</#if>
 								<p>Corretor: 
 									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
+								<p>
+								<#if atividade.dataHoraLimiteEnvioAtraso??>
+									<a href="./reports/${atividade.id}/target/generated-report.html" data-toggle="tooltip" data-placement="right" title='Disponível a partir de ${formatter2.format(atividade.dataHoraLimiteEnvioAtraso.time)}'}>Planilha de notas dos testes</a>
+								</#if>
+							
 							<td>${atividade.descricao} 
 								<#if (atividade.linksVideoAulas?size>0)>
 								<p> Video-aulas:

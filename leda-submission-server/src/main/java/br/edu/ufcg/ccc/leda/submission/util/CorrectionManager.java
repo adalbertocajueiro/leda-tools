@@ -42,13 +42,14 @@ public class CorrectionManager {
 			// filtra as pastas que correspondem a roteiros enviados
 			// cada pasta é o proprio identificador do roteiro.
 			System.out.println("%%%%%%%% Executando Correction Timer Task em: " + Util.formatDate(new GregorianCalendar()));
-			System.out.println("Verificando atividades a corrigir...");
+			System.out.println("Verificando atividades a corrigir na pasta " + Constants.CURRENT_SEMESTER_FOLDER.getName());
 			File[] atividades = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
 					@Override
 					public boolean accept(File pathname) {
 						boolean resp = false;
 						if (pathname.isDirectory()) {
 							resp = Constants.PATTERN_ROTEIRO.matcher(pathname.getName()).matches()
+									|| Constants.PATTERN_ROTEIRO_REVISAO.matcher(pathname.getName()).matches()
 									|| Constants.PATTERN_PROVA.matcher(pathname.getName()).matches();
 						}
 						return resp;
@@ -76,8 +77,6 @@ public class CorrectionManager {
 							Thread task = corrector.corrigirRoteiro(atividades[i].getName());
 							executing.add(task);
 						}
-					}else{
-						System.out.println("Atividade " + atividades[i] + " nao pode ser corrigida porque ainda nao fechou o envio ou porque ja foi corrigido");
 					}
 				} catch (ConfigurationException e) {
 					// TODO Auto-generated catch block
@@ -112,23 +111,33 @@ public class CorrectionManager {
 		boolean result = false;
 		// tem que ver se a data atual ultrapassou a data limite de envio
 		// com atraso
-		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
-		Atividade ativ = atividades.get(atividadeId.getName());
-		if (ativ != null && ativ instanceof Roteiro) {
-			GregorianCalendar current = new GregorianCalendar();
-			result = current.after(((Roteiro) ativ).getDataHoraLimiteEnvioAtraso());
-		} else {
-			throw new RuntimeException(
-					"Atividade nao localizada (CorrectionTimerTask.canCorrect): " + atividadeId.getName());
+		//so faz sentido corrigir o que eh roteiro e que foi submetido e a pasta existe
+		if(!Constants.PATTERN_AULA.matcher(atividadeId.getName()).matches()){
+			if(atividadeId.exists()){
+				Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
+				Atividade ativ = atividades.get(atividadeId.getName());
+				if (ativ != null && ativ instanceof Roteiro) {
+					GregorianCalendar current = new GregorianCalendar();
+					result = current.after(((Roteiro) ativ).getDataHoraLimiteEnvioAtraso());
+				} else {
+					throw new RuntimeException(
+							"Atividade nao localizada (CorrectionTimerTask.canCorrect): " + atividadeId.getName());
+				}
+				// verifica se existe um arquivo target/generated-report.html (indicando que ja
+				// foi corrigido)
+				//File targetFolder = new File(roteiro,"target");
+				if(result){
+					File report = new File(atividadeId,Constants.GENERATED_REPORT_FILE);
+					result = result && !report.exists();
+					if(!result){
+						System.out.println("Atividade " + atividadeId.getName() + " ja foi corrigida");
+					}
+				} else{
+					System.out.println("Atividade " + atividadeId.getName() + " ainda não esta recebendo envio");
+				}
+			}
+			
 		}
-		// verifica se existe um arquivo target/generated-report.html (indicando que ja
-		// foi corrigido)
-		//File targetFolder = new File(roteiro,"target");
-		File report = new File(atividadeId,Constants.GENERATED_REPORT_FILE);
-		result = result && !report.exists();
-		//File report = new File(roteiro, MAVEN_OUTPUT_FILE);
-		//result = result && !report.exists();
-
 		
 		return result;
 	}

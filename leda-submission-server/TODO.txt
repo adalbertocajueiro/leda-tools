@@ -84,3 +84,5 @@ https://jar-download.com/explore-java-source-code-detail.php?file=./javaSource/o
 
 na planilha de submissoes, os arquivos podem ser ordenados por nome do estudante. isso pdoe ser feito no servidor ainda, odernando antes de colocar a variavel submissoes no modelo. OK
 - implementar mecanismo de nao permitir que o aluno baixe a prova e no final desista de enviar e deixe pra repor. - OK 
+
+config também pode implementar a opcao de mostrar os de revisao ou nao.

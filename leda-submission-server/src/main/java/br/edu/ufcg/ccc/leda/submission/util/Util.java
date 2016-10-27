@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -761,20 +760,23 @@ public class Util {
 		return alunosComDownload;
 	}
 	
-	public static Map<String,List<Submission>> allSubmissions() throws ConfigurationException, IOException, ServiceException{
+	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
 		Map<String,List<Submission>> result = new HashMap<String,List<Submission>>();
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		if(currentSemester.exists()){
-			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
-			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
 			File[] folders = currentSemester.listFiles(new FileFilter() {
 				
 				@Override
 				public boolean accept(File arg0) {
-					return patternRoteiro.matcher(arg0.getName()).matches() 
-							|| patternProva.matcher(arg0.getName()).matches();
+					boolean matches = Constants.PATTERN_ROTEIRO.matcher(arg0.getName()).matches()
+							|| Constants.PATTERN_PROVA.matcher(arg0.getName()).matches();
+					if(showAll){
+						matches = matches || Constants.PATTERN_ROTEIRO_REVISAO.matcher(arg0.getName()).matches();
+					}
+					return matches;
+							
 				}
 			});
 			for (int i = 0; i < folders.length; i++) {

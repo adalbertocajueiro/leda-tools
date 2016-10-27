@@ -22,7 +22,14 @@
 <#-- Call formatter constructor -->
 <#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
  
-<!-------->
+<!---- SE NAO TIVER NENHUMA SUBMISSAO ENTAO MOSTRA UMA TELA INFORMANDO ISSO. O MENU DO BAV-BAR PODERIA SER MONTADO DAS ATIVIDADES ---->
+<#if (chavesOrdenadas?size == 0)>
+<div id="content">
+<br>
+<p>
+<h4>Sem submissões até o momento</h4>
+</div>
+<#else>
 <div id="content">
     <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
 		<#assign active = 'true'>
@@ -78,7 +85,8 @@
         </div>
 	</#list>
     </div>
-	
+
+</div> <!-- tab-content -->	
 
 <script type="text/javascript">
     $('#tabs').click(function (e) {
@@ -88,7 +96,7 @@
 </script>  
 
 </div> <!-- container -->
-
+</#if>
 
 <script>
 $(document).ready(function(){
