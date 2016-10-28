@@ -86,3 +86,4 @@ na planilha de submissoes, os arquivos podem ser ordenados por nome do estudante
 - implementar mecanismo de nao permitir que o aluno baixe a prova e no final desista de enviar e deixe pra repor. - OK 
 
 config também pode implementar a opcao de mostrar os de revisao ou nao.
+-ordenar por datas as informacoes dos roteiros e provas.
