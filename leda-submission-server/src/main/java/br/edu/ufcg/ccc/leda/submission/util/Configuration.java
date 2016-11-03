@@ -3,6 +3,7 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,12 +17,8 @@ public class Configuration {
 
 	private Map<String, Student> students;
 	private Map<String,Atividade> atividades;
-	//private Map<String,Roteiro> roteiros;
-	//private Map<String,Prova> provas;
 	private List<Monitor> monitores;
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
-	//private static final String ID_ROTEIROS_SHEET = "19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
-	//private static final String ID_PROVAS_SHEET = "1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI";
 	
 	private static Configuration instance;
 	
@@ -30,24 +27,18 @@ public class Configuration {
 			students = Util.loadStudentLists();
 			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
 			atividades = Util.loadSpreadsheetsAtividades(monitores);
-			//roteiros = new TreeMap<String,Roteiro>(Util.loadSpreadsheetRoteiros(ID_ROTEIROS_SHEET));
-			//provas = new TreeMap<String, Prova> (Util.comparatorProvas());
-			//provas.putAll(Util.loadSpreadsheetProvas(ID_PROVAS_SHEET));
-			//provas = Util.loadSpreadsheetProvas(ID_PROVAS_SHEET);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			//atividades = new TreeMap<String,Atividade>();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			//atividades = new TreeMap<String,Atividade>();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.add("150.165.74");
@@ -72,7 +63,8 @@ public class Configuration {
 	public Map<String, Atividade> getRoteiros() {
 		Map<String,Atividade> roteiros = new TreeMap();
 		roteiros.putAll(atividades.values().stream().filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova))).collect(Collectors.toMap(ativ -> ativ.getId(), ativ -> ativ)));
-		return roteiros;
+
+		return roteiros; 
 	}
 	public Map<String, Atividade> getProvas() {
 		Map<String,Atividade> provas = new TreeMap(Util.comparatorProvas());
@@ -95,8 +87,6 @@ public class Configuration {
 
 		result.append("Provas: <br>");
 		getProvas().values().forEach(p -> result.append(p.toString() + "<br>"));
-		//atividades.values().stream().filter(a -> a instanceof Prova).sorted((p1,p2)-> p1.getId().compareTo(p2.getId()))
-		//	.forEach(p -> result.append(p.toString() + "<br>"));
 		
 		return result.toString();
 	}

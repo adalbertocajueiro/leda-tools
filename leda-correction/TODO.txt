@@ -50,3 +50,7 @@
     System.out.println("File Attribute: " + valueFromAttributes);
   }
 }
+
+- fazer o corretor capturar a lista dos estudantes e montar a tabela com todos os estudantes
+- fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. os comentarios tambem
+ficarao neste json.

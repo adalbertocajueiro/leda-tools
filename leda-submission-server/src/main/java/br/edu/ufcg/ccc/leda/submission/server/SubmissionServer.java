@@ -124,11 +124,11 @@ public class SubmissionServer extends Jooby {
         View html = Results.html("cronograma");
         //int turmas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma)).size();
         //System.out.println("Numero turmas: " + turmas);
-        List<String> turmas = new ArrayList<String>();
-        for (int i = 1; i <= Constants.TURMAS; i++) {
-			turmas.add(String.valueOf(i));
-		}
-        html.put("turmas", turmas);
+        //List<String> turmas = new ArrayList<String>();
+        //for (int i = 1; i <= Constants.TURMAS; i++) {
+		//	turmas.add(String.valueOf(i));
+		//}
+        //html.put("turmas", turmas);
         //html.put("atividades", atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.toList()));
         Map<String,List<Atividade>> atividadesAgrupadas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
         html.put("atividades", atividadesAgrupadas);
@@ -504,9 +504,9 @@ public class SubmissionServer extends Jooby {
 	//use(new Auth().basic());
 	//use(new Auth().basic("/config2/**",MyUserClientLoginValidator.class));
 	get("/correct", (req,resp) -> {
-		String id = req.param("roteiro").value();
+		String id = req.param("id").value();
 		AutomaticCorrector corr = new AutomaticCorrector();
-		corr.corrigirRoteiro(id);
+		corr.corrigirAtividade(id);
 		resp.send("Correction started");
 	});
 	

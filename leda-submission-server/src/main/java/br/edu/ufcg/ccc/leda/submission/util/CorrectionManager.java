@@ -74,7 +74,7 @@ public class CorrectionManager {
 
 							System.out.println("Iniciando correcao de " + atividades[i].getName());
 							AutomaticCorrector corrector = new AutomaticCorrector();
-							Thread task = corrector.corrigirRoteiro(atividades[i].getName());
+							Thread task = corrector.corrigirAtividade(atividades[i].getName());
 							executing.add(task);
 						}
 					}
