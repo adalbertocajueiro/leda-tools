@@ -83,6 +83,7 @@ public class SubmissionServer extends Jooby {
 		assets("jquery/**");
 		assets("bootstrap/**");
 		assets("tether/**");
+		
 	}
   {
 	use(new Ftl());
@@ -133,6 +134,16 @@ public class SubmissionServer extends Jooby {
         Map<String,List<Atividade>> atividadesAgrupadas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
         html.put("atividades", atividadesAgrupadas);
         
+        return html;
+    });
+	
+	get("/menu", (req) -> {
+        View html = Results.html("menu-frames");
+        return html;
+    });
+	
+	get("/menuLeft", (req) -> {
+        View html = Results.html("menu");
         return html;
     });
 	
@@ -247,6 +258,12 @@ public class SubmissionServer extends Jooby {
 
 	});
 	
+	get("/correct", (req,resp) -> {
+		String id = req.param("id").value();
+		AutomaticCorrector corr = new AutomaticCorrector();
+		corr.corrigirAtividade(id);
+		resp.send("Correction started");
+	});
 	
   }
 
@@ -503,12 +520,7 @@ public class SubmissionServer extends Jooby {
 	//};
 	//use(new Auth().basic());
 	//use(new Auth().basic("/config2/**",MyUserClientLoginValidator.class));
-	get("/correct", (req,resp) -> {
-		String id = req.param("id").value();
-		AutomaticCorrector corr = new AutomaticCorrector();
-		corr.corrigirAtividade(id);
-		resp.send("Correction started");
-	});
+	
 	
 	
   }
