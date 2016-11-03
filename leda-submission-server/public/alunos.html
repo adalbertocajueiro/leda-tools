@@ -17,17 +17,37 @@
 <body>
 
 <div class="container">
-
+<br>
+<h4>Alunos matriculados em ${semestre}</h4>
+<br>
 <!-------->
 <div id="content">
-    <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
-        <li class="nav-item"><a class="nav-link active" href="#t1" role="tab" data-toggle="tab">T1</a></li>
-        <li class="nav-item"><a class="nav-link" href="#t2" role="tab" data-toggle="tab">T2</a></li>
+	<ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
+		<#assign active = 'true'>
+		<#list turmas as turma>
+			<#if active='true'> 
+				<li class="nav-item"><a class="nav-link active" href='#t${turma}' role="tab" data-toggle="tab">Turma ${turma}</a></li>
+				<#assign active='false'>
+			<#else>
+				<li class="nav-item"><a class="nav-link" href="#t${turma}" role="tab" data-toggle="tab">Turma ${turma}</a></li>
+			</#if>
+		</#list>
+		<!-- COLCOAR A GERACAO DESSA LISTA AUTOMATICA ??? >
+        <li class="nav-item"><a class="nav-link active" href="#t1" role="tab" data-toggle="tab">Turma 1</a></li>
+        <li class="nav-item"><a class="nav-link" href="#t2" role="tab" data-toggle="tab">Turma 2</a></li>
+		<li class="nav-item"><a class="nav-link" href="#t3" role="tab" data-toggle="tab">Turma 3</a></li -->
     </ul>
-	<#assign gray = 'true'>
+ 	<#assign gray = 'true'>
+	<#assign active = 'true'>
     <div id="my-tab-content" class="tab-content">
-        <div  role="tabpanel" class="tab-pane fade in active" id="t1">
-            <h3>Turma 1</h3>
+		<#list turmas as turma>
+			<#if active='true'> 
+				<div role="tabpanel" class="tab-pane fade in active" id="t${turma}">
+				<#assign active='false'>
+			<#else>
+				<div  role="tabpanel" class="tab-pane fade" id="t${turma}">
+			</#if>
+            <h4>Turma ${turma}</h4>
             <table id="t1" class="table table-hover table-bordered">
 				<thead class="bg-success">
 					<th class="text-xs-center">Estudante</th>
@@ -35,10 +55,10 @@
 				</thead>
 				<tbody>
 				<#list alunos as student>
-					<#if gray == 'true' && student.turma == "01">
+					<#if gray == 'true' && student.turma == turma>
 						<tr class="table-warning"><td>${student.nome} <!-- td>${student.matricula} -->
 						<#assign gray = 'false'>
-					<#elseif gray == 'false' && student.turma == "01">
+					<#elseif gray == 'false'>
 						<tr class="table-info"><td>${student.nome} <!-- td>${student.matricula} -->
 						<#assign gray = 'true'>
 					</#if>
@@ -46,7 +66,9 @@
 				</tbody>
 			</table>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="t2">
+		</#list>
+        
+        <!-- div role="tabpanel" class="tab-pane fade" id="t2">
             <h3>Turma 2</h3>
             <table id="t2" class="table table-hover">
 				<thead class="bg-success">
@@ -65,7 +87,7 @@
 				</#list>
 				</tbody>
 			</table>
-        </div>
+        </div -->
 	</div>
 
 
