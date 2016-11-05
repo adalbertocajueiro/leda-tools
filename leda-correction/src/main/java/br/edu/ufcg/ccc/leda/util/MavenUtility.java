@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
@@ -107,9 +108,13 @@ public class MavenUtility {
 		}
 	}
 
-	public void generateReport(File submissionsFolder, File targetFolder)
+	public void generateReport(File submissionsFolder, File targetFolder, Map<String,Student> alunos)
 			throws IOException, JDOMException {
 
+		//TODO tem que fazer alguma coisa com a lista de alunos, como por exemplo salvar 
+		//o json dos testes para o calculo de proximidade e tambem gerar o relatorio para 
+		//a turma completa. se o aluno nao submeteu entao aparece la que nao submeteu.
+		// talvez seja melhor gerar o json e depois construir o report baseado no json.
 		String finalPathHtml = targetFolder.getAbsolutePath()
 				+ FINAL_REPORT_NAME;
 		reportUtility.createAndSaveReport(submissionsFolder, BASIC_HTML_FILE,

@@ -168,7 +168,7 @@
 						<tr class="table-warning">
 							<td class="text-nowrap text-xs-center" data-toggle="tooltip" data-placement="left" title='Aula ${atividade?index + 1}'>${atividade.id} 
 							<td class="text-xs-center" data-toggle="tooltip" data-placement="right" title='Atividade inicia em ${formatter2.format(atividade.dataHora.time)}'>${formatter.format(atividade.dataHora.time)}
-							<td>
+							<td class="text-nowrap">
 								<#if atividade.id?starts_with("A")>
 									${(atividade.nome)!""}
 								<#else>
@@ -203,7 +203,7 @@
 						<tr class="table-info">
 							<td class="text-nowrap text-xs-center" data-toggle="tooltip" data-placement="left" title='Aula ${atividade?index + 1}'>${atividade.id}
 							<td class="text-xs-center" data-toggle="tooltip" data-placement="right" title='Atividade inicia em ${formatter2.format(atividade.dataHora.time)}'>${formatter.format(atividade.dataHora.time)}
-							<td>
+							<td class="text-nowrap">
 								<#if atividade.id?starts_with("A")>
 									${(atividade.nome)!""}
 								<#else>

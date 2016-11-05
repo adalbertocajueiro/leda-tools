@@ -52,5 +52,9 @@
 }
 
 - fazer o corretor capturar a lista dos estudantes e montar a tabela com todos os estudantes
-- fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. os comentarios tambem
-ficarao neste json.
+- fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. os 
+  comentarios dos corretores tambem poderiam ficar neste json? os comentarios podem ficar num
+  json a parte para evitar de ser perdido quando se rodar uma correcao mais de uma vez.
+- sera que pode ser tudo salvo em json e fazemos um viewer (freemarker) para construirmos o 
+  relatorio? (abordagem melhor porque separa model de viewer)
+- fazer um gerador de XLSX a partir do JSON ou deixar tudo online?

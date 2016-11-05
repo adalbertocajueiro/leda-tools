@@ -19,7 +19,10 @@ package br.edu.ufcg.ccc.leda;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -27,6 +30,9 @@ import org.apache.maven.project.MavenProject;
 import org.jdom2.JDOMException;
 
 import br.edu.ufcg.ccc.leda.util.MavenUtility;
+import br.edu.ufcg.ccc.leda.util.Student;
+import br.edu.ufcg.ccc.leda.util.Util;
+import br.edu.ufcg.ccc.leda.util.Utilities;
 
 /**
  * Goal which corrects a student's submission.
@@ -93,6 +99,9 @@ public class LEDACorrectionMojo extends AbstractMojo {
 	 */
 	private List<String> fileNames;
 
+	private String pathAllStudents = "alunosJson";
+	private Map<String,Student> alunos;
+	
 	public void execute() throws MojoExecutionException {
 
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
@@ -112,6 +121,22 @@ public class LEDACorrectionMojo extends AbstractMojo {
 			System.out.println(fileName);
 		}
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n");
+		try {
+			Properties prop = Utilities.loadProperties();
+			String url = prop.getProperty(Utilities.SUBMISSION_SERVER_URL);
+			System.out.println("Obtaining student lists from server " + url);
+			String urlAllStudents = url + "/" + pathAllStudents;
+			Map<String,Student> alunos = new HashMap<String,Student>();
+			try {
+				alunos = Util.getAllStudents(urlAllStudents);
+			} catch (IOException e2) {
+				throw new MojoExecutionException(e2.getMessage(),e2);
+			}
+
+		} catch (IOException e1) {
+			throw new MojoExecutionException(
+					"Property submission server url not loaded");
+		}
 		System.out.println("GENERATING MAVEN PROJECTS FOR EACH STUDENT");
 
 		MavenUtility mu = new MavenUtility(submissionsDirectory,
@@ -155,7 +180,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 				System.out.println("GENERATING FINAL REPORT");
 				File targetFolder = new File(this.project.getBuild().getDirectory());
 				try {
-					mu.generateReport(submissionsDirectory, targetFolder);
+					mu.generateReport(submissionsDirectory, targetFolder,alunos);
 				} catch (IOException | JDOMException e) {
 					e.printStackTrace();
 					throw new MojoExecutionException("Error geenrating report", e);
