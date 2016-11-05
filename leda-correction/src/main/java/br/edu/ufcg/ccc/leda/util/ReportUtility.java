@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -49,11 +52,15 @@ public class ReportUtility {
 					Element testSuite = xml.getRootElement();
 					int tests = Integer.parseInt(testSuite
 							.getAttributeValue("tests"));
-					if (report.getTestSuitName() == null) {
+					if (report.getTestSuiteName() == null) {
 						String testSuiteName = testSuite
 								.getAttributeValue("name");
-						report.setTestSuitName(testSuiteName);
+						report.setTestSuiteName(testSuiteName);
 						report.setNumberOfTests(tests);
+					}else{
+						if(tests > report.getNumberOfTests()){
+							report.setNumberOfTests(tests);
+						}
 					}
 					double time = Double.parseDouble(testSuite
 							.getAttributeValue("time"));
@@ -104,6 +111,110 @@ public class ReportUtility {
 		return report;
 	}
 
+	private TestReport generateJsonReport(File submissionsFolder, File targetFolder,Map<String,Student> alunos)
+			throws IOException, JDOMException {
+		TestReport report = new TestReport(null, 0);
+		String turma = submissionsFolder.getParentFile().getName().substring(4);
+		List<Student> alunosDaTurma = alunos.values().stream().filter(s -> s.getTurma().equals(turma))
+				.sorted((s1,s2) -> s1.getNome().compareTo(s2.getNome())).collect(Collectors.toList());
+		//alunosDaTurma.forEach(a -> System.out.println(a.getNome() + " - Turma " + a.getTurma()));		
+		if (submissionsFolder.isDirectory()) {
+			File[] subFolders = submissionsFolder.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.isDirectory();
+				}
+			});
+			for (Student aluno : alunosDaTurma) {
+				File pastaDoAluno = getFolderForStudent(submissionsFolder, aluno.getMatricula());
+				File xmlFile = this.getSurefireReportFile(pastaDoAluno);
+				if(pastaDoAluno != null){
+					File mavenOutputLog = new File(pastaDoAluno.getAbsolutePath()
+							+ File.separator + MavenUtility.MAVEN_OUTPUT_LOG);
+	
+					if (xmlFile != null) {
+						XMLFileUtility fu = new XMLFileUtility();
+						Document xml = fu.loadXMLFile(xmlFile);
+						
+						Element testSuite = xml.getRootElement();
+						int tests = Integer.parseInt(testSuite
+								.getAttributeValue("tests"));
+						if (report.getTestSuiteName() == null) {
+							String testSuiteName = testSuite
+									.getAttributeValue("name");
+							report.setTestSuiteName(testSuiteName);
+							report.setNumberOfTests(tests);
+						}else{
+							if(tests > report.getNumberOfTests()){
+								report.setNumberOfTests(tests);
+							}
+						}
+						double time = Double.parseDouble(testSuite
+								.getAttributeValue("time"));
+						int failures = Integer.parseInt(testSuite
+								.getAttributeValue("failures"));
+						String matricula = aluno.getMatricula();
+						String studentName = aluno.getNome();
+						String generatedReport = pastaDoAluno.getAbsolutePath()
+								+ File.separator + "target" + File.separator
+								+ "site" + File.separator + "project-reports.html";
+						File completeReport = new File(generatedReport);
+						int errors = Integer.parseInt(testSuite
+								.getAttributeValue("errors"));
+						int skipped = Integer.parseInt(testSuite
+								.getAttributeValue("skipped"));
+	
+						File sentZipFile = new File(pastaDoAluno.getParent(),
+								pastaDoAluno.getName() + ".zip");
+	
+						TestReportItem item = new TestReportItem(xmlFile,
+								matricula, studentName, sentZipFile.lastModified(),
+								tests, errors, failures, skipped, time,
+								completeReport, mavenOutputLog);
+						report.getReportItems().add(item);
+					} else {
+						String matricula = aluno.getMatricula();
+						String studentName = aluno.getNome();
+						File sentZipFile = new File(pastaDoAluno.getParent(),
+								pastaDoAluno.getName() + ".zip");
+	
+						TestReportErrorItem errorItem = new TestReportErrorItem(
+								matricula, studentName, sentZipFile.lastModified(),
+								mavenOutputLog);
+						report.getReportItems().add(errorItem);
+					}
+				}else{
+					TestReportErrorItem errorItem = new TestReportErrorItem(
+							aluno.getMatricula(), aluno.getNome(), 0,
+							null);
+					report.getReportItems().add(errorItem);
+				}
+			}
+			
+			
+		}
+
+		// precisa ordenar os itens do report por nome para facilitar
+		report.getReportItems().sort(
+				(s1, s2) -> s1.getStudentName().compareTo(s2.getStudentName()));
+
+		return report;
+	}
+	private File getFolderForStudent(File submissionsFolder, String matricula){
+		File studentFolder = null;
+		File[] subFolders = submissionsFolder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isDirectory() && pathname.getName().contains(matricula);
+			}
+		});
+		if(subFolders.length == 1){
+			studentFolder = subFolders[0];
+		}
+		return studentFolder;
+	}
+	
 	public static void main(String[] args) throws MalformedURLException {
 		ReportUtility ru = new ReportUtility();
 		File f1 = new File("D:\\trash2\\R2-01-correction\\subs");
@@ -115,6 +226,7 @@ public class ReportUtility {
 		// int i = 0;
 	}
 
+	@Deprecated
 	public void createAndSaveReport(File submissionsFolder,
 			String templateHtml, File targetFolder, String finalPathHtml)
 			throws IOException, JDOMException {
@@ -122,9 +234,19 @@ public class ReportUtility {
 				.generateReport(submissionsFolder, targetFolder);
 		HTMLFileUtility htmlfu = new HTMLFileUtility();
 		org.jsoup.nodes.Document doc = htmlfu.buildMainReport(templateHtml,
-				"SUITENAME", report.getTestSuitName(), "TESTS",
+				"SUITENAME", report.getTestSuiteName(), "TESTS",
 				report.getNumberOfTests(), report, targetFolder);
 		htmlfu.writeXMLFile(doc, finalPathHtml);
+	}
+	
+	public void createAndSaveJsonReport(File submissionsFolder,
+			File targetFolder, String finalPathHtml, Map<String,Student> alunos)
+			throws IOException, JDOMException {
+		TestReport testReport = this
+				.generateJsonReport(submissionsFolder, targetFolder, alunos);
+		
+		File jsonFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-report.json");
+		Utilities.writeTestReportToJson(testReport, jsonFile);
 	}
 
 	private File getSurefireReportFile(File folder) {

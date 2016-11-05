@@ -3,23 +3,23 @@ package br.edu.ufcg.ccc.leda.util;
 import java.util.ArrayList;
 
 public class TestReport {
-	private String testSuitName;
+	private String testSuiteName;
 	private int numberOfTests;
 	private ArrayList<TestReportItem> reportItems;
 
-	public TestReport(String testSuitName, int numberOfTests) {
+	public TestReport(String testSuiteName, int numberOfTests) {
 		super();
-		this.testSuitName = testSuitName;
+		this.testSuiteName = testSuiteName;
 		this.numberOfTests = numberOfTests;
 		this.reportItems = new ArrayList<TestReportItem>();
 	}
 
-	public String getTestSuitName() {
-		return testSuitName;
+	public String getTestSuiteName() {
+		return testSuiteName;
 	}
 
-	public void setTestSuitName(String testSuitName) {
-		this.testSuitName = testSuitName;
+	public void setTestSuiteName(String testSuitName) {
+		this.testSuiteName = testSuitName;
 	}
 
 	public int getNumberOfTests() {

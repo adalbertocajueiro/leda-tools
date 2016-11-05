@@ -62,6 +62,8 @@ import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
+import br.edu.ufcg.ccc.leda.util.TestReport;
+import br.edu.ufcg.ccc.leda.util.Utilities;
 import jxl.read.biff.BiffException;
 
 public class Util {
@@ -192,6 +194,18 @@ public class Util {
 		FileReader fr = new FileReader(jsonFile);
 		Map<String, Roteiro> map = gson.fromJson(fr, new TypeToken<Map<String,Roteiro>>(){}.getType());
 		return map;
+	}
+	
+	public static TestReport loadTestReport(String id) throws IOException{
+		TestReport result = null;
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			File jsonReport = new File(atividadeFolder,id + "-report.json");
+			if(jsonReport.exists()){
+				result = Utilities.loadTestReportFromJson(jsonReport);
+			}
+		}
+		return result;
 	}
 	
 	public static Map<String, String> loadFilesOwnersFromJson(File jsonFile) throws FileNotFoundException {

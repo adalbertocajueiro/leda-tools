@@ -1,6 +1,9 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Adalberto
@@ -124,5 +127,4 @@ public class TestReportItem {
 	public void setLastModified(long lastModified) {
 		this.lastModified = lastModified;
 	}
-
 }

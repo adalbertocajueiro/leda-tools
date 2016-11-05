@@ -37,6 +37,7 @@ import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.util.Utilities;
 import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 import br.edu.ufcg.ccc.leda.submission.util.Atividade;
 import br.edu.ufcg.ccc.leda.submission.util.Constants;
@@ -266,6 +267,22 @@ public class SubmissionServer extends Jooby {
 		resp.send("Correction started");
 	});
 	
+	get("/report", (req) -> {
+
+		//StringBuilder result = new StringBuilder();
+		//result.append("Configuration information! <br>");
+		//result.append(Configuration.getInstance().toString());
+		String id = req.param("id").value();
+        View html = Results.html("report");
+        //Configuration config = Configuration.getInstance();
+        //System.out.println(config.getIpsAutorizados());
+        html.put("id",id);
+        html.put("report",Util.loadTestReport(id));
+        //System.out.println(config.toString());
+        return html;
+        
+		//resp.send(result.toString());
+	  });
   }
 
   {

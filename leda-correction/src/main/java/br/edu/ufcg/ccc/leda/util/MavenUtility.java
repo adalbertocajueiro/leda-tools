@@ -117,10 +117,14 @@ public class MavenUtility {
 		// talvez seja melhor gerar o json e depois construir o report baseado no json.
 		String finalPathHtml = targetFolder.getAbsolutePath()
 				+ FINAL_REPORT_NAME;
-		reportUtility.createAndSaveReport(submissionsFolder, BASIC_HTML_FILE,
-				targetFolder, finalPathHtml);
+		//reportUtility.createAndSaveReport(submissionsFolder, BASIC_HTML_FILE,
+		//		targetFolder, finalPathHtml);
+		reportUtility.createAndSaveJsonReport(submissionsFolder,
+				targetFolder, finalPathHtml, alunos);
 
 	}
+	
+	
 
 	/**
 	 * Zip file is the student's submission. Its name is the student's name.
