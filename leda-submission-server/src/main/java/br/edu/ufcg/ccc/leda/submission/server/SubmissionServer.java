@@ -312,18 +312,10 @@ public class SubmissionServer extends Jooby {
 			//do aluno
 			File fileToSend = null;
 			try {
-				if(id.startsWith("R")){ //solicitado downlaod de roteiro
-					fileToSend = FileUtilities.getEnvironment(id, matricula);
-					resp.type(MediaType.octetstream);
-				    resp.download(fileToSend);
-				} else if (id.startsWith("P")){ //solicitado download de prova
-					fileToSend = FileUtilities.getEnvironmentProva(id, matricula);
-					resp.type(MediaType.octetstream);
-				    resp.download(fileToSend);					
-				}
+				fileToSend = FileUtilities.getEnvironmentAtividade(id, matricula);
+				resp.type(MediaType.octetstream);
+			    resp.download(fileToSend);
 			} catch (ConfigurationException | IOException | AtividadeException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
 				resp.send(e.getMessage());
 			}
 		});

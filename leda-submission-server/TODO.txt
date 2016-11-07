@@ -88,6 +88,7 @@ na planilha de submissoes, os arquivos podem ser ordenados por nome do estudante
 config também pode implementar a opcao de mostrar os de revisao ou nao.
 -ordenar por datas as informacoes dos roteiros e provas.
 - SERA QUE VALE APENA ATACHAR UM VOLUME AO 10.4.4.174 PARA SALVAR OS DADOS A PARTIR DE 2016.2?
+- nao pode esquecer de mudar a propriedade submission.server.url antes de colcoar o servidor no ar para ele conseguir buscar os alunos
 - fazer rotas que devolvem o relatorio detalhado do surefire e o maven output. provavalmente 
   tem que continuar com o sistema de links para poder passear no codigo fonte completo do aluno
   tem que pensar em que links relativos vai gerar, mas manter a estrutura de links simbolicos e assets no servidor.

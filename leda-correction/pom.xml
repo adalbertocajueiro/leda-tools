@@ -15,11 +15,28 @@
 	<version>${parent.version}</version>
 	<name>LEDA Correction System Mojo</name>
 	
-	<properties>
-		<submission.server.url>http://web.cloud.lsd.ufcg.edu.br:44174/submission</submission.server.url>
-	</properties>
 	<!-- url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg/</url -->
 	<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
+	
+	<profiles>
+		<profile>
+			<id>server</id>
+			<properties>
+				<submission.server.url>http://10.4.4.174/submission</submission.server.url>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<submission.server.url>http://web.cloud.lsd.ufcg.edu.br:44174/submission</submission.server.url>
+			</properties>
+		</profile>
+	</profiles>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

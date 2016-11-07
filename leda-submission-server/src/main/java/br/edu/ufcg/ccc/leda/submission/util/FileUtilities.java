@@ -36,7 +36,7 @@ import com.google.gdata.util.ServiceException;
 public class FileUtilities {
 
 	
-	public static File getEnvironmentAmbiente(String id, String matricula) throws ConfigurationException, IOException, AtividadeException, ServiceException{
+	public static File getEnvironmentAtividade(String id, String matricula) throws ConfigurationException, IOException, AtividadeException, ServiceException{
 		File environment = null;
 		
 		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
@@ -68,74 +68,6 @@ public class FileUtilities {
 		return environment;
 	}
 
-	@Deprecated
-	public static File getEnvironmentProva(String provaId, String matricula) throws ConfigurationException, IOException, AtividadeException, ServiceException{
-		File environment = null;
-		
-		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
-		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
-		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
-		File provaUploadFolder = new File(currentSemester,provaId);
-
-		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
-		String content = "VAZIO"; 
-		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-
-		try {
-			Validator.validateProvaDownload(provaId,matricula);
-		} catch (AtividadeException e) {
-			content = "[ERRO]:aluno " + matricula + " tentou fazer download da prova " + provaId + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
-			logger.log(content);
-			throw e;
-		}
-		
-		//pega o roteiro par aobter o arquivo e mandar de volta
-		Map<String,Prova> provas = null; //Configuration.getInstance().getProvas();
-		Prova prova = provas.get(provaId);
-		environment = prova.getArquivoAmbiente();
-
-		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
-		Student requester = studentsMap.get(matricula);
-		content = "[DOWNLOAD]:prova " + provaId + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
-		logger.log(content);
-		
-		return environment;
-	}
-	
-	@Deprecated
-	public static File getEnvironment(String roteiro, String matricula) throws ConfigurationException, IOException, AtividadeException, ServiceException{
-		File environment = null;
-
-		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
-		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
-		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
-		File provaUploadFolder = new File(currentSemester,roteiro);
-
-		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
-		String content = "VAZIO"; 
-
-		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-		try {
-			Validator.validateDownload(roteiro,matricula);
-		} catch (AtividadeException e) {
-			content = "[ERRO]:aluno " + matricula + " tentou fazer download do roteiro " + roteiro + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
-			logger.log(content);
-			throw e;
-		}
-		
-		//pega o roteiro par aobter o arquivo e mandar de volta
-		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
-		Student requester = studentsMap.get(matricula);
-		content = "[DOWNLOAD]:roteiro " + roteiro + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
-		logger.log(content);
-
-		//pega o roteiro par aobter o arquivo e mandar de volta
-		Map<String,Roteiro> roteiros = null; //Configuration.getInstance().getRoteiros();
-		Roteiro rot = roteiros.get(roteiro);
-		environment = rot.getArquivoAmbiente();
-		
-		return environment;
-	}
 	/**
 	 * Salva um roteiro recebido de um upload de professor ou monitor autorizado numa pasta 
 	 * especifica para geração de link de download de ambiente. O arquivo tambem salva num json
