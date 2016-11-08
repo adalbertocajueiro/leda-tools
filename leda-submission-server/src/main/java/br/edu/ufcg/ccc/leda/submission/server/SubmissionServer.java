@@ -115,7 +115,8 @@ public class SubmissionServer extends Jooby {
         Map<String,Student> alunos = Configuration.getInstance().getStudents();
         View html = Results.html("alunos");
         html.put("semestre",Constants.CURRENT_SEMESTER);
-        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
+        //html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
+        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList()));
         Map<String,List<Atividade>> atividadesAgrupadas = Configuration.getInstance().getAtividades().values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
         html.put("turmas",atividadesAgrupadas.keySet());
         

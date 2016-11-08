@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -45,7 +44,6 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.format.CellFormatType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -1166,7 +1164,7 @@ public class Util {
 	}
 	
 
-	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException {
+	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException, BiffException {
 		//Util.sendEmail("adalberto.cajueiro@gmail.com", "adalberto.cajueiro@gmail.com", "Teste", "conteudo", "adalberto.cajueiro@gmail.com", "acfcaju091401");
 		//Util.send2();
 		//System.out.println("Email enviado");
@@ -1174,8 +1172,13 @@ public class Util {
 		//https://docs.google.com/spreadsheets/d//pubhtml
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI");
 		//provas.forEach((id,p) -> System.out.println(p));
-		List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
-		Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
+		//List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
+		//Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
+		Map<String,Student> alunos = Util.loadStudentLists();
+		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
+		//students.forEach(s -> System.out.println(s.getNome()));
+		TestReport report = Util.loadTestReport("RR2-01");
+		report.getReportItems().forEach(tri -> System.out.println(tri.generateMavenOutputLink()));
 		int i = 2;
 		int k = 1;
 		

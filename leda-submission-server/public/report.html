@@ -34,7 +34,7 @@
     <div id="my-tab-content" class="tab-content">
 		<div role="tabpanel" class="tab-pane fade in active" id="report">
         <br>
-		<p>Nome da suite: ${report.testSuitName}
+		<p>Nome da suite: ${report.testSuiteName}
 		<p>Número de testes: ${report.numberOfTests}
 		<br>
 		<br>
@@ -63,10 +63,11 @@
 							<td class="text-xs-center">${reportItem.time}
 							<td>
 								<#if reportItem.class.simpleName == "TestReportItem">
-									<a href="detailedReport?id=${id}&matricula=${reportItem.matricula}">Detailed report.</a>
-									<a href="mavenOutput?id=${id}&matricula=${reportItem.matricula}">Maven output.</a>
+									<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
+									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
 								<#else>
 									<font color="red"> Posible compilation error.</font>
+									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
 								</#if>
 						<#assign gray = 'false'>
 					<#elseif gray == 'false'>
@@ -80,10 +81,11 @@
 							<td class="text-xs-center">${reportItem.time}
 							<td>
 								<#if reportItem.class.simpleName == "TestReportItem">
-									<a href="detailedReport?id=${id}&matricula=${reportItem.matricula}">Detailed report.</a>
-									<a href="mavenOutput?id=${id}&matricula=${reportItem.matricula}">Maven output.</a>
+									<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
+									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
 								<#else>
 									<font color="red"> Posible compilation error.</font>
+									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
 								</#if>
 						<#assign gray = 'true'>
 					</#if>
