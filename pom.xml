@@ -23,6 +23,26 @@
 		<module>leda-submission-server</module>
 		<!--  module>leda-submission-tool</module -->		
 	</modules>
+	<profiles>
+    <profile>
+      <id>server</id>
+      <properties>
+
+		<injected.plugin.repository.url>http://10.4.4.174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url>
+      </properties>
+    </profile>
+    
+    <profile>
+      <id>local</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+
+        <injected.plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url>
+      </properties>   
+    </profile>
+  </profiles>
 	<build>
 		<plugins>
 			<plugin>

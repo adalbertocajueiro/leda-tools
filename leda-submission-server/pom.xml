@@ -24,6 +24,17 @@
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 	</properties>
 
+	<pluginRepositories>
+	  <pluginRepository>
+			<id>ufcg-maven2</id>
+			<url>${injected.plugin.repository.url}</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+	  </pluginRepository>
+	</pluginRepositories>
+	
 	<profiles>
 		<profile>
 			<id>server</id>
