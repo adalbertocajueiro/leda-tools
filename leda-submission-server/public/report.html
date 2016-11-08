@@ -33,66 +33,81 @@
  	<#assign gray = 'true'>
     <div id="my-tab-content" class="tab-content">
 		<div role="tabpanel" class="tab-pane fade in active" id="report">
-        <br>
-		<p>Nome da suite: ${report.testSuiteName}
-		<p>Número de testes: ${report.numberOfTests}
-		<br>
-		<br>
-        <table id="report" class="table table-hover table-bordered">
-			<thead class="bg-success">
-				<th class="text-xs-center">Estudante</th>
-				<th class="text-xs-center">Data envio</th>
-				<th class="text-xs-center">Passou</th>
-				<th class="text-xs-center"><font color="red">Erros</font></th>
-				<th class="text-xs-center"><font color="blue">Falhas</font></th>
-				<th class="text-xs-center">Pulados</th>
-				<th class="text-xs-center">Tempo</th>
-				<th class="text-xs-center">Detalhes</th>
-					<!-- th class="text-xs-center">Matricula</th -->	
-				</thead>
-				<tbody>
-				<#list report.reportItems as reportItem>
-					<#if gray == 'true'>
-						<tr class="table-warning">
-							<td>${reportItem.studentName} 
-							<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
-							<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
-							<td class="text-xs-center">${reportItem.errors}
-							<td class="text-xs-center">${reportItem.failures}
-							<td class="text-xs-center">${reportItem.skipped}
-							<td class="text-xs-center">${reportItem.time}
-							<td>
-								<#if reportItem.class.simpleName == "TestReportItem">
-									<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
-									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-								<#else>
-									<font color="red"> Posible compilation error.</font>
-									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-								</#if>
-						<#assign gray = 'false'>
-					<#elseif gray == 'false'>
-						<tr class="table-info">
-							<td>${reportItem.studentName} 
-							<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
-							<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
-							<td class="text-xs-center">${reportItem.errors}
-							<td class="text-xs-center">${reportItem.failures}
-							<td class="text-xs-center">${reportItem.skipped}
-							<td class="text-xs-center">${reportItem.time}
-							<td>
-								<#if reportItem.class.simpleName == "TestReportItem">
-									<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
-									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-								<#else>
-									<font color="red"> Posible compilation error.</font>
-									<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-								</#if>
-						<#assign gray = 'true'>
-					</#if>
-				</#list>
-				</tbody>
+		<#if report??>
+			<br>
+			<p>Nome da suite: ${report.testSuiteName}
+			<p>Número de testes: ${report.numberOfTests}
+			<br>
+			<br>
+			<table id="report" class="table table-hover table-bordered">
+				<thead class="bg-success">
+					<th class="text-xs-center">Estudante</th>
+					<th class="text-xs-center">Data envio</th>
+					<th class="text-xs-center">Passou</th>
+					<th class="text-xs-center"><font color="red">Erros</font></th>
+					<th class="text-xs-center"><font color="blue">Falhas</font></th>
+					<th class="text-xs-center">Pulados</th>
+					<th class="text-xs-center">Tempo</th>
+					<th class="text-xs-center">Detalhes</th>
+						<!-- th class="text-xs-center">Matricula</th -->	
+					</thead>
+					<tbody>
+					<#list report.reportItems as reportItem>
+						<#if gray == 'true'>
+							<tr class="table-warning">
+								<td>${reportItem.studentName} 
+								<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
+								<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
+								<td class="text-xs-center">${reportItem.errors}
+								<td class="text-xs-center">${reportItem.failures}
+								<td class="text-xs-center">${reportItem.skipped}
+								<td class="text-xs-center">${reportItem.time}
+								<td>
+									<#if reportItem.class.simpleName == "TestReportItem">
+										<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
+										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+									<#else>
+										<font color="red"> Posible compilation error.</font>
+										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+									</#if>
+							<#assign gray = 'false'>
+						<#elseif gray == 'false'>
+							<tr class="table-info">
+								<td>${reportItem.studentName} 
+								<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
+								<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
+								<td class="text-xs-center">${reportItem.errors}
+								<td class="text-xs-center">${reportItem.failures}
+								<td class="text-xs-center">${reportItem.skipped}
+								<td class="text-xs-center">${reportItem.time}
+								<td>
+									<#if reportItem.class.simpleName == "TestReportItem">
+										<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
+										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+									<#else>
+										<font color="red"> Posible compilation error.</font>
+										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+									</#if>
+							<#assign gray = 'true'>
+						</#if>
+					</#list>
+					</tbody>
 			</table>
+		<#else>
+			<br>
+			<h5>Dados de testes ausentes. Provavelmente a atividade ainda não foi corrigida.</h5>
+		</#if>
         </div>
+		
+		<div role="tabpanel" class="tab-pane fade" id="similaridades">
+		<#if report??>
+			<br>
+			<h5>Em construção</h5>
+			
+		<#else>
+			<br>
+			<h5>Dados de testes ausentes. Provavelmente a atividade ainda não foi corrigida.</h5>
+		</#if>
 	</div>
 
 
