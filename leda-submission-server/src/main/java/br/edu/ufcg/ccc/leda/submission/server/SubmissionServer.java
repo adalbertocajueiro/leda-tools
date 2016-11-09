@@ -18,9 +18,6 @@ import org.jooby.Results;
 import org.jooby.Upload;
 import org.jooby.View;
 import org.jooby.ftl.Ftl;
-import org.pac4j.core.exception.CredentialsException;
-import org.pac4j.http.credentials.UsernamePasswordCredentials;
-import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 
 import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
@@ -536,6 +533,7 @@ public class SubmissionServer extends Jooby {
 	
   }
   
+  /*
   static class MyUserClientLoginValidator implements UsernamePasswordAuthenticator{
 
 	@Override
@@ -551,5 +549,5 @@ public class SubmissionServer extends Jooby {
   public static void main(final String[] args) throws Throwable {
     run(SubmissionServer::new, args);
   }
-
+	*/
 }

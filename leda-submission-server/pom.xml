@@ -22,6 +22,7 @@
 		<semestre.letivo>2016.2</semestre.letivo>
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
+		<injected.plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url>
 	</properties>
 
 	<repositories>
@@ -146,8 +147,13 @@
 			<artifactId>leda-compactor-tool</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- dependency to send email -->
 		<dependency>
+			<groupId>com.github.odiszapc</groupId>
+			<artifactId>nginxparser</artifactId>
+			<version>0.9.6</version>
+		</dependency>
+		<!-- dependency to send email -->
+		<!--  dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
@@ -158,21 +164,11 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.5.5</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.odiszapc</groupId>
-			<artifactId>nginxparser</artifactId>
-			<version>0.9.6</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jooby/jooby-jade -->
-		<dependency>
-			<groupId>org.jooby</groupId>
-			<artifactId>jooby-jade</artifactId>
-			<version>1.0.0.CR7</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.jooby</groupId>
 			<artifactId>jooby-pac4j</artifactId>
-		</dependency>
+		</dependency -->
 		<dependency>
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-correction-tool</artifactId>
