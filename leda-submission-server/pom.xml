@@ -22,7 +22,7 @@
 		<semestre.letivo>2016.2</semestre.letivo>
 		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
-		<injected.plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url>
+		<!--  injected.plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url -->
 	</properties>
 
 	<repositories>
