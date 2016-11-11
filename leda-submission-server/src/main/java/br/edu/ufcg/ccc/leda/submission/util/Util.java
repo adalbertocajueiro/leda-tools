@@ -60,6 +60,7 @@ import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
+import br.edu.ufcg.ccc.leda.util.CorrectionReport;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 import jxl.read.biff.BiffException;
@@ -206,6 +207,18 @@ public class Util {
 		return result;
 	}
 	
+	public static CorrectionReport loadCorrectionReport(String id) throws IOException{
+		CorrectionReport result = null;
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			File correctionReport = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReport.exists()){
+				result = Utilities.loadCorrectionReportFromJson(correctionReport);
+			}
+		}
+		return result;
+	}
+	
 	public static Map<String, String> loadFilesOwnersFromJson(File jsonFile) throws FileNotFoundException {
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(jsonFile);
@@ -296,8 +309,8 @@ public class Util {
         bos.close();
     }
 	
-	public static List<Monitor> loadSpreadsheetMonitor(String idGoogleDrive) throws IOException, ServiceException{
-		ArrayList<Monitor> monitores = new ArrayList<Monitor>();
+	public static List<Corretor> loadSpreadsheetMonitor(String idGoogleDrive) throws IOException, ServiceException{
+		ArrayList<Corretor> monitores = new ArrayList<Corretor>();
 		
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
         
@@ -320,23 +333,26 @@ public class Util {
             String email = cec.getValue("Email".toLowerCase());
             String fone = cec.getValue("Fone".toLowerCase());
             
-            Monitor monitor = 
+            Corretor corretor = 
             		new Monitor(matricula, nome, email, fone);
+            if(matricula.length() == 7){ //matricula de um professor
+            	corretor = new Professor(matricula, nome, email, fone);
+            }
             
-            monitores.add(monitor);
+            monitores.add(corretor);
         }
         
 		return monitores;
 	}
 	
-	public static Map<String,Atividade> loadSpreadsheetsAtividades(List<Monitor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+	public static Map<String,Atividade> loadSpreadsheetsAtividades(List<Corretor> corretores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
-		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T1, monitores));
-		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T2, monitores));
+		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T1, corretores));
+		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T2, corretores));
 		
 		return atividades;
 	}
-	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Monitor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Corretor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
         
@@ -369,7 +385,7 @@ public class Util {
                 List<Monitor> monitoresDoRoteiro = listOfMonitores(nomesMonitores,monitores);
                 
                 String nomeMonitor = cec.getValue("Corretor".toLowerCase());
-                Monitor corretor = 
+                Corretor corretor = 
                 		monitores.stream().filter(m -> m.getNome().equals(nomeMonitor)).findAny().orElse(null);
                 
                 //System.out.println(val6);
@@ -494,7 +510,7 @@ public class Util {
 	}
 
 	@Deprecated
-	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(List<Monitor> monitores) throws IOException{
+	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(List<Corretor> monitores) throws IOException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		
 		atividades.putAll(loadSpreadsheetAtividadeFromExcel("Cronograma T1.xlsx", monitores));
@@ -504,7 +520,7 @@ public class Util {
 	}
 	
 	@Deprecated
-	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(String excelFileName, List<Monitor> monitores) throws IOException{
+	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(String excelFileName, List<Corretor> monitores) throws IOException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		
 		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,excelFileName);
@@ -550,7 +566,7 @@ public class Util {
                         List<Monitor> monitoresDoRoteiro = listOfMonitores(nomesMonitores,monitores);
                         
                         String nomeMonitor = cellNomeMonitorCorretor != null?cellNomeMonitorCorretor.getStringCellValue():"";
-                        Monitor corretor = 
+                        Corretor corretor = 
                         		monitores.stream().filter(m -> m.getNome().equals(nomeMonitor)).findAny().orElse(null);
                         
                         GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cellDataInicioCorrecao.getDateCellValue());
@@ -577,8 +593,8 @@ public class Util {
 	}
 
 	@Deprecated
-	public static List<Monitor> loadSpreadsheetMonitorFromExcel() throws IOException{
-		ArrayList<Monitor> monitores = new ArrayList<Monitor>();
+	public static List<Corretor> loadSpreadsheetMonitorFromExcel() throws IOException{
+		ArrayList<Corretor> monitores = new ArrayList<Corretor>();
 		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Monitores.xlsx");
 		FileInputStream fis = new FileInputStream(excelFile);
 		
@@ -615,10 +631,13 @@ public class Util {
                         String email = cellEmail != null?cellEmail.getStringCellValue():"";
                         String fone = cellFone != null? (cellFone.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellFone.getNumericCellValue()):cellFone.getStringCellValue():"";
                         
-                        Monitor monitor = 
+                        Corretor corretor = 
                         		new Monitor(matricula, nome, email, fone);
                         
-                        monitores.add(monitor);
+                        if(matricula.length() == 7){ //matricula de um professor
+                        	corretor = new Professor(matricula, nome, email, fone);
+                        }
+                        monitores.add(corretor);
             		}
             	}
             }
@@ -631,7 +650,7 @@ public class Util {
 
 	private static Atividade createAtividade(String id, String nome, String descricao,
 			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
-			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Monitor corretor,
+			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Corretor corretor,
 			GregorianCalendar dataHoraInicioCorrecao, GregorianCalendar dataHoraEntregaCorrecao) {
 		
 		Atividade result = null;
@@ -649,7 +668,7 @@ public class Util {
 		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
 			result = new Prova(id,nome,descricao,dataHoraLiberacao,
 					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
-					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+					monitores,(Professor) corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
 			
 		}
 		return result;
@@ -1128,14 +1147,14 @@ public class Util {
 		}
 	}
 		
-	private static List<Monitor> listOfMonitores(String listOfMonitores,List<Monitor> monitores) {
+	private static List<Monitor> listOfMonitores(String listOfMonitores,List<Corretor> monitores) {
 		ArrayList<Monitor> list = new ArrayList<Monitor>();
 		if(listOfMonitores != null){
 			String[] nomes = listOfMonitores.split(",");
 			for (String nome : nomes) {
 				monitores.stream().forEach(m -> {
-					if(m.getNome().equals(nome.trim())){
-						list.add(m);
+					if(m.getNome().equals(nome.trim()) && !(m instanceof Professor)){
+						list.add((Monitor) m);
 					}
 				});
 			}

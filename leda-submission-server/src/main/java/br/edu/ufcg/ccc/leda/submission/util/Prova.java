@@ -9,12 +9,12 @@ public class Prova extends Roteiro{
 	
 	public Prova(String id, String nome, String descricao, GregorianCalendar dataHoraLiberacao,
 			List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraLimiteEnvioNormal,
-			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Monitor monitorCorretor, GregorianCalendar dataInicioCorrecao,
+			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Professor corretor, GregorianCalendar dataInicioCorrecao,
 			GregorianCalendar dataLimiteCorrecao, File arquivoAmbiente, File arquivoProjetoCorrecao) {
 		
 		super(id, nome, descricao, dataHoraLiberacao, linksVideoAulas, 
 				dataHoraLimiteEnvioNormal, dataHoraLimiteEnvioAtraso,
-				monitores, monitorCorretor, dataInicioCorrecao, 
+				monitores, corretor, dataInicioCorrecao, 
 				dataLimiteCorrecao, arquivoAmbiente, arquivoProjetoCorrecao);
 
 	}

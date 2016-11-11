@@ -17,7 +17,7 @@ public class Configuration {
 
 	private Map<String, Student> students;
 	private Map<String,Atividade> atividades;
-	private List<Monitor> monitores;
+	private List<Corretor> monitores;
 	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
 	
 	private static Configuration instance;
@@ -90,7 +90,7 @@ public class Configuration {
 		
 		return result.toString();
 	}
-	public List<Monitor> getMonitores() {
+	public List<Corretor> getMonitores() {
 		return monitores;
 	}
 	public Map<String, Atividade> getAtividades() {

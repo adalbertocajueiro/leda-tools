@@ -1,11 +1,11 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-public class Monitor implements Corretor {
+public class Professor implements Corretor {
 	private String matricula;
 	private String nome;
 	private String email;
 	private String fone;
-	public Monitor(String matricula, String nome, String email, String fone) {
+	public Professor(String matricula, String nome, String email, String fone) {
 		super();
 		this.matricula = matricula;
 		this.nome = nome;

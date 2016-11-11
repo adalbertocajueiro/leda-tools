@@ -147,6 +147,34 @@ public class SubmissionServer extends Jooby {
         return html;
     });
 	
+	get("/menuCorrecao", (req) -> {
+		String id = req.param("id").value();		
+		View html = Results.html("menu-frames-correcao");
+        html.put("id", id);
+        return html;
+    });
+	
+	get("/menuLeftCorrecao", (req) -> {
+		String id = req.param("id").value();
+		String turma = id.substring(4).trim();
+		
+		List<Student> alunos = Configuration.getInstance().getStudents().values()
+				.stream().filter(a -> a.getTurma().equals(turma))
+				.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toList());
+
+		View html = Results.html("menuLeftCorrecao");
+        html.put("id",id);
+        html.put("alunos", alunos);
+
+		return html;
+    });
+	
+	get("/menuRightCorrecao", (req) -> {
+        View html = Results.html("menu-frames-right-correcao");
+        return html;
+    });
+	
 	get("/listCopies", (req) -> {
 		String id = req.param("id").value();
 		List<List<FileCopy>> copias = Util.listAllCopies(id);

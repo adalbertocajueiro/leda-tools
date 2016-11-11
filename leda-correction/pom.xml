@@ -21,6 +21,9 @@
 	<profiles>
 		<profile>
 			<id>server</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<submission.server.url>http://10.4.4.174/submission</submission.server.url>
 			</properties>
@@ -28,9 +31,6 @@
 
 		<profile>
 			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
 				<submission.server.url>http://web.cloud.lsd.ufcg.edu.br:44174/submission</submission.server.url>
 			</properties>

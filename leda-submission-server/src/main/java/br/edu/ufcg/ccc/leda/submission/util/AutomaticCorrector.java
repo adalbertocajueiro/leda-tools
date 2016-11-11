@@ -40,11 +40,12 @@ public class AutomaticCorrector {
 			
 			@Override
 			public boolean accept(File pathname) {
+				//System.out.println("procurando arquivos do id: " + id + " pathname: " + pathname.getName());
 				return pathname.getName().startsWith(id) && pathname.getName().contains("correction");
 			}
 		};
 		File[] files = new File[0];
-		if(Constants.PATTERN_ROTEIRO.matcher(id).matches()){			
+		if(Constants.PATTERN_ROTEIRO.matcher(id).matches() || Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){			
 			//pega os arquivos correction-proj 
 			files = Constants.ROTEIROS_FOLDER.listFiles(filter);
 		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
@@ -116,7 +117,7 @@ public class AutomaticCorrector {
 			InvocationRequest request = new DefaultInvocationRequest();
 			//request.setPomFile(new File(projectFoder, "./pom.xml"));
 			//request.setGoals(Arrays.asList("surefire-report:report-only"));
-			request.setGoals(Arrays.asList("clean", "install", "site","--log-file maven-output.txt" ));
+			request.setGoals(Arrays.asList("clean", "install", "-e", "--log-file maven-output.txt" ));
 			request.setBaseDirectory(projectFolder);
 			invoker.execute(request);
 		}

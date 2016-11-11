@@ -1,7 +1,5 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
-import java.io.File;
-import java.net.URL;
 import java.util.GregorianCalendar;
 import java.util.List;
 

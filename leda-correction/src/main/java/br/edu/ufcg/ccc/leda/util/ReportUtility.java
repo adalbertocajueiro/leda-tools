@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public class ReportUtility {
 	 * @throws IOException
 	 * @throws JDOMException
 	 */
+	@Deprecated
 	private TestReport generateReport(File submissionsFolder, File targetFolder)
 			throws IOException, JDOMException {
 		TestReport report = new TestReport(null, 0);
@@ -111,9 +113,11 @@ public class ReportUtility {
 		return report;
 	}
 
-	private TestReport generateJsonReport(File submissionsFolder, File targetFolder,Map<String,Student> alunos)
+	private TestReport generateJsonTestReport(File submissionsFolder, Map<String,Student> alunos)
 			throws IOException, JDOMException {
+		//System.out.println("submissions folder: " + submissionsFolder.getAbsolutePath());
 		TestReport report = new TestReport(null, 0);
+		//System.out.println("Lista de alunos recebida: " + alunos);
 		String turma = submissionsFolder.getParentFile().getName().substring(4);
 		List<Student> alunosDaTurma = alunos.values().stream().filter(s -> s.getTurma().equals(turma))
 				.sorted((s1,s2) -> s1.getNome().compareTo(s2.getNome())).collect(Collectors.toList());
@@ -127,8 +131,9 @@ public class ReportUtility {
 			});
 			for (Student aluno : alunosDaTurma) {
 				File pastaDoAluno = getFolderForStudent(submissionsFolder, aluno.getMatricula());
-				File xmlFile = this.getSurefireReportFile(pastaDoAluno);
+				
 				if(pastaDoAluno != null){
+					File xmlFile = this.getSurefireReportFile(pastaDoAluno);
 					File mavenOutputLog = new File(pastaDoAluno.getAbsolutePath()
 							+ File.separator + MavenUtility.MAVEN_OUTPUT_LOG);
 	
@@ -200,6 +205,23 @@ public class ReportUtility {
 
 		return report;
 	}
+	
+	private CorrectionReport generateJsonCorrectionReport(File submissionsFolder, String matriculaCorretor, Map<String,Student> alunos)
+			throws IOException, JDOMException {
+		
+		String id = submissionsFolder.getParentFile().getName();
+		CorrectionReport report = new CorrectionReport(id,matriculaCorretor, new ArrayList<CorrectionReportItem>());
+		String turma = submissionsFolder.getParentFile().getName().substring(4);
+		List<Student> alunosDaTurma = alunos.values().stream().filter(s -> s.getTurma().equals(turma))
+				.sorted((s1,s2) -> s1.getNome().compareTo(s2.getNome())).collect(Collectors.toList());
+		
+		for (Student student : alunosDaTurma) {
+			CorrectionReportItem item = new CorrectionReportItem(student.getMatricula(), "");
+			report.getReportItems().add(item);
+		}
+
+		return report;
+	}
 	private File getFolderForStudent(File submissionsFolder, String matricula){
 		File studentFolder = null;
 		File[] subFolders = submissionsFolder.listFiles(new FileFilter() {
@@ -239,14 +261,24 @@ public class ReportUtility {
 		htmlfu.writeXMLFile(doc, finalPathHtml);
 	}
 	
-	public void createAndSaveJsonReport(File submissionsFolder,
-			File targetFolder, String finalPathHtml, Map<String,Student> alunos)
+	public void createAndSaveJsonTestReport(File submissionsFolder,
+			Map<String,Student> alunos)
 			throws IOException, JDOMException {
 		TestReport testReport = this
-				.generateJsonReport(submissionsFolder, targetFolder, alunos);
+				.generateJsonTestReport(submissionsFolder, alunos);
 		
 		File jsonFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-report.json");
 		Utilities.writeTestReportToJson(testReport, jsonFile);
+	}
+	
+	public void createAndSaveJsonCorrectionReport(File submissionsFolder,
+			String matriculaCorretor, Map<String,Student> alunos)
+			throws IOException, JDOMException {
+		CorrectionReport correctionReport = this
+				.generateJsonCorrectionReport(submissionsFolder, matriculaCorretor, alunos);
+		
+		File jsonFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-correction.json");
+		Utilities.writeCorrectionReportToJson(correctionReport, jsonFile);
 	}
 
 	private File getSurefireReportFile(File folder) {

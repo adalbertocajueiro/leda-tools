@@ -115,13 +115,14 @@ public class MavenUtility {
 		//o json dos testes para o calculo de proximidade e tambem gerar o relatorio para 
 		//a turma completa. se o aluno nao submeteu entao aparece la que nao submeteu.
 		// talvez seja melhor gerar o json e depois construir o report baseado no json.
-		String finalPathHtml = targetFolder.getAbsolutePath()
-				+ FINAL_REPORT_NAME;
+		//String finalPathHtml = targetFolder.getAbsolutePath()
+		//		+ FINAL_REPORT_NAME;
 		//reportUtility.createAndSaveReport(submissionsFolder, BASIC_HTML_FILE,
 		//		targetFolder, finalPathHtml);
-		reportUtility.createAndSaveJsonReport(submissionsFolder,
-				targetFolder, finalPathHtml, alunos);
-
+		reportUtility.createAndSaveJsonTestReport(submissionsFolder,alunos);
+		
+		//precisa criar e salvar o json para a correcao ser feita
+		reportUtility.createAndSaveJsonCorrectionReport(submissionsFolder, "", alunos);
 	}
 	
 	

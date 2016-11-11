@@ -20,7 +20,23 @@
 
 <br>
 <div class="container">
-  <div class="row">
+	<br>
+	<p>Atividade: ${id}</p>
+	<p>Corretor:</p>
+	<div id="my-tab-content" class="tab-content">
+		<p>Alunos:
+		<table id='t${id?keep_after("-")}' class="table table-hover">
+				<!-- thead class="bg-success">
+					<th class="text-xs-center">Estudante</th>
+				</thead -->
+				<tbody class="small">
+				<#list alunos as student>
+					<tr><td class="btn-link p-b-0 p-t-0"><a href="">${student.nome}</a> <!-- td>${student.matricula} -->
+				</#list>
+				</tbody>
+			</table>
+	</div>
+  <!-- div class="row">
     <nav class="col-sm-3" id="myScrollspy">
       <ul class="nav nav-pills navbar-brand" data-spy="affix" data-offset-top="105">
         <li class="col-form-label"><a class="btn btn-secondary nav-link" href="alunos" target="rightframe">Estudantes</a></li>
@@ -33,12 +49,12 @@
             <li><a class="nav-link" href="#section41">Section 4-1</a></li>
             <li><a class="nav-link" href="#section42">Section 4-2</a></li>
           </ul>
-        </li -->
+        </li>
       </ul>
     </nav>
     
     </div>
-  </div>
+  </div -->
 </div>
 
 <script>

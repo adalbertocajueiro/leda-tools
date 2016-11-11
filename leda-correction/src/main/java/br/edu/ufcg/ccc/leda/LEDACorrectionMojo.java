@@ -126,7 +126,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 			String url = prop.getProperty(Utilities.SUBMISSION_SERVER_URL);
 			System.out.println("Obtaining student lists from server " + url);
 			String urlAllStudents = url + "/" + pathAllStudents;
-			Map<String,Student> alunos = new HashMap<String,Student>();
+			alunos = new HashMap<String,Student>();
 			try {
 				alunos = Util.getAllStudents(urlAllStudents);
 			} catch (IOException e2) {
@@ -177,13 +177,13 @@ public class LEDACorrectionMojo extends AbstractMojo {
 								"Error creating project folder", e);
 					}
 				}
-				System.out.println("GENERATING FINAL REPORT");
+				System.out.println("GENERATING TEST REPORT IN JSON");
 				File targetFolder = new File(this.project.getBuild().getDirectory());
 				try {
 					mu.generateReport(submissionsDirectory, targetFolder,alunos);
 				} catch (IOException | JDOMException e) {
 					e.printStackTrace();
-					throw new MojoExecutionException("Error geenrating report", e);
+					throw new MojoExecutionException("Error generating report", e);
 				}
 	
 			} else {

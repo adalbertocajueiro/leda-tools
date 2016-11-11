@@ -14,7 +14,7 @@ public class Roteiro extends Atividade{
 	private GregorianCalendar dataHoraLimiteEnvioNormal;
 	private GregorianCalendar dataHoraLimiteEnvioAtraso;
 	
-	private Monitor corretor;
+	private Corretor corretor;
 	private GregorianCalendar dataInicioCorrecao;
 	private GregorianCalendar dataLimiteCorrecao;
 	
@@ -56,14 +56,14 @@ public class Roteiro extends Atividade{
 			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas,
 			GregorianCalendar dataHoraLimiteEnvioNormal,
 			GregorianCalendar dataHoraLimiteEnvioAtraso,
-			List<Monitor> monitores, Monitor monitorCorretor, 
+			List<Monitor> monitores, Corretor corretor, 
 			GregorianCalendar dataInicioCorrecao, GregorianCalendar dataLimiteCorrecao, 
 			File arquivoAmbiente, File arquivoProjetoCorrecao) {
 
 		this(id,nome,descricao,dataHoraLiberacao,
 				linksVideoAulas,monitores, 
 				arquivoAmbiente,arquivoProjetoCorrecao);
-		this.corretor = monitorCorretor;
+		this.corretor = corretor;
 		this.dataInicioCorrecao = dataInicioCorrecao;
 		this.dataLimiteCorrecao = dataLimiteCorrecao;
 		
@@ -134,11 +134,11 @@ public class Roteiro extends Atividade{
 	}
 
 	
-	public Monitor getCorretor() {
+	public Corretor getCorretor() {
 		return corretor;
 	}
 
-	public void setCorretor(Monitor corretor) {
+	public void setCorretor(Corretor corretor) {
 		this.corretor = corretor;
 	}
 
