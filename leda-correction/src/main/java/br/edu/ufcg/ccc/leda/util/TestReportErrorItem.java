@@ -12,6 +12,7 @@ public class TestReportErrorItem extends TestReportItem {
 				mavenOutputLog);
 	}
 
+	
 	@Override
 	public String generateCompleteReportLink(){
 		return "Possible compilation error!";

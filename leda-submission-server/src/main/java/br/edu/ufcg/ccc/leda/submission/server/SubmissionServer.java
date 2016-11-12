@@ -154,6 +154,14 @@ public class SubmissionServer extends Jooby {
         return html;
     });
 	
+	get("/surefireReport", (req,resp) -> {
+		resp.send("Relatorio surefire do aluno escolhido");
+    });
+	
+	get("/commentPanel", (req,resp) -> {
+		resp.send("Painel para comentario do codigo do aluno");
+    });
+	
 	get("/menuLeftCorrecao", (req) -> {
 		String id = req.param("id").value();
 		String turma = id.substring(4).trim();

@@ -148,7 +148,7 @@ public class AutomaticCorrector {
 	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException {
 		AutomaticCorrector ac = new AutomaticCorrector();
 		System.out.println("Corection started");
-		ac.corrigirAtividade("R01-01");
+		ac.corrigirAtividade("RR1-01");
 		System.out.println("Corection in progress");
 	}
 	

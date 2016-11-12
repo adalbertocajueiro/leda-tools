@@ -12,7 +12,6 @@ public class ReportUtilityTest {
 
 	public static void main(String[] args) throws IOException, JDOMException {
 		ReportUtility ru = new ReportUtility();
-		String FINAL_HTML_FILE = "D:\\trash2\\leda-upload\\2016.1\\R01-02\\target\\generated-report.html";
 		File submissionsFolder = new File("D:\\trash2\\leda-upload\\2016.2\\RR1-01\\subs");
 		Map<String,Student> alunos = new HashMap<String,Student>();
 		try {
@@ -21,6 +20,8 @@ public class ReportUtilityTest {
 			e2.printStackTrace();
 		}
 		ru.createAndSaveJsonTestReport(submissionsFolder, alunos);
+		
+		TestReport report = Utilities.loadTestReportFromJson(new File("D:\\trash2\\leda-upload\\2016.2\\RR1-01\\RR1-01-report.json"));
 		System.out.println("End");
 	}
 }

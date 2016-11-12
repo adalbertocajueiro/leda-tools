@@ -127,7 +127,8 @@ public class CorrectionManager {
 				// foi corrigido)
 				//File targetFolder = new File(roteiro,"target");
 				if(result){
-					File report = new File(atividadeId,Constants.GENERATED_REPORT_FILE);
+					//File report = new File(atividadeId,Constants.GENERATED_REPORT_FILE);
+					File report = new File(atividadeId,atividadeId.getName()+"-report.json");
 					result = result && !report.exists();
 					if(!result){
 						System.out.println("Atividade " + atividadeId.getName() + " ja foi corrigida");

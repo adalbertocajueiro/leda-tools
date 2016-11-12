@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 
 
 public class Utilities {
-	private static final String RESOURCES_FOLDER = "src/main/resources";
 	public static final String SUBMISSION_SERVER_URL = "submission.server.url";
 	public static final String PROPERTIES_FILE = "/app.properties";
 	
@@ -32,6 +31,10 @@ public class Utilities {
 	public static void writeTestReportToJson(TestReport testReport, File jsonFile) throws IOException {
 		Gson gson = new Gson();
 
+		//GsonBuilder builder = new GsonBuilder();
+        //builder.registerTypeAdapter(TestReportItem.class   , new TestReportItemAdapter());
+		//gson = builder.create();
+
 		FileWriter fw = new FileWriter(jsonFile);
 		gson.toJson(testReport, fw);
 		fw.flush();
@@ -40,7 +43,6 @@ public class Utilities {
 	
 	public static void writeCorrectionReportToJson(CorrectionReport correctionReport, File jsonFile) throws IOException {
 		Gson gson = new Gson();
-
 		FileWriter fw = new FileWriter(jsonFile);
 		gson.toJson(correctionReport, fw);
 		fw.flush();
@@ -49,6 +51,11 @@ public class Utilities {
 	
 	public static TestReport loadTestReportFromJson(File jsonFile) throws IOException{
 		Gson gson = new Gson();
+
+		//GsonBuilder builder = new GsonBuilder();
+        //builder.registerTypeAdapter(TestReportItem.class   , new TestReportItemAdapter());
+		//gson = builder.create();
+
 		FileReader fr = new FileReader(jsonFile);
 		TestReport result = gson.fromJson(fr, new TypeToken<TestReport>(){}.getType());
 		return result;
@@ -56,7 +63,7 @@ public class Utilities {
 	
 	public static CorrectionReport loadCorrectionReportFromJson(File jsonFile) throws IOException{
 		Gson gson = new Gson();
-		FileReader fr = new FileReader(jsonFile);
+        FileReader fr = new FileReader(jsonFile);
 		CorrectionReport result = gson.fromJson(fr, new TypeToken<CorrectionReport>(){}.getType());
 		return result;
 	}

@@ -56,37 +56,53 @@
 						<#if gray == 'true'>
 							<tr class="table-warning">
 								<td>${reportItem.studentName} 
-								<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
+								<#if reportItem.mavenOutputLog??>
+									<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
+								<#else>
+									<td class="text-xs-center"> -
+								</#if>
 								<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
 								<td class="text-xs-center">${reportItem.errors}
 								<td class="text-xs-center">${reportItem.failures}
 								<td class="text-xs-center">${reportItem.skipped}
 								<td class="text-xs-center">${reportItem.time}
 								<td>
-									<#if reportItem.class.simpleName == "TestReportItem">
-										<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
-										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+									<#if reportItem.mavenOutputLog??>
+										<#if reportItem.completeReport??>
+											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+										<#else>
+											<font color="red">Possivel erro de compilação.</a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+										</#if>
 									<#else>
-										<font color="red"> Posible compilation error.</font>
-										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+										<font color="red"> Aluno não submeteu.</font>
 									</#if>
 							<#assign gray = 'false'>
 						<#elseif gray == 'false'>
 							<tr class="table-info">
 								<td>${reportItem.studentName} 
-								<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
+								<#if reportItem.mavenOutputLog??>
+									<td class="text-xs-center">${formatter.format(reportItem.lastModified)}
+								<#else>
+									<td class="text-xs-center"> -
+								</#if>
 								<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
 								<td class="text-xs-center">${reportItem.errors}
 								<td class="text-xs-center">${reportItem.failures}
 								<td class="text-xs-center">${reportItem.skipped}
 								<td class="text-xs-center">${reportItem.time}
 								<td>
-									<#if reportItem.class.simpleName == "TestReportItem">
-										<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
-										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+									<#if reportItem.mavenOutputLog??>
+										<#if reportItem.completeReport??>
+											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+										<#else>
+											<font color="red">Possivel erro de compilação.</a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+										</#if>
 									<#else>
-										<font color="red"> Posible compilation error.</font>
-										<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+										<font color="red"> Aluno não submeteu.</font>
 									</#if>
 							<#assign gray = 'true'>
 						</#if>
