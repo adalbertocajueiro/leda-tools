@@ -2,8 +2,11 @@
 <html>
 
 <frameset cols="25%,*">
-  <frame name="leftframe" src="menuLeftCorrecao?id=${id}" frameborder="1">
-  <frame name="rightframe" src="menuRightCorrecao" frameborder="1">
+  <frame id="leftframe" name="leftframe" src="menuLeftCorrecao?id=${id}" frameborder="1">
+  <frameset id="rightframeset"  name="rightframeset" rows="70%,*">
+	<frame id="topframe" name="topframe" src="surefireReport" frameborder="1">
+	<frame id="bottomframe" name="bottomframe" src="commentPanel" frameborder="1">
+  </frameset>
 </frameset>
 
 </html>

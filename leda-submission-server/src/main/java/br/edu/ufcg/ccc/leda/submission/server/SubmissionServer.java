@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,6 +35,8 @@ import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.util.TestReport;
+import br.edu.ufcg.ccc.leda.util.TestReportItem;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 import br.edu.ufcg.ccc.leda.submission.util.Atividade;
@@ -155,11 +158,28 @@ public class SubmissionServer extends Jooby {
     });
 	
 	get("/surefireReport", (req,resp) -> {
+		/*String id = req.param("id").value();
+		String matricula = req.param("matricula").value();
+		TestReport testReport = Util.loadTestReport(id);
+		TestReportItem item = testReport.getReportItems().stream()
+				.filter(tri -> tri.getMatricula().equals(matricula)).findFirst().orElse(null);
+		//retorna o link para o relatorio em si se ele existe
+		//os relatorios se encotnram em public/reports/ID/subs/MATR-NOME/target/site/project-reports.html
+		//este é o campo completeReport do TestReportItem 
+		if(item.getCompleteReport() != null){
+			String renderer = item.getCompleteReport().getAbsolutePath();
+			int indexOfId = renderer.indexOf(id);
+			renderer = renderer.substring(indexOfId); //precisa tirar o .html do nome do arquivo
+			int indexOfDot = 
+		}*/
+		//ou entao retorna uma tela com a mensagem de que o relatorio nao foi gerado.
+
 		resp.send("Relatorio surefire do aluno escolhido");
     });
 	
 	get("/commentPanel", (req,resp) -> {
-		resp.send("Painel para comentario do codigo do aluno");
+		String matricula = req.param("matricula").value();
+		resp.send("Painel para comentario do codigo do aluno: " + matricula);
     });
 	
 	get("/menuLeftCorrecao", (req) -> {
@@ -170,11 +190,15 @@ public class SubmissionServer extends Jooby {
 				.stream().filter(a -> a.getTurma().equals(turma))
 				.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
 				.collect(Collectors.toList());
-
+		TestReport report = Util.loadTestReport(id);
+		HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
+		report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+		
 		View html = Results.html("menuLeftCorrecao");
         html.put("id",id);
         html.put("alunos", alunos);
-
+        html.put("reportItems", items);
+        
 		return html;
     });
 	

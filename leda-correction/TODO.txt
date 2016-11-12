@@ -52,7 +52,7 @@
 }
 
 - fazer o corretor capturar a lista dos estudantes e montar a tabela com todos os estudantes - OK
-- fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. 
+- fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. - OK
 - os comentarios dos corretores tambem poderiam ficar neste json? os comentarios podem ficar num
   json a parte para evitar de ser perdido quando se rodar uma correcao mais de uma vez.
   melhor deixar num json a parte.
