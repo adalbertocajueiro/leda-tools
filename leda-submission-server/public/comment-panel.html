@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Menu Left</title>
+  <title>Painel de comentario de código</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="./jquery/ui/1.12.1/jquery-ui.css" rel="stylesheet">
@@ -22,27 +22,9 @@
 <br>
 <div class="container">
 	<br>
-	<p>Atividade: ${id}</p>
-	<p>Corretor:</p>
-	<div id="my-tab-content" class="tab-content">
-		<p>Alunos:
-		<table id='t${id?keep_after("-")}' class="table table-hover">
-				<!-- thead class="bg-success">
-					<th class="text-xs-center">Estudante</th>
-				</thead -->
-				<tbody class="small">
-				<#list alunos as student>
-					<#assign reportItem = reportItems[student.matricula]>
-					<#if reportItem.completeReport??>
-						<tr><td id="${student.matricula}" class="btn btn-link p-b-0 p-t-0"><a class="custom-select-sm p-b-0 p-t-0" onclick='parent.document.getElementById("topframe").src ="./reports/${id}/${reportItem.generateCompleteReportLink()?replace("\\","/")}" ; parent.document.getElementById("bottomframe").src ="commentPanel?id=${id}&matricula=${student.matricula}"'>${student.nome}</a> 
-						<!-- tr><td id="${student.matricula}" class="btn-link p-b-0 p-t-0"><a href="./reports/${id}/${reportItem.generateCompleteReportLink()}" target="topframe">${student.nome}</a --> 
-					<#else>
-						<tr><td class="p-b-0 p-t-0">${student.nome}
-					</#if>
-				</#list>
-				</tbody>
-			</table>
-	</div>
+	<p>Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}</p>
+	
+	
 </div>
 
 <script>

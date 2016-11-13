@@ -157,7 +157,7 @@ public class SubmissionServer extends Jooby {
         return html;
     });
 	
-	get("/surefireReport", (req,resp) -> {
+	get("/surefireReport", (req) -> {
 		/*String id = req.param("id").value();
 		String matricula = req.param("matricula").value();
 		TestReport testReport = Util.loadTestReport(id);
@@ -174,12 +174,22 @@ public class SubmissionServer extends Jooby {
 		}*/
 		//ou entao retorna uma tela com a mensagem de que o relatorio nao foi gerado.
 
-		resp.send("Relatorio surefire do aluno escolhido");
+		//resp.send("Relatorio surefire do aluno escolhido");
+		View html = Results.html("surefire-report");
+		
+		return html;
     });
 	
-	get("/commentPanel", (req,resp) -> {
-		String matricula = req.param("matricula").value();
-		resp.send("Painel para comentario do codigo do aluno: " + matricula);
+	get("/commentPanel", (req) -> {
+		String id = req.param("id").value("");
+		String matricula = req.param("matricula").value("");
+	
+		View html = Results.html("comment-panel");
+		html.put("id",id);
+		html.put("matricula", matricula);
+		
+		return html;
+		//resp.send("Painel para comentario do codigo do aluno: " + matricula);
     });
 	
 	get("/menuLeftCorrecao", (req) -> {
