@@ -18,11 +18,25 @@
 
  </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
-
-<br>
 <div class="container">
+	<#if corretor??>
+		<p>Coretor logado
+	<#else>
+		<form style="float:right" class="form-inline">
+		  <div class="form-group">
+			<input type="hidden" class="form-control text-xs-right" id="matricula" value="${matricula}">
+			<input type="hidden" class="form-control text-xs-right" id="corretor" value="${corretorMat}">
+		  </div>
+		  <div class="form-group">
+			<input type="password" class="form-control" id="pwd" placeholder="Digite sua senha">
+			<a class="btn btn-secondary btn-nav-link">Login</a>
+		  </div>
+		</form>
+		
+	</#if>
 	<br>
-	<p>Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}</p>
+	<br>
+	<textarea class="form-control" rows="5" id="comment" placeholder="Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}"></textarea>
 	
 	
 </div>

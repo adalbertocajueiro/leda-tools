@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Results;
+import org.jooby.Session;
 import org.jooby.Upload;
 import org.jooby.View;
 import org.jooby.ftl.Ftl;
@@ -28,8 +29,10 @@ import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
+import br.edu.ufcg.ccc.leda.submission.util.Corretor;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
+import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
 import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
@@ -151,9 +154,15 @@ public class SubmissionServer extends Jooby {
     });
 	
 	get("/menuCorrecao", (req) -> {
-		String id = req.param("id").value();		
+		String id = req.param("id").value();	
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		//System.out.println("%%%%ATIVIDADE " + atividade);
 		View html = Results.html("menu-frames-correcao");
         html.put("id", id);
+        if(atividade instanceof Roteiro){
+        	html.put("corretor",((Roteiro) atividade).getCorretor());
+        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+        }
         return html;
     });
 	
@@ -183,11 +192,15 @@ public class SubmissionServer extends Jooby {
 	get("/commentPanel", (req) -> {
 		String id = req.param("id").value("");
 		String matricula = req.param("matricula").value("");
-	
+		String corretorPar = req.param("corretor").value("");
+		Session session = req.session();
+		Corretor corretor = session.get("corretor").toOptional(Corretor.class).orElse(null);
+		
 		View html = Results.html("comment-panel");
 		html.put("id",id);
 		html.put("matricula", matricula);
-		
+		html.put("corretor",corretor);
+		html.put("corretorMat",corretorPar);
 		return html;
 		//resp.send("Painel para comentario do codigo do aluno: " + matricula);
     });
@@ -204,10 +217,16 @@ public class SubmissionServer extends Jooby {
 		HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
 		report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
 		
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		
 		View html = Results.html("menuLeftCorrecao");
         html.put("id",id);
         html.put("alunos", alunos);
         html.put("reportItems", items);
+        if(atividade instanceof Roteiro){
+        	html.put("corretor",((Roteiro) atividade).getCorretor());
+        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+        }
         
 		return html;
     });
