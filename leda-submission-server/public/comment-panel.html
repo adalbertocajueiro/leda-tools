@@ -17,27 +17,28 @@
   
 
  </head>
-<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
+<body data-spy="scroll">
 <div class="container">
 	<#if corretor??>
-		<p>Coretor logado
-	<#else>
-		<form style="float:right" class="form-inline">
-		  <div class="form-group">
-			<input type="hidden" class="form-control text-xs-right" id="matricula" value="${matricula}">
-			<input type="hidden" class="form-control text-xs-right" id="corretor" value="${corretorMat}">
-		  </div>
-		  <div class="form-group">
-			<input type="password" class="form-control" id="pwd" placeholder="Digite sua senha">
-			<a class="btn btn-secondary btn-nav-link">Login</a>
-		  </div>
+		<br>
+		<br>
+		<form id="commentForm" role="form" method="POST" action="addComment">
+				<div>
+					<input type="hidden" id="id" name="id" value="${id}">
+					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
+					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"  data-toggle="tooltip" data-placement="top" title='Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}'>
+						<#if comentario??>
+							${comentario}
+						</#if>
+					</textarea>
+				</div>
+				<div >
+					<a class="btn btn-secondary btn-nav-link" onclick="javascript:submitform();">Enviar</a>
+				</div>
 		</form>
-		
+	<#else>
+		<p>Realize primeiro o login na parte superior do menu esquerdo.
 	</#if>
-	<br>
-	<br>
-	<textarea class="form-control" rows="5" id="comment" placeholder="Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}"></textarea>
-	
 	
 </div>
 
@@ -53,6 +54,13 @@ function someFunc() {
     validate();
     anotherFunction();
     YetAnotherFunction();
+}
+</script>
+
+<script type="text/javascript">
+function submitform(){
+    document.forms["commentForm"].submit();
+	return false;
 }
 </script>
 </body>

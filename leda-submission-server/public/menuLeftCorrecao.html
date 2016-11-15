@@ -15,34 +15,70 @@
 		<script src="./tether/1.3.3/js/tether.min.js"></script>
         <script type="text/javascript" src="./bootstrap/4.0.0/js/bootstrap.min.js"></script>
   
+  
 
  </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
-
-<br>
 <div class="container">
 	<br>
 	<p>Atividade: ${id}</p>
-	<p>Corretor:</p>
-	<div id="my-tab-content" class="tab-content">
-		<p>Alunos:
-		<table id='t${id?keep_after("-")}' class="table table-hover">
-				<!-- thead class="bg-success">
-					<th class="text-xs-center">Estudante</th>
-				</thead -->
-				<tbody class="small">
-				<#list alunos as student>
-					<#assign reportItem = reportItems[student.matricula]>
-					<#if reportItem.completeReport??>
-						<tr><td id="${student.matricula}" class="btn btn-link p-b-0 p-t-0"><a class="custom-select-sm p-b-0 p-t-0" onclick='parent.document.getElementById("topframe").src ="./reports/${id}/${reportItem.generateCompleteReportLink()?replace("\\","/")}" ; parent.document.getElementById("bottomframe").src ="commentPanel?id=${id}&matricula=${student.matricula}&corretor=${corretor.getMatricula()}"'>${student.nome}</a> 
-						<!-- tr><td id="${student.matricula}" class="btn-link p-b-0 p-t-0"><a href="./reports/${id}/${reportItem.generateCompleteReportLink()}" target="topframe">${student.nome}</a --> 
-					<#else>
-						<tr><td class="p-b-0 p-t-0">${student.nome}
-					</#if>
-				</#list>
-				</tbody>
-			</table>
-	</div>
+	<#if corretor??>
+		<p>Corretor: ${corretor.nome}</p>
+		<#if corretorSessao??>
+			<div id="my-tab-content" class="tab-content">
+				<p>Alunos:
+				<table id='t${id?keep_after("-")}' class="table table-hover">
+						<!-- thead class="bg-success">
+							<th class="text-xs-center">Estudante</th>
+						</thead -->
+						<tbody class="small">
+						<#list alunos as student>
+							<#assign reportItem = reportItems[student.matricula]>
+							<#if reportItem.completeReport??>
+								<tr><td id="${student.matricula}" class="btn btn-link p-b-0 p-t-0"><a class="custom-select-sm p-b-0 p-t-0" onclick='parent.document.getElementById("topframe").src ="./reports/${id}/${reportItem.generateCompleteReportLink()?replace("\\","/")}" ; parent.document.getElementById("bottomframe").src ="commentPanel?id=${id}&matricula=${student.matricula}&corretor=${corretor.getMatricula()}"'>${student.nome}</a> 
+								<!-- tr><td id="${student.matricula}" class="btn-link p-b-0 p-t-0"><a href="./reports/${id}/${reportItem.generateCompleteReportLink()}" target="topframe">${student.nome}</a --> 
+							<#else>
+								<tr><td class="p-b-0 p-t-0">${student.nome}
+							</#if>
+						</#list>
+						</tbody>
+					</table>
+			</div>
+		<#else>
+			<!-- p><a class="btn btn-info" onclick="location.href='loginCorretor?id=${id}&matricula=${corretor.getMatricula()}'">Login</a></p -->
+			<p><a class="btn btn-info" onclick="$('#myModal').modal('show')">Login</a></p>
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog modal-sm">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<div class="modal-header" style="padding:5px 5px;">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h5><span class="glyphicon"></span>Login</h5>
+					</div>
+					<div class="modal-body" style="padding:15px 20px;">
+					  <form role="form" id="form" action="loginCorretor" method="POST">
+						<!-- div class="form-group" -->
+						  <label for="matricula"><span class="glyphicon glyphicon-user"></span> ${corretor.getNome()}</label><br>
+						  <input type="hidden" name="id" value="${id}">
+						  <input type="hidden" name="matricula" value="${corretor.getMatricula()}">
+						  <input type="password" name="senha" placeholder="Senha">
+						<!-- /div -->
+						<button type="submit" id="loginBtn" class="btn btn-success" onclick="javascript:submitform();"><span class="glyphicon glyphicon-off"></span> Login </button>
+					  </form>
+					</div>
+					<div class="modal-footer">
+					  <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal" onclick="$('#myModal').modal('hide')"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+					</div>
+				  </div>
+				  
+				</div>
+			</div>
+		</#if>
+	<#else>
+		<p>Corretor: <font color="red">Não atribuído</font></p> 
+	</#if>
+	
 </div>
 
 <script>

@@ -14,6 +14,23 @@ public class CorrectionReport {
 		this.reportItems = reportItems;
 	}
 
+	public void setComentario(String matriculaAluno, String comentario){
+		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);
+		if(reportItem == null){
+			throw new CorrectionReportException("Nao pode adicionar comentario ao aluno " + matriculaAluno + " para atividade " + id);
+		}
+		reportItem.setComentario(comentario);
+	}
+	
+	public String getComentario(String matriculaAluno){
+		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);
+		if(reportItem == null){
+			throw new CorrectionReportException("Nao pode localizar comentario do aluno " + matriculaAluno + " para atividade " + id);
+		}
+		
+		return reportItem.getComentario();
+	}
+	
 	public String getId() {
 		return id;
 	}

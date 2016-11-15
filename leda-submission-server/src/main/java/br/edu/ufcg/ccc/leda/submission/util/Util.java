@@ -219,6 +219,36 @@ public class Util {
 		return result;
 	}
 	
+	public static void writeCorrectionComment(String id, String matriculaAluno, String comment) throws IOException{
+		
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			CorrectionReport report = null;
+			File correctionReport = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReport.exists()){
+				report = Utilities.loadCorrectionReportFromJson(correctionReport);
+			}
+			if(report != null){
+				report.setComentario(matriculaAluno,comment);
+				Utilities.writeCorrectionReportToJson(report, correctionReport);
+			}
+			
+		}
+		
+	}
+	
+	public static void writeCorrectionReport(CorrectionReport report, 
+			String id) throws IOException{
+	
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			File correctionReport = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReport.exists()){
+				Utilities.writeCorrectionReportToJson(report,correctionReport);
+			}
+		}
+	}
+	
 	public static Map<String, String> loadFilesOwnersFromJson(File jsonFile) throws FileNotFoundException {
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(jsonFile);

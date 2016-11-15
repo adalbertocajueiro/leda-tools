@@ -2,12 +2,12 @@ package br.edu.ufcg.ccc.leda.util;
 
 public class CorrectionReportItem {
 	private String matricula;
-	private String comentatio = "";
+	private String comentario = "";
 	
-	public CorrectionReportItem(String matricula, String comentatio) {
+	public CorrectionReportItem(String matricula, String comentario) {
 		super();
 		this.matricula = matricula;
-		this.comentatio = comentatio;
+		this.comentario = comentario;
 	}
 
 	public String getMatricula() {
@@ -18,13 +18,15 @@ public class CorrectionReportItem {
 		this.matricula = matricula;
 	}
 
-	public String getComentatio() {
-		return comentatio;
+	public String getComentario() {
+		return comentario;
 	}
 
-	public void setComentatio(String comentatio) {
-		this.comentatio = comentatio;
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
+
+	
 	
 	
 	

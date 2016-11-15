@@ -38,6 +38,7 @@ import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.util.CorrectionReport;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.TestReportItem;
 import br.edu.ufcg.ccc.leda.util.Utilities;
@@ -159,6 +160,7 @@ public class SubmissionServer extends Jooby {
 		//System.out.println("%%%%ATIVIDADE " + atividade);
 		View html = Results.html("menu-frames-correcao");
         html.put("id", id);
+        html.put("sessionId", req.session().id());
         if(atividade instanceof Roteiro){
         	html.put("corretor",((Roteiro) atividade).getCorretor());
         	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
@@ -185,22 +187,34 @@ public class SubmissionServer extends Jooby {
 
 		//resp.send("Relatorio surefire do aluno escolhido");
 		View html = Results.html("surefire-report");
+		html.put("sessionId", req.session().id());
 		
 		return html;
     });
 	
 	get("/commentPanel", (req) -> {
 		String id = req.param("id").value("");
-		String matricula = req.param("matricula").value("");
+		String matriculaAluno = req.param("matricula").value("");
 		String corretorPar = req.param("corretor").value("");
 		Session session = req.session();
-		Corretor corretor = session.get("corretor").toOptional(Corretor.class).orElse(null);
 		
 		View html = Results.html("comment-panel");
 		html.put("id",id);
-		html.put("matricula", matricula);
-		html.put("corretor",corretor);
+		html.put("matricula", matriculaAluno);
 		html.put("corretorMat",corretorPar);
+		html.put("sessionId", req.session().id());
+		html.put("corretor", session.get("corretor"));
+		
+		CorrectionReport report = Util.loadCorrectionReport(id);
+		if(report.getMatriculaCorretor().equals("")){
+			report.setMatriculaCorretor(corretorPar);
+			Util.writeCorrectionReport(report, id);
+		}
+		//System.out.println("MATRICULA " + matriculaAluno);
+		if(!matriculaAluno.equals("")){
+			html.put("comentario",report.getComentario(matriculaAluno));
+		}
+		
 		return html;
 		//resp.send("Painel para comentario do codigo do aluno: " + matricula);
     });
@@ -208,6 +222,37 @@ public class SubmissionServer extends Jooby {
 	get("/menuLeftCorrecao", (req) -> {
 		String id = req.param("id").value();
 		String turma = id.substring(4).trim();
+		Session session = req.session();
+		String corretor = session.get("corretor").toOptional().orElse(null);
+		//System.out.println("CORETOR DA SESSAO: " + corretor);
+		List<Student> alunos = Configuration.getInstance().getStudents().values()
+				.stream().filter(a -> a.getTurma().equals(turma))
+				.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toList());
+		TestReport report = Util.loadTestReport(id);
+		HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
+		report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+		
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		
+		View html = Results.html("menuLeftCorrecao");
+        html.put("id",id);
+        html.put("alunos", alunos);
+        html.put("reportItems", items);
+        html.put("sessionId", req.session().id());
+        if(atividade instanceof Roteiro){
+        	html.put("corretor",((Roteiro) atividade).getCorretor());
+        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+        }
+        html.put("corretorSessao",corretor);
+		return html;
+    });
+	
+
+	/*get("/loginCorretor", (req) -> {
+		String id = req.param("id").value();
+		String turma = id.substring(4).trim();
+		//validar senha e colocar corretor na sessao
 		
 		List<Student> alunos = Configuration.getInstance().getStudents().values()
 				.stream().filter(a -> a.getTurma().equals(turma))
@@ -223,18 +268,13 @@ public class SubmissionServer extends Jooby {
         html.put("id",id);
         html.put("alunos", alunos);
         html.put("reportItems", items);
+        html.put("sessionId", req.session().id());
         if(atividade instanceof Roteiro){
         	html.put("corretor",((Roteiro) atividade).getCorretor());
         	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
         }
-        
 		return html;
-    });
-	
-	get("/menuRightCorrecao", (req) -> {
-        View html = Results.html("menu-frames-right-correcao");
-        return html;
-    });
+    });*/
 	
 	get("/listCopies", (req) -> {
 		String id = req.param("id").value();
@@ -347,6 +387,8 @@ public class SubmissionServer extends Jooby {
 
 	});
 	
+	
+	
 	get("/correct", (req,resp) -> {
 		String id = req.param("id").value();
 		AutomaticCorrector corr = new AutomaticCorrector();
@@ -444,82 +486,9 @@ public class SubmissionServer extends Jooby {
 			     
 		  	});
 
-/*	post("/uploadRoteiro", (req,resp) -> {
-		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
-		//System.out.println("pedido de upload de roteiro recebido");
-		String id = req.param("roteiro").value();
-		//System.out.println(roteiro);
-	    String semestre = req.param("semestre").value();
-	    //System.out.println(semestre);
-	    String turma = req.param("turma").value();
-	    //System.out.println(turma);
-	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
-	    //System.out.println(numeroTurmas);
-	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
-	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
-	    
-		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(id,semestre,turma,numeroTurmas);
-		File uploadedAmbiente = uploadAmbiente.file();
-		File uploadedCorrecao = uploadCorrecao.file();
-		String result = "default response";
-		try {
-			result = FileUtilities.saveProfessorSubmission(uploadedAmbiente, uploadedCorrecao, config);
-			
-		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		}
-		resp.send(result);  
-	     
-  	});
 	
-	post("/uploadProva", (req,resp) -> {
-		//toda a logica para receber uma prova e guarda-lo por completo e mante-la no mapeamento
-		//de provas onde se jabe a data de liberacao e a data maxima de envio
-		String id = req.param("roteiro").value(); //aqui sera o id da prova P0X
-		//System.out.println(roteiro);
-	    String semestre = req.param("semestre").value();
-	    //System.out.println(semestre);
-	    String turma = req.param("turma").value();
-	    //System.out.println(turma);
-	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
-	    //System.out.println(numeroTurmas);
-	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
-	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
-	    
-		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(id,semestre,turma,numeroTurmas);
-		File uploadedAmbiente = uploadAmbiente.file();
-		File uploadedCorrecao = uploadCorrecao.file();
-		String result = "default response";
-		try {
-			result = FileUtilities.saveProfessorTestSubmission(uploadedAmbiente, uploadedCorrecao, config);
-			
-		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		}
-		resp.send(result);  
-	     
-  	});
-*/	
 		 		
-	post("/submitAtividade",(req,resp) -> {
+		post("/submitAtividade",(req,resp) -> {
 			      String matricula = req.param("matricula").value();
 			      String semestre = req.param("semestre").value();
 			      String id = req.param("roteiro").value();
@@ -565,52 +534,65 @@ public class SubmissionServer extends Jooby {
 				resp.send(result);  
 			    });
 
-/*	post("/submitRoteiro",(req,resp) -> {
-	      String matricula = req.param("matricula").value();
-	      String semestre = req.param("semestre").value();
-	      String id = req.param("roteiro").value();
-	      String ip = req.param("ip").value();
-	      String files = req.param("filesOwners").value();
-	      Upload upload = req.param("arquivo").toUpload();
-	      
-	      
-	      //R0X-0X
-	      String turma = id.substring(4);
-		  
-	      //se o id do roteiro for PPX, entao é submissao de prova e deve validar o ip e salvar
-	      //em outra pasta. Isso vai ser feito pelo FileUtilities.saveStudentSubmission
-	      
-	      //System.out.println("Request received from " + ip);
-		  
-	      StudentUploadConfiguration config = new StudentUploadConfiguration(id,semestre, turma, matricula,ip,files);
-		  File uploaded = upload.file();
-		  String result = "default response";
-		  try {
-			result = FileUtilities.saveStudentSubmission(uploaded, config);
+	post("/loginCorretor",(req) -> {
+		String id = req.param("id").value();
+		String matricula = req.param("matricula").value();
+		String turma = id.substring(4).trim();
+		String senha = req.param("senha").value();
+		
+		View html = Results.html("menuLeftCorrecao");
+		
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		String matriculaCorretor = ((Roteiro) atividade).getCorretor().getMatricula();
+		//System.out.println("MATRICULA CORRETOR: " + matriculaCorretor);
+		//System.out.println("SENHA CORRETOR: " + senha);
+		if(matriculaCorretor.equals(senha)){
+			Session session = req.session();
+			session.set("corretor", ((Roteiro) atividade).getCorretor().getMatricula());
 			
-		} catch (StudentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
+			List<Student> alunos = Configuration.getInstance().getStudents().values()
+					.stream().filter(a -> a.getTurma().equals(turma))
+					.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+					.collect(Collectors.toList());
+			TestReport report = Util.loadTestReport(id);
+			HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
+			report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
 			
-		}catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (AtividadeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
+	        html.put("id",id);
+	        html.put("alunos", alunos);
+	        html.put("reportItems", items);
+	        html.put("sessionId", req.session().id());
+	        if(atividade instanceof Roteiro){
+	        	html.put("corretor",((Roteiro) atividade).getCorretor());
+	        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+	        }
+	        html.put("corretorSessao",((Roteiro) atividade).getCorretor().getMatricula());
+			html.put("id",id);
+		}else{
+			html = Results.html("erro-senha");
+			html.put("matricula",matricula);
 		}
-		resp.send(result);  
-	    });
-*/	
+		
+	    
+	    return html;
+
+	});
+	
+	post("/addComment",(req) -> {
+		Session session = req.session();
+		String matriculaCorretor = session.get("corretor").value();
+		if(matriculaCorretor == null){
+			throw new RuntimeException("Corretor nao logado!");
+		}
+		String id = req.param("id").value();
+		String matriculaAluno = req.param("matricula").value();
+		String comentario = req.param("comentario").value();
+		
+		Util.writeCorrectionComment(id, matriculaAluno, comentario);
+		
+		Gson gson = new Gson();	
+	    return gson.toJson("Comentario salvo");
+	}).produces("json");
 	//use(new Auth().basic("*", MyUserClientLoginValidator.class));
 	//new SimpleTestTokenAuthenticator(){
 	//	@override
