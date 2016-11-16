@@ -212,7 +212,7 @@ public class SubmissionServer extends Jooby {
 		}
 		//System.out.println("MATRICULA " + matriculaAluno);
 		if(!matriculaAluno.equals("")){
-			html.put("comentario",report.getComentario(matriculaAluno));
+			html.put("comentario",report.getComentario(matriculaAluno).trim());
 		}
 		
 		return html;

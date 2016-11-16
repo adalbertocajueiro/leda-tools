@@ -229,7 +229,7 @@ public class Util {
 				report = Utilities.loadCorrectionReportFromJson(correctionReport);
 			}
 			if(report != null){
-				report.setComentario(matriculaAluno,comment);
+				report.setComentario(matriculaAluno,comment.trim());
 				Utilities.writeCorrectionReportToJson(report, correctionReport);
 			}
 			

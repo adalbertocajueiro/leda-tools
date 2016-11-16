@@ -20,17 +20,13 @@
 <body data-spy="scroll">
 <div class="container">
 	<#if corretor??>
-		<br>
-		<br>
 		<form id="commentForm" role="form" method="POST" action="addComment">
 				<div>
 					<input type="hidden" id="id" name="id" value="${id}">
 					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
-					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"  data-toggle="tooltip" data-placement="top" title='Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}'>
-						<#if comentario??>
-							${comentario}
-						</#if>
-					</textarea>
+					<br>
+					<p>Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}</p>
+					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"><#if comentario??>${comentario?trim}</#if></textarea>
 				</div>
 				<div >
 					<a class="btn btn-secondary btn-nav-link" onclick="javascript:submitform();">Enviar</a>
