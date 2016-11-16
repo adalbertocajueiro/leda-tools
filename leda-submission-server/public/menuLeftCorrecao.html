@@ -25,6 +25,7 @@
 	<#if corretor??>
 		<p>Corretor: ${corretor.nome}</p>
 		<#if corretorSessao??>
+			<p><a class="btn btn-warning" onclick="location.href='logoutCorretor?id=${id}'">Logout</a></p>
 			<div id="my-tab-content" class="tab-content">
 				<p>Alunos:
 				<table id='t${id?keep_after("-")}' class="table table-hover">

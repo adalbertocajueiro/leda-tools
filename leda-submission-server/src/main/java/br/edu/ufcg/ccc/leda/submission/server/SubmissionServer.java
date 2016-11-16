@@ -244,7 +244,9 @@ public class SubmissionServer extends Jooby {
         	html.put("corretor",((Roteiro) atividade).getCorretor());
         	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
         }
-        html.put("corretorSessao",corretor);
+        if(corretor != null && !corretor.equals("")){
+        	html.put("corretorSessao",corretor);
+        }
 		return html;
     });
 	
@@ -412,6 +414,15 @@ public class SubmissionServer extends Jooby {
         
 		//resp.send(result.toString());
 	  });
+	
+	get("/logoutCorretor", (req,resp) -> {
+		String id = req.param("id").value();
+		View html = Results.html("historyBack");
+		Session session = req.session();
+		session.set("corretor", "");
+		resp.redirect("menuLeftCorrecao?id=" + id);
+		//return html;
+	});
   }
 
   {
@@ -578,21 +589,24 @@ public class SubmissionServer extends Jooby {
 
 	});
 	
-	post("/addComment",(req) -> {
-		Session session = req.session();
-		String matriculaCorretor = session.get("corretor").value();
-		if(matriculaCorretor == null){
-			throw new RuntimeException("Corretor nao logado!");
-		}
+	post("/addComment",(req,resp) -> {
 		String id = req.param("id").value();
 		String matriculaAluno = req.param("matricula").value();
+		String matriculaCorretorPar = req.param("corretor").value();
 		String comentario = req.param("comentario").value();
+
+		Session session = req.session();
+		String matriculaCorretor = session.get("corretor").value("");
+		if(matriculaCorretor == null || matriculaCorretor.equals("")){
+			//throw new RuntimeException("Corretor nao logado!");
+			resp.redirect("commentPanel?id=" + id + "?matricula=''&corretor="+matriculaCorretorPar);
+		}
 		
 		Util.writeCorrectionComment(id, matriculaAluno, comentario);
-		
-		Gson gson = new Gson();	
-	    return gson.toJson("Comentario salvo");
-	}).produces("json");
+		resp.redirect("commentPanel?id=" + id + "?matricula=" + matriculaAluno + "&corretor=" + matriculaCorretorPar); 
+		//Gson gson = new Gson();	
+	    //return gson.toJson("Comentario salvo");
+	});
 	//use(new Auth().basic("*", MyUserClientLoginValidator.class));
 	//new SimpleTestTokenAuthenticator(){
 	//	@override
