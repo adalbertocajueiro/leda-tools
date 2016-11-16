@@ -53,6 +53,17 @@
 					</thead>
 					<tbody>
 					<#list report.reportItems as reportItem>
+						<div class="modal fade" id="${reportItem.matricula}" role="dialog" >
+											  <div class="modal-dialog modal-sm">
+												<div class="modal-content">
+													<div class="modal-header" style="padding:5px 5px;">
+													  <button type="button" class="close" data-dismiss="modal">&times;</button>
+													  <h5><span class="glyphicon"></span>Comentário</h5>
+													</div>
+													<p>comentario do aluno ${reportItem.studentName}
+												</div>
+											  </div>
+											</div>
 						<#if gray == 'true'>
 							<tr class="table-warning">
 								<td>${reportItem.studentName} 
@@ -71,9 +82,14 @@
 										<#if reportItem.completeReport??>
 											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
 											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
+											
+											
+
 										<#else>
 											<font color="red">Possivel erro de compilação.</a>
 											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
 										</#if>
 									<#else>
 										<font color="red"> Aluno não submeteu.</font>
@@ -97,9 +113,13 @@
 										<#if reportItem.completeReport??>
 											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
 											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
+
 										<#else>
 											<font color="red">Possivel erro de compilação.</a>
 											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
+
 										</#if>
 									<#else>
 										<font color="red"> Aluno não submeteu.</font>

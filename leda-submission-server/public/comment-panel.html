@@ -29,7 +29,7 @@
 					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"><#if comentario??>${comentario?trim}</#if></textarea>
 				</div>
 				<div >
-					<a class="btn btn-secondary btn-nav-link" onclick="javascript:submitform();">Enviar</a>
+					<a class="btn btn-secondary btn-nav-link" onclick="document.getElementById('commentForm').submit();">Enviar</a>
 				</div>
 		</form>
 	<#else>
@@ -38,6 +38,20 @@
 	
 </div>
 
+<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<!-- div class="modal-header" style="padding:5px 5px;">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h5><span class="glyphicon"></span>Login</h5>
+					</div -->
+					<div class="modal-body" style="padding:5px 10px;">
+						<p> Comentário enviado.
+					</div>
+				  </div>
+				</div>
+			</div>
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -56,8 +70,15 @@ function someFunc() {
 <script type="text/javascript">
 function submitform(){
     document.forms["commentForm"].submit();
-	return false;
+	$('#myModal').modal('show');
 }
+</script>
+<script>
+$('#commentForm').submit(function () {
+ document.forms["commentForm"].submit();
+ $('#myModal').modal('show');
+ return false;
+});
 </script>
 </body>
 </html>
