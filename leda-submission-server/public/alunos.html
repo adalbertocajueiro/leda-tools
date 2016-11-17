@@ -50,16 +50,20 @@
             <h4>Turma ${turma}</h4>
             <table id="t${turma}" class="table table-hover table-bordered">
 				<thead class="bg-success">
+					<th class="text-xs-center">#</th>
 					<th class="text-xs-center">Estudante</th>
 					<!-- th class="text-xs-center">Matricula</th -->	
 				</thead>
 				<tbody>
+				<#assign index = 1>
 				<#list alunos as student>
 					<#if gray == 'true' && student.turma == turma>
-						<tr class="table-warning"><td>${student.nome} <!-- td>${student.matricula} -->
+						<tr class="table-warning"><td class="text-xs-center">${index}<td>${student.nome} <!-- td>${student.matricula} -->
+						<#assign index = index + 1>
 						<#assign gray = 'false'>
-					<#elseif gray == 'false'>
-						<tr class="table-info"><td>${student.nome} <!-- td>${student.matricula} -->
+					<#elseif gray == 'false' && student.turma == turma>
+						<tr class="table-info"><td class="text-xs-center">${index}<td>${student.nome} <!-- td>${student.matricula} -->
+						<#assign index = index + 1>
 						<#assign gray = 'true'>
 					</#if>
 				</#list>

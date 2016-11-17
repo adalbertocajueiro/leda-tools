@@ -19,7 +19,7 @@
  </head>
 <body data-spy="scroll">
 <div class="container">
-	<#if corretor??>
+	<#if corretor?? && (corretor?length > 0)>
 		<form id="commentForm" role="form" method="POST" action="addComment">
 				<div>
 					<input type="hidden" id="id" name="id" value="${id}">
@@ -39,36 +39,13 @@
 	
 </div>
 
-<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog">
-				  <!-- Modal content-->
-				  <div class="modal-content">
-					<!-- div class="modal-header" style="padding:5px 5px;">
-					  <button type="button" class="close" data-dismiss="modal">&times;</button>
-					  <h5><span class="glyphicon"></span>Login</h5>
-					</div -->
-					<div class="modal-body" style="padding:5px 10px;">
-						<p> Comentário enviado.
-					</div>
-				  </div>
-				</div>
-			</div>
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
 
-<script>
-function someFunc() {
-    
-    validate();
-    anotherFunction();
-    YetAnotherFunction();
-}
-</script>
-
-<script type="text/javascript">
+<<script type="text/javascript">
 function submitform(){
     document.forms["commentForm"].submit();
 	$('#myModal').modal('show');

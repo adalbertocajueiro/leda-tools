@@ -18,9 +18,6 @@ public class Utilities {
 	
 	public static Properties loadProperties() throws IOException{
 		Properties p = new Properties();
-		//File confFolder = new File(RESOURCES_FOLDER);
-		//FileReader fr = new FileReader(new File(confFolder,"app.properties"));
-		//p.load(fr);
 		InputStream is = Utilities.class.getResourceAsStream(PROPERTIES_FILE);
 		
 		p.load(is);
@@ -30,10 +27,6 @@ public class Utilities {
 	
 	public static void writeTestReportToJson(TestReport testReport, File jsonFile) throws IOException {
 		Gson gson = new Gson();
-
-		//GsonBuilder builder = new GsonBuilder();
-        //builder.registerTypeAdapter(TestReportItem.class   , new TestReportItemAdapter());
-		//gson = builder.create();
 
 		FileWriter fw = new FileWriter(jsonFile);
 		gson.toJson(testReport, fw);
@@ -51,10 +44,6 @@ public class Utilities {
 	
 	public static TestReport loadTestReportFromJson(File jsonFile) throws IOException{
 		Gson gson = new Gson();
-
-		//GsonBuilder builder = new GsonBuilder();
-        //builder.registerTypeAdapter(TestReportItem.class   , new TestReportItemAdapter());
-		//gson = builder.create();
 
 		FileReader fr = new FileReader(jsonFile);
 		TestReport result = gson.fromJson(fr, new TypeToken<TestReport>(){}.getType());

@@ -1223,11 +1223,11 @@ public class Util {
 		//provas.forEach((id,p) -> System.out.println(p));
 		//List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
 		//Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
-		Map<String,Student> alunos = Util.loadStudentLists();
+		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
-		TestReport report = Util.loadTestReport("RR2-01");
-		report.getReportItems().forEach(tri -> System.out.println(tri.generateMavenOutputLink()));
+		CorrectionReport report = Util.loadCorrectionReport("RR1-01");
+		report.getReportItems().forEach(tri -> System.out.println(tri.getMatricula()));
 		int i = 2;
 		int k = 1;
 		

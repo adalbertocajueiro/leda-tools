@@ -25,7 +25,7 @@
 	<#if corretor??>
 		<p>Corretor: ${corretor.nome}</p>
 		<#if corretorSessao??>
-			<p><a class="btn btn-warning" onclick="location.href='logoutCorretor?id=${id}'">Logout</a></p>
+			<p><a class="btn btn-warning" onclick="parent.document.getElementById('topframe').src='surefireReport';parent.document.getElementById('bottomframe').src='commentPanel?id=${id}&corretor=${corretor.getMatricula()}';location.href='logoutCorretor?id=${id}'">Logout</a></p>
 			<div id="my-tab-content" class="tab-content">
 				<p>Alunos:
 				<table id='t${id?keep_after("-")}' class="table table-hover">
@@ -62,14 +62,11 @@
 						<!-- div class="form-group" -->
 						  <label for="matricula"><span class="glyphicon glyphicon-user"></span> ${corretor.getNome()}</label><br>
 						  <input type="hidden" name="id" value="${id}">
-						  <input type="hidden" name="matricula" value="${corretor.getMatricula()}">
-						  <input type="password" name="senha" placeholder="Senha">
+						  <input type="hidden" id="matricula" name="matricula" value="${corretor.getMatricula()}">
+						  <input type="password" id="senha" name="senha" placeholder="Senha">
 						<!-- /div -->
-						<button type="submit" id="loginBtn" class="btn btn-success" onclick="javascript:submitform();"><span class="glyphicon glyphicon-off"></span> Login </button>
+						<button type="submit" id="loginBtn" class="btn btn-success"><span class="glyphicon glyphicon-off"></span> Login </button>
 					  </form>
-					</div>
-					<div class="modal-footer">
-					  <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal" onclick="$('#myModal').modal('hide')"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 					</div>
 				  </div>
 				  
@@ -89,12 +86,9 @@ $(document).ready(function(){
 </script>
 
 <script>
-function someFunc() {
-    
-    validate();
-    anotherFunction();
-    YetAnotherFunction();
-}
+$('#myModal').on('shown.bs.modal', function() {
+    $("#senha").focus();
+});
 </script>
 </body>
 </html>

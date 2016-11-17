@@ -115,13 +115,16 @@ public class SubmissionServer extends Jooby {
 	}).produces("json");
 	
 	get("/alunos", (req) -> {
-        //List<String> alunos = new ArrayList<String>();
         Map<String,Student> alunos = Configuration.getInstance().getStudents();
         View html = Results.html("alunos");
         html.put("semestre",Constants.CURRENT_SEMESTER);
-        //html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
-        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList()));
-        Map<String,List<Atividade>> atividadesAgrupadas = Configuration.getInstance().getAtividades().values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
+        html.put("alunos",alunos.values().stream()
+        		.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+        		.collect(Collectors.toList()));
+        Map<String,List<Atividade>> atividadesAgrupadas = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.groupingBy( Atividade::getTurma));
         html.put("turmas",atividadesAgrupadas.keySet());
         
         return html;
@@ -130,14 +133,6 @@ public class SubmissionServer extends Jooby {
 	get("/cronograma", (req) -> {
         Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
         View html = Results.html("cronograma");
-        //int turmas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma)).size();
-        //System.out.println("Numero turmas: " + turmas);
-        //List<String> turmas = new ArrayList<String>();
-        //for (int i = 1; i <= Constants.TURMAS; i++) {
-		//	turmas.add(String.valueOf(i));
-		//}
-        //html.put("turmas", turmas);
-        //html.put("atividades", atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.toList()));
         Map<String,List<Atividade>> atividadesAgrupadas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
         html.put("atividades", atividadesAgrupadas);
         
@@ -169,23 +164,6 @@ public class SubmissionServer extends Jooby {
     });
 	
 	get("/surefireReport", (req) -> {
-		/*String id = req.param("id").value();
-		String matricula = req.param("matricula").value();
-		TestReport testReport = Util.loadTestReport(id);
-		TestReportItem item = testReport.getReportItems().stream()
-				.filter(tri -> tri.getMatricula().equals(matricula)).findFirst().orElse(null);
-		//retorna o link para o relatorio em si se ele existe
-		//os relatorios se encotnram em public/reports/ID/subs/MATR-NOME/target/site/project-reports.html
-		//este é o campo completeReport do TestReportItem 
-		if(item.getCompleteReport() != null){
-			String renderer = item.getCompleteReport().getAbsolutePath();
-			int indexOfId = renderer.indexOf(id);
-			renderer = renderer.substring(indexOfId); //precisa tirar o .html do nome do arquivo
-			int indexOfDot = 
-		}*/
-		//ou entao retorna uma tela com a mensagem de que o relatorio nao foi gerado.
-
-		//resp.send("Relatorio surefire do aluno escolhido");
 		View html = Results.html("surefire-report");
 		html.put("sessionId", req.session().id());
 		
@@ -206,11 +184,12 @@ public class SubmissionServer extends Jooby {
 		html.put("corretor", session.get("corretor"));
 		
 		CorrectionReport report = Util.loadCorrectionReport(id);
+		
 		if(report.getMatriculaCorretor().equals("")){
 			report.setMatriculaCorretor(corretorPar);
 			Util.writeCorrectionReport(report, id);
 		}
-		//System.out.println("MATRICULA " + matriculaAluno);
+
 		if(!matriculaAluno.equals("")){
 			html.put("comentario",report.getComentario(matriculaAluno).trim());
 		}
@@ -224,7 +203,6 @@ public class SubmissionServer extends Jooby {
 		String turma = id.substring(4).trim();
 		Session session = req.session();
 		String corretor = session.get("corretor").toOptional().orElse(null);
-		//System.out.println("CORETOR DA SESSAO: " + corretor);
 		List<Student> alunos = Configuration.getInstance().getStudents().values()
 				.stream().filter(a -> a.getTurma().equals(turma))
 				.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
@@ -599,11 +577,12 @@ public class SubmissionServer extends Jooby {
 		String matriculaCorretor = session.get("corretor").value("");
 		if(matriculaCorretor == null || matriculaCorretor.equals("")){
 			//throw new RuntimeException("Corretor nao logado!");
-			resp.redirect("commentPanel?id=" + id + "?matricula=''&corretor="+matriculaCorretorPar);
+			resp.redirect("commentPanel?id=" + id + "&matricula=&corretor="+matriculaCorretorPar);
+		}else{
+			Util.writeCorrectionComment(id, matriculaAluno, comentario);
+			resp.redirect("commentPanel?id=" + id + "&matricula=" + matriculaAluno + "&corretor=" + matriculaCorretorPar); 
 		}
 		
-		Util.writeCorrectionComment(id, matriculaAluno, comentario);
-		resp.redirect("commentPanel?id=" + id + "?matricula=" + matriculaAluno + "&corretor=" + matriculaCorretorPar); 
 		//Gson gson = new Gson();	
 	    //return gson.toJson("Comentario salvo");
 	});
