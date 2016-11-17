@@ -157,8 +157,7 @@ public class SubmissionServer extends Jooby {
         html.put("id", id);
         html.put("sessionId", req.session().id());
         if(atividade instanceof Roteiro){
-        	html.put("corretor",((Roteiro) atividade).getCorretor());
-        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+       		html.put("corretor",((Roteiro) atividade).getCorretor());
         }
         return html;
     });
@@ -185,9 +184,11 @@ public class SubmissionServer extends Jooby {
 		
 		CorrectionReport report = Util.loadCorrectionReport(id);
 		
-		if(report.getMatriculaCorretor().equals("")){
-			report.setMatriculaCorretor(corretorPar);
-			Util.writeCorrectionReport(report, id);
+		if(report != null){
+			if(report.getMatriculaCorretor().equals("")){
+				report.setMatriculaCorretor(corretorPar);
+				Util.writeCorrectionReport(report, id);
+			}
 		}
 
 		if(!matriculaAluno.equals("")){
@@ -209,8 +210,9 @@ public class SubmissionServer extends Jooby {
 				.collect(Collectors.toList());
 		TestReport report = Util.loadTestReport(id);
 		HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
-		report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
-		
+		if(report != null){
+			report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+		}
 		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
 		
 		View html = Results.html("menuLeftCorrecao");

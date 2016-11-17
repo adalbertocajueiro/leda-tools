@@ -88,6 +88,27 @@ public class TestReportItem {
 		}
 		return relativeLink != null? relativeLink.toString():"";
 	}
+	
+	public boolean hasSubmitted(){
+		return this.mavenOutputLog != null;
+	}
+	
+	public boolean hasCompilationError(){
+		return this.completeReport == null;
+	}
+	
+	public double calculateTestScore(){
+		double score = 0;
+		if(hasSubmitted() && !hasCompilationError()){
+			double passed = this.totalTests - this.errors;
+			if(passed < 0){
+				passed = 0;
+			}
+			score = passed/this.totalTests*4.0;
+		}
+		return score;
+	}
+	
 	public File getTestResultXMLFile() {
 		return testResultXMLFile;
 	}

@@ -152,6 +152,7 @@ public class ReportUtility {
 						}else{
 							if(tests > report.getNumberOfTests()){
 								report.setNumberOfTests(tests);
+								updateNumberOfTestsInReportItems(tests,report);
 							}
 						}
 						double time = Double.parseDouble(testSuite
@@ -206,7 +207,16 @@ public class ReportUtility {
 		return report;
 	}
 	
-	private CorrectionReport generateJsonCorrectionReport(File submissionsFolder, String matriculaCorretor, Map<String,Student> alunos)
+
+	
+
+	private void updateNumberOfTestsInReportItems(int tests, TestReport report) {
+		report.getReportItems().forEach(tri -> tri.setTotalTests(tests));
+	}
+
+	private CorrectionReport generateJsonCorrectionReport(File submissionsFolder, 
+			String matriculaCorretor, Map<String,Student> alunos,
+			TestReport testReport)
 			throws IOException, JDOMException {
 		
 		String id = submissionsFolder.getParentFile().getName();
@@ -216,7 +226,18 @@ public class ReportUtility {
 				.sorted((s1,s2) -> s1.getNome().compareTo(s2.getNome())).collect(Collectors.toList());
 		
 		for (Student student : alunosDaTurma) {
-			CorrectionReportItem item = new CorrectionReportItem(student.getMatricula(), "");
+			TestReportItem reportItem = 
+					testReport.getReportItemForStudent(student.getMatricula());
+			CorrectionClassification classification = 
+					CorrectionClassification.PRESENCA;
+			if(!reportItem.hasSubmitted()){
+				classification = CorrectionClassification.FALTA;
+			}
+			double notaTestes = reportItem.calculateTestScore();
+			
+			CorrectionReportItem item = 
+					new CorrectionReportItem(student.getMatricula(), "",
+							classification,0,notaTestes);
 			report.getReportItems().add(item);
 		}
 
@@ -274,8 +295,13 @@ public class ReportUtility {
 	public void createAndSaveJsonCorrectionReport(File submissionsFolder,
 			String matriculaCorretor, Map<String,Student> alunos)
 			throws IOException, JDOMException {
+		
+		File jsonFileTestReport = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-report.json");
+		TestReport testReport = Utilities.loadTestReportFromJson(jsonFileTestReport);
+		
 		CorrectionReport correctionReport = this
-				.generateJsonCorrectionReport(submissionsFolder, matriculaCorretor, alunos);
+				.generateJsonCorrectionReport(submissionsFolder, matriculaCorretor, 
+						alunos,testReport);
 		
 		File jsonFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-correction.json");
 		Utilities.writeCorrectionReportToJson(correctionReport, jsonFile);

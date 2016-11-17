@@ -14,6 +14,14 @@ public class TestReport {
 		this.reportItems = new ArrayList<TestReportItem>();
 	}
 
+	public TestReportItem getReportItemForStudent(String matricula){
+		TestReportItem result = null;
+		result = reportItems.stream().filter(tri -> tri.getMatricula().equals(matricula))
+				.findFirst().orElse(null);
+		
+		return result;
+	}
+	
 	public String getTestSuiteName() {
 		return testSuiteName;
 	}

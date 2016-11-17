@@ -173,13 +173,21 @@
 									${(atividade.nome)!""}
 								<#else>
 									<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+									<ul>
+									<li>Corretor: 
+										<#if atividade.corretor??> 
+											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome}</span>
+										<#else>
+											<font color="red">não atribuído</font>
+										</#if>
+									<li> <#if atividade.dataHoraLimiteEnvioAtraso??>
+											<a href="report?id=${atividade.id}" data-toggle="tooltip" data-placement="right" title='Disponível a partir de ${formatter2.format(atividade.dataHoraLimiteEnvioAtraso.time)}'}>Planilha de notas dos testes</a>
+										 </#if>
+									<li><a class="btn-link" role="button" style="color:blue" onclick="parent.window.location.replace((parent.window.location.href).replace('/menu','/menuCorrecao?id=${atividade.id}'));" data-toggle="tooltip" data-placement="top" title="Reservado para corretores">Correção</a>
+									</ul>
 								</#if>
-								<p>Corretor: 
-									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
-								<p>
-								<#if atividade.dataHoraLimiteEnvioAtraso??>
-									<a href="report?id=${atividade.id}" data-toggle="tooltip" data-placement="right" title='Disponível a partir de ${formatter2.format(atividade.dataHoraLimiteEnvioAtraso.time)}'}>Planilha de notas dos testes</a>
-								</#if>
+								
+								
 							<td>${atividade.descricao}
 								
 								<#if (atividade.linksVideoAulas?size>0) >
@@ -208,15 +216,21 @@
 									${(atividade.nome)!""}
 								<#else>
 									<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+									<ul>
+									<li>Corretor: 
+										<#if atividade.corretor??> 
+											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome}</span>
+										<#else>
+											<font color="red">não atribuído</font>
+										</#if>
+									<li> <#if atividade.dataHoraLimiteEnvioAtraso??>
+											<a href="report?id=${atividade.id}" data-toggle="tooltip" data-placement="right" title='Disponível a partir de ${formatter2.format(atividade.dataHoraLimiteEnvioAtraso.time)}'}>Planilha de notas dos testes</a>
+										 </#if>
+									<li><a class="btn-link" role="button" style="color:blue" onclick="parent.window.location.replace((parent.window.location.href).replace('/menu','/menuCorrecao?id=${atividade.id}'));" data-toggle="tooltip" data-placement="top" title="Reservado para corretores">Correção</a>
+									</ul>								
 								</#if>
-								<p>Corretor: 
-									<#if atividade.corretor??> <br> - Nome: ${atividade.corretor.nome} <br> - E-mail: ${atividade.corretor.email}</#if>
-								<p>
-								<#if atividade.dataHoraLimiteEnvioAtraso??>
-									<a href="report?id=${atividade.id}" data-toggle="tooltip" data-placement="right" title='Disponível a partir de ${formatter2.format(atividade.dataHoraLimiteEnvioAtraso.time)}'}>Planilha de notas dos testes</a>
-								</#if>
-							
-							<td>${atividade.descricao} 
+
+								<td>${atividade.descricao} 
 								<#if (atividade.linksVideoAulas?size>0)>
 								<p> Video-aulas:
 									<ul>

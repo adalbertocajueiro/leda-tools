@@ -55,12 +55,8 @@
 - fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. - OK
 - os comentarios dos corretores tambem poderiam ficar neste json? os comentarios podem ficar num
   json a parte para evitar de ser perdido quando se rodar uma correcao mais de uma vez.
-  melhor deixar num json a parte.
-  pagina com menu para selecionar o roteiro (ja mostra o monitor corretor), seleciona o aluno
-  e mostra o relatorio surefire do aluno para o monitor olhar e um frame abaixo para ele colocar 
-  os comentarios da correcao. se ja tiver algum comentario ele já mostra e permite atualização. 
-  o json da correcao pode conter o id do roteiro/prova, a matricula do estudante e o comentario 
-  do corretor. Tem que associar o professor com a prova. dar acesso ao aluno para ele ver apenas 
+  melhor deixar num json a parte. - OK
+- dar acesso ao aluno para ele ver apenas 
   o comentario da sua atividade. Implementar senha sendo a matricula do aluno. 
 - sera que pode ser tudo salvo em json e fazemos um viewer (freemarker) para construirmos o 
   relatorio? (abordagem melhor porque separa model de viewer) SIM - feito - OK
