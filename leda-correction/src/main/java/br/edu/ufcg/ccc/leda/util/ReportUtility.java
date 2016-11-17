@@ -230,6 +230,7 @@ public class ReportUtility {
 					testReport.getReportItemForStudent(student.getMatricula());
 			CorrectionClassification classification = 
 					CorrectionClassification.PRESENCA;
+			
 			if(!reportItem.hasSubmitted()){
 				classification = CorrectionClassification.FALTA;
 			}

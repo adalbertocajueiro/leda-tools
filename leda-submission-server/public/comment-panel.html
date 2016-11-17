@@ -25,9 +25,19 @@
 					<input type="hidden" id="id" name="id" value="${id}">
 					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
 					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">
+					<label class="col-form-label-sm">Selecione a classificação do aluno baseado nos comentários </label> 
+					<select class="custom-select" id="classificacaoAluno" name="classificacaoAluno">
+						<#list classificacao as itemClassificacao>
+							<option value="${itemClassificacao.getClassification()}">${itemClassificacao.getClassification()}</option>
+						</#list>
+					</select>
 					<br>
-					<p>Espaço para comentario do codigo do aluno ${matricula} no roteiro: ${id}</p>
+					<label class="col-form-label-sm">Nota dos testes: <#if correctionReportItem??>${correctionReportItem.notaTestes}</#if></label>
+					<br>
+					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="bottom" title='Não modifique essa nota! Apenas o professor modifica!!!'>Nota de design: </label>					
+					<input type="text" id="nodaDesign" name="notaDesign" maxlength="4" size="3"><#if correctionReportItem??>${correctionReportItem.notaDesign}</#if></input>
 					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"><#if comentario??>${comentario?trim}</#if></textarea>
+					
 				</div>
 				<div >
 					<a class="btn btn-secondary btn-nav-link" onclick="document.getElementById('commentForm').submit();">Enviar</a>
@@ -45,7 +55,7 @@ $(document).ready(function(){
 });
 </script>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 function submitform(){
     document.forms["commentForm"].submit();
 	$('#myModal').modal('show');

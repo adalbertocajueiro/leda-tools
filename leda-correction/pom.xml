@@ -35,6 +35,13 @@
 				<submission.server.url>http://web.cloud.lsd.ufcg.edu.br:44174/submission</submission.server.url>
 			</properties>
 		</profile>
+		
+		<profile>
+			<id>localhost</id>
+			<properties>
+				<submission.server.url>http://localhost:8888</submission.server.url>
+			</properties>
+		</profile>
 	</profiles>
 	
 	<dependencies>

@@ -13,6 +13,12 @@ public class CorrectionReport {
 		this.matriculaCorretor = matriculaCorretor;
 		this.reportItems = reportItems;
 	}
+	
+	public CorrectionReportItem getCorrectionReportItemforStudent(String matricula){
+		CorrectionReportItem result = null;
+		result = this.reportItems.stream().filter(cri -> cri.getMatricula().equals(matricula)).findFirst().orElse(null);
+		return result;
+	}
 
 	public void setComentario(String matriculaAluno, String comentario){
 		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);

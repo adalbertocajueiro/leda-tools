@@ -38,7 +38,9 @@ import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
 import br.edu.ufcg.ccc.leda.util.CorrectionReport;
+import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.TestReportItem;
 import br.edu.ufcg.ccc.leda.util.Utilities;
@@ -181,6 +183,7 @@ public class SubmissionServer extends Jooby {
 		html.put("corretorMat",corretorPar);
 		html.put("sessionId", req.session().id());
 		html.put("corretor", session.get("corretor"));
+		html.put("classificacao",CorrectionClassification.values());
 		
 		CorrectionReport report = Util.loadCorrectionReport(id);
 		
@@ -189,11 +192,16 @@ public class SubmissionServer extends Jooby {
 				report.setMatriculaCorretor(corretorPar);
 				Util.writeCorrectionReport(report, id);
 			}
+			CorrectionReportItem correctionItem = report.getCorrectionReportItemforStudent(matriculaAluno);
+			if(correctionItem != null){
+				html.put("correctionReportItem", correctionItem);
+			}
 		}
 
 		if(!matriculaAluno.equals("")){
 			html.put("comentario",report.getComentario(matriculaAluno).trim());
 		}
+
 		
 		return html;
 		//resp.send("Painel para comentario do codigo do aluno: " + matricula);

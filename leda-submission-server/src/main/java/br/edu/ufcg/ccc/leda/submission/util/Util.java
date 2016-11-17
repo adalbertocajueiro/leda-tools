@@ -595,10 +595,10 @@ public class Util {
                         String nomesMonitores = cellNomesMonitores != null?cellNomesMonitores.getStringCellValue():"";
                         List<Monitor> monitoresDoRoteiro = listOfMonitores(nomesMonitores,monitores);
                         
-                        String nomeMonitor = cellNomeMonitorCorretor != null?cellNomeMonitorCorretor.getStringCellValue():"";
-                        Corretor corretor = 
-                        		monitores.stream().filter(m -> m.getNome().equals(nomeMonitor)).findAny().orElse(null);
-                        
+                        String nomeMonitor = cellNomeMonitorCorretor.getStringCellValue();
+                        Corretor corretor = monitores.stream().filter(c -> c.getNome().equals(nomeMonitor))
+                        		.findFirst().orElse(null);
+
                         GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cellDataInicioCorrecao.getDateCellValue());
                         GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cellDataEntregaCorrecao.getDateCellValue());
                         String links = cellLinksVideoAulas != null?cellLinksVideoAulas.getStringCellValue():"";
@@ -696,6 +696,8 @@ public class Util {
 					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
 			
 		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
+			//System.out.println("MOntando atividade da prova: " + id);
+			//System.out.println("Corretor: " + corretor);
 			result = new Prova(id,nome,descricao,dataHoraLiberacao,
 					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
 					monitores,(Professor) corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
@@ -1226,6 +1228,8 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		List<Corretor> corretores = Util.loadSpreadsheetMonitorFromExcel();
+		Map<String,Atividade> atividades = Util.loadSpreadsheetAtividadeFromExcel(corretores);
 		CorrectionReport report = Util.loadCorrectionReport("RR1-01");
 		report.getReportItems().forEach(tri -> System.out.println(tri.getMatricula()));
 		int i = 2;
