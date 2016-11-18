@@ -27,6 +27,20 @@ public class CorrectionReport {
 		}
 		reportItem.setComentario(comentario);
 	}
+	public void setNotaDesign(String matriculaAluno, double notaDesign){
+		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);
+		if(reportItem == null){
+			throw new CorrectionReportException("Nao pode adicionar nota de design ao aluno " + matriculaAluno + " para atividade " + id);
+		}
+		reportItem.setNotaDesign(notaDesign);
+	}
+	public void setClassificacao(String matriculaAluno, CorrectionClassification classificacao){
+		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);
+		if(reportItem == null){
+			throw new CorrectionReportException("Nao pode adicionar classificacao ao aluno " + matriculaAluno + " para atividade " + id);
+		}
+		reportItem.setClassification(classificacao);
+	}
 	
 	public String getComentario(String matriculaAluno){
 		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);

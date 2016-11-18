@@ -15,6 +15,15 @@
 		<script src="./tether/1.3.3/js/tether.min.js"></script>
         <script type="text/javascript" src="./bootstrap/4.0.0/js/bootstrap.min.js"></script>
   
+  <script type="text/javascript">
+
+function showChar(e)
+{
+alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
+      + "charCode: " + e.charCode);
+}
+
+</script>
 
  </head>
 <body data-spy="scroll">
@@ -26,16 +35,22 @@
 					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
 					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">
 					<label class="col-form-label-sm">Selecione a classificação do aluno baseado nos comentários </label> 
-					<select class="custom-select" id="classificacaoAluno" name="classificacaoAluno">
-						<#list classificacao as itemClassificacao>
-							<option value="${itemClassificacao.getClassification()}">${itemClassificacao.getClassification()}</option>
-						</#list>
+					<select class="custom-select" id="classificacaoAluno" name="classificacaoAluno" onchange="javascript:mudarNotaDesign();">
+						<#if correctionReportItem??>
+							<#list classificacao as itemClassificacao>
+								<option value="${itemClassificacao}" <#if itemClassificacao.getClassification() == correctionReportItem.classification.getClassification()>selected</#if> >${itemClassificacao.getClassification()}</option>
+							</#list>
+						<#else>
+							<#list classificacao as itemClassificacao>
+								<option value="${itemClassificacao}">${itemClassificacao.getClassification()}</option>
+							</#list>
+						</#if>
 					</select>
 					<br>
 					<label class="col-form-label-sm">Nota dos testes: <#if correctionReportItem??>${correctionReportItem.notaTestes}</#if></label>
 					<br>
 					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="bottom" title='Não modifique essa nota! Apenas o professor modifica!!!'>Nota de design: </label>					
-					<input type="text" id="nodaDesign" name="notaDesign" maxlength="4" size="3"><#if correctionReportItem??>${correctionReportItem.notaDesign}</#if></input>
+					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if>>
 					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"><#if comentario??>${comentario?trim}</#if></textarea>
 					
 				</div>
@@ -60,6 +75,23 @@ function submitform(){
     document.forms["commentForm"].submit();
 	$('#myModal').modal('show');
 }
+
+function mudarNotaDesign(){
+    var classif = document.getElementById('classificacaoAluno').value;
+	var notaDes = document.getElementById('notaDesign').value;
+	if(classif == 'EXCELENTE' ){
+		document.getElementById('notaDesign').value = '9.5'; 
+	} else if (classif == 'BOM' ){
+		document.getElementById('notaDesign').value = '8.0';
+	} else if (classif == 'REGULAR' ){
+		document.getElementById('notaDesign').value = '6.0';
+	} else if (classif == 'RUIM' ){
+		document.getElementById('notaDesign').value = '4.0';
+	}
+	return true;
+}
+
+
 </script>
 <script>
 $('#commentForm').submit(function () {

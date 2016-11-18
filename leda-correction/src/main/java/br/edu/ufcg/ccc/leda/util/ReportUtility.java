@@ -304,8 +304,25 @@ public class ReportUtility {
 				.generateJsonCorrectionReport(submissionsFolder, matriculaCorretor, 
 						alunos,testReport);
 		
-		File jsonFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-correction.json");
-		Utilities.writeCorrectionReportToJson(correctionReport, jsonFile);
+		File jsonCorrectionFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-correction.json");
+		//se ja existe algum correction report, ele aproveita as classificacoes e as notas 
+		//do report existente
+		if(jsonCorrectionFile.exists()){
+			CorrectionReport existingReport = Utilities.loadCorrectionReportFromJson(jsonCorrectionFile);
+			correctionReport.setMatriculaCorretor(existingReport.getMatriculaCorretor());
+			correctionReport.getReportItems()
+				.forEach(cri -> {
+					CorrectionReportItem existingItem = 
+							existingReport.getReportItems().stream().filter(eri -> eri.getMatricula().equals(cri.getMatricula())).findFirst().orElse(null);
+					if(existingItem != null){
+						cri.setClassification(existingItem.getClassification());
+						cri.setNotaDesign(existingItem.getNotaDesign());
+						cri.setComentario(existingItem.getComentario());
+					}
+				});
+		}
+		
+		Utilities.writeCorrectionReportToJson(correctionReport, jsonCorrectionFile);
 	}
 
 	private File getSurefireReportFile(File folder) {

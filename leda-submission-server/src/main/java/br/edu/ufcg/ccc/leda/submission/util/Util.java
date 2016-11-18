@@ -60,6 +60,7 @@ import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
+import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
 import br.edu.ufcg.ccc.leda.util.CorrectionReport;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.Utilities;
@@ -219,18 +220,24 @@ public class Util {
 		return result;
 	}
 	
-	public static void writeCorrectionComment(String id, String matriculaAluno, String comment) throws IOException{
+	public static void writeCorrectionComment(String id, String matriculaAluno, 
+			String notaDesignStr, String classificacaoStr, String comment) throws IOException{
 		
 		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
 		if(atividadeFolder.exists()){
 			CorrectionReport report = null;
-			File correctionReport = new File(atividadeFolder,id + "-correction.json");
-			if(correctionReport.exists()){
-				report = Utilities.loadCorrectionReportFromJson(correctionReport);
+			File correctionReportFile = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReportFile.exists()){
+				report = Utilities.loadCorrectionReportFromJson(correctionReportFile);
 			}
 			if(report != null){
+				double notaDesign = Double.valueOf(notaDesignStr);
+				CorrectionClassification classificacao = 
+						CorrectionClassification.valueOf(classificacaoStr);
+				report.setNotaDesign(matriculaAluno, notaDesign);
+				report.setClassificacao(matriculaAluno, classificacao);
 				report.setComentario(matriculaAluno,comment.trim());
-				Utilities.writeCorrectionReportToJson(report, correctionReport);
+				Utilities.writeCorrectionReportToJson(report, correctionReportFile);
 			}
 			
 		}

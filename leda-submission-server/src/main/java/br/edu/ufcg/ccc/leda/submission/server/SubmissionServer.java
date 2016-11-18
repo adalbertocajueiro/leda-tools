@@ -181,7 +181,6 @@ public class SubmissionServer extends Jooby {
 		html.put("id",id);
 		html.put("matricula", matriculaAluno);
 		html.put("corretorMat",corretorPar);
-		html.put("sessionId", req.session().id());
 		html.put("corretor", session.get("corretor"));
 		html.put("classificacao",CorrectionClassification.values());
 		
@@ -581,6 +580,8 @@ public class SubmissionServer extends Jooby {
 		String id = req.param("id").value();
 		String matriculaAluno = req.param("matricula").value();
 		String matriculaCorretorPar = req.param("corretor").value();
+		String classificacaoStr = req.param("classificacaoAluno").value();
+		String notaDesignStr = req.param("notaDesign").value();
 		String comentario = req.param("comentario").value();
 
 		Session session = req.session();
@@ -589,7 +590,7 @@ public class SubmissionServer extends Jooby {
 			//throw new RuntimeException("Corretor nao logado!");
 			resp.redirect("commentPanel?id=" + id + "&matricula=&corretor="+matriculaCorretorPar);
 		}else{
-			Util.writeCorrectionComment(id, matriculaAluno, comentario);
+			Util.writeCorrectionComment(id, matriculaAluno, notaDesignStr, classificacaoStr, comentario);
 			resp.redirect("commentPanel?id=" + id + "&matricula=" + matriculaAluno + "&corretor=" + matriculaCorretorPar); 
 		}
 		
