@@ -48,6 +48,9 @@
 					<th class="text-xs-center"><font color="blue">Falhas</font></th>
 					<th class="text-xs-center">Pulados</th>
 					<th class="text-xs-center">Tempo</th>
+					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota dos testes'>T</th>
+					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota de design'>D</th>
+					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota final (T*0.4 + D*0.6)'>F</th>
 					<th class="text-xs-center">Detalhes</th>
 						<!-- th class="text-xs-center">Matricula</th -->	
 					</thead>
@@ -77,22 +80,32 @@
 								<td class="text-xs-center">${reportItem.failures}
 								<td class="text-xs-center">${reportItem.skipped}
 								<td class="text-xs-center">${reportItem.time}
-								<td>
+								<#if correctionReport??>
+									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
+									<#assign notaDesign = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaDesign>
+									<#assign notaFinal = (notaTestes*0.4 + notaDesign*0.6) >
+									<td class="text-xs-center">${notaTestes}
+									<td class="text-xs-center">${notaDesign}
+									<td class="text-xs-center"><strong>${notaFinal}</strong>
+								<#else>
+									<td class="text-xs-center">
+									<td class="text-xs-center">
+									<td class="text-xs-center">
+								</#if>
+								
+								<td class="text-xs-center">
 									<#if reportItem.mavenOutputLog??>
 										<#if reportItem.completeReport??>
-											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
-											
-											
-
+											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}"> <img src="report.png" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
 										<#else>
-											<font color="red">Possivel erro de compilação.</a>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
+											<img src="error.png" width="20" data-toggle="tooltip" data-placement="top" title='Possível erro de compilação'>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
 										</#if>
 									<#else>
-										<font color="red"> Aluno não submeteu.</font>
+										<img src="empty-submission.png" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
 									</#if>
 							<#assign gray = 'false'>
 						<#elseif gray == 'false'>
@@ -108,21 +121,31 @@
 								<td class="text-xs-center">${reportItem.failures}
 								<td class="text-xs-center">${reportItem.skipped}
 								<td class="text-xs-center">${reportItem.time}
-								<td>
+								<#if correctionReport??>
+									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
+									<#assign notaDesign = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaDesign>
+									<#assign notaFinal = (notaTestes*0.4 + notaDesign*0.6) >
+									<td class="text-xs-center">${notaTestes}
+									<td class="text-xs-center">${notaDesign}
+									<td class="text-xs-center"><strong>${notaFinal}</strong>
+								<#else>
+									<td class="text-xs-center">
+									<td class="text-xs-center">
+									<td class="text-xs-center">
+								</#if>
+								<td class="text-xs-center">
 									<#if reportItem.mavenOutputLog??>
 										<#if reportItem.completeReport??>
-											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}">Detailed report.</a>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
-
+											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}"> <img src="report.png" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
 										<#else>
-											<font color="red">Possivel erro de compilação.</a>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}">Maven output.</a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')">Comentarios</a>
-
+											<img src="error.png" width="20" data-toggle="tooltip" data-placement="top" title='Possível erro de compilação'>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
 										</#if>
 									<#else>
-										<font color="red"> Aluno não submeteu.</font>
+										<img src="empty-submission.png" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
 									</#if>
 							<#assign gray = 'true'>
 						</#if>
@@ -146,6 +169,11 @@
 		</#if>
 	</div>
 
+	<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 
 <script type="text/javascript">
     $('#tabs a').click(function (e) {
