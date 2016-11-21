@@ -134,7 +134,7 @@ public class CorrectionManager {
 						System.out.println("Atividade " + atividadeId.getName() + " ja foi corrigida");
 					}
 				} else{
-					System.out.println("Atividade " + atividadeId.getName() + " ainda não esta recebendo envio");
+					System.out.println("Atividade " + atividadeId.getName() + " ainda dentro do prazo de envio");
 				}
 			}
 			

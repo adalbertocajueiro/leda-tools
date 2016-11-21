@@ -60,4 +60,5 @@
   o comentario da sua atividade. Implementar senha sendo a matricula do aluno. 
 - sera que pode ser tudo salvo em json e fazemos um viewer (freemarker) para construirmos o 
   relatorio? (abordagem melhor porque separa model de viewer) SIM - feito - OK
-- fazer um gerador de XLSX a partir do JSON ou deixar tudo online?
+- correcao completamente online e salva no JSON. - OK
+- fazer um gerador de XLSX a partir do JSON para arquivamento e exportacao para o controle academico.

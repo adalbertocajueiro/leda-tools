@@ -29,7 +29,6 @@ import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
-import br.edu.ufcg.ccc.leda.submission.util.Corretor;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
@@ -43,7 +42,6 @@ import br.edu.ufcg.ccc.leda.util.CorrectionReport;
 import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.TestReportItem;
-import br.edu.ufcg.ccc.leda.util.Utilities;
 import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 import br.edu.ufcg.ccc.leda.submission.util.Atividade;
 import br.edu.ufcg.ccc.leda.submission.util.Constants;
@@ -552,8 +550,9 @@ public class SubmissionServer extends Jooby {
 					.collect(Collectors.toList());
 			TestReport report = Util.loadTestReport(id);
 			HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
-			report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
-			
+			if(report != null){
+				report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+			}
 	        html.put("id",id);
 	        html.put("alunos", alunos);
 	        html.put("reportItems", items);

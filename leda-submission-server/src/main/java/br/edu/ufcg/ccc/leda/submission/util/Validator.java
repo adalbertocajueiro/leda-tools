@@ -36,10 +36,9 @@ public class Validator {
 					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}			
 		} else if (atividade instanceof Roteiro){
-			if(dataAtual.before(atividade.getDataHora()) || 
-					dataAtual.after(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso())){
-				throw new AtividadeException("Roteiro " + id + " disponivel para download apenas entre " +
-					Util.formatDate(atividade.getDataHora()) + " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso())+ ".\n"
+			if(dataAtual.before(atividade.getDataHora())){
+				throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
+					Util.formatDate(atividade.getDataHora()) + ".\n"
 					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
 		}
