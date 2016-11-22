@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -878,7 +879,15 @@ public class Util {
 	}
 	
 	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
-		Map<String,List<Submission>> result = new HashMap<String,List<Submission>>();
+		//precisa ordenar as submissoes pelas datas de cada atividade
+		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
+
+		Map<String,List<Submission>> result = new TreeMap<String,List<Submission>>(
+				(s1,s2) -> {
+					Atividade a1 = atividades.get(s1);
+					Atividade a2 = atividades.get(s2);
+					return (int)(a1.getDataHora().getTimeInMillis() - a2.getDataHora().getTimeInMillis());
+				});
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
@@ -902,6 +911,7 @@ public class Util {
 				result.put(folderName,submissions);
 			}
 		}
+		
 		
 		return result;
 	}

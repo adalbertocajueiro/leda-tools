@@ -18,7 +18,7 @@
 
 <div class="container">
 <br>
-<h4>Alunos matriculados em ${semestre}</h4>
+<h4>Registros de faltas do semestre ${semestre}</h4>
 <br>
 <!-------->
 <div id="content">
@@ -32,10 +32,6 @@
 				<li class="nav-item"><a class="nav-link" href="#t${turma}" role="tab" data-toggle="tab">Turma ${turma}</a></li>
 			</#if>
 		</#list>
-		<!-- COLCOAR A GERACAO DESSA LISTA AUTOMATICA ??? >
-        <li class="nav-item"><a class="nav-link active" href="#t1" role="tab" data-toggle="tab">Turma 1</a></li>
-        <li class="nav-item"><a class="nav-link" href="#t2" role="tab" data-toggle="tab">Turma 2</a></li>
-		<li class="nav-item"><a class="nav-link" href="#t3" role="tab" data-toggle="tab">Turma 3</a></li -->
     </ul>
  	<#assign gray = 'true'>
 	<#assign active = 'true'>
@@ -49,24 +45,18 @@
 			</#if>
             <h4>Turma ${turma}</h4>
             <table id="t${turma}" class="table table-hover table-bordered">
-				<thead class="bg-success">
-					<th class="text-xs-center">#</th>
-					<th class="text-xs-center">Estudante</th>
-					<!-- th class="text-xs-center">Matricula</th -->	
+				<thead class="bg-success" >
+				<#list submissoes?values as submissao>
+				
+					<#assign t = submissao[0].atividade.id?keep_after("-")>
+					<#if t == turma>
+						<th class="text-xs-center">${submissao[0].atividade.id?keep_before("-")}</th>
+					</#if>
+					<!-- GERAR AS COLUNAS BASEADAS NOS ROTEIROS QUE JA ACONTECERAM -->	
+				
+				</#list>
 				</thead>
 				<tbody>
-				<#assign index = 1>
-				<#list alunos as student>
-					<#if gray == 'true' && student.turma == turma>
-						<tr class="table-warning"><td class="text-xs-center">${index}<td>${student.nome} <!-- td>${student.matricula} -->
-						<#assign index = index + 1>
-						<#assign gray = 'false'>
-					<#elseif gray == 'false' && student.turma == turma>
-						<tr class="table-info"><td class="text-xs-center">${index}<td>${student.nome} <!-- td>${student.matricula} -->
-						<#assign index = index + 1>
-						<#assign gray = 'true'>
-					</#if>
-				</#list>
 				</tbody>
 			</table>
         </div>
@@ -82,9 +72,6 @@
 </script>  
 
 </div> <!-- container -->
-
-<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
-
 
 
 </body>

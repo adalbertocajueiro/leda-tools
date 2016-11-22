@@ -342,6 +342,24 @@ public class SubmissionServer extends Jooby {
 		//resp.send(result.toString());
 	  }).name("config");
 	
+	get("/faltas", (req) -> {
+
+		Map<String,List<Submission>> submissoes = Util.allSubmissions(true);
+
+
+        Map<String,List<Atividade>> atividadesAgrupadas = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.groupingBy( Atividade::getTurma));
+
+        View html = Results.html("faltas");
+		html.put("submissoes",submissoes);
+        html.put("turmas",atividadesAgrupadas.keySet());
+        html.put("semestre",Constants.CURRENT_SEMESTER);
+
+        return html;
+	  });
+	
 	/*get("/redirect", (req,resp) -> {
 	    //req.flash("success", "The item has been created");
 	    //return Results.redirect("http://www.google.com");
