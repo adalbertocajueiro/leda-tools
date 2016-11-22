@@ -16,6 +16,11 @@
 
 <body>
 
+<#-- Create constructor object -->
+<#assign objectConstructor = "freemarker.template.utility.ObjectConstructor"?new()>
+<#-- Call formatter constructor -->
+<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy")>
+
 <div class="container">
 <br>
 <h4>Registros de faltas do semestre ${semestre}</h4>
@@ -33,7 +38,6 @@
 			</#if>
 		</#list>
     </ul>
- 	<#assign gray = 'true'>
 	<#assign active = 'true'>
     <div id="my-tab-content" class="tab-content">
 		<#list turmas as turma>
@@ -43,20 +47,41 @@
 			<#else>
 				<div  role="tabpanel" class="tab-pane fade" id="t${turma}">
 			</#if>
-            <h4>Turma ${turma}</h4>
+            <br>
             <table id="t${turma}" class="table table-hover table-bordered">
 				<thead class="bg-success" >
-				<#list submissoes?values as submissao>
-				
-					<#assign t = submissao[0].atividade.id?keep_after("-")>
+				<th class="text-xs-center">Aluno</th>
+				<#list submissoes?keys as id>
+					<#assign numeroAlunos = submissoes[id]?size>
+					<#assign t = id?keep_after("-")>
 					<#if t == turma>
-						<th class="text-xs-center">${submissao[0].atividade.id?keep_before("-")}</th>
+						<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="${formatter.format(submissoes[id][0].atividade.dataHora.time)}">${id?keep_before("-")}</th>
 					</#if>
 					<!-- GERAR AS COLUNAS BASEADAS NOS ROTEIROS QUE JA ACONTECERAM -->	
 				
 				</#list>
 				</thead>
 				<tbody>
+				<#list alunos as aluno>
+					<#if aluno.turma == turma>
+						<tr>
+							<td>${aluno.nome}
+							<#list submissoes?keys as id>
+							  <#if id?keep_after("-") == turma>
+								<#list submissoes[id] as sub>
+									<#if sub.aluno.matricula == aluno.matricula>
+										<#if sub.arquivoSubmetido??>
+											<td class="text-xs-center">
+										<#else>
+											<td class="text-xs-center" style="color:red">F
+										</#if>
+									</#if>
+								</#list>
+							  </#if>
+							</#list>
+					</#if>
+				</#list>
+				
 				</tbody>
 			</table>
         </div>
@@ -71,6 +96,11 @@
 	})
 </script>  
 
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 </div> <!-- container -->
 
 

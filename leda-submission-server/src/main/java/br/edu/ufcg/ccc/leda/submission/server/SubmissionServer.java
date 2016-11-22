@@ -356,6 +356,9 @@ public class SubmissionServer extends Jooby {
 		html.put("submissoes",submissoes);
         html.put("turmas",atividadesAgrupadas.keySet());
         html.put("semestre",Constants.CURRENT_SEMESTER);
+        html.put("alunos",Configuration.getInstance().getStudents().values().stream()
+        		.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+        		.collect(Collectors.toList()));
 
         return html;
 	  });
