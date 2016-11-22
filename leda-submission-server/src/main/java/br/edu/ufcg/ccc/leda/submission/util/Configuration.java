@@ -26,6 +26,7 @@ public class Configuration {
 		try {
 			students = Util.loadStudentLists();
 			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
+			Util.loadSpreadsheetSenhasFromExcel(monitores);
 			atividades = Util.loadSpreadsheetsAtividades(monitores);
 			ipsAutorizados.add("150.165.74");
 			ipsAutorizados.add("150.165.54");

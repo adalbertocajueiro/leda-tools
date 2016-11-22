@@ -29,7 +29,9 @@ import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
+import br.edu.ufcg.ccc.leda.submission.util.Corretor;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
+import br.edu.ufcg.ccc.leda.submission.util.Professor;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
 import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
@@ -537,10 +539,17 @@ public class SubmissionServer extends Jooby {
 		View html = Results.html("menuLeftCorrecao");
 		
 		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
-		String matriculaCorretor = ((Roteiro) atividade).getCorretor().getMatricula();
+		Corretor corretor = ((Roteiro) atividade).getCorretor();
+		//pegar tambem os professores para que eles tenham acesso direto.
+		
+		//String matriculaCorretor = corretor.getMatricula();
 		//System.out.println("MATRICULA CORRETOR: " + matriculaCorretor);
 		//System.out.println("SENHA CORRETOR: " + senha);
-		if(matriculaCorretor.equals(senha)){
+		if(corretor.getSenha().equals(senha) || 
+				Configuration.getInstance().getMonitores().stream()
+				.filter(c -> (c instanceof Professor) && c.getSenha().equals(senha))
+				.findFirst().isPresent()){
+			
 			Session session = req.session();
 			session.set("corretor", ((Roteiro) atividade).getCorretor().getMatricula());
 			

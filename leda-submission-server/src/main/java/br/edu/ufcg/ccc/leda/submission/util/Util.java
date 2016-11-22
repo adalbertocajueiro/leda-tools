@@ -369,11 +369,12 @@ public class Util {
             //System.out.println(val);
             String email = cec.getValue("Email".toLowerCase());
             String fone = cec.getValue("Fone".toLowerCase());
+            String senha = null;
             
             Corretor corretor = 
-            		new Monitor(matricula, nome, email, fone);
+            		new Monitor(matricula, nome, email, fone, senha);
             if(matricula.length() == 7){ //matricula de um professor
-            	corretor = new Professor(matricula, nome, email, fone);
+            	corretor = new Professor(matricula, nome, email, fone,senha);
             }
             
             monitores.add(corretor);
@@ -659,20 +660,22 @@ public class Util {
             			matricula = cellMatricula.getStringCellValue();
             		}
 
-            		if(!matricula.equals("Matricula")){ //pode trabalhar aqui com o matcher
+            		if(!matricula.equals("Matricula") && matricula.length() > 1){ //pode trabalhar aqui com o matcher
             			org.apache.poi.ss.usermodel.Cell cellNome = row.getCell(1); //celula com o nome
             			org.apache.poi.ss.usermodel.Cell cellEmail = row.getCell(2); //celula com a descricao
             			org.apache.poi.ss.usermodel.Cell cellFone = row.getCell(3); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellSenha = row.getCell(8); //celula de datahora de liberacao
 
             			String nome = cellNome != null?cellNome.getStringCellValue():"";
                         String email = cellEmail != null?cellEmail.getStringCellValue():"";
                         String fone = cellFone != null? (cellFone.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellFone.getNumericCellValue()):cellFone.getStringCellValue():"";
+                        String senha = null;
                         
                         Corretor corretor = 
-                        		new Monitor(matricula, nome, email, fone);
+                        		new Monitor(matricula, nome, email, fone,senha);
                         
                         if(matricula.length() == 7){ //matricula de um professor
-                        	corretor = new Professor(matricula, nome, email, fone);
+                        	corretor = new Professor(matricula, nome, email, fone,senha);
                         }
                         monitores.add(corretor);
             		}
@@ -685,6 +688,50 @@ public class Util {
 		return monitores;
 	}
 
+	public static void loadSpreadsheetSenhasFromExcel(List<Corretor> corretores) throws IOException{
+		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Senhas.xlsx");
+		FileInputStream fis = new FileInputStream(excelFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			//problema na leitura do arquivo excel
+			ex.printStackTrace();
+		}
+	
+		Iterator<Row> rowIterator = mySheet.iterator();
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cellMatricula = row.getCell(0);
+            	if(cellMatricula != null){
+            		String matricula = null;
+            		if(cellMatricula.getCellType() != XSSFCell.CELL_TYPE_STRING){
+            			matricula = String.valueOf((int)cellMatricula.getNumericCellValue()); //
+            		}else{
+            			matricula = cellMatricula.getStringCellValue();
+            		}
+
+            		if(!matricula.equals("Matricula") && matricula.length() > 1){ //pode trabalhar aqui com o matcher
+            			org.apache.poi.ss.usermodel.Cell cellSenha = row.getCell(1); //celula com o nome
+                        String senha = cellSenha != null? (cellSenha.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellSenha.getNumericCellValue()):cellSenha.getStringCellValue():"";
+                        	
+                        String matr = matricula;
+                        Corretor corretor = corretores.stream().filter(c -> c.getMatricula().equals(matr))
+                        		.findFirst().orElse(null);
+                        if(corretor != null){
+                        	corretor.setSenha(senha);
+                        }
+            		}
+            	}
+            }
+		}
+		myWorkBook.close();
+	}
 	private static Atividade createAtividade(String id, String nome, String descricao,
 			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
 			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Corretor corretor,
@@ -1236,9 +1283,12 @@ public class Util {
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		List<Corretor> corretores = Util.loadSpreadsheetMonitorFromExcel();
+		Util.loadSpreadsheetSenhasFromExcel(corretores);
 		Map<String,Atividade> atividades = Util.loadSpreadsheetAtividadeFromExcel(corretores);
-		CorrectionReport report = Util.loadCorrectionReport("RR1-01");
-		report.getReportItems().forEach(tri -> System.out.println(tri.getMatricula()));
+		atividades.values().forEach(a -> a.getMonitores().forEach(m -> System.out.println(m.getNome())));
+		atividades.values().stream().filter(a -> a instanceof Roteiro).forEach(r -> System.out.println(((Roteiro) r).getCorretor()));
+		//CorrectionReport report = Util.loadCorrectionReport("RR1-01");
+		//report.getReportItems().forEach(tri -> System.out.println(tri.getMatricula()));
 		int i = 2;
 		int k = 1;
 		

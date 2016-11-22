@@ -17,5 +17,9 @@ public interface Corretor {
 	String getFone();
 
 	void setFone(String fone);
+	
+	String getSenha();
+	
+	void setSenha(String senha);
 
 }
