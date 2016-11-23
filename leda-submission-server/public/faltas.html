@@ -60,12 +60,14 @@
 					<!-- GERAR AS COLUNAS BASEADAS NOS ROTEIROS QUE JA ACONTECERAM -->	
 				
 				</#list>
+				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Cada dia de falta corresponde a 2 aulas">Total</th>
 				</thead>
 				<tbody>
 				<#list alunos as aluno>
 					<#if aluno.turma == turma>
 						<tr>
 							<td>${aluno.nome}
+							<#assign totalFaltas = 0>
 							<#list submissoes?keys as id>
 							  <#if id?keep_after("-") == turma>
 								<#list submissoes[id] as sub>
@@ -74,11 +76,13 @@
 											<td class="text-xs-center">
 										<#else>
 											<td class="text-xs-center" style="color:red">F
+											<#assign totalFaltas = totalFaltas + 2>
 										</#if>
 									</#if>
 								</#list>
 							  </#if>
 							</#list>
+							<td class="text-xs-center font-weight-bold" <#if (totalFaltas > 14)>style="color:red"</#if>>${totalFaltas}
 					</#if>
 				</#list>
 				
