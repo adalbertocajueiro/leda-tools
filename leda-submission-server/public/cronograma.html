@@ -156,7 +156,7 @@
 									<ul>
 									<li>Corretor: 
 										<#if atividade.corretor??> 
-											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome}</span>
+											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome?split(" ")[0]}</span>
 										<#else>
 											<font color="red">não atribuído</font>
 										</#if>
@@ -202,7 +202,7 @@
 									</#if>									<ul>
 									<li>Corretor: 
 										<#if atividade.corretor??> 
-											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome}</span>
+											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome?split(" ")[0]}</span>
 										<#else>
 											<font color="red">não atribuído</font>
 										</#if>
