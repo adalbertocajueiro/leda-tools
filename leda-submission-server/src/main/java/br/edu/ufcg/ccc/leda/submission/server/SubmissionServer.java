@@ -309,7 +309,7 @@ public class SubmissionServer extends Jooby {
 		resp.send(result.toString());
 	});
 	
-	get("/reload", (req) -> {
+	get("/reload", (req,resp) -> {
 		Configuration.getInstance().reload();
 		//chain.next("config",req,resp);
 		
@@ -318,10 +318,10 @@ public class SubmissionServer extends Jooby {
 		//result.append(Configuration.getInstance().toString());
 		
 		//resp.send(result.toString());
-		View html = Results.html("configuration");
-        html.put("config",Configuration.getInstance());
-        
-        return html;
+		//View html = Results.html("configuration");
+        //html.put("config",Configuration.getInstance());
+        resp.redirect("menu");
+        //return html;
 		
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
