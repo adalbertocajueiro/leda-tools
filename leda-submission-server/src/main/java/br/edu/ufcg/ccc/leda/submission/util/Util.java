@@ -16,6 +16,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -48,6 +49,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jdom2.JDOMException;
 
 import com.github.odiszapc.nginxparser.NgxBlock;
 import com.github.odiszapc.nginxparser.NgxConfig;
@@ -162,6 +164,15 @@ public class Util {
 		
 		return result;
 	}
+	
+	public static SimilarityMatrix buildSimilarityMatrix(String id) throws IOException, JDOMException{
+		SimilarityMatrix result = null;
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		result = ClusteringUtil.buildSimilarityMatrix(atividadeFolder);
+		
+		return result;
+	}
+	
 	public static void writeRoteirosToJson(Map<String,Roteiro> roteiros, File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 
@@ -1279,7 +1290,7 @@ public class Util {
 	}
 	
 
-	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException, BiffException {
+	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException, BiffException, JDOMException {
 		//Util.sendEmail("adalberto.cajueiro@gmail.com", "adalberto.cajueiro@gmail.com", "Teste", "conteudo", "adalberto.cajueiro@gmail.com", "acfcaju091401");
 		//Util.send2();
 		//System.out.println("Email enviado");
@@ -1292,7 +1303,12 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		
 		List<Corretor> corretores = Util.loadSpreadsheetMonitorFromExcel();
+		SimilarityMatrix matrix = Util.buildSimilarityMatrix("R01-01");
+		for (int i = 0; i < matrix.getSimilarities().length; i++) {
+			System.out.println(Arrays.toString(matrix.getSimilarities()[i]));
+		}
 		Util.loadSpreadsheetSenhasFromExcel(corretores);
 		Map<String,Atividade> atividades = Util.loadSpreadsheetAtividadeFromExcel(corretores);
 		atividades.values().forEach(a -> a.getMonitores().forEach(m -> System.out.println(m.getNome())));

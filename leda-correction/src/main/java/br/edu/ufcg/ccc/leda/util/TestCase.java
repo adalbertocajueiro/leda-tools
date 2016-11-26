@@ -12,6 +12,25 @@ public class TestCase {
 		this.testCaseClass = testCaseClass;
 		this.result = result;
 	}
+	
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean resp = false;
+		if(obj instanceof TestCase){
+			resp = this.testCaseClass.equals(((TestCase) obj).getTestCaseClass())
+					&& this.testCaseName.equals(((TestCase) obj).getTestCaseName());
+		}
+		return resp;
+	}
+
+	
+
+	@Override
+	public String toString() {
+		return this.result.ordinal() + "";
+	}
+
 
 	public String getTestCaseName() {
 		return testCaseName;

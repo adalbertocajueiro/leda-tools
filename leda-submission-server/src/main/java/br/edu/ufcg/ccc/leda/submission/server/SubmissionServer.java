@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.submission.util.Submission;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
+import br.edu.ufcg.ccc.leda.submission.util.ClusteringUtil;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
@@ -34,6 +35,7 @@ import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.Professor;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
+import br.edu.ufcg.ccc.leda.submission.util.SimilarityMatrix;
 import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
@@ -90,6 +92,7 @@ public class SubmissionServer extends Jooby {
 		assets("/*.gif");
 		assets("/*.png");
 		assets("jquery/**");
+		assets("plotly/**");
 		assets("bootstrap/**");
 		assets("tether/**");
 		
@@ -415,6 +418,12 @@ public class SubmissionServer extends Jooby {
         html.put("id",id);
         html.put("report",Util.loadTestReport(id));
         html.put("correctionReport",Util.loadCorrectionReport(id));
+        SimilarityMatrix similarityMatrix = Util.buildSimilarityMatrix(id);
+        html.put("sMatrix", similarityMatrix);
+        html.put("studentsTestList", similarityMatrix.getStudentsTestList());
+        html.put("matrix",similarityMatrix.getSimilarities());
+        
+        //html.put(values);
 
         return html;
         

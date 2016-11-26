@@ -6,17 +6,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import java.util.stream.Collectors;
 
 import org.apache.commons.math3.ml.clustering.CentroidCluster;
-import org.apache.maven.lifecycle.internal.LifecycleStarter;
-import org.apache.poi.ss.formula.functions.LinearRegressionFunction.FUNCTION;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import org.junit.runner.notification.Failure;
 
 import br.edu.ufcg.ccc.leda.util.TestCase;
 import br.edu.ufcg.ccc.leda.util.TestResult;
@@ -44,19 +42,21 @@ public class XMLUtil {
 		StudentTestList result = new StudentTestList(matricula);
 		
 		SAXBuilder saxBuilder = new SAXBuilder();
-		Document document = saxBuilder.build(file);
-
-		List<Element> testcases = document.getRootElement().getChildren()
-				.stream().filter(e -> e.getName().equals("testcase"))
-				.collect(Collectors.toList());
-		
-		for (Element element : testcases) {
-			TestResult tr = getTestResult(element);
-			//para pegar o tipo de teste precisa varrer o conteudo do elemento procurando por outro element
-			//que tenha name error ou Failure.class se nao for nenhum desses entao eh pass
-			TestCase tc = new TestCase(element.getAttributeValue("name"),element.getAttributeValue("classname"),tr);		
-			if(tc.getResult() != TestResult.SKIPPED){
-				result.add(tc);
+		if(file.exists()){
+			Document document = saxBuilder.build(file);
+	
+			List<Element> testcases = document.getRootElement().getChildren()
+					.stream().filter(e -> e.getName().equals("testcase"))
+					.collect(Collectors.toList());
+			
+			for (Element element : testcases) {
+				TestResult tr = getTestResult(element);
+				//para pegar o tipo de teste precisa varrer o conteudo do elemento procurando por outro element
+				//que tenha name error ou Failure.class se nao for nenhum desses entao eh pass
+				TestCase tc = new TestCase(element.getAttributeValue("name"),element.getAttributeValue("classname"),tr);		
+				if(tc.getResult() != TestResult.SKIPPED){
+					result.add(tc);
+				}
 			}
 		}
 		return result;
