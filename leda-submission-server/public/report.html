@@ -18,12 +18,12 @@
 
 <body>
 
-<div class="container" style="min-height:1600px;max-height:1600px;max-width:1600px;min-width:1600px">
+<div class="container" >
 <br>
 <h4>Relatório de correção para roteiro ${id}</h4>
 <br>
 <!-------->
-<div id="content" style="min-height:1600px;max-height:1600px;max-width:1600px;min-width:1600px">
+<div id="content">
 	<ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
 		<li class="nav-item"><a class="nav-link active" href='#report' role="tab" data-toggle="tab">Testes</a></li>
 		<li class="nav-item"><a class="nav-link" href="#similaridades" role="tab" data-toggle="tab">Similaridades</a></li>
@@ -33,7 +33,7 @@
 	<#-- Call formatter constructor -->
 	<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
  	<#assign gray = 'true'>
-    <div id="my-tab-content" class="tab-content" style="min-height:1600px;max-height:1600px;max-width:1600px;min-width:1600px">
+    <div id="my-tab-content" class="tab-content">
 		<div role="tabpanel" class="tab-pane fade in active" id="report">
 		<#if report??>
 			<br>
