@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.submission.util.Submission;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
-import br.edu.ufcg.ccc.leda.submission.util.ClusteringUtil;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;

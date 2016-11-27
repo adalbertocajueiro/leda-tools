@@ -98,16 +98,23 @@
 								<td class="text-xs-center">
 									<#if reportItem.mavenOutputLog??>
 										<#if reportItem.completeReport??>
-											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}"> <img src="report.png" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
+											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}"> 
+												<img src="report.svg" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> 
+												<img src="tools.svg" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> 
+												<img src="chat.svg" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
+											</a>
 										<#else>
-											<img src="error.png" width="20" data-toggle="tooltip" data-placement="top" title='Possível erro de compilação'>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
+											<img src="cancel.svg" width="20" data-toggle="tooltip" data-placement="top" title='Possível erro de compilação'>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> 
+												<img src="tools.svg" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> 
+												<img src="chat.svg" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'>
+											</a>
 										</#if>
 									<#else>
-										<img src="empty-submission.png" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
+										<img src="box.svg" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
 									</#if>
 							<#assign gray = 'false'>
 						<#elseif gray == 'false'>
@@ -138,16 +145,23 @@
 								<td class="text-xs-center">
 									<#if reportItem.mavenOutputLog??>
 										<#if reportItem.completeReport??>
-											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}"> <img src="report.png" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
+											<a href="./reports/${id}/${reportItem.generateCompleteReportLink()}"> 
+												<img src="report.svg" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> 
+												<img src="tools.svg" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> 
+												<img src="chat.svg" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
+											</a>
 										<#else>
-											<img src="error.png" width="20" data-toggle="tooltip" data-placement="top" title='Possível erro de compilação'>
-											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> <img src="maven-icon.png" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> <img src="chat.png" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
+											<img src="cancel.svg" width="20" data-toggle="tooltip" data-placement="top" title='Possível erro de compilação'>
+											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> 
+												<img src="tools.svg" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
+											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> 
+												<img src="chat.svg" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'>
+											</a>
 										</#if>
 									<#else>
-										<img src="empty-submission.png" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
+										<img src="box.svg" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
 									</#if>
 							<#assign gray = 'true'>
 						</#if>
@@ -160,17 +174,12 @@
 		</#if>
         </div>
 		
-		<#if report??>
-			<br>
-			<h5>Em construção</h5>
-			<div role="tabpanel" class="tab-pane fade" id="similaridades" style="min-height:1600px;max-height:1600px;max-width:1600px;min-width:1600px">
-			
-		<#else>
-			<br>
-			<h5>Dados de testes ausentes. Provavelmente a atividade ainda não foi corrigida.</h5>
-		</#if>
+		<div role="tabpanel" class="tab-pane fade" id="similaridades" style="min-height:1600px;max-height:1600px;max-width:1600px;min-width:1600px">
 	</div>
 
+	<div>Icons made by <a href="http://www.flaticon.com/authors/elias-bikbulatov" title="Elias Bikbulatov">Elias Bikbulatov</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+	<br>
+	<br>
 	<script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -189,15 +198,6 @@ $(document).ready(function(){
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
 
 <!-- SCRIPT PARA RENDERIZAR O HEATMAP -->
-<#if studentsTestList??>
-	tem variavel
-<#else>
-	nao tem variavel
-</#if>
-<br>
-${sMatrix.class.name} <br>
-
-
 <script>
     var xValues = [
     <#list sMatrix.studentsTestList as studentTestList>'m=${studentTestList.matricula}'<#if studentTestList?has_next>,</#if></#list>
