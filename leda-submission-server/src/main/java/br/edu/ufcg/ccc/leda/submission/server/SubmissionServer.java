@@ -415,13 +415,18 @@ public class SubmissionServer extends Jooby {
 		String id = req.param("id").value();
         View html = Results.html("report");
         html.put("id",id);
-        html.put("report",Util.loadTestReport(id));
-        html.put("correctionReport",Util.loadCorrectionReport(id));
-        SimilarityMatrix similarityMatrix = Util.buildSimilarityMatrix(id);
-        html.put("sMatrix", similarityMatrix);
-        html.put("studentsTestList", similarityMatrix.getStudentsTestList());
-        html.put("matrix",similarityMatrix.getSimilarities());
-        
+        TestReport testReport = Util.loadTestReport(id);
+        if(testReport != null){
+        	html.put("report",testReport);
+        }
+        CorrectionReport corrReport = Util.loadCorrectionReport(id);
+        html.put("correctionReport",corrReport);
+        if(corrReport != null){
+        	SimilarityMatrix similarityMatrix = Util.buildSimilarityMatrix(id);
+        	html.put("sMatrix", similarityMatrix);
+        //html.put("studentsTestList", similarityMatrix.getStudentsTestList());
+        //html.put("matrix",similarityMatrix.getSimilarities());
+        }
         //html.put(values);
 
         return html;
