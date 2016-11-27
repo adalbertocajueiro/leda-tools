@@ -27,6 +27,7 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 
  </head>
 <body data-spy="scroll">
+<#setting number_format=",##0.0">
 <div class="container">
 	<#if corretor?? && (corretor?length > 0)>
 		<form id="commentForm" role="form" method="POST" action="addComment">
@@ -34,7 +35,9 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 					<input type="hidden" id="id" name="id" value="${id}">
 					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
 					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">
-					<label class="col-form-label-sm">Selecione a classificação do aluno baseado nos comentários </label> 
+					<label class="col-form-label-sm">Comentários do aluno: ${aluno.nome}</label>
+					<br>
+					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="top" title="Classifique o aluno baseado nos comentários">Classificação: </label> 
 					<select class="custom-select" id="classificacaoAluno" name="classificacaoAluno" onchange="javascript:mudarNotaDesign();">
 						<#if correctionReportItem??>
 							<#list classificacao as itemClassificacao>
@@ -47,11 +50,15 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 						</#if>
 					</select>
 					<br>
-					<label class="col-form-label-sm">Nota dos testes: <#if correctionReportItem??>${correctionReportItem.notaTestes}</#if></label>
+					<label class="col-form-label-sm">Nota dos testes: </label> <input type="text" class="text-xs-center" name="notaTestes" disabled id="notaTestes" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaTestes}'</#if>>
 					<br>
 					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="bottom" title='Não modifique essa nota! Apenas o professor modifica!!!'>Nota de design: </label>					
 					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if>>
-					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6"><#if comentario??>${comentario?trim}</#if></textarea>
+					<br>
+					<label class="col-form-label-sm">Nota do roteiro:</label> 
+					<input class="text-xs-center font-weight-bold" type="text" id="notaRoteiro" disabled name="notaRoteiro" maxlength="4" size="2" value='${correctionReportItem.notaDesign}'>
+					<br>
+					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6" placeholder="Comentários do corretor"><#if comentario??>${comentario?trim}</#if></textarea>
 					
 				</div>
 				<div >
@@ -78,7 +85,6 @@ function submitform(){
 
 function mudarNotaDesign(){
     var classif = document.getElementById('classificacaoAluno').value;
-	var notaDes = document.getElementById('notaDesign').value;
 	if(classif == 'EXCELENTE' ){
 		document.getElementById('notaDesign').value = '9.5'; 
 	} else if (classif == 'BOM' ){
@@ -87,7 +93,13 @@ function mudarNotaDesign(){
 		document.getElementById('notaDesign').value = '6.0';
 	} else if (classif == 'RUIM' ){
 		document.getElementById('notaDesign').value = '4.0';
+	} else {
+		document.getElementById('notaDesign').value = '0.0';
 	}
+	var notaDes = parseFloat(document.getElementById('notaDesign').value);
+	var notaTestes = parseFloat(document.getElementById('notaTestes').value);
+	var notaRoteiro = (notaTestes + notaDes*0.6);	
+	document.getElementById('notaRoteiro').value = notaRoteiro.toFixed(1);
 	return true;
 }
 

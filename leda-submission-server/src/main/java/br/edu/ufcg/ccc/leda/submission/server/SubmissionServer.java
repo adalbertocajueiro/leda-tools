@@ -181,9 +181,12 @@ public class SubmissionServer extends Jooby {
 		String corretorPar = req.param("corretor").value("");
 		Session session = req.session();
 		
+		Student aluno = Configuration.getInstance().getStudents().get(matriculaAluno);
+		
 		View html = Results.html("comment-panel");
 		html.put("id",id);
 		html.put("matricula", matriculaAluno);
+		html.put("aluno",aluno);
 		html.put("corretorMat",corretorPar);
 		html.put("corretor", session.get("corretor"));
 		html.put("classificacao",CorrectionClassification.values());
