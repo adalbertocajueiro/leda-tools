@@ -35,7 +35,7 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 					<input type="hidden" id="id" name="id" value="${id}">
 					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
 					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">
-					<label class="col-form-label-sm">Comentários do aluno: ${aluno.nome}</label>
+					<label class="col-form-label-sm">Comentários do aluno: <#if aluno??>${aluno.nome}</#if></label>
 					<br>
 					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="top" title="Classifique o aluno baseado nos comentários">Classificação: </label> 
 					<select class="custom-select" id="classificacaoAluno" name="classificacaoAluno" onchange="javascript:mudarNotaDesign();">
@@ -56,7 +56,7 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if>>
 					<br>
 					<label class="col-form-label-sm">Nota do roteiro:</label> 
-					<input class="text-xs-center font-weight-bold" type="text" id="notaRoteiro" disabled name="notaRoteiro" maxlength="4" size="2" value='${correctionReportItem.notaDesign}'>
+					<input class="text-xs-center font-weight-bold" type="text" id="notaRoteiro" disabled name="notaRoteiro" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaDesign}'</#if>>
 					<br>
 					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6" placeholder="Comentários do corretor"><#if comentario??>${comentario?trim}</#if></textarea>
 					

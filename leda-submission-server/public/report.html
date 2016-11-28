@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -17,7 +17,7 @@
 </head>
 
 <body>
-
+<#setting number_format=",##0.0">
 <div class="container" >
 <br>
 <h4>Relatório de correção para roteiro ${id}</h4>
@@ -37,8 +37,8 @@
 		<div role="tabpanel" class="tab-pane fade in active" id="report">
 		<#if report??>
 			<br>
-			<p>Nome da suite: ${report.testSuiteName}
-			<p>Número de testes: ${report.numberOfTests}
+			<!-- <p>Nome da suite: ${report.testSuiteName} --> 
+			<p>Número de testes: ${report.numberOfTests?string?keep_before(".")}
 			<br>
 			<br>
 			<table id="report" class="table table-hover table-bordered">
@@ -58,17 +58,7 @@
 					</thead>
 					<tbody>
 					<#list report.reportItems as reportItem>
-						<div class="modal fade" id="${reportItem.matricula}" role="dialog" >
-											  <div class="modal-dialog modal-sm">
-												<div class="modal-content">
-													<div class="modal-header" style="padding:5px 5px;">
-													  <button type="button" class="close" data-dismiss="modal">&times;</button>
-													  <h5><span class="glyphicon"></span>Comentário</h5>
-													</div>
-													<p>comentario do aluno ${reportItem.studentName}
-												</div>
-											  </div>
-											</div>
+						
 						<#if gray == 'true'>
 							<tr class="table-warning">
 								<td>${reportItem.studentName} 
@@ -77,10 +67,10 @@
 								<#else>
 									<td class="text-xs-center"> -
 								</#if>
-								<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
-								<td class="text-xs-center">${reportItem.errors}
-								<td class="text-xs-center">${reportItem.failures}
-								<td class="text-xs-center">${reportItem.skipped}
+								<td class="text-xs-center">${(reportItem.totalTests - reportItem.errors - reportItem.failures - reportItem.skipped)?string?keep_before(".")}
+								<td class="text-xs-center">${reportItem.errors?string?keep_before(".")}
+								<td class="text-xs-center">${reportItem.failures?string?keep_before(".")}
+								<td class="text-xs-center">${reportItem.skipped?string?keep_before(".")}
 								<td class="text-xs-center">${reportItem.time}
 								<#if correctionReport??>
 									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
@@ -102,7 +92,7 @@
 												<img src="report.svg" width="20" data-toggle="tooltip" data-placement="top" title='Relatório detalhado'></a>
 											<a href="./reports/${id}/${reportItem.generateMavenOutputLink()}"> 
 												<img src="tools.svg" width="20" data-toggle="tooltip" data-placement="top" title='Saida compilação maven'></a>
-											<a class="btn-link" role="button" style="color:blue" onclick="$('#${reportItem.matricula}').modal('show')"> 
+											<a class="btn-link" role="button" style="color:blue" data-toogle="modal" onclick="$('#${reportItem.matricula}').modal('show')"> 
 												<img src="chat.svg" width="20" data-toggle="tooltip" data-placement="top" title='Comentários do corretor'></a>
 											</a>
 										<#else>
@@ -117,6 +107,28 @@
 										<img src="box.svg" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
 									</#if>
 							<#assign gray = 'false'>
+							<div class="modal fade" id="${reportItem.matricula}" role="dialog">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-header" style="padding:5px 5px;">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h5><span class="glyphicon"></span>Comentários</h5>
+										</div>
+										<div class="modal-body" placeholder="Comentários sobre o código do aluno">
+										<#if correctionReport??>
+											<#assign correctionReportItem = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula)>
+											<#if correctionReportItem??>
+												<p><#if (correctionReportItem.comentario?length>0)>${correctionReportItem.comentario}<#else>Sem comentários</#if></p>
+											<#else>
+												<p>Sem comentários</p>
+											</#if>
+										<#else>
+											<p>Sem comentários</p>
+										</#if>
+										</div>
+									</div>
+								</div>				  
+							</div>
 						<#elseif gray == 'false'>
 							<tr class="table-info">
 								<td>${reportItem.studentName} 
@@ -125,10 +137,10 @@
 								<#else>
 									<td class="text-xs-center"> -
 								</#if>
-								<td class="text-xs-center">${reportItem.totalTests - reportItem.failures - reportItem.skipped}
-								<td class="text-xs-center">${reportItem.errors}
-								<td class="text-xs-center">${reportItem.failures}
-								<td class="text-xs-center">${reportItem.skipped}
+								<td class="text-xs-center">${(reportItem.totalTests - reportItem.errors - reportItem.failures - reportItem.skipped)?string?keep_before(".")}
+								<td class="text-xs-center">${reportItem.errors?string?keep_before(".")}
+								<td class="text-xs-center">${reportItem.failures?string?keep_before(".")}
+								<td class="text-xs-center">${reportItem.skipped?string?keep_before(".")}
 								<td class="text-xs-center">${reportItem.time}
 								<#if correctionReport??>
 									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
@@ -164,6 +176,28 @@
 										<img src="box.svg" width="20" data-toggle="tooltip" data-placement="top" title='Aluno não submeteu'>
 									</#if>
 							<#assign gray = 'true'>
+							<div class="modal fade" id="${reportItem.matricula}" role="dialog">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-header" style="padding:5px 5px;">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h5><span class="glyphicon"></span>Comentários</h5>
+										</div>
+										<div class="modal-body" placeholder="Comentários sobre o código do aluno">
+										<#if correctionReport??>
+											<#assign correctionReportItem = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula)>
+											<#if correctionReportItem??>
+												<p><#if (correctionReportItem.comentario?length>0)>${correctionReportItem.comentario}<#else>Sem comentários</#if></p>
+											<#else>
+												<p>Sem comentários</p>
+											</#if>
+										<#else>
+											<p>Sem comentários</p>
+										</#if>
+										</div>
+									</div>
+								</div>				  
+							</div>
 						</#if>
 					</#list>
 					</tbody>
