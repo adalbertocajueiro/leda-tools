@@ -75,7 +75,7 @@
 								<#if correctionReport??>
 									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
 									<#assign notaDesign = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaDesign>
-									<#assign notaFinal = (notaTestes*0.4 + notaDesign*0.6) >
+									<#assign notaFinal = (notaTestes + notaDesign*0.6) >
 									<td class="text-xs-center">${notaTestes}
 									<td class="text-xs-center">${notaDesign}
 									<td class="text-xs-center"><strong>${notaFinal}</strong>
@@ -145,7 +145,7 @@
 								<#if correctionReport??>
 									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
 									<#assign notaDesign = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaDesign>
-									<#assign notaFinal = (notaTestes*0.4 + notaDesign*0.6) >
+									<#assign notaFinal = (notaTestes + notaDesign*0.6) >
 									<td class="text-xs-center">${notaTestes}
 									<td class="text-xs-center">${notaDesign}
 									<td class="text-xs-center"><strong>${notaFinal}</strong>
