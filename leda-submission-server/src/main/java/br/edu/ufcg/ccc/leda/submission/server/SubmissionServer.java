@@ -345,7 +345,7 @@ public class SubmissionServer extends Jooby {
         return html;
         
 		//resp.send(result.toString());
-	  }).name("config");
+	  });
 	
 	get("/faltas", (req) -> {
 

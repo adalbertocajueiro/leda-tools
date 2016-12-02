@@ -777,7 +777,11 @@ public class Util {
 			Set<String> keys = atividades.keySet();
 			for (String key : keys) {
 				Atividade atividade = atividades.get(key);
-				File[] files = Constants.ROTEIROS_FOLDER.listFiles(new FileFilter() {
+				File folderToSearch = Constants.ROTEIROS_FOLDER;
+				if(Constants.PATTERN_PROVA.matcher(atividade.getId()).matches()){
+					folderToSearch = Constants.PROVAS_FOLDER;
+				}
+				File[] files = folderToSearch.listFiles(new FileFilter() {
 					
 					@Override
 					public boolean accept(File pathname) {
