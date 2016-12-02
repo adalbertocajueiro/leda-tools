@@ -169,8 +169,8 @@ public class Validator {
 			if(atividade.getDataHora().after(dataAtual) ||
 					((Roteiro) atividade).getDataHoraLimiteEnvioNormal().before(dataAtual)){
 	
-				throw new AtividadeException("Envio do roteiro " + id + " possivel apenas entre " + Util.formatDate(atividade.getDataHora())
-						+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+				throw new AtividadeException("Envio da prova " + id + " possivel apenas entre " + Util.formatDate(atividade.getDataHora())
+						+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioNormal()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
 			
 		} else{ //eh roteiro

@@ -37,6 +37,8 @@
 		<div role="tabpanel" class="tab-pane fade in active" id="report">
 		<#if report??>
 			<br>
+			<p><font color="DarkRed">Obs: os comentários poderão ser alterados até: ${formatter.format(atividade.dataLimiteCorrecao.time?datetime)}, que é a data limite de correção desta atividade.</font></p>
+			<br>
 			<!-- <p>Nome da suite: ${report.testSuiteName} --> 
 			<p>Número de testes: ${report.numberOfTests?string?keep_before(".")}
 			<br>
@@ -52,7 +54,7 @@
 					<th class="text-xs-center">Tempo</th>
 					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota dos testes'>T</th>
 					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota de design'>D</th>
-					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota final (T*0.4 + D*0.6)'>F</th>
+					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota final (T + D*0.6)'>F</th>
 					<th class="text-xs-center">Detalhes</th>
 						<!-- th class="text-xs-center">Matricula</th -->	
 					</thead>

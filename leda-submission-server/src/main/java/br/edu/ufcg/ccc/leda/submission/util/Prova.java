@@ -9,11 +9,11 @@ public class Prova extends Roteiro{
 	
 	public Prova(String id, String nome, String descricao, GregorianCalendar dataHoraLiberacao,
 			List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraLimiteEnvioNormal,
-			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Professor corretor, GregorianCalendar dataInicioCorrecao,
+			List<Monitor> monitores, Professor corretor, GregorianCalendar dataInicioCorrecao,
 			GregorianCalendar dataLimiteCorrecao, File arquivoAmbiente, File arquivoProjetoCorrecao) {
-		
+		//nas provas a hora de envio com atraso eh a hora de envio normal mesmo
 		super(id, nome, descricao, dataHoraLiberacao, linksVideoAulas, 
-				dataHoraLimiteEnvioNormal, dataHoraLimiteEnvioAtraso,
+				dataHoraLimiteEnvioNormal, dataHoraLimiteEnvioNormal,
 				monitores, corretor, dataInicioCorrecao, 
 				dataLimiteCorrecao, arquivoAmbiente, arquivoProjetoCorrecao);
 

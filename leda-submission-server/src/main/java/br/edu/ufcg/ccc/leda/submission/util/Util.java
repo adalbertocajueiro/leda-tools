@@ -765,7 +765,7 @@ public class Util {
 			//System.out.println("MOntando atividade da prova: " + id);
 			//System.out.println("Corretor: " + corretor);
 			result = new Prova(id,nome,descricao,dataHoraLiberacao,
-					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					linksVideoAulas,dataHoraEnvioNormal,
 					monitores,(Professor) corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
 			
 		}

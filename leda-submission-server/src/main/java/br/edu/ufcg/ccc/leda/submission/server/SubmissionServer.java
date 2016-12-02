@@ -418,6 +418,7 @@ public class SubmissionServer extends Jooby {
 		String id = req.param("id").value();
         View html = Results.html("report");
         html.put("id",id);
+        html.put("atividade", Configuration.getInstance().getAtividades().get(id));
         TestReport testReport = Util.loadTestReport(id);
         if(testReport != null){
         	html.put("report",testReport);
