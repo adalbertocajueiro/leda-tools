@@ -69,7 +69,8 @@
 							<td>${aluno.nome}
 							<#assign totalFaltas = 0>
 							<#list submissoes?keys as id>
-							  <#if id?keep_after("-") == turma>
+							  <#assign atividade = atividades[id]>
+							  <#if id?keep_after("-") == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime)>
 								<#list submissoes[id] as sub>
 									<#if sub.aluno.matricula == aluno.matricula>
 										<#if sub.arquivoSubmetido??>
