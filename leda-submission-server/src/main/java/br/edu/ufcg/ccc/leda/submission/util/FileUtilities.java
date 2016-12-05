@@ -96,8 +96,7 @@ public class FileUtilities {
 			id = id.substring(0, id.indexOf("X"));
 		}
 
-			// remove os arquivos de prova antes cadastrados (baseado no id da prova)
-			Util.removeFilesByPrefix(folderAtividade, id);
+			
 			
 			
 			if(config.getNumeroTurmas() > 1){
@@ -113,6 +112,8 @@ public class FileUtilities {
 				
 			}else{
 				//caso base: processa o upload de um roteiro apenas
+				// remove os arquivos de prova antes cadastrados (baseado no id da prova)
+				Util.removeFilesByPrefix(folderAtividade, id);
 				
 				// precisa verificar se o professor enviou um roteiro cadastrado.
 				Validator.validate(config);
