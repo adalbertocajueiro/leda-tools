@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Painel de comentario de código</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="./jquery/ui/1.12.1/jquery-ui.css" rel="stylesheet">
+  <link href="./tether/1.3.3/css/tether.css" rel="stylesheet">
+  <link href="./bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+  <script src="./tether/1.3.3/js/tether.min.js"></script>
+        <script type="text/javascript" src="./jquery/3.1.1/jquery.min.js"></script>
+		<script src="./jquery/ui/1.12.1/jquery-ui.js"></script>
+		<script src="./tether/1.3.3/js/tether.min.js"></script>
+        <script type="text/javascript" src="./bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  
+  <script type="text/javascript">
+
+function showChar(e)
+{
+alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
+      + "charCode: " + e.charCode);
+}
+
+</script>
+
+ </head>
+<body data-spy="scroll">
+<#setting number_format=",##0.0">
+<div class="container">
+	<#if corretor?? && (corretor?length > 0)>
+		<form id="commentForm" role="form" method="POST" action="addComment">
+				<div>
+					<input type="hidden" id="id" name="id" value="${id}">
+					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
+					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">
+					<label class="col-form-label-sm">Comentários do aluno: <#if aluno??>${aluno.nome}</#if></label>
+					<br>
+					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="top" title="Classifique o aluno baseado nos comentários">Classificação: </label> 
+					<select class="custom-select" id="classificacaoAluno" name="classificacaoAluno" onchange="javascript:mudarNotaDesign();">
+						<#if correctionReportItem??>
+							<#list classificacao as itemClassificacao>
+								<option value="${itemClassificacao}" <#if itemClassificacao.getClassification() == correctionReportItem.classification.getClassification()>selected</#if> >${itemClassificacao.getClassification()}</option>
+							</#list>
+						<#else>
+							<#list classificacao as itemClassificacao>
+								<option value="${itemClassificacao}">${itemClassificacao.getClassification()}</option>
+							</#list>
+						</#if>
+					</select>
+					<br>
+					<label class="col-form-label-sm">Nota dos testes: </label> <input type="text" class="text-xs-center" name="notaTestes" disabled id="notaTestes" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaTestes}'</#if>>
+					<br>
+					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="bottom" title='Não modifique essa nota! Apenas o professor modifica!!!'>Nota de design: </label>					
+					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if>>
+					<br>
+					<label class="col-form-label-sm">Nota do roteiro:</label> 
+					<input class="text-xs-center font-weight-bold" type="text" id="notaRoteiro" disabled name="notaRoteiro" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaDesign}'</#if>>
+					<br>
+					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6" placeholder="Comentários do corretor"><#if comentario??>${comentario?trim}</#if></textarea>
+					
+				</div>
+				<div >
+					<a class="btn btn-secondary btn-nav-link" onclick="document.getElementById('commentForm').submit();">Enviar</a>
+				</div>
+		</form>
+	<#else>
+		<p>Realize primeiro o login na parte superior do menu esquerdo.
+	</#if>
+	
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+<script type="text/javascript">
+function submitform(){
+    document.forms["commentForm"].submit();
+	$('#myModal').modal('show');
+}
+
+function mudarNotaDesign(){
+    var classif = document.getElementById('classificacaoAluno').value;
+	if(classif == 'EXCELENTE' ){
+		document.getElementById('notaDesign').value = '9.5'; 
+	} else if (classif == 'BOM' ){
+		document.getElementById('notaDesign').value = '8.0';
+	} else if (classif == 'REGULAR' ){
+		document.getElementById('notaDesign').value = '6.0';
+	} else if (classif == 'RUIM' ){
+		document.getElementById('notaDesign').value = '4.0';
+	} else {
+		document.getElementById('notaDesign').value = '0.0';
+	}
+	var notaDes = parseFloat(document.getElementById('notaDesign').value);
+	var notaTestes = parseFloat(document.getElementById('notaTestes').value);
+	var notaRoteiro = (notaTestes + notaDes*0.6);	
+	document.getElementById('notaRoteiro').value = notaRoteiro.toFixed(1);
+	return true;
+}
+
+
+</script>
+<script>
+$('#commentForm').submit(function () {
+ document.forms["commentForm"].submit();
+ $('#myModal').modal('show');
+ return false;
+});
+</script>
+</body>
+</html>
+

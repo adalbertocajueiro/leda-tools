@@ -21,7 +21,7 @@ for (NgxEntry entry : rtmpServers) {
 poderia ja mantar a lista d eestudantes no contexto.
 - tem que fazer o arquivo Provas.xlxs e carregar as provas no servidor - OK
 - tem que modificar o corretor para tambem corrigir as provas automaticamente. - OK
-- precisa tratar com uma tolerancia para o envio das provas?
+- precisa tratar com uma tolerancia para o envio das provas? - NAO - OK
 - precisa persistir as provas em um json tambem? - OK
 - nao permitir o envio de roteiro que ainda nao esta aberto para recebimento/submissao - OK
 - fazer funcionalidade para fazer o reload dos dados de configuracao automaticamente e salvar no singleton - OK
@@ -84,3 +84,12 @@ https://jar-download.com/explore-java-source-code-detail.php?file=./javaSource/o
 
 na planilha de submissoes, os arquivos podem ser ordenados por nome do estudante. isso pdoe ser feito no servidor ainda, odernando antes de colocar a variavel submissoes no modelo. OK
 - implementar mecanismo de nao permitir que o aluno baixe a prova e no final desista de enviar e deixe pra repor. - OK 
+
+config também pode implementar a opcao de mostrar os de revisao ou nao.
+-ordenar por datas as informacoes dos roteiros e provas.
+- SERA QUE VALE APENA ATACHAR UM VOLUME AO 10.4.4.174 PARA SALVAR OS DADOS A PARTIR DE 2016.2?
+- nao pode esquecer de mudar a propriedade submission.server.url antes de fazer o up do correction-tool para ele conseguir buscar os alunos - OK
+- fazer rotas que devolvem o relatorio detalhado do surefire e o maven output. provavalmente OK
+  tem que continuar com o sistema de links para poder passear no codigo fonte completo do aluno OK
+  tem que pensar em que links relativos vai gerar, mas manter a estrutura de links simbolicos e assets no servidor. OK
+- plotar apenas as faltas dos roteiros que ja aconteceram e ja fechou a data de envio.

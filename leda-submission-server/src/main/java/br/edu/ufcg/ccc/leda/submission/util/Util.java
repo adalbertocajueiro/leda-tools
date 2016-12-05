@@ -1,3 +1,4 @@
+
 package br.edu.ufcg.ccc.leda.submission.util;
 
 
@@ -12,20 +13,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -41,6 +44,13 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.poi.POIXMLException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jdom2.JDOMException;
+
 import com.github.odiszapc.nginxparser.NgxBlock;
 import com.github.odiszapc.nginxparser.NgxConfig;
 import com.github.odiszapc.nginxparser.NgxParam;
@@ -53,14 +63,14 @@ import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.util.Compactor;
+import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
+import br.edu.ufcg.ccc.leda.util.CorrectionReport;
+import br.edu.ufcg.ccc.leda.util.TestReport;
+import br.edu.ufcg.ccc.leda.util.Utilities;
+import jxl.read.biff.BiffException;
 
 public class Util {
 
-	public static final String AUTOR_MATRICULA = "autor.matricula";
-	public static final String AUTOR_NOME = "autor.nome";
-
-	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
-	
 	private static final int BUFFER_SIZE = 4096;
 	
 	/**
@@ -83,19 +93,20 @@ public class Util {
 	}
 	
 	public static String generateFileName(File file, ProfessorUploadConfiguration config){
-		String result = config.getRoteiro();
+		String result = config.getId();
 		
 		result = result + "-" + removeTempInfoFromFileName(file.getName());
 		
 		return result;
 	}
 	
+	
 	public static Comparator<String> comparatorProvas(){
 		Comparator<String> comparator = 
 				(name1,name2)-> {
 					int result = 0;
-					Pattern patternProvaPratica = Pattern.compile("PP[1-3]-[0-9][0-9[X]]");
-					Pattern patternProvaReposicao = Pattern.compile("PR[1-3]-[0-9][0-9[X]]");
+					Pattern patternProvaPratica = Pattern.compile("PP[1-9]-[0-9][0-9[X]]");
+					Pattern patternProvaReposicao = Pattern.compile("PR[1-9]-[0-9][0-9[X]]");
 					Pattern patternProvaFinal = Pattern.compile("PF[1-3]-[0-9][0-9[X]]");
 					Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 					if (patternRoteiro.matcher(name1).matches()){
@@ -153,6 +164,15 @@ public class Util {
 		
 		return result;
 	}
+	
+	public static SimilarityMatrix buildSimilarityMatrix(String id) throws IOException, JDOMException{
+		SimilarityMatrix result = null;
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		result = ClusteringUtil.buildSimilarityMatrix(atividadeFolder);
+		
+		return result;
+	}
+	
 	public static void writeRoteirosToJson(Map<String,Roteiro> roteiros, File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 
@@ -179,11 +199,73 @@ public class Util {
 		fw.flush();
 		fw.close();
 	}
+	
+	@Deprecated
 	public static Map<String, Roteiro> loadRoteirosFromJson(File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(jsonFile);
 		Map<String, Roteiro> map = gson.fromJson(fr, new TypeToken<Map<String,Roteiro>>(){}.getType());
 		return map;
+	}
+	
+	public static TestReport loadTestReport(String id) throws IOException{
+		TestReport result = null;
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			File jsonReport = new File(atividadeFolder,id + "-report.json");
+			if(jsonReport.exists()){
+				result = Utilities.loadTestReportFromJson(jsonReport);
+			}
+		}
+		return result;
+	}
+	
+	public static CorrectionReport loadCorrectionReport(String id) throws IOException{
+		CorrectionReport result = null;
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			File correctionReport = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReport.exists()){
+				result = Utilities.loadCorrectionReportFromJson(correctionReport);
+			}
+		}
+		return result;
+	}
+	
+	public static void writeCorrectionComment(String id, String matriculaAluno, 
+			String notaDesignStr, String classificacaoStr, String comment) throws IOException{
+		
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			CorrectionReport report = null;
+			File correctionReportFile = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReportFile.exists()){
+				report = Utilities.loadCorrectionReportFromJson(correctionReportFile);
+			}
+			if(report != null){
+				double notaDesign = Double.valueOf(notaDesignStr);
+				CorrectionClassification classificacao = 
+						CorrectionClassification.valueOf(classificacaoStr);
+				report.setNotaDesign(matriculaAluno, notaDesign);
+				report.setClassificacao(matriculaAluno, classificacao);
+				report.setComentario(matriculaAluno,comment.trim());
+				Utilities.writeCorrectionReportToJson(report, correctionReportFile);
+			}
+			
+		}
+		
+	}
+	
+	public static void writeCorrectionReport(CorrectionReport report, 
+			String id) throws IOException{
+	
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		if(atividadeFolder.exists()){
+			File correctionReport = new File(atividadeFolder,id + "-correction.json");
+			if(correctionReport.exists()){
+				Utilities.writeCorrectionReportToJson(report,correctionReport);
+			}
+		}
 	}
 	
 	public static Map<String, String> loadFilesOwnersFromJson(File jsonFile) throws FileNotFoundException {
@@ -217,7 +299,7 @@ public class Util {
 	
 	public static Properties loadProperties() throws IOException{
 		Properties p = new Properties();
-		File confFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
+		File confFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
 		FileReader fr = new FileReader(new File(confFolder,"app.properties"));
 		p.load(fr);
 		
@@ -225,19 +307,21 @@ public class Util {
 	}
 	
 	public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
-		GregorianCalendar result = new GregorianCalendar();
-		//se estiver no formato errado retorna uma excecao
-		//tem que fazer isso com string format provavelmente ou regex
-		if(!PATTERN_DATE_TIME.matcher(dataHora).matches()){
-			throw new WrongDateHourFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
-		}
-		result.set(Calendar.DATE, Integer.parseInt(dataHora.substring(0, 2)));
-		result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)) - 1); //janeiro eh considerado mes 0
-		result.set(Calendar.YEAR, Integer.parseInt(dataHora.substring(6, 10)));
-		result.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dataHora.substring(11, 13)));
-		result.set(Calendar.MINUTE, Integer.parseInt(dataHora.substring(14, 16)));
-		result.set(Calendar.SECOND, Integer.parseInt(dataHora.substring(17)));
-		
+		GregorianCalendar result = null;
+		if(dataHora != null){
+			result = new GregorianCalendar();
+			//se estiver no formato errado retorna uma excecao
+			//tem que fazer isso com string format provavelmente ou regex
+			if(!Constants.PATTERN_DATE_TIME.matcher(dataHora).matches()){
+				throw new WrongDateHourFormatException("Date " + dataHora + " does not respect the format DD/MM/YYYY HH:MM:SS");
+			}
+			result.set(Calendar.DATE, Integer.parseInt(dataHora.substring(0, 2)));
+			result.set(Calendar.MONTH, Integer.parseInt(dataHora.substring(3,5)) - 1); //janeiro eh considerado mes 0
+			result.set(Calendar.YEAR, Integer.parseInt(dataHora.substring(6, 10)));
+			result.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dataHora.substring(11, 13)));
+			result.set(Calendar.MINUTE, Integer.parseInt(dataHora.substring(14, 16)));
+			result.set(Calendar.SECOND, Integer.parseInt(dataHora.substring(17)));
+		} 
 		return result;
 	}
 
@@ -274,8 +358,52 @@ public class Util {
         bos.close();
     }
 	
-	public static Map<String,Roteiro> loadSpreadsheetRoteiros(String idGoogleDrive) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
-		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
+	public static List<Corretor> loadSpreadsheetMonitor(String idGoogleDrive) throws IOException, ServiceException{
+		ArrayList<Corretor> monitores = new ArrayList<Corretor>();
+		
+		SpreadsheetService service = new SpreadsheetService("Sheet1");
+        
+        String sheetUrl =
+            "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
+
+        // Use this String as url
+        URL url = new URL(sheetUrl);
+
+        // Get Feed of Spreadsheet url
+        ListFeed lf = service.getFeed(url, ListFeed.class);
+
+        //Iterate over feed to get cell value
+        for (ListEntry le : lf.getEntries()) {
+            CustomElementCollection cec = le.getCustomElements();
+            //Pass column name to access it's cell values
+            String matricula = cec.getValue("Matricula".toLowerCase());
+            String nome = cec.getValue("Nome".toLowerCase());
+            //System.out.println(val);
+            String email = cec.getValue("Email".toLowerCase());
+            String fone = cec.getValue("Fone".toLowerCase());
+            String senha = null;
+            
+            Corretor corretor = 
+            		new Monitor(matricula, nome, email, fone, senha);
+            if(matricula.length() == 7){ //matricula de um professor
+            	corretor = new Professor(matricula, nome, email, fone,senha);
+            }
+            
+            monitores.add(corretor);
+        }
+        
+		return monitores;
+	}
+	
+	public static Map<String,Atividade> loadSpreadsheetsAtividades(List<Corretor> corretores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T1, corretores));
+		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T2, corretores));
+		
+		return atividades;
+	}
+	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Corretor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
         
             String sheetUrl =
@@ -291,7 +419,8 @@ public class Util {
             for (ListEntry le : lf.getEntries()) {
                 CustomElementCollection cec = le.getCustomElements();
                 //Pass column name to access it's cell values
-                String idRoteiro = cec.getValue("Roteiro".toLowerCase());
+                String id = cec.getValue("Id".toLowerCase());
+                String nome = cec.getValue("Nome".toLowerCase());
                 //System.out.println(val);
                 String descricao = cec.getValue("Descrição".toLowerCase());
                 //System.out.println(val2);
@@ -301,83 +430,393 @@ public class Util {
                 //System.out.println(val4);
                 GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cec.getValue("Data-HoraLimiteEnvioAtraso".toLowerCase()));
                 //System.out.println(val5);
-                String monitorCorretor = cec.getValue("MonitorCorretor".toLowerCase());
+                
+                String nomesMonitores = cec.getValue("Monitores".toLowerCase());
+                List<Monitor> monitoresDoRoteiro = listOfMonitores(nomesMonitores,monitores);
+                
+                String nomeMonitor = cec.getValue("Corretor".toLowerCase());
+                Corretor corretor = 
+                		monitores.stream().filter(m -> m.getNome().equals(nomeMonitor)).findAny().orElse(null);
+                
                 //System.out.println(val6);
                 GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cec.getValue("DataInicioCorrecao".toLowerCase()));
                 //System.out.println(val7);
                 GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cec.getValue("DataEntregaCorrecao".toLowerCase()));
                 //System.out.println(val8);
-                Roteiro roteiro = new Roteiro(idRoteiro,descricao,dataHoraLiberacao,
-                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitorCorretor,
-                		dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);
-                roteiros.put(roteiro.getId(), roteiro);
+                String links = cec.getValue("LinksVideoAulas".toLowerCase());
+                List<LinkVideoAula> linksVideoAulas = listOfLinks(links);
+                
+                Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
+                		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitoresDoRoteiro,
+                		corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao);
+                
+                atividades.put(atividade.getId(), atividade);
             }
             
-            File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
-    		if(!configFolder.exists()){
-    			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
-    		}
-    		File jsonFileRoteiros = new File(configFolder,FileUtilities.JSON_FILE_ROTEIRO);
-
-    		//sobrescreve os dados lidos da spreadsheet
-    		FileUtilities.loadRoteirosFromUploadFolder(roteiros);
+    		//sobrescreve os dados lidos da spreadsheet (apenas os arquivos de ambiente e correcao coletados nas pastas)
+    		Util.loadAtividadesFromUploadFolder(atividades);
     		
-    		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
-    		Util.writeRoteirosToJson(roteiros, jsonFileRoteiros);
-        
-        return roteiros;
+        return atividades;
+	}
+
+	/**
+	 * Carrega os nomes dos alunso paseando-se nas matriculas. Os alunos
+	 * fornecem a matricula e o nome sera pego da lista dos amtriculados excel).
+	 * Esse mapa deve ser atualizado caso o arquivo de excel seja atualizado
+	 * também. Ver isso nos frameworks do engenho onde vai rodar ou entao
+	 * colocar uma url no sistema para ele fazer isso automaticamente quando
+	 * invocada essafuncao por get. Os arquivos dos estudantes devem ser lidos
+	 * de uma pasta pegando todos os dados em arquivos xls ou xlxs que comecam
+	 * com o nome frequencia.
+	 * 
+	 * @return
+	 * @throws ConfigurationException 
+	 * @throws IOException 
+	 * @throws BiffException 
+	 */
+	public static Map<String, Student> loadStudentLists() throws IOException, BiffException {
+		Map<String, Student> result = new HashMap<String, Student>();
+		File configFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
+		if(!configFolder.exists()){
+			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+		}
+		//System.out.println("%%%%%%CONFIG FOLDER: " + configFolder.getAbsolutePath());
+		File[] excelFiles = configFolder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				boolean frequencia = pathname.getName().startsWith("frequencia");
+				boolean excel = pathname.getName().endsWith(".xls") || pathname.getName().endsWith(".xlsx");
+				return  frequencia && excel;
+			}
+		});
+		//System.out.println("%%%%%%%%% EXCEL FILES: " + excelFiles.length);
+		for (int i = 0; i < excelFiles.length; i++) {
+			loadStudentsFromExcelFile(excelFiles[i],result);
+		}
+		return result;
+	}
+
+	/**
+	 * Arquivo excel tem que ter extensao xlsx
+	 * 
+	 * @param excelFile
+	 * @param map
+	 * @throws IOException
+	 * @throws BiffException
+	 */
+	protected static void loadStudentsFromExcelFile(File excelFile, Map<String,Student> map) throws IOException, BiffException{
+		loadStudentsFromXLSX(excelFile, map);
+	}
+
+	private static void loadStudentsFromXLSX(File xlsxFile,Map<String, Student> map) throws IOException {
+		FileInputStream fis = new FileInputStream(xlsxFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			myWorkBook = new HSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}
+		String turma = extractTurmaFromExcelFile(xlsxFile);
+		if(turma.equals("0")){
+			myWorkBook.close();
+			throw new RuntimeException("Turma invalida!");
+		}
+		
+		Iterator<Row> rowIterator = mySheet.iterator();
+		
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cell0 = row.getCell(0);
+            	if(cell0 != null){
+            			org.apache.poi.ss.usermodel.Cell cell1 = row.getCell(1);
+            			org.apache.poi.ss.usermodel.Cell cell2 = row.getCell(2);
+            			Student student = new Student(cell1.getStringCellValue(), cell2.getStringCellValue(), turma);
+            			map.put(cell1.getStringCellValue(), student);
+            	}
+            }
+		}
+		myWorkBook.close();
+	}
+
+	private static String extractTurmaFromExcelFile(File excelFile){
+		String turma = "00";
+		String nomeArquivo = excelFile.getName();
+		if(nomeArquivo.indexOf("-01_") != -1){
+			turma = "01";
+		} else if (nomeArquivo.indexOf("-02_") != -1){
+			turma = "02";
+		} else if (nomeArquivo.indexOf("-03_") != -1){
+			turma = "03";
+		}
+		
+		return turma;
+	}
+
+	@Deprecated
+	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(List<Corretor> monitores) throws IOException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		
+		atividades.putAll(loadSpreadsheetAtividadeFromExcel("Cronograma T1.xlsx", monitores));
+		atividades.putAll(loadSpreadsheetAtividadeFromExcel("Cronograma T2.xlsx", monitores));
+		
+		return atividades;
 	}
 	
-	public static Map<String,Prova> loadSpreadsheetProvas(String idGoogleDrive) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
-		Map<String,Prova> provas = new HashMap<String,Prova>();
-		SpreadsheetService service = new SpreadsheetService("Sheet2");
-            String sheetUrl =
-            		"https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
-            		//"https://docs.google.com/spreadsheets/d/19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA";
+	@Deprecated
+	public static Map<String,Atividade> loadSpreadsheetAtividadeFromExcel(String excelFileName, List<Corretor> monitores) throws IOException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		
+		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,excelFileName);
+		FileInputStream fis = new FileInputStream(excelFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			//problema na leitura do arquivo excel
+			ex.printStackTrace();
+		}
+	
+		Iterator<Row> rowIterator = mySheet.iterator();
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cellId = row.getCell(0);
+            	if(cellId != null){
+            		String id = cellId.getStringCellValue(); //
 
-            // Use this String as url
-            URL url = new URL(sheetUrl);
+            		if(!id.equals("Id")){ //pode trabalhar aqui com o matcher
+            			org.apache.poi.ss.usermodel.Cell cellNome = row.getCell(1); //celula com o nome
+            			org.apache.poi.ss.usermodel.Cell cellDescricao = row.getCell(2); //celula com a descricao
+            			org.apache.poi.ss.usermodel.Cell cellDataHoraLiberacao = row.getCell(3); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellDataHoraEnvioNormal = row.getCell(4); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellDataHoraLimiteEnvioAtraso = row.getCell(5); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellNomesMonitores = row.getCell(6); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellNomeMonitorCorretor = row.getCell(7); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellDataInicioCorrecao = row.getCell(8); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellDataEntregaCorrecao = row.getCell(9); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellLinksVideoAulas = row.getCell(10); //celula de datahora de liberacao
 
-            // Get Feed of Spreadsheet url
-            ListFeed lf = service.getFeed(url, ListFeed.class);
+                        String nome = cellNome != null?cellNome.getStringCellValue():"";
+                        String descricao = cellDescricao != null?cellDescricao.getStringCellValue():"";
+                        GregorianCalendar dataHoraLiberacao = Util.buildDate(cellDataHoraLiberacao.getDateCellValue());
+                        GregorianCalendar dataHoraEnvioNormal = Util.buildDate(cellDataHoraEnvioNormal.getDateCellValue());
+                        GregorianCalendar dataHoraLimiteEnvioAtraso = Util.buildDate(cellDataHoraLimiteEnvioAtraso.getDateCellValue());
+                        String nomesMonitores = cellNomesMonitores != null?cellNomesMonitores.getStringCellValue():"";
+                        List<Monitor> monitoresDoRoteiro = listOfMonitores(nomesMonitores,monitores);
+                        
+                        String nomeMonitor = cellNomeMonitorCorretor.getStringCellValue();
+                        Corretor corretor = monitores.stream().filter(c -> c.getNome().equals(nomeMonitor))
+                        		.findFirst().orElse(null);
 
-            //Iterate over feed to get cell value
-            for (ListEntry le : lf.getEntries()) {
-                CustomElementCollection cec = le.getCustomElements();
-                //Pass column name to access it's cell values
-                String idProva = cec.getValue("Prova".toLowerCase());
-                //System.out.println(idProva);
-                String descricao = cec.getValue("Descrição".toLowerCase());
-                //System.out.println(val2);
-                GregorianCalendar dataHoraLiberacao = Util.buildDate(cec.getValue("Data-HoraLiberação".toLowerCase()));
-                //System.out.println(val3);
-                GregorianCalendar dataHoraLimiteEnvio = Util.buildDate(cec.getValue("Data-HoraLimiteEnvio".toLowerCase()));
-                //System.out.println(val4);
-                Prova prova = new Prova(idProva,descricao,null,null,
-                		dataHoraLiberacao,dataHoraLimiteEnvio);
-                provas.put(prova.getProvaId(), prova);
+                        GregorianCalendar dataHoraInicioCorrecao = Util.buildDate(cellDataInicioCorrecao.getDateCellValue());
+                        GregorianCalendar dataHoraEntregaCorrecao = Util.buildDate(cellDataEntregaCorrecao.getDateCellValue());
+                        String links = cellLinksVideoAulas != null?cellLinksVideoAulas.getStringCellValue():"";
+                        List<LinkVideoAula> linksVideoAulas = listOfLinks(links);
+                        
+                        Atividade atividade = createAtividade(id,nome,descricao,dataHoraLiberacao, linksVideoAulas,
+                        		dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,monitoresDoRoteiro,
+                        		corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao);
+                        
+                        atividades.put(atividade.getId(), atividade);
+            		}
+            	}
             }
-            
-            File configFolder = new File(FileUtilities.DEFAULT_CONFIG_FOLDER);
-    		if(!configFolder.exists()){
-    			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
-    		}
-    		File jsonFileProvas = new File(configFolder,FileUtilities.JSON_FILE_PROVA);
+		}
+		myWorkBook.close();
 
-    		//sobrescreve os dados lidos da spreadsheet
-    		FileUtilities.loadProvasFromUploadFolder(provas);
-    		
-    		//com o reuso pode ter acontecido de alguma data ter sido modificada. entao salvamos novamente no json
-    		Util.writeProvasToJson(provas, jsonFileProvas);
-        
-        return provas;
+		//sobrescreve os dados lidos da spreadsheet (apenas os arquivos de ambiente e correcao coletados nas pastas)
+		Util.loadAtividadesFromUploadFolder(atividades);
+
+       
+		return atividades;
 	}
+
+	@Deprecated
+	public static List<Corretor> loadSpreadsheetMonitorFromExcel() throws IOException{
+		ArrayList<Corretor> monitores = new ArrayList<Corretor>();
+		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Monitores.xlsx");
+		FileInputStream fis = new FileInputStream(excelFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			//problema na leitura do arquivo excel
+			ex.printStackTrace();
+		}
+	
+		Iterator<Row> rowIterator = mySheet.iterator();
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cellMatricula = row.getCell(0);
+            	if(cellMatricula != null){
+            		String matricula = null;
+            		if(cellMatricula.getCellType() != XSSFCell.CELL_TYPE_STRING){
+            			matricula = String.valueOf((int)cellMatricula.getNumericCellValue()); //
+            		}else{
+            			matricula = cellMatricula.getStringCellValue();
+            		}
+
+            		if(!matricula.equals("Matricula") && matricula.length() > 1){ //pode trabalhar aqui com o matcher
+            			org.apache.poi.ss.usermodel.Cell cellNome = row.getCell(1); //celula com o nome
+            			org.apache.poi.ss.usermodel.Cell cellEmail = row.getCell(2); //celula com a descricao
+            			org.apache.poi.ss.usermodel.Cell cellFone = row.getCell(3); //celula de datahora de liberacao
+            			org.apache.poi.ss.usermodel.Cell cellSenha = row.getCell(8); //celula de datahora de liberacao
+
+            			String nome = cellNome != null?cellNome.getStringCellValue():"";
+                        String email = cellEmail != null?cellEmail.getStringCellValue():"";
+                        String fone = cellFone != null? (cellFone.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellFone.getNumericCellValue()):cellFone.getStringCellValue():"";
+                        String senha = null;
+                        
+                        Corretor corretor = 
+                        		new Monitor(matricula, nome, email, fone,senha);
+                        
+                        if(matricula.length() == 7){ //matricula de um professor
+                        	corretor = new Professor(matricula, nome, email, fone,senha);
+                        }
+                        monitores.add(corretor);
+            		}
+            	}
+            }
+		}
+		myWorkBook.close();
+
+       
+		return monitores;
+	}
+
+	public static void loadSpreadsheetSenhasFromExcel(List<Corretor> corretores) throws IOException{
+		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Senhas.xlsx");
+		FileInputStream fis = new FileInputStream(excelFile);
+		
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet mySheet = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			mySheet = myWorkBook.getSheetAt(0);
+		}catch(POIXMLException ex){
+			//problema na leitura do arquivo excel
+			ex.printStackTrace();
+		}
+	
+		Iterator<Row> rowIterator = mySheet.iterator();
+		while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+            if(cellIterator.hasNext()){
+            	org.apache.poi.ss.usermodel.Cell cellMatricula = row.getCell(0);
+            	if(cellMatricula != null){
+            		String matricula = null;
+            		if(cellMatricula.getCellType() != XSSFCell.CELL_TYPE_STRING){
+            			matricula = String.valueOf((int)cellMatricula.getNumericCellValue()); //
+            		}else{
+            			matricula = cellMatricula.getStringCellValue();
+            		}
+
+            		if(!matricula.equals("Matricula") && matricula.length() > 1){ //pode trabalhar aqui com o matcher
+            			org.apache.poi.ss.usermodel.Cell cellSenha = row.getCell(1); //celula com o nome
+                        String senha = cellSenha != null? (cellSenha.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellSenha.getNumericCellValue()):cellSenha.getStringCellValue():"";
+                        	
+                        String matr = matricula;
+                        Corretor corretor = corretores.stream().filter(c -> c.getMatricula().equals(matr))
+                        		.findFirst().orElse(null);
+                        if(corretor != null){
+                        	corretor.setSenha(senha);
+                        }
+            		}
+            	}
+            }
+		}
+		myWorkBook.close();
+	}
+	private static Atividade createAtividade(String id, String nome, String descricao,
+			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
+			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Corretor corretor,
+			GregorianCalendar dataHoraInicioCorrecao, GregorianCalendar dataHoraEntregaCorrecao) {
+		
+		Atividade result = null;
+		if(Constants.PATTERN_AULA.matcher(id).matches()){
+			result = new Aula(id,nome,descricao,dataHoraLiberacao,linksVideoAulas,monitores);			
+		}else if(Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){
+			result = new RoteiroRevisao(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+		}else if(Constants.PATTERN_ROTEIRO.matcher(id).matches()){
+			result = new Roteiro(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+			
+		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
+			//System.out.println("MOntando atividade da prova: " + id);
+			//System.out.println("Corretor: " + corretor);
+			result = new Prova(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,
+					monitores,(Professor) corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
+			
+		}
+		return result;
+	}
+
+	public static void loadAtividadesFromUploadFolder(Map<String,Atividade> atividades){
+		
+			Set<String> keys = atividades.keySet();
+			for (String key : keys) {
+				Atividade atividade = atividades.get(key);
+				File folderToSearch = Constants.ROTEIROS_FOLDER;
+				if(Constants.PATTERN_PROVA.matcher(atividade.getId()).matches()){
+					folderToSearch = Constants.PROVAS_FOLDER;
+				}
+				File[] files = folderToSearch.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File pathname) {
+						//tem arquivos cadastrado para o roteiro pelo ID
+						return pathname.getName().startsWith(atividade.getId());
+					}
+				});
+				//tem arquivo cadastrado para o roteiro
+				File environment = null;
+				File correction = null;
+				if(files.length > 0){
+					for (int i = 0; i < files.length; i++) {
+						if(files[i].getName().contains("environment")){
+							environment = files[i];
+						} else{
+							correction = files[i];
+						}
+					}
+				}
+				if(atividade instanceof Roteiro){
+					((Roteiro) atividade).setArquivoAmbiente(environment);
+					((Roteiro) atividade).setArquivoProjetoCorrecao(correction);
+				}else if(atividade instanceof Prova){
+					((Roteiro) atividade).setArquivoAmbiente(environment);
+					((Roteiro) atividade).setArquivoProjetoCorrecao(correction);
+				}
+			}
+	}
+
 	public static File compact(File folder) throws IOException{
 		//id pode ser d euma prova ou de um roteiro
 		File target = null;
 		Compactor compactor = new Compactor();
-		//File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		//File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		//File uploadFolder = new File(Constants.UPLOAD_FOLDER);
+		//File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		//File folder = new File(currentSemester,id);
 		if(folder.exists()){
 			//target = new File(currentSemester,id + ".zip");
@@ -398,10 +837,14 @@ public class Util {
 				return pathname.isFile() && pathname.getName().startsWith(prefix);
 			}
 		});
-		for (int i = 0; i < files.length; i++) {
-			Files.deleteIfExists(files[i].toPath());
+		if(files != null){
+			for (int i = 0; i < files.length; i++) {
+				Files.deleteIfExists(files[i].toPath());
+			}
 		}
 	}
+
+	@Deprecated
 	public static void loadConfig(String path) throws IOException{
 		NgxConfig conf = NgxConfig.read(path);
 		NgxBlock app = conf.findBlock("application");
@@ -426,8 +869,8 @@ public class Util {
 	 */
 	public static List<String> alunosDownload(String id) throws IOException{
 		ArrayList<String> alunosComDownload = new ArrayList<String>();
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		File provaUploadFolder = new File(currentSemester,id);
 		File downloadLogFile = new File(provaUploadFolder, id + ".log");
 		
@@ -450,20 +893,31 @@ public class Util {
 		return alunosComDownload;
 	}
 	
-	public static Map<String,List<Submission>> allSubmissions() throws ConfigurationException, IOException, ServiceException{
-		Map<String,List<Submission>> result = new HashMap<String,List<Submission>>();
+	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
+		//precisa ordenar as submissoes pelas datas de cada atividade
+		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
 
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		Map<String,List<Submission>> result = new TreeMap<String,List<Submission>>(
+				(s1,s2) -> {
+					Atividade a1 = atividades.get(s1);
+					Atividade a2 = atividades.get(s2);
+					return (int)(a1.getDataHora().getTimeInMillis() - a2.getDataHora().getTimeInMillis());
+				});
+
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		if(currentSemester.exists()){
-			Pattern patternRoteiro = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
-			Pattern patternProva = Pattern.compile("P[PRF][1-3]-[0-9][0-9[X]]");
 			File[] folders = currentSemester.listFiles(new FileFilter() {
 				
 				@Override
 				public boolean accept(File arg0) {
-					return patternRoteiro.matcher(arg0.getName()).matches() 
-							|| patternProva.matcher(arg0.getName()).matches();
+					boolean matches = Constants.PATTERN_ROTEIRO.matcher(arg0.getName()).matches()
+							|| Constants.PATTERN_PROVA.matcher(arg0.getName()).matches();
+					if(showAll){
+						matches = matches || Constants.PATTERN_ROTEIRO_REVISAO.matcher(arg0.getName()).matches();
+					}
+					return matches;
+							
 				}
 			});
 			for (int i = 0; i < folders.length; i++) {
@@ -473,6 +927,7 @@ public class Util {
 			}
 		}
 		
+		
 		return result;
 	}
 	
@@ -481,7 +936,7 @@ public class Util {
 		List<Submission> result = new ArrayList<Submission>();
 	
 		if(atividadeFolder.exists()){
-			File submissionsFolder = new File(atividadeFolder,FileUtilities.SUBMISSIONS_FOLDER);
+			File submissionsFolder = new File(atividadeFolder,Constants.SUBMISSIONS_FOLDER_NAME);
 			List<File> files = new ArrayList<File>();
 			if(submissionsFolder.exists()){
 				files = filesAsList(submissionsFolder);
@@ -498,7 +953,7 @@ public class Util {
 					try {
 						sub = new Submission(id, a.getMatricula());
 						result.add(sub);
-					} catch (ConfigurationException | IOException | ServiceException | RoteiroException
+					} catch (ConfigurationException | IOException | ServiceException | AtividadeException
 							| StudentException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -551,8 +1006,8 @@ public class Util {
 	}
 	public static List<List<FileCopy>> listAllCopies(String id) throws ConfigurationException, IOException, ServiceException{
 		
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		File currentSemester = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		File folder = new File(currentSemester,id);
 
 		return listAllCopies(folder);
@@ -567,11 +1022,10 @@ public class Util {
 	 * @throws IOException
 	 * @throws ServiceException
 	 */
-	//PPPP testar a aexecucao desse metodo.
 	public static List<List<FileCopy>> listAllCopies(File folderId) throws ConfigurationException, IOException, ServiceException{
 		List<List<FileCopy>> result = new ArrayList<List<FileCopy>>();
 
-		File submissionsFolder = new File(folderId,FileUtilities.SUBMISSIONS_FOLDER);
+		File submissionsFolder = new File(folderId,Constants.SUBMISSIONS_FOLDER_NAME);
 		File[] jsons = submissionsFolder.listFiles(new FileFilter() {
 			
 			@Override
@@ -804,8 +1258,43 @@ public class Util {
 		}
 	}
 		
+	private static List<Monitor> listOfMonitores(String listOfMonitores,List<Corretor> monitores) {
+		ArrayList<Monitor> list = new ArrayList<Monitor>();
+		if(listOfMonitores != null){
+			String[] nomes = listOfMonitores.split(",");
+			for (String nome : nomes) {
+				monitores.stream().forEach(m -> {
+					if(m.getNome().equals(nome.trim()) && !(m instanceof Professor)){
+						list.add((Monitor) m);
+					}
+				});
+			}
+		}
+		
+		return list;
+	}
+	private static List<LinkVideoAula> listOfLinks(String listOfLinks){
+		ArrayList<LinkVideoAula> list = new ArrayList<LinkVideoAula>();
+		Function<String[], List<LinkVideoAula>> fill = new Function<String[], List<LinkVideoAula>>() {
+			@Override
+			public List<LinkVideoAula> apply(String[] links) {
+				for (String textoURL : links) {
+
+					LinkVideoAula link = new LinkVideoAula(textoURL.trim());
+					list.add(link);
+
+				}
+				return list;
+			}
+		};
+		if(listOfLinks != null && listOfLinks.length() > 0){
+			fill.apply(listOfLinks.split(","));
+		}
+		return list;
+	}
 	
-	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException {
+
+	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException, BiffException, JDOMException {
 		//Util.sendEmail("adalberto.cajueiro@gmail.com", "adalberto.cajueiro@gmail.com", "Teste", "conteudo", "adalberto.cajueiro@gmail.com", "acfcaju091401");
 		//Util.send2();
 		//System.out.println("Email enviado");
@@ -813,17 +1302,26 @@ public class Util {
 		//https://docs.google.com/spreadsheets/d//pubhtml
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("1mt0HNYUMgK_tT_P2Lz5PQjBP16F6Hn-UI8P21C0iPmI");
 		//provas.forEach((id,p) -> System.out.println(p));
-		Util.submissions(new File("D:\\trash2\\leda-upload\\2016.1\\R01-01"));
+		//List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
+		//Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
+		//Map<String,Student> alunos = Util.loadStudentLists();
+		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
+		//students.forEach(s -> System.out.println(s.getNome()));
 		
-		Map<String,List<Submission>> allSubmissions = Util.allSubmissions();
-		allSubmissions.forEach( (id,ls) -> {
-			System.out.println("Atividade: " + id);
-			ls.forEach( s -> {
-				if(s.getArquivoSubmetido() != null){
-					System.out.println(" - " + s.getArquivoSubmetido().getName());
-				}
-			} );
-		});
+		List<Corretor> corretores = Util.loadSpreadsheetMonitorFromExcel();
+		SimilarityMatrix matrix = Util.buildSimilarityMatrix("R01-01");
+		for (int i = 0; i < matrix.getSimilarities().length; i++) {
+			System.out.println(Arrays.toString(matrix.getSimilarities()[i]));
+		}
+		Util.loadSpreadsheetSenhasFromExcel(corretores);
+		Map<String,Atividade> atividades = Util.loadSpreadsheetAtividadeFromExcel(corretores);
+		atividades.values().forEach(a -> a.getMonitores().forEach(m -> System.out.println(m.getNome())));
+		atividades.values().stream().filter(a -> a instanceof Roteiro).forEach(r -> System.out.println(((Roteiro) r).getCorretor()));
+		//CorrectionReport report = Util.loadCorrectionReport("RR1-01");
+		//report.getReportItems().forEach(tri -> System.out.println(tri.getMatricula()));
+		int i = 2;
+		int k = 1;
+		
 		//Map<String,Prova> provas = Util.loadSpreadsheetProvas("19npZPI7Y1jyk1jxNKHgUZkYTk3hMT_vdmHunQS-tOhA");
 		//provas.forEach((id,p) -> System.out.println(p));
 		//File target = Util.compact(new File("D:\\trash2\\leda-upload\\2016.1\\R01-02"));
@@ -895,6 +1393,7 @@ public class Util {
 		 System.out.println("DST_OFFSET: "
 		        + (calendar.get(Calendar.DST_OFFSET)/(60*60*1000))); // in hours
 */	}
+
 }
 class SMTPAuthenticator extends javax.mail.Authenticator{
 	public PasswordAuthentication getPasswordAuthentication(){

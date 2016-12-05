@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,12 +16,10 @@ import java.util.stream.Collectors;
 import org.jooby.Jooby;
 import org.jooby.MediaType;
 import org.jooby.Results;
+import org.jooby.Session;
 import org.jooby.Upload;
 import org.jooby.View;
 import org.jooby.ftl.Ftl;
-import org.pac4j.core.exception.CredentialsException;
-import org.pac4j.http.credentials.UsernamePasswordCredentials;
-import org.pac4j.http.credentials.authenticator.UsernamePasswordAuthenticator;
 
 import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
@@ -30,14 +29,25 @@ import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
+import br.edu.ufcg.ccc.leda.submission.util.Corretor;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
+import br.edu.ufcg.ccc.leda.submission.util.Professor;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
-import br.edu.ufcg.ccc.leda.submission.util.RoteiroException;
+import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
+import br.edu.ufcg.ccc.leda.submission.util.SimilarityMatrix;
+import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
+import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
+import br.edu.ufcg.ccc.leda.util.CorrectionReport;
+import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
+import br.edu.ufcg.ccc.leda.util.TestReport;
+import br.edu.ufcg.ccc.leda.util.TestReportItem;
 import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
+import br.edu.ufcg.ccc.leda.submission.util.Atividade;
+import br.edu.ufcg.ccc.leda.submission.util.Constants;
 
 /**
  * @author jooby generator
@@ -78,7 +88,12 @@ public class SubmissionServer extends Jooby {
 		assets("css/**");
 		assets("/*.ico");
 		assets("/*.svg");
-		assets("bootstrap4/**");
+		assets("/*.gif");
+		assets("/*.png");
+		assets("jquery/**");
+		assets("plotly/**");
+		assets("bootstrap/**");
+		assets("tether/**");
 		
 	}
   {
@@ -106,15 +121,156 @@ public class SubmissionServer extends Jooby {
 	}).produces("json");
 	
 	get("/alunos", (req) -> {
-        //List<String> alunos = new ArrayList<String>();
         Map<String,Student> alunos = Configuration.getInstance().getStudents();
         View html = Results.html("alunos");
-        html.put("pageName", "Alunos cadastrados em LEDA");
-        
-        html.put("alunos",alunos.values().stream().sorted((a1,a2) -> a1.getTurma().compareTo(a2.getTurma()) == 0 ? a1.getNome().compareTo(a2.getNome()) : a1.getTurma().compareTo(a2.getTurma())).collect(Collectors.toList()));
+        html.put("semestre",Constants.CURRENT_SEMESTER);
+        html.put("alunos",alunos.values().stream()
+        		.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+        		.collect(Collectors.toList()));
+        Map<String,List<Atividade>> atividadesAgrupadas = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.groupingBy( Atividade::getTurma));
+        html.put("turmas",atividadesAgrupadas.keySet());
         
         return html;
     });
+	
+	get("/cronograma", (req) -> {
+        Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
+        View html = Results.html("cronograma");
+        Map<String,List<Atividade>> atividadesAgrupadas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
+        html.put("atividades", atividadesAgrupadas);
+        
+        return html;
+    });
+	
+	get("/menu", (req) -> {
+        View html = Results.html("menu-frames");
+        return html;
+    });
+	
+	get("/menuLeft", (req) -> {
+        View html = Results.html("menu");
+        return html;
+    });
+	
+	get("/menuCorrecao", (req) -> {
+		String id = req.param("id").value();	
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		//System.out.println("%%%%ATIVIDADE " + atividade);
+		View html = Results.html("menu-frames-correcao");
+        html.put("id", id);
+        html.put("sessionId", req.session().id());
+        if(atividade instanceof Roteiro){
+       		html.put("corretor",((Roteiro) atividade).getCorretor());
+        }
+        return html;
+    });
+	
+	get("/surefireReport", (req) -> {
+		View html = Results.html("surefire-report");
+		html.put("sessionId", req.session().id());
+		
+		return html;
+    });
+	
+	get("/commentPanel", (req) -> {
+		String id = req.param("id").value("");
+		String matriculaAluno = req.param("matricula").value("");
+		String corretorPar = req.param("corretor").value("");
+		Session session = req.session();
+		
+		Student aluno = Configuration.getInstance().getStudents().get(matriculaAluno);
+		
+		View html = Results.html("comment-panel");
+		html.put("id",id);
+		html.put("matricula", matriculaAluno);
+		html.put("aluno",aluno);
+		html.put("corretorMat",corretorPar);
+		html.put("corretor", session.get("corretor"));
+		html.put("classificacao",CorrectionClassification.values());
+		
+		CorrectionReport report = Util.loadCorrectionReport(id);
+		
+		if(report != null){
+			if(report.getMatriculaCorretor().equals("")){
+				report.setMatriculaCorretor(corretorPar);
+				Util.writeCorrectionReport(report, id);
+			}
+			CorrectionReportItem correctionItem = report.getCorrectionReportItemforStudent(matriculaAluno);
+			if(correctionItem != null){
+				html.put("correctionReportItem", correctionItem);
+			}
+		}
+
+		if(!matriculaAluno.equals("")){
+			html.put("comentario",report.getComentario(matriculaAluno).trim());
+		}
+
+		
+		return html;
+		//resp.send("Painel para comentario do codigo do aluno: " + matricula);
+    });
+	
+	get("/menuLeftCorrecao", (req) -> {
+		String id = req.param("id").value();
+		String turma = id.substring(4).trim();
+		Session session = req.session();
+		String corretor = session.get("corretor").toOptional().orElse(null);
+		List<Student> alunos = Configuration.getInstance().getStudents().values()
+				.stream().filter(a -> a.getTurma().equals(turma))
+				.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toList());
+		TestReport report = Util.loadTestReport(id);
+		HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
+		if(report != null){
+			report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+		}
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		
+		View html = Results.html("menuLeftCorrecao");
+        html.put("id",id);
+        html.put("alunos", alunos);
+        html.put("reportItems", items);
+        html.put("sessionId", req.session().id());
+        if(atividade instanceof Roteiro){
+        	html.put("corretor",((Roteiro) atividade).getCorretor());
+        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+        }
+        if(corretor != null && !corretor.equals("")){
+        	html.put("corretorSessao",corretor);
+        }
+		return html;
+    });
+	
+
+	/*get("/loginCorretor", (req) -> {
+		String id = req.param("id").value();
+		String turma = id.substring(4).trim();
+		//validar senha e colocar corretor na sessao
+		
+		List<Student> alunos = Configuration.getInstance().getStudents().values()
+				.stream().filter(a -> a.getTurma().equals(turma))
+				.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toList());
+		TestReport report = Util.loadTestReport(id);
+		HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
+		report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+		
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		
+		View html = Results.html("menuLeftCorrecao");
+        html.put("id",id);
+        html.put("alunos", alunos);
+        html.put("reportItems", items);
+        html.put("sessionId", req.session().id());
+        if(atividade instanceof Roteiro){
+        	html.put("corretor",((Roteiro) atividade).getCorretor());
+        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+        }
+		return html;
+    });*/
 	
 	get("/listCopies", (req) -> {
 		String id = req.param("id").value();
@@ -130,7 +286,9 @@ public class SubmissionServer extends Jooby {
 	  });
 	
 	get("/submissoes", (req) -> {
-		Map<String,List<Submission>> submissoes = Util.allSubmissions();
+		boolean showAll = Boolean.valueOf(req.param("showAll").value());
+		Map<String,List<Submission>> submissoes = Util.allSubmissions(showAll);
+		
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
@@ -156,7 +314,7 @@ public class SubmissionServer extends Jooby {
 		resp.send(result.toString());
 	});
 	
-	get("/reload", (req) -> {
+	get("/reload", (req,resp) -> {
 		Configuration.getInstance().reload();
 		//chain.next("config",req,resp);
 		
@@ -165,10 +323,10 @@ public class SubmissionServer extends Jooby {
 		//result.append(Configuration.getInstance().toString());
 		
 		//resp.send(result.toString());
-		View html = Results.html("configuration");
-        html.put("config",Configuration.getInstance());
-        
-        return html;
+		//View html = Results.html("configuration");
+        //html.put("config",Configuration.getInstance());
+        resp.redirect("menu");
+        //return html;
 		
 	});
 	//get("/report/", req -> Results.html("report/generated-report"));
@@ -180,12 +338,36 @@ public class SubmissionServer extends Jooby {
 		//result.append(Configuration.getInstance().toString());
 
         View html = Results.html("configuration");
-        html.put("config",Configuration.getInstance());
-        
+        Configuration config = Configuration.getInstance();
+        //System.out.println(config.getIpsAutorizados());
+        html.put("config",config);
+        //System.out.println(config.toString());
         return html;
         
 		//resp.send(result.toString());
-	  }).name("config");
+	  });
+	
+	get("/faltas", (req) -> {
+
+		Map<String,List<Submission>> submissoes = Util.allSubmissions(true);
+
+
+        Map<String,List<Atividade>> atividadesAgrupadas = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.groupingBy( Atividade::getTurma));
+
+        View html = Results.html("faltas");
+		html.put("submissoes",submissoes);
+        html.put("turmas",atividadesAgrupadas.keySet());
+        html.put("atividades", Configuration.getInstance().getAtividades());
+        html.put("semestre",Constants.CURRENT_SEMESTER);
+        html.put("alunos",Configuration.getInstance().getStudents().values().stream()
+        		.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+        		.collect(Collectors.toList()));
+
+        return html;
+	  });
 	
 	/*get("/redirect", (req,resp) -> {
 	    //req.flash("success", "The item has been created");
@@ -224,10 +406,51 @@ public class SubmissionServer extends Jooby {
 	});
 	
 	
+	
+	get("/correct", (req,resp) -> {
+		String id = req.param("id").value();
+		AutomaticCorrector corr = new AutomaticCorrector();
+		corr.corrigirAtividade(id);
+		resp.send("Correction started");
+	});
+	
+	get("/report", (req) -> {
+
+		String id = req.param("id").value();
+        View html = Results.html("report");
+        html.put("id",id);
+        html.put("atividade", Configuration.getInstance().getAtividades().get(id));
+        TestReport testReport = Util.loadTestReport(id);
+        if(testReport != null){
+        	html.put("report",testReport);
+        }
+        CorrectionReport corrReport = Util.loadCorrectionReport(id);
+        html.put("correctionReport",corrReport);
+        if(corrReport != null){
+        	SimilarityMatrix similarityMatrix = Util.buildSimilarityMatrix(id);
+        	html.put("sMatrix", similarityMatrix);
+        //html.put("studentsTestList", similarityMatrix.getStudentsTestList());
+        //html.put("matrix",similarityMatrix.getSimilarities());
+        }
+        //html.put(values);
+
+        return html;
+        
+		//resp.send(result.toString());
+	  });
+	
+	get("/logoutCorretor", (req,resp) -> {
+		String id = req.param("id").value();
+		View html = Results.html("historyBack");
+		Session session = req.session();
+		session.set("corretor", "");
+		resp.redirect("menuLeftCorrecao?id=" + id);
+		//return html;
+	});
   }
 
   {
-		post("/downloadProva",(req,resp) -> {
+		/*post("/downloadProva",(req,resp) -> {
 			String prova = req.param("prova").value();
 			String matricula = req.param("matricula").value();
 
@@ -238,12 +461,12 @@ public class SubmissionServer extends Jooby {
 				fileToSend = FileUtilities.getEnvironmentProva(prova, matricula);
 				resp.type(MediaType.octetstream);
 			    resp.download(fileToSend);
-			} catch (ConfigurationException | IOException | RoteiroException e) {
+			} catch (ConfigurationException | IOException | AtividadeException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
 				resp.send(e.getMessage());
 			}
-		});
+		});*/
 
 		post("/download",(req,resp) -> {
 			String id = req.param("id").value();
@@ -253,157 +476,184 @@ public class SubmissionServer extends Jooby {
 			//do aluno
 			File fileToSend = null;
 			try {
-				if(id.startsWith("R")){ //solicitado downlaod de roteiro
-					fileToSend = FileUtilities.getEnvironment(id, matricula);
-					resp.type(MediaType.octetstream);
-				    resp.download(fileToSend);
-				} else if (id.startsWith("P")){ //solicitado download de prova
-					fileToSend = FileUtilities.getEnvironmentProva(id, matricula);
-					resp.type(MediaType.octetstream);
-				    resp.download(fileToSend);					
-				}
-			} catch (ConfigurationException | IOException | RoteiroException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
+				fileToSend = FileUtilities.getEnvironmentAtividade(id, matricula);
+				resp.type(MediaType.octetstream);
+			    resp.download(fileToSend);
+			} catch (ConfigurationException | IOException | AtividadeException e) {
 				resp.send(e.getMessage());
 			}
 		});
-	 post("/uploadRoteiro", (req,resp) -> {
-		//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
-		//System.out.println("pedido de upload de roteiro recebido");
-		String roteiro = req.param("roteiro").value();
-		//System.out.println(roteiro);
-	    String semestre = req.param("semestre").value();
-	    //System.out.println(semestre);
-	    String turma = req.param("turma").value();
-	    //System.out.println(turma);
-	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
-	    //System.out.println(numeroTurmas);
-	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
-	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+
+		 post("/uploadAtividade", (req,resp) -> {
+				//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
+				//System.out.println("pedido de upload de roteiro recebido");
+				String id = req.param("roteiro").value();
+				//System.out.println(roteiro);
+			    String semestre = req.param("semestre").value();
+			    //System.out.println(semestre);
+			    String turma = req.param("turma").value();
+			    //System.out.println(turma);
+			    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
+			    //System.out.println(numeroTurmas);
+			    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
+			    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+			    
+				  //System.out.println("upload " + upload);
+				ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(id,semestre,turma,numeroTurmas);
+				File uploadedAmbiente = uploadAmbiente.file();
+				File uploadedCorrecao = uploadCorrecao.file();
+				String result = "default response";
+				try {
+					result = FileUtilities.saveProfessorSubmission(uploadedAmbiente, uploadedCorrecao, config);
+					
+				} catch (ConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = e.getMessage();
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = e.getMessage();
+					
+				}
+				resp.send(result);  
+			     
+		  	});
+
+	
+		 		
+		post("/submitAtividade",(req,resp) -> {
+			      String matricula = req.param("matricula").value();
+			      String semestre = req.param("semestre").value();
+			      String id = req.param("roteiro").value();
+			      String ip = req.param("ip").value();
+			      String files = req.param("filesOwners").value();
+			      Upload upload = req.param("arquivo").toUpload();
+			      
+			      
+			      //R0X-0X
+			      String turma = id.substring(4);
+				  
+			      //se o id do roteiro for PPX, entao é submissao de prova e deve validar o ip e salvar
+			      //em outra pasta. Isso vai ser feito pelo FileUtilities.saveStudentSubmission
+			      
+			      //System.out.println("Request received from " + ip);
+				  
+			      StudentUploadConfiguration config = new StudentUploadConfiguration(id,semestre, turma, matricula,ip,files);
+				  File uploaded = upload.file();
+				  String result = "default response";
+				  try {
+					result = FileUtilities.saveStudentSubmission(uploaded, config);
+					
+				} catch (StudentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = e.getMessage();
+					
+				}catch (ConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = e.getMessage();
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = e.getMessage();
+					
+				} catch (AtividadeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = e.getMessage();
+				}
+				resp.send(result);  
+			    });
+
+	post("/loginCorretor",(req) -> {
+		String id = req.param("id").value();
+		String matricula = req.param("matricula").value();
+		String turma = id.substring(4).trim();
+		String senha = req.param("senha").value();
+		
+		View html = Results.html("menuLeftCorrecao");
+		
+		Atividade atividade = Configuration.getInstance().getAtividades().get(id);
+		Corretor corretor = ((Roteiro) atividade).getCorretor();
+		//pegar tambem os professores para que eles tenham acesso direto.
+		
+		//String matriculaCorretor = corretor.getMatricula();
+		//System.out.println("MATRICULA CORRETOR: " + matriculaCorretor);
+		//System.out.println("SENHA CORRETOR: " + senha);
+		if(corretor.getSenha().equals(senha) || 
+				Configuration.getInstance().getMonitores().stream()
+				.filter(c -> (c instanceof Professor) && c.getSenha().equals(senha))
+				.findFirst().isPresent()){
+			
+			Session session = req.session();
+			session.set("corretor", ((Roteiro) atividade).getCorretor().getMatricula());
+			
+			List<Student> alunos = Configuration.getInstance().getStudents().values()
+					.stream().filter(a -> a.getTurma().equals(turma))
+					.sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+					.collect(Collectors.toList());
+			TestReport report = Util.loadTestReport(id);
+			HashMap<String,TestReportItem> items = new HashMap<String,TestReportItem>();
+			if(report != null){
+				report.getReportItems().forEach(item -> items.put(item.getMatricula(), item ));
+			}
+	        html.put("id",id);
+	        html.put("alunos", alunos);
+	        html.put("reportItems", items);
+	        html.put("sessionId", req.session().id());
+	        if(atividade instanceof Roteiro){
+	        	html.put("corretor",((Roteiro) atividade).getCorretor());
+	        	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
+	        }
+	        html.put("corretorSessao",((Roteiro) atividade).getCorretor().getMatricula());
+			html.put("id",id);
+		}else{
+			html = Results.html("erro-senha");
+			html.put("matricula",matricula);
+		}
+		
 	    
-		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,roteiro,numeroTurmas);
-		File uploadedAmbiente = uploadAmbiente.file();
-		File uploadedCorrecao = uploadCorrecao.file();
-		String result = "default response";
-		try {
-			result = FileUtilities.saveProfessorSubmission(uploadedAmbiente, uploadedCorrecao, config);
-			
-		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		}
-		resp.send(result);  
-	     
-  	});
+	    return html;
+
+	});
 	
-	post("/uploadProva", (req,resp) -> {
-		//toda a logica para receber uma prova e guarda-lo por completo e mante-la no mapeamento
-		//de provas onde se jabe a data de liberacao e a data maxima de envio
-		String prova = req.param("roteiro").value(); //aqui sera o id da prova P0X
-		//System.out.println(roteiro);
-	    String semestre = req.param("semestre").value();
-	    //System.out.println(semestre);
-	    String turma = req.param("turma").value();
-	    //System.out.println(turma);
-	    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
-	    //System.out.println(numeroTurmas);
-	    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
-	    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
-	    
-		  //System.out.println("upload " + upload);
-		ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(semestre,turma,prova,numeroTurmas);
-		File uploadedAmbiente = uploadAmbiente.file();
-		File uploadedCorrecao = uploadCorrecao.file();
-		String result = "default response";
-		try {
-			result = FileUtilities.saveProfessorTestSubmission(uploadedAmbiente, uploadedCorrecao, config);
-			
-		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
+	post("/addComment",(req,resp) -> {
+		String id = req.param("id").value();
+		String matriculaAluno = req.param("matricula").value();
+		String matriculaCorretorPar = req.param("corretor").value();
+		String classificacaoStr = req.param("classificacaoAluno").value();
+		String notaDesignStr = req.param("notaDesign").value();
+		String comentario = req.param("comentario").value();
+
+		Session session = req.session();
+		String matriculaCorretor = session.get("corretor").value("");
+		if(matriculaCorretor == null || matriculaCorretor.equals("")){
+			//throw new RuntimeException("Corretor nao logado!");
+			resp.redirect("commentPanel?id=" + id + "&matricula=&corretor="+matriculaCorretorPar);
+		}else{
+			Util.writeCorrectionComment(id, matriculaAluno, notaDesignStr, classificacaoStr, comentario);
+			resp.redirect("commentPanel?id=" + id + "&matricula=" + matriculaAluno + "&corretor=" + matriculaCorretorPar); 
 		}
-		resp.send(result);  
-	     
-  	});
-	
-	post("/submitRoteiro",(req,resp) -> {
-	      String matricula = req.param("matricula").value();
-	      String semestre = req.param("semestre").value();
-	      String roteiro = req.param("roteiro").value();
-	      String ip = req.param("ip").value();
-	      String files = req.param("filesOwners").value();
-	      Upload upload = req.param("arquivo").toUpload();
-	      
-	      
-	      //R0X-0X
-	      String turma = roteiro.substring(4);
-		  
-	      //se o id do roteiro for PPX, entao é submissao de prova e deve validar o ip e salvar
-	      //em outra pasta. Isso vai ser feito pelo FileUtilities.saveStudentSubmission
-	      
-	      //System.out.println("Request received from " + ip);
-		  
-	      StudentUploadConfiguration config = new StudentUploadConfiguration(semestre, turma, roteiro, matricula,ip,files);
-		  File uploaded = upload.file();
-		  String result = "default response";
-		  try {
-			result = FileUtilities.saveStudentSubmission(uploaded, config);
-			
-		} catch (StudentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		}catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-			
-		} catch (RoteiroException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = e.getMessage();
-		}
-		resp.send(result);  
-	    });
-	
+		
+		//Gson gson = new Gson();	
+	    //return gson.toJson("Comentario salvo");
+	});
 	//use(new Auth().basic("*", MyUserClientLoginValidator.class));
 	//new SimpleTestTokenAuthenticator(){
 	//	@override
 	//};
 	//use(new Auth().basic());
 	//use(new Auth().basic("/config2/**",MyUserClientLoginValidator.class));
-	get("/correct", (req,resp) -> {
-		String roteiro = req.param("roteiro").value();
-		AutomaticCorrector corr = new AutomaticCorrector();
-		corr.corrigirRoteiro(roteiro);
-		resp.send("Correction started");
-	});
+	
 	
 	
   }
   
+  /*
   static class MyUserClientLoginValidator implements UsernamePasswordAuthenticator{
 
 	@Override
@@ -419,5 +669,5 @@ public class SubmissionServer extends Jooby {
   public static void main(final String[] args) throws Throwable {
     run(SubmissionServer::new, args);
   }
-
+	*/
 }

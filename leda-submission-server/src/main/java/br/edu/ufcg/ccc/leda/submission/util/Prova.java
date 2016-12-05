@@ -2,83 +2,32 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
 import java.util.GregorianCalendar;
+import java.util.List;
 
-public class Prova extends Atividade{
+public class Prova extends Roteiro{
 
-	private String provaId;
-	private String descricao;
-	private File arquivoAmbiente;
-	private File arquivoProjetoCorrecao;
-	private GregorianCalendar dataHoraLiberacao;
-	private GregorianCalendar dataHoraLimiteEnvio;
-	public Prova(String provaId, String descricao, File arquivoAmbiente,
-			File arquivoProjetoCorrecao, GregorianCalendar dataHoraLiberacao,
-			GregorianCalendar dataHoraLimiteEnvio) {
-		super();
-		this.provaId = provaId;
-		this.descricao = descricao;
-		this.arquivoAmbiente = arquivoAmbiente;
-		this.arquivoProjetoCorrecao = arquivoProjetoCorrecao;
-		this.dataHoraLiberacao = dataHoraLiberacao;
-		this.dataHoraLimiteEnvio = dataHoraLimiteEnvio;
-	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		return this.hashCode() == obj.hashCode();
-	}	
+	public Prova(String id, String nome, String descricao, GregorianCalendar dataHoraLiberacao,
+			List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraLimiteEnvioNormal,
+			List<Monitor> monitores, Professor corretor, GregorianCalendar dataInicioCorrecao,
+			GregorianCalendar dataLimiteCorrecao, File arquivoAmbiente, File arquivoProjetoCorrecao) {
+		//nas provas a hora de envio com atraso eh a hora de envio normal mesmo
+		super(id, nome, descricao, dataHoraLiberacao, linksVideoAulas, 
+				dataHoraLimiteEnvioNormal, dataHoraLimiteEnvioNormal,
+				monitores, corretor, dataInicioCorrecao, 
+				dataLimiteCorrecao, arquivoAmbiente, arquivoProjetoCorrecao);
 
-	@Override
-	public int hashCode() {
-		return this.provaId.hashCode();
 	}
-	@Override
+
+/*	@Override
 	public String toString() {
-		if(this.dataHoraLiberacao != null){
-			return this.provaId + " - " + Util.formatDate(this.dataHoraLiberacao);
+		if(this.dataHora != null){
+			return this.id + " - " + Util.formatDate(this.dataHora);
 		}else{
-			return this.provaId;
+			return this.id;
 		}
 		
 	}
-	
-	public String getProvaId() {
-		return provaId;
-	}
-	public void setProvaId(String provaId) {
-		this.provaId = provaId;
-	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	public File getArquivoAmbiente() {
-		return arquivoAmbiente;
-	}
-	public void setArquivoAmbiente(File arquivoAmbiente) {
-		this.arquivoAmbiente = arquivoAmbiente;
-	}
-	public File getArquivoProjetoCorrecao() {
-		return arquivoProjetoCorrecao;
-	}
-	public void setArquivoProjetoCorrecao(File arquivoProjetoCorrecao) {
-		this.arquivoProjetoCorrecao = arquivoProjetoCorrecao;
-	}
-	public GregorianCalendar getDataHoraLiberacao() {
-		return dataHoraLiberacao;
-	}
-	public void setDataHoraLiberacao(GregorianCalendar dataHoraLiberacao) {
-		this.dataHoraLiberacao = dataHoraLiberacao;
-	}
-	public GregorianCalendar getDataHoraLimiteEnvio() {
-		return dataHoraLimiteEnvio;
-	}
-	public void setDataHoraLimiteEnvio(GregorianCalendar dataHoraLimiteEnvio) {
-		this.dataHoraLimiteEnvio = dataHoraLimiteEnvio;
-	}
-	
-	
+*/
 	
 }

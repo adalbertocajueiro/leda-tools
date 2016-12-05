@@ -1,0 +1,2 @@
+- precisa mudar os nomes dos atributos para realmente ser os nomes enviados nos XMLs (isso vai causar mudança em cascata nos XMLs). Por exemplo roteiro -> id
+- precisa parametrizar a URL onde se busca os alunos????

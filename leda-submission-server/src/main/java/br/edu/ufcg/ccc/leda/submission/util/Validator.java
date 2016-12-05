@@ -11,97 +11,126 @@ import com.google.gdata.util.ServiceException;
 
 public class Validator {
 
-	public static void validateDownload(String roteiro, String matricula) throws RoteiroException, ConfigurationException, IOException, ServiceException{
+	public static void validateDownloadAmbiente(String id, String matricula) throws AtividadeException, ConfigurationException, IOException, ServiceException{
+		
 		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
 		Student requester = studentsMap.get(matricula);
-		String turma = roteiro.substring(4);
+		String turma = id.substring(4);
 		if(requester == null){
-			throw new RoteiroException("Matricula " + matricula + " nao cadastrada");
+			throw new AtividadeException("Matricula " + matricula + " nao cadastrada");
 		}else if(!turma.equals(requester.getTurma())){
-			throw new RoteiroException("Estudante " + matricula + " nao pode fazer download da prova da turma " + turma);			
+			throw new AtividadeException("Estudante " + matricula + " nao pode fazer download de ambientes da turma " + turma);			
 		}
 
-		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
-		Roteiro rot = roteirosMap.get(roteiro);
-		if(rot == null){
-			throw new RoteiroException("Roteiro " + roteiro + " nao cadastrado");
+		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
+		Atividade atividade = atividades.get(id);
+		if(atividade == null){
+			throw new AtividadeException("Atividade (roteiro ou prova)" + id + " nao cadastrada");
 		}
 		GregorianCalendar dataAtual = new GregorianCalendar();
-		if(dataAtual.before(rot.getDataHoraLiberacao()) || 
+		if(atividade instanceof Prova){
+			if(dataAtual.before(atividade.getDataHora()) || 
+					dataAtual.after(((Prova) atividade).getDataHoraLimiteEnvioNormal())){
+				throw new AtividadeException("Prova " + id + " disponivel para download apenas entre " +
+					Util.formatDate(atividade.getDataHora()) + " e " + Util.formatDate(((Prova) atividade).getDataHoraLimiteEnvioNormal())+ ".\n"
+					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+			}			
+		} else if (atividade instanceof Roteiro){
+			if(dataAtual.before(atividade.getDataHora())){
+				throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
+					Util.formatDate(atividade.getDataHora()) + ".\n"
+					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+			}
+		}
+		
+		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
+		if(((Roteiro) atividade).getArquivoAmbiente() == null){
+			throw new AtividadeException("Arquivo de ambiente para  atividade (roteiro ou prova) " + id + " nao cadastrado");
+		} else if(!((Roteiro) atividade).getArquivoAmbiente().exists()){
+			throw new AtividadeException("Arquivo de ambiente para  atividade (roteiro ou prova) " + id + " nao encontrado no servidor: " + ((Roteiro) atividade).getArquivoAmbiente().getAbsolutePath());
+		}
+	}
+
+	@Deprecated
+	public static void validateDownload(String id, String matricula) throws AtividadeException, ConfigurationException, IOException, ServiceException{
+		
+		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+		Student requester = studentsMap.get(matricula);
+		String turma = id.substring(4);
+		if(requester == null){
+			throw new AtividadeException("Matricula " + matricula + " nao cadastrada");
+		}else if(!turma.equals(requester.getTurma())){
+			throw new AtividadeException("Estudante " + matricula + " nao pode fazer download de ambientes da turma " + turma);			
+		}
+
+		Map<String,Roteiro> roteirosMap = null; //Configuration.getInstance().getRoteiros();
+		Roteiro rot = roteirosMap.get(id);
+		if(rot == null){
+			throw new AtividadeException("Roteiro " + id + " nao cadastrado");
+		}
+		GregorianCalendar dataAtual = new GregorianCalendar();
+		if(dataAtual.before(rot.getDataHora()) || 
 				dataAtual.after(rot.getDataHoraLimiteEnvioAtraso())){
-			throw new RoteiroException("Roteiro " + roteiro + " disponivel para download apenas entre " +
-				Util.formatDate(rot.getDataHoraLiberacao()) + " e " + Util.formatDate(rot.getDataHoraLimiteEnvioAtraso())+ ".\n"
+			throw new AtividadeException("Roteiro " + id + " disponivel para download apenas entre " +
+				Util.formatDate(rot.getDataHora()) + " e " + Util.formatDate(rot.getDataHoraLimiteEnvioAtraso())+ ".\n"
 				+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 		}
 		
 		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
 		if(rot.getArquivoAmbiente() == null){
-			throw new RoteiroException("Arquivo de ambiente para  o roteiro " + roteiro + " nao cadastrado");
+			throw new AtividadeException("Arquivo de ambiente para  o roteiro " + id + " nao cadastrado");
 		} else if(!rot.getArquivoAmbiente().exists()){
-			throw new RoteiroException("Arquivo de ambiente para  o roteiro " + roteiro + " nao encontrado no servidor: " + rot.getArquivoAmbiente().getAbsolutePath());
+			throw new AtividadeException("Arquivo de ambiente para  o roteiro " + id + " nao encontrado no servidor: " + rot.getArquivoAmbiente().getAbsolutePath());
 		}
 	}
 	
-	public static void validateProvaDownload(String provaId,String matricula) throws RoteiroException, ConfigurationException, IOException, ServiceException{
+	@Deprecated
+	public static void validateProvaDownload(String id,String matricula) throws AtividadeException, ConfigurationException, IOException, ServiceException{
 		Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
 		Student requester = studentsMap.get(matricula);
-		String turma = provaId.substring(4);
+		String turma = id.substring(4);
 		if(requester == null){
-			throw new RoteiroException("Matricula " + matricula + " nao cadastrada");
+			throw new AtividadeException("Matricula " + matricula + " nao cadastrada");
 		}else if(!turma.equals(requester.getTurma())){
-			throw new RoteiroException("Estudante " + matricula + " nao pode fazer download da prova da turma " + turma);			
+			throw new AtividadeException("Estudante " + matricula + " nao pode fazer download da prova da turma " + turma);			
 		}
 				
-		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
-		Prova prova = provasMap.get(provaId);
+		Map<String,Prova> provasMap = null; //Configuration.getInstance().getProvas();
+		Prova prova = provasMap.get(id);
 		if(prova == null){
-			throw new RoteiroException("Prova " + provaId + " nao cadastrada");
+			throw new AtividadeException("Prova " + id + " nao cadastrada");
 		}
 		GregorianCalendar dataAtual = new GregorianCalendar();
-		if(dataAtual.before(prova.getDataHoraLiberacao()) || 
-				dataAtual.after(prova.getDataHoraLimiteEnvio())){
-			throw new RoteiroException("Prova " + provaId + " disponivel para download apenas entre " +
-				Util.formatDate(prova.getDataHoraLiberacao()) + " e " + Util.formatDate(prova.getDataHoraLimiteEnvio())+ ".\n"
+		if(dataAtual.before(prova.getDataHora()) || 
+				dataAtual.after(prova.getDataHoraLimiteEnvioNormal())){
+			throw new AtividadeException("Prova " + id + " disponivel para download apenas entre " +
+				Util.formatDate(prova.getDataHora()) + " e " + Util.formatDate(prova.getDataHoraLimiteEnvioNormal())+ ".\n"
 				+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 		}
 		
 		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
 		if(prova.getArquivoAmbiente() == null){
-			throw new RoteiroException("Arquivo de ambiente para  a prova " + provaId + " nao cadastrado");
+			throw new AtividadeException("Arquivo de ambiente para  a prova " + id + " nao cadastrado");
 		} else if(!prova.getArquivoAmbiente().exists()){
-			throw new RoteiroException("Arquivo de ambiente para  a prova" + provaId + " nao encontrado no servidor: " + prova.getArquivoAmbiente().getAbsolutePath());
+			throw new AtividadeException("Arquivo de ambiente para  a prova" + id + " nao encontrado no servidor: " + prova.getArquivoAmbiente().getAbsolutePath());
 		}
 	}
 	
 	//realiza validacoes de uma submissao de professor 
-	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException, RoteiroException, ServiceException {
+	public static void validate(ProfessorUploadConfiguration config) throws ConfigurationException, IOException, AtividadeException, ServiceException {
 				
-			Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
-			//System.out.println("STUDENT: " + config.getMatricula());
-			//studentMap.keySet().forEach(key -> System.out.println("CADASTRADO: " + key));
-			
-			//se o professor/usuario informado nao esta autorizado 
-			
-			//se o id do roteiro for de uma prova
-			if(config.getRoteiro().startsWith("P")){
-				//pega as datas da prova do mapeamento das provas
-				
-			}else{
-				//se roteiro informado nao esta cadastrado
-				Roteiro roteiro = roteirosMap.get(config.getRoteiro());
-				if(roteiro == null){
-					throw new RoteiroException("Roteiro " + config.getRoteiro() + " nao cadastrado.");
-				}
-			}
-			
+		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
+		Atividade atividade = atividades.get(config.getId());
+		if (atividade == null) {
+			throw new AtividadeException("Atividade (roteiro ou prova) " + config.getId() + " nao cadastrada");
 		}
+	}
 		
 	//realiza validacoes e retorna excecoes caso alguma delas nao seja satisfeita 
-	public static void validate(StudentUploadConfiguration config) throws ConfigurationException, IOException, StudentException, RoteiroException, ServiceException {
+	public static void validate(StudentUploadConfiguration config) throws ConfigurationException, IOException, StudentException, AtividadeException, ServiceException {
 			
 		Map<String,Student> studentMap = Configuration.getInstance().getStudents();
-		Map<String,Roteiro> roteirosMap = Configuration.getInstance().getRoteiros();
-		Map<String,Prova> provasMap = Configuration.getInstance().getProvas();
+		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
 		//System.out.println("STUDENT: " + config.getMatricula());
 		//studentMap.keySet().forEach(key -> System.out.println("CADASTRADO: " + key));
 		
@@ -116,49 +145,45 @@ public class Validator {
 			throw new StudentException("Estudante " + config.getMatricula() + " não cadastrado na turma " + config.getTurma());
 		}
 		
-		//se o id do roteiro for PPX, entao valida diretamente nas provas. 
-		String id = config.getRoteiro();
+		String id = config.getId();
+		Atividade atividade = atividades.get(id);
 		
-		if(id.startsWith("P")){ //eh prova
+		//se id informado nao existe
+		if (atividade == null) {
+			throw new AtividadeException("Atividade (roteiro ou prova) " + id + " não cadastrada no sistema");
+		}
+		
+		GregorianCalendar dataAtual = new GregorianCalendar();
+		
+		//se for prova
+		if(Constants.PATTERN_PROVA.matcher(id).matches()){
 			//se o aluno submete de um IP invalido
 			String ipCaller = config.getIp();
-			System.out.println("Validator.IP: " + ipCaller);
+			//System.out.println("Validator.IP: " + ipCaller);
 			ArrayList<String> ips = Configuration.getInstance().getIpsAutorizados();
 			Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
 			if(ipStream.count() == 0){ //nao esta nos ips autorizados
-				throw new RoteiroException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
+				throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
 			}
 			ipStream.close();
-			//se a prova informado nao existe
-			if(!provasMap.containsKey(id)){
-				throw new RoteiroException("Prova " + id + " não cadastrada no sistema");
-			}
-			//se prova informado esta fora do prazo de recebimento
-			Prova prova = provasMap.get(id);
-			GregorianCalendar dataAtual = new GregorianCalendar();
-			if(prova.getDataHoraLiberacao().after(dataAtual) ||
-					prova.getDataHoraLimiteEnvio().before(dataAtual)){
+			if(atividade.getDataHora().after(dataAtual) ||
+					((Roteiro) atividade).getDataHoraLimiteEnvioNormal().before(dataAtual)){
 	
-				throw new RoteiroException("Envio da prova " + id + " possivel apenas entre " + Util.formatDate(prova.getDataHoraLiberacao())
-						+ " e " + Util.formatDate(prova.getDataHoraLimiteEnvio()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+				throw new AtividadeException("Envio da prova " + id + " possivel apenas entre " + Util.formatDate(atividade.getDataHora())
+						+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioNormal()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
+			
 		} else{ //eh roteiro
 					
-			//se o roteiro informado nao existe
-			if(!roteirosMap.containsKey(id)){
-				throw new RoteiroException("Roteiro " + id + " não cadastrado no sistema");
-			}
+ 			//se roteiro informado esta fora do prazo de recebimento
 			
-			
-			//se roteiro informado esta fora do prazo de recebimento
-			Roteiro roteiro = roteirosMap.get(id);
-			GregorianCalendar dataAtual = new GregorianCalendar();
-			if(roteiro.getDataHoraLiberacao().after(dataAtual) ||
-					roteiro.getDataHoraLimiteEnvioAtraso().before(dataAtual)){
+			if(atividade.getDataHora().after(dataAtual) ||
+					((Roteiro) atividade).getDataHoraLimiteEnvioAtraso().before(dataAtual)){
 	
-				throw new RoteiroException("Envio do roteiro " + id + " possivel apenas entre " + Util.formatDate(roteiro.getDataHoraLiberacao())
-						+ " e " + Util.formatDate(roteiro.getDataHoraLimiteEnvioAtraso()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+				throw new AtividadeException("Envio do roteiro " + id + " possivel apenas entre " + Util.formatDate(atividade.getDataHora())
+						+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
 		}
+		
 	}
 }

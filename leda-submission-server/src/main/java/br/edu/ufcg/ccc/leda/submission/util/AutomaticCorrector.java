@@ -23,7 +23,7 @@ public class AutomaticCorrector {
 	 * Corrige automaticamente um roteiro executando o maven no projeto de correcao.
 	 * vamos chamar o maven programaticamente como no leda-correction-tool.
 	 * 
-	 * @param roteiro - o identificador do roteiro no formaro R0X-0X
+	 * @param id - o identificador do roteiro no formaro R0X-0X
 	 * @throws IOException 
 	 * @throws TimeoutException 
 	 * @throws ExecutionException 
@@ -31,60 +31,51 @@ public class AutomaticCorrector {
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
 	 */
-	public Thread corrigirRoteiro(String roteiro) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
-		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
-		//File uploadFolder = new File("D:\\trash2\\leda-upload");
+	public Thread corrigirAtividade(String id) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
 		
-		//pega a subpasta do semestre atual
-		File currentSemesterUploadFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
-		
-		//pega a pasta contendo os arquivos dos roteiros enviados pelo docente
-		File roteirosFolder = new File(currentSemesterUploadFolder,FileUtilities.ROTEIROS_FOLDER);
-		
-		//pega a pasta contendo os uploads do roteiro informado (ela vai ser a pasta do
-		//projeto maven de correcao a ser executado). as submissoes estarao na sub-pasta subs 
-		//para cada pasta de roteiro.
-		File pastaRoteiroCorrigido = new File(currentSemesterUploadFolder,roteiro);
+		File pastaAtividadeACorrigir = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
 		//PRECISA FAZER UMAS VALIDADOES PRA VER SE A PASTA ESTA OK ANTES DA CORRECAO
-		
-		//pega os arquivos correction-proj 
-		File[] files = roteirosFolder.listFiles(new FileFilter() {
+
+		FileFilter filter = new FileFilter() {
 			
 			@Override
 			public boolean accept(File pathname) {
-				//tem arquivos de correcao cadastrado para o roteiro pelo ID
-				return pathname.getName().startsWith(roteiro) && pathname.getName().contains("correction");
+				//System.out.println("procurando arquivos do id: " + id + " pathname: " + pathname.getName());
+				return pathname.getName().startsWith(id) && pathname.getName().contains("correction");
 			}
-		});
-		//copia o arquivo correction-proj para a pasta de correcao do roteiro e o descompacta
-		if(files.length == 1){
-			File foutCorrProj = new File(pastaRoteiroCorrigido,files[0].getName());
-			Files.copy(files[0].toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			Util.unzip(foutCorrProj);
+		};
+		File[] files = new File[0];
+		if(Constants.PATTERN_ROTEIRO.matcher(id).matches() || Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){			
+			//pega os arquivos correction-proj 
+			files = Constants.ROTEIROS_FOLDER.listFiles(filter);
+		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
+			//pega os arquivos correction-proj 
+			files = Constants.PROVAS_FOLDER.listFiles(filter);
 		}
-			
-		//executa o maven salvando em um arquivo de log (maven-output.txt) na pasta 
-		//String cdCommand = "cd " + pastaRoteiroCorrigido.getAbsolutePath();
-		//String mavenCommand = "mvn install site --log-file maven-output.txt";
-		//Runtime.getRuntime().exec(cdCommand mavenCommand);
-		//ProcessBuilder pb = new ProcessBuilder(cdCommand,mavenCommand);
-		//pb.start();
-		Thread task = runCorrection(pastaRoteiroCorrigido);
+		if(files != null){
+			//copia o arquivo correction-proj para a pasta de correcao do roteiro e o descompacta
+			if(files.length == 1){
+				File foutCorrProj = new File(pastaAtividadeACorrigir,files[0].getName());
+				Files.copy(files[0].toPath(), foutCorrProj.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				Util.unzip(foutCorrProj);
+			}
+		}
+
+		Thread task = runCorrection(pastaAtividadeACorrigir);
 		
 		return task;
 	}
 	
-	public Thread corrigirProva(String prova) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
+	/*public Thread corrigirProva(String prova) throws IOException, InterruptedException, ExecutionException,  NoSuchMethodException, SecurityException{
 		//pega a pasta de uploads. dentro dessa pasta existe a subpasta dos semestres
-		File uploadFolder = new File(FileUtilities.UPLOAD_FOLDER);
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		//File uploadFolder = new File("D:\\trash2\\leda-upload");
 		
 		//pega a subpasta do semestre atual
-		File currentSemesterUploadFolder = new File(uploadFolder,FileUtilities.CURRENT_SEMESTER);
+		File currentSemesterUploadFolder = new File(uploadFolder,Constants.CURRENT_SEMESTER);
 		
 		//pega a pasta contendo os arquivos dos roteiros enviados pelo docente
-		File provasFolder = new File(currentSemesterUploadFolder,FileUtilities.PROVAS_FOLDER);
+		File provasFolder = new File(currentSemesterUploadFolder,Constants.PROVAS_FOLDER_NAME);
 		
 		//pega a pasta contendo os uploads do roteiro informado (ela vai ser a pasta do
 		//projeto maven de correcao a ser executado). as submissoes estarao na sub-pasta subs 
@@ -117,16 +108,16 @@ public class AutomaticCorrector {
 		Thread task = runCorrection(pastaProvaCorrigida);
 		
 		return task;
-	}
+	}*/
 	
 	public void executeMaven(File projectFolder) throws MavenInvocationException, IOException{
 		Invoker invoker = new DefaultInvoker();
-		System.setProperty("maven.home", FileUtilities.MAVEN_HOME_FOLDER);
+		System.setProperty("maven.home", Constants.MAVEN_HOME_FOLDER);
 		if (projectFolder.isDirectory()) {
 			InvocationRequest request = new DefaultInvocationRequest();
 			//request.setPomFile(new File(projectFoder, "./pom.xml"));
 			//request.setGoals(Arrays.asList("surefire-report:report-only"));
-			request.setGoals(Arrays.asList("clean", "install", "site","--log-file maven-output.txt" ));
+			request.setGoals(Arrays.asList("clean", "install", "-e", "--log-file maven-output.txt" ));
 			request.setBaseDirectory(projectFolder);
 			invoker.execute(request);
 		}
@@ -157,7 +148,7 @@ public class AutomaticCorrector {
 	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException, TimeoutException, NoSuchMethodException, SecurityException {
 		AutomaticCorrector ac = new AutomaticCorrector();
 		System.out.println("Corection started");
-		ac.corrigirRoteiro("R01-01");
+		ac.corrigirAtividade("RR1-01");
 		System.out.println("Corection in progress");
 	}
 	

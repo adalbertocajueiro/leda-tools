@@ -17,10 +17,10 @@
 - colcoar a correcao numa thread para nao congelar a aplicacao. - OK
 - Tem que ordenar os alunos por ordem alfabetica na planilha geral e colocar os alunos que nao enviaram o roteiro no relatorio
   para facilitar a correcao. - OK
-- poderia manter a lista dos alunos matriculados (vale apena?)
+- poderia manter a lista dos alunos matriculados (vale apena?) - OK
 - quando da erro de compilacao no projeto do aluno e nao gera a pasta site o generate final report retorna nullpointer. consertar isso.
 - fazer uma ferramenta que mostra as similaridades dos resultados baseados nos testes de correcao.
-- alterar o compactor para que ele adicione atributos do dono do arquivo nos arquivos java antes de compactar e enviar
+- alterar o compactor para que ele adicione atributos do dono do arquivo nos arquivos java antes de compactar e enviar - OK
   http://stackoverflow.com/questions/15906793/is-it-possible-to-set-custom-metadata-on-files-using-java
   https://docs.oracle.com/javase/tutorial/essential/io/fileAttr.html
   exemplo:
@@ -50,3 +50,15 @@
     System.out.println("File Attribute: " + valueFromAttributes);
   }
 }
+
+- fazer o corretor capturar a lista dos estudantes e montar a tabela com todos os estudantes - OK
+- fazer o corretor gerar um arquivo json com os resultados das correcoes por cada aluno. - OK
+- os comentarios dos corretores tambem poderiam ficar neste json? os comentarios podem ficar num
+  json a parte para evitar de ser perdido quando se rodar uma correcao mais de uma vez.
+  melhor deixar num json a parte. - OK
+- dar acesso ao aluno para ele ver apenas 
+  o comentario da sua atividade. Implementar senha sendo a matricula do aluno. 
+- sera que pode ser tudo salvo em json e fazemos um viewer (freemarker) para construirmos o 
+  relatorio? (abordagem melhor porque separa model de viewer) SIM - feito - OK
+- correcao completamente online e salva no JSON. - OK
+- fazer um gerador de XLSX a partir do JSON para arquivamento e exportacao para o controle academico.

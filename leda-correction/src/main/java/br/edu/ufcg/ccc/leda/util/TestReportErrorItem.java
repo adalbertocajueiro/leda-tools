@@ -1,6 +1,7 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 
 public class TestReportErrorItem extends TestReportItem {
@@ -11,6 +12,11 @@ public class TestReportErrorItem extends TestReportItem {
 				mavenOutputLog);
 	}
 
+	
+	@Override
+	public String generateCompleteReportLink(){
+		return "Possible compilation error!";
+	}
 	public static void main(String[] args) {
 		File file = new File(
 				"D:\\trash\\counting\\subs\\654321-ADERBAL DOS SANTOS.zip");
