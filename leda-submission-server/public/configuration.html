@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -36,16 +36,18 @@
 					<th class="text-xs-center">ID</th>
 					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Data Liberação</th>
-					<th class="text-xs-center">Data Limite</th>
-					<th class="text-xs-center">Monitor</th>
-					<th class="text-xs-center">Ambiente</th>
+					<th class="text-xs-center">Data Limite Envio</th>
+					<th class="text-xs-center">Data Limite Correção</th>
+					<th class="text-xs-center">Corretor</th>
+					<th class="text-xs-center">Ambiente</th> 
 				</thead>
 				<tbody>
 				<#list config.getRoteiros()?values as roteiro>
 						<tr><td>${roteiro.id} <td><#if roteiro.nome??>${roteiro.nome}</#if>
 						<td class="text-xs-center">${formatter.format(roteiro.dataHora.time)}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
-						<td>${(roteiro.monitorCorretor)!""}
+						<td class="text-xs-center">${formatter.format(roteiro.dataLimiteCorrecao.time)}
+						<td><#if roteiro.corretor??>${roteiro.corretor.nome?split(" ")[0]}</#if>
 						<td class="text-xs-center"><#if roteiro.arquivoAmbiente??> ${formatter.format(roteiro.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
 				</#list>
 				</tbody>
