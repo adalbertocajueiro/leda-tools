@@ -52,9 +52,9 @@
 				<thead class="bg-success" >
 				<th class="text-xs-center">Aluno</th>
 				<#list submissoes?keys as id>
-					<#assign numeroAlunos = submissoes[id]?size>
 					<#assign t = id?keep_after("-")>
-					<#if t == turma>
+					<#assign atividade = atividades[id]>
+					<#if t == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime) >
 						<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="${formatter.format(submissoes[id][0].atividade.dataHora.time)}">${id?keep_before("-")}</th>
 					</#if>
 					<!-- GERAR AS COLUNAS BASEADAS NOS ROTEIROS QUE JA ACONTECERAM -->	
