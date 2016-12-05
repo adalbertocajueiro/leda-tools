@@ -113,7 +113,7 @@ public class FileUtilities {
 			}else{
 				//caso base: processa o upload de um roteiro apenas
 				// remove os arquivos de prova antes cadastrados (baseado no id da prova)
-				Util.removeFilesByPrefix(folderAtividade, id);
+				Util.removeFilesByPrefix(folderAtividade.getParentFile(), id);
 				
 				// precisa verificar se o professor enviou um roteiro cadastrado.
 				Validator.validate(config);
