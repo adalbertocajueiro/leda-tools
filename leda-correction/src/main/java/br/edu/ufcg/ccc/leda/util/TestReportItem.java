@@ -104,7 +104,7 @@ public class TestReportItem {
 			if(passed < 0){
 				passed = 0;
 			}
-			score = passed/this.totalTests*4.0;
+			score = passed/(this.totalTests - this.skipped)*4.0;
 		}
 		return score;
 	}
