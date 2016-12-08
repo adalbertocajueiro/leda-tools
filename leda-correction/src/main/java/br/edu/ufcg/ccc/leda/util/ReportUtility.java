@@ -196,8 +196,16 @@ public class ReportUtility {
 					report.getReportItems().add(errorItem);
 				}
 			}
-			
-			
+			//no final precisa dar uma outra passada em todos os itens para lidar com os 
+			//que entraram em loop porque a nota de testes dele esta incorreta
+			//porque nao consideram a quantidade total de testes
+			report.getReportItems().stream()
+				.filter(tri -> tri.getTotalTests() < report.getNumberOfTests())
+				.forEach(tri -> {
+					int naoExecutados = report.getNumberOfTests() - tri.getTotalTests();
+					tri.setTotalTests(report.getNumberOfTests());
+					tri.setFailures(tri.getFailures() + naoExecutados);
+				});
 		}
 
 		// precisa ordenar os itens do report por nome para facilitar
