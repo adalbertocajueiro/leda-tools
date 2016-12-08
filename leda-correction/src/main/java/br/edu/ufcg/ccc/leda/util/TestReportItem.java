@@ -100,7 +100,7 @@ public class TestReportItem {
 	public double calculateTestScore(){
 		double score = 0;
 		if(hasSubmitted() && !hasCompilationError()){
-			double passed = this.totalTests - this.errors;
+			double passed = this.totalTests - this.errors - this.failures - this.skipped;
 			if(passed < 0){
 				passed = 0;
 			}

@@ -48,6 +48,21 @@ public class StudentSubmissionSender extends Sender {
 		StringBody ip = new StringBody(Inet4Address.getLocalHost()
 				.getHostAddress(), ContentType.TEXT_PLAIN);
 
+		/** AQUI PODE PRECISAR DE ALGUMA LOGICA PARA ELIMINAR O LOOPBACK 127.0.0.1
+		 * PORQUE EM ALGUNS CASOS ELE EH RETORNADO.
+		 * Enumeration<NetworkInterface> n = NetworkInterface.getNetworkInterfaces();
+                for (; n.hasMoreElements();)
+                {
+                        NetworkInterface e = n.nextElement();
+                        System.out.println("Interface: " + e.getName());
+                        Enumeration<InetAddress> a = e.getInetAddresses();
+                        for (; a.hasMoreElements();)
+                        {
+                                InetAddress addr = a.nextElement();
+                                System.out.println("  " + addr.getHostAddress());
+                        }
+                }
+		 */
 		Gson gson = new Gson();
 		StringBody files = new StringBody(gson.toJson(filesOwners), ContentType.TEXT_PLAIN);
 		
