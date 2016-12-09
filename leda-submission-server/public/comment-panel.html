@@ -53,10 +53,10 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 					<label class="col-form-label-sm">Nota dos testes: </label> <input type="text" class="text-xs-center" name="notaTestes" disabled id="notaTestes" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaTestes}'</#if>>
 					<br>
 					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="bottom" title='Não modifique essa nota! Apenas o professor modifica!!!'>Nota de design: </label>					
-					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if>>
+					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if> onchange='javascript:ajustarNotaDesign();'>
 					<br>
-					<label class="col-form-label-sm">Nota do roteiro:</label> 
-					<input class="text-xs-center font-weight-bold" type="text" id="notaRoteiro" disabled name="notaRoteiro" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaDesign}'</#if>>
+					<label class="col-form-label-sm">Nota da atividade:</label> 
+					<input class="text-xs-center font-weight-bold" type="text" id="notaRoteiro" disabled name="notaRoteiro" maxlength="4" size="2" <#if correctionReportItem??> value='${correctionReportItem.notaTestes + correctionReportItem.notaDesign}'</#if> >
 					<br>
 					<textarea class="form-inline form-control" id="comentario" name="comentario" rows="6" placeholder="Comentários do corretor"><#if comentario??>${comentario?trim}</#if></textarea>
 					
@@ -103,6 +103,13 @@ function mudarNotaDesign(){
 	return true;
 }
 
+function ajustarNotaDesign(){
+	var notaDes = parseFloat(document.getElementById('notaDesign').value);
+	var notaTestes = parseFloat(document.getElementById('notaTestes').value);
+	var notaRoteiro = (notaTestes + notaDes*0.6);	
+	document.getElementById('notaRoteiro').value = notaRoteiro.toFixed(1);
+	return true;
+}
 
 </script>
 <script>
