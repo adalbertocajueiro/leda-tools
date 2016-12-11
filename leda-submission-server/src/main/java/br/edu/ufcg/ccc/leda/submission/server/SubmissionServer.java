@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jooby.Jooby;
@@ -369,31 +370,51 @@ public class SubmissionServer extends Jooby {
         return html;
 	  });
 	
-	/*get("/redirect", (req,resp) -> {
-	    //req.flash("success", "The item has been created");
-	    //return Results.redirect("http://www.google.com");
-		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet httpget = new HttpGet("http://www.ufcg.edu.br");
-		CloseableHttpResponse response = httpclient.execute(httpget);
-		HttpEntity resEntity = response.getEntity();
-		String content = "";
-		System.out.println("Entity: " + resEntity);
-		if (resEntity != null) {
-            //System.out.println("Response content length: " + resEntity.getContentLength());
-            InputStreamReader isr = new InputStreamReader(resEntity.getContent());
-            BufferedReader br =  new BufferedReader(isr);
-            
-            while( (content = br.readLine()) != null){
+	get("/mediaProvasPraticas", (req) -> {
+		Gson gson = new Gson();
+		
+	    
+		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
+			//predicado para filtrar o que mostrar nas notas (provas e roteiros
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA.matcher(t).matches();
+			}
+		});
+		Map<String,Double> alunosMedias = new HashMap<String,Double>();
+		
+		//tem que fazer um metodo que sumariza as matrculas e as notas das provas
+		//praticas e devolve num Map<String,Double>.
+		return gson.toJson(Configuration.getInstance().getStudents());
+	  }).produces("json");
+	
+	get("/notas", (req) -> {
 
-            }
-        }
-        EntityUtils.consume(resEntity);
-        response.close();
-        httpclient.close();
-        resp.send(content);
-	  });*/
-	
-	
+        Map<String,List<Atividade>> atividadesAgrupadas = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.groupingBy( Atividade::getTurma));
+
+        View html = Results.html("notas");
+        Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
+			//predicado para filtrar o que mostrar nas notas (provas e roteiros
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA.matcher(t).matches()
+						|| Constants.PATTERN_ROTEIRO.matcher(t).matches();
+			}
+		});
+                
+		html.put("correctionReports",correctionReports); 
+        html.put("turmas",atividadesAgrupadas.keySet());
+        html.put("atividades", Configuration.getInstance().getAtividades());
+        html.put("semestre",Constants.CURRENT_SEMESTER);
+        html.put("alunos",Configuration.getInstance().getStudents().values().stream()
+        		.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+        		.collect(Collectors.toList()));
+
+        return html;
+	  });
 	
 	get("/requestDownload",(req) -> {
 		String id = req.param("id").value();

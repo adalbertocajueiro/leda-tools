@@ -29,6 +29,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -200,14 +201,6 @@ public class Util {
 		fw.close();
 	}
 	
-	@Deprecated
-	public static Map<String, Roteiro> loadRoteirosFromJson(File jsonFile) throws ConfigurationException, IOException{
-		Gson gson = new Gson();
-		FileReader fr = new FileReader(jsonFile);
-		Map<String, Roteiro> map = gson.fromJson(fr, new TypeToken<Map<String,Roteiro>>(){}.getType());
-		return map;
-	}
-	
 	public static TestReport loadTestReport(String id) throws IOException{
 		TestReport result = null;
 		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
@@ -232,6 +225,31 @@ public class Util {
 		return result;
 	}
 	
+	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException{
+		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
+        	int res = 1;
+        	if(cr1.charAt(0) != cr2.charAt(0)){
+        		res = cr2.charAt(0) -  cr1.charAt(0);
+        	} else{
+        		res = cr1.compareTo(cr2);
+        	}
+        	return res;
+        
+		});
+		
+		File[] atividadesFiltradas = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return patternValidator.test(pathname.getName());
+			}
+		});
+		for (int i = 0; i < atividadesFiltradas.length; i++) {
+			result.put(atividadesFiltradas[i].getName(), Util.loadCorrectionReport(atividadesFiltradas[i].getName()));
+		}
+		return result;
+	}
+
 	public static void writeCorrectionComment(String id, String matriculaAluno, 
 			String notaDesignStr, String classificacaoStr, String comment) throws IOException{
 		
@@ -1307,6 +1325,36 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		
+		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
+			//predicado para filtrar o que mostrar nas notas (provas e roteiros
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA.matcher(t).matches()
+						|| Constants.PATTERN_ROTEIRO.matcher(t).matches();
+			}
+		});
+		
+		TreeMap<String, CorrectionReport> mapReport = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
+        	int result = 1;
+        	if(cr1.charAt(0) != cr2.charAt(0)){
+        		result = cr2.charAt(0) -  cr1.charAt(0);
+        	} else{
+        		result = cr1.compareTo(cr2);
+        	}
+        	return result;
+        
+		});
+		mapReport.putAll(correctionReports);
+		correctionReports = correctionReports.values().stream().sorted( (cr1,cr2) -> {
+        	int result = 1;
+        	if(cr1.getId().charAt(0) != cr2.getId().charAt(0)){
+        		result = cr2.getId().charAt(0) -  cr1.getId().charAt(0);
+        	} else{
+        		result = cr1.getId().compareTo(cr2.getId());
+        	}
+        	return result;
+        }).collect(Collectors.toMap(cr -> cr.getId(), cr -> cr));
 		
 		List<Corretor> corretores = Util.loadSpreadsheetMonitorFromExcel();
 		SimilarityMatrix matrix = Util.buildSimilarityMatrix("R01-01");
