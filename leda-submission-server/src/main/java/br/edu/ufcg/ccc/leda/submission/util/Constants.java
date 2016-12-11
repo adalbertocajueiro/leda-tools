@@ -33,6 +33,8 @@ public abstract class Constants {
 	public static String UPLOAD_FOLDER_NAME;
 	public static String CURRENT_SEMESTER;
 	public static String MAVEN_HOME_FOLDER;
+	public static int QUANTIDADE_PROVAS;
+	public static int QUANTIDADE_ROTEIROS;
 	
 	public static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
 	public static final String GENERATED_REPORT_FILE = "target/generated-report.html";
@@ -41,6 +43,10 @@ public abstract class Constants {
 	public static final Pattern PATTERN_ROTEIRO = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_ROTEIRO_REVISAO = Pattern.compile("RR[0-9]{1}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_PROVA = Pattern.compile("P[PRF][1-9]-[0-9][0-9[X]]");
+	public static final Pattern PATTERN_PROVA_PRATICA = Pattern.compile("P[P][1-9]-[0-9][0-9[X]]");
+	public static final Pattern PATTERN_PROVA_REPOSICAO = Pattern.compile("P[R][1-9]-[0-9][0-9[X]]");
+	public static final Pattern PATTERN_PROVA_FINAL = Pattern.compile("P[F][1-9]-[0-9][0-9[X]]");
+
 	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 	public static final String AUTOR_MATRICULA = "autor.matricula";
 	public static final String AUTOR_NOME = "autor.nome";
@@ -55,6 +61,8 @@ public abstract class Constants {
 			UPLOAD_FOLDER_NAME = prop.getProperty("upload.folder");
 			CURRENT_SEMESTER = prop.getProperty("semestre.letivo");
 			MAVEN_HOME_FOLDER = prop.getProperty("mavenHomeFolder");
+			QUANTIDADE_PROVAS = Integer.valueOf(prop.getProperty("quantidadeProvas"));
+			QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
 			
 			DEFAULT_CONFIG_FOLDER = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
     		if(!DEFAULT_CONFIG_FOLDER.exists()){
