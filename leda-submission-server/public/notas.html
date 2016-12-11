@@ -49,12 +49,13 @@
 				<thead class="bg-success" >
 				<th class="text-xs-center">Aluno</th>
 				<#list correctionReports?values as corrReport>
+					<#if corrReport??>
 					<#assign t = corrReport.id?keep_after("-")>
 					<#assign atividade = atividades[corrReport.id]>
 					<#if t == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime) >
 						<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="">${corrReport.id?keep_before("-")}</th>
 					</#if>
-						
+					</#if>
 				
 				</#list>
 				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Media dos Roteiros">MR</th>
@@ -72,6 +73,7 @@
 							<#assign somaNotasProvas = 0>
 							<#assign qtdeProvas = 4>
 							<#list correctionReports?values as corrReport>
+							  <#if corrReport??>
 							  <#assign atividade = atividades[corrReport.id]>
 							  <#if corrReport.id?keep_after("-") == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime)>
 								<#assign corrReportItem = corrReport.getCorrectionReportItemforStudent(aluno.matricula)>
@@ -84,6 +86,7 @@
 									</#if>				
 								</#if>
 								<td class="text-xs-center"> ${notaAtividade}
+							  </#if>
 							  </#if>
 							</#list>
 							<td class="text-xs-center font-weight-bold">${somaNotasRoteiros/qtdeRoteiros}
