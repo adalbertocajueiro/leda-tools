@@ -66,6 +66,7 @@ import com.google.gson.Gson;
 import br.edu.ufcg.ccc.leda.util.Compactor;
 import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
 import br.edu.ufcg.ccc.leda.util.CorrectionReport;
+import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 import jxl.read.biff.BiffException;
@@ -250,6 +251,27 @@ public class Util {
 		return result;
 	}
 
+	public static Map<String,Double> buildMediasProvasPraticas() throws IOException, ConfigurationException, ServiceException{
+		Map<String,Double> mediasProvasPraticas = new HashMap<String,Double>();
+		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
+			//predicado para filtrar o que mostrar nas notas (provas e roteiros
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA_PRATICA.matcher(t).matches();
+			}
+		});
+		Map<String,Student> alunos = Configuration.getInstance().getStudents();
+		alunos.keySet().forEach( m -> {
+			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
+				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
+				return item!=null ? item.getNotaTestes() + item.getNotaDesign()*0.6: 0.0;
+			}).sum();
+			mediasProvasPraticas.put(m,(double)somatorioNotas/Constants.QUANTIDADE_PROVAS);
+		});
+		
+		return mediasProvasPraticas;
+	}
+	
 	public static void writeCorrectionComment(String id, String matriculaAluno, 
 			String notaDesignStr, String classificacaoStr, String comment) throws IOException{
 		
@@ -1325,6 +1347,7 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Map<String,Double> medias = Util.buildMediasProvasPraticas();
 		
 		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
 			//predicado para filtrar o que mostrar nas notas (provas e roteiros

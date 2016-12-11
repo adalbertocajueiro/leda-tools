@@ -372,20 +372,7 @@ public class SubmissionServer extends Jooby {
 	
 	get("/mediaProvasPraticas", (req) -> {
 		Gson gson = new Gson();
-		
-	    
-		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
-			//predicado para filtrar o que mostrar nas notas (provas e roteiros
-			@Override
-			public boolean test(String t) {
-				return Constants.PATTERN_PROVA.matcher(t).matches();
-			}
-		});
-		Map<String,Double> alunosMedias = new HashMap<String,Double>();
-		
-		//tem que fazer um metodo que sumariza as matrculas e as notas das provas
-		//praticas e devolve num Map<String,Double>.
-		return gson.toJson(Configuration.getInstance().getStudents());
+		return gson.toJson(Util.buildMediasProvasPraticas());
 	  }).produces("json");
 	
 	get("/notas", (req) -> {
