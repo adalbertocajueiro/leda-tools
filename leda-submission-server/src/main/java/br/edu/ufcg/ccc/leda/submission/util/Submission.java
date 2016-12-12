@@ -2,6 +2,8 @@ package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,32 @@ public class Submission {
 		return submissao;
 	}
 
+	public String generateSubmittedFileLink(){
+		Path relativeLink = null;
+		if(this.arquivoSubmetido != null && this.arquivoSubmetido.exists()){
+			File atividadeFolder = this.arquivoSubmetido.getParentFile().getParentFile();
+			try {
+				relativeLink = generateRelativeLink(this.arquivoSubmetido, atividadeFolder);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				relativeLink = this.arquivoSubmetido.toPath();
+			}
+		}
+		return relativeLink != null? relativeLink.toString():"";
+	}
+	
+	private Path generateRelativeLink(File referenciado, File referenciador)
+			throws MalformedURLException {
+		//Path pathAbsolute = Paths.get(referenciado.getAbsolutePath());
+		//Path pathBase = Paths.get(referenciador.getAbsolutePath());
+		Path pathAbsolute = referenciado.toPath();
+		Path pathBase = referenciador.toPath();
+		Path pathRelative = pathBase.relativize(pathAbsolute);
+
+		return pathRelative;
+	}
+	
 	private boolean buscarFezDownload(String idAtividade, String matricula) throws IOException {
 		boolean fezDownload = true;
 		List<String> alunosDownload = Util.alunosDownload(idAtividade);

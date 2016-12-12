@@ -162,7 +162,6 @@ public class SubmissionServer extends Jooby {
 		//System.out.println("%%%%ATIVIDADE " + atividade);
 		View html = Results.html("menu-frames-correcao");
         html.put("id", id);
-        html.put("sessionId", req.session().id());
         if(atividade instanceof Roteiro){
        		html.put("corretor",((Roteiro) atividade).getCorretor());
         }
@@ -170,9 +169,13 @@ public class SubmissionServer extends Jooby {
     });
 	
 	get("/surefireReport", (req) -> {
+		String matricula = req.param("matricula").value("");
+		String id = req.param("id").value();
 		View html = Results.html("surefire-report");
-		html.put("sessionId", req.session().id());
-		
+		if(!matricula.equals("")){
+			html.put("submission",Util.getSubmissionForStudent(id,matricula));
+			html.put("id",id);
+		}
 		return html;
     });
 	
@@ -184,6 +187,7 @@ public class SubmissionServer extends Jooby {
 		
 		Student aluno = Configuration.getInstance().getStudents().get(matriculaAluno);
 		
+
 		View html = Results.html("comment-panel");
 		html.put("id",id);
 		html.put("matricula", matriculaAluno);
@@ -195,10 +199,10 @@ public class SubmissionServer extends Jooby {
 		CorrectionReport report = Util.loadCorrectionReport(id);
 		
 		if(report != null){
-			if(report.getMatriculaCorretor().equals("")){
-				report.setMatriculaCorretor(corretorPar);
-				Util.writeCorrectionReport(report, id);
-			}
+			//if(report.getMatriculaCorretor().equals("")){
+			report.setMatriculaCorretor(corretorPar);
+			Util.writeCorrectionReport(report, id);
+			//}
 			CorrectionReportItem correctionItem = report.getCorrectionReportItemforStudent(matriculaAluno);
 			if(correctionItem != null){
 				html.put("correctionReportItem", correctionItem);
@@ -234,7 +238,7 @@ public class SubmissionServer extends Jooby {
         html.put("id",id);
         html.put("alunos", alunos);
         html.put("reportItems", items);
-        html.put("sessionId", req.session().id());
+        
         if(atividade instanceof Roteiro){
         	html.put("corretor",((Roteiro) atividade).getCorretor());
         	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());

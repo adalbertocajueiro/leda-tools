@@ -933,6 +933,18 @@ public class Util {
 		return alunosComDownload;
 	}
 	
+	public static Submission getSubmissionForStudent(String idAtividade, String matricula) throws ConfigurationException, IOException, ServiceException{
+		Submission result = null;
+		Map<String,List<Submission>> allSubmissions = Util.allSubmissions(false);
+		List<Submission> submissions = allSubmissions.get(idAtividade);
+		if(submissions != null){
+			result = submissions.stream().filter( s -> s.getAluno().getMatricula().equals(matricula))
+				.findFirst().orElse(null);
+		}
+				
+		return result;
+	}
+	
 	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
 		//precisa ordenar as submissoes pelas datas de cada atividade
 		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
@@ -1347,6 +1359,8 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Submission sub = Util.getSubmissionForStudent("R02-01", "116110707");
+		System.out.println(sub.generateSubmittedFileLink());
 		Map<String,Double> medias = Util.buildMediasProvasPraticas();
 		
 		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {

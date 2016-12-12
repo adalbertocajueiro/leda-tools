@@ -20,7 +20,16 @@
 
 <br>
 <div class="container">
-  <h4>Faça o login e selecione um aluno no menu esquerdo para visualizar o relatório detalhado</h4>
+  <#if submission??>
+	<#if submission.arquivoSubmetido ??>
+		<p>O(A) aluno(a) ${submission.aluno.nome} fez submissão mas o relatório de correção não foi gerado e não pode ser mostrado neste painel. Você precisa <a href='./reports/${id}/${submission.generateSubmittedFileLink()}'>baixar a submissão</a> do aluno 
+			para inspecionar a implementação e colocar os comentários e classificação no painel abaixo.</p>
+	<#else>
+		<p>O(A) aluno(a) ${submission.aluno.nome} não fez submissão para a atividade ${id}</p>
+	</#if>
+  <#else>
+	<p>Faça o login e selecione um aluno no menu esquerdo para visualizar o relatório detalhado. Varifique também se o aluno fez a submissão.</p>
+  </#if>
   </div>
 </div>
 

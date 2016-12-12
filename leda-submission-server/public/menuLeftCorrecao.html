@@ -41,7 +41,7 @@
 									<tr><td id="${student.matricula}" class="btn btn-link p-b-0 p-t-0"><a class="custom-select-sm p-b-0 p-t-0" onclick='parent.document.getElementById("topframe").src ="./reports/${id}/${reportItem.generateCompleteReportLink()?replace("\\","/")}" ; parent.document.getElementById("bottomframe").src ="commentPanel?id=${id}&matricula=${student.matricula}&corretor=${corretor.getMatricula()}"'>${student.nome}</a> 
 									<!-- tr><td id="${student.matricula}" class="btn-link p-b-0 p-t-0"><a href="./reports/${id}/${reportItem.generateCompleteReportLink()}" target="topframe">${student.nome}</a --> 
 								<#else>
-									<tr><td class="p-b-0 p-t-0">${student.nome}
+									<tr><td id="${student.matricula}" class="btn p-b-0 p-t-0"><a class="custom-select-sm p-b-0 p-t-0" onclick='parent.document.getElementById("topframe").src ="surefireReport?id=${id}&matricula=${student.matricula}" ; parent.document.getElementById("bottomframe").src ="commentPanel?id=${id}&matricula=${student.matricula}&corretor=${corretor.getMatricula()}"'>${student.nome}</a> 
 								</#if>							
 						</#list>
 						<#else>
