@@ -170,7 +170,7 @@ public class SubmissionServer extends Jooby {
 	
 	get("/surefireReport", (req) -> {
 		String matricula = req.param("matricula").value("");
-		String id = req.param("id").value();
+		String id = req.param("id").value("");
 		View html = Results.html("surefire-report");
 		if(!matricula.equals("")){
 			html.put("submission",Util.getSubmissionForStudent(id,matricula));
@@ -453,7 +453,6 @@ public class SubmissionServer extends Jooby {
 	
 	get("/logoutCorretor", (req,resp) -> {
 		String id = req.param("id").value();
-		View html = Results.html("historyBack");
 		Session session = req.session();
 		session.set("corretor", "");
 		resp.redirect("menuLeftCorrecao?id=" + id);
