@@ -246,18 +246,44 @@ public class Util {
 			}
 		});
 		for (int i = 0; i < atividadesFiltradas.length; i++) {
-			result.put(atividadesFiltradas[i].getName(), Util.loadCorrectionReport(atividadesFiltradas[i].getName()));
+			CorrectionReport report = Util.loadCorrectionReport(atividadesFiltradas[i].getName());
+			if(report != null){
+				result.put(atividadesFiltradas[i].getName(), report);
+			}
 		}
 		return result;
 	}
 
+	public static Map<String,Double> buildMediasLEDASemFinal() throws IOException, ConfigurationException, ServiceException{
+		Map<String,Double> mediasSemFinal = new HashMap<String,Double>();
+		Map<String,Double> mediasProvasTeoricas = Util.loadSpreadsheetsMediasEDA();
+		Map<String,Double> mediasProvasPraticas = Util.buildMediasProvasPraticas();
+		Map<String,Double> mediasRoteiros = Util.buildMediasRoteiros();
+		
+		//media roteiros = 0.25
+		//media prova teorica = 0.25 (secursar EDA)
+		//media prova pratica = 0.5 (se cursar EDA) e 0.75 (se nao cursar EDA)
+		mediasProvasPraticas.forEach((mat,med) -> {
+			double mpp = med;
+			double mr = mediasRoteiros.get(mat);
+			double mediaSemFinal = mpp*0.75 + mr*0.25;
+			Double mpt = mediasProvasTeoricas.get(mat);
+			if(mpt != null){
+				mediaSemFinal = mpp*0.5 + mr*0.25 + mpt*0.25;
+			}
+			mediasSemFinal.put(mat, mediaSemFinal);
+		});
+		return mediasSemFinal;
+	}
+	
 	public static Map<String,Double> buildMediasProvasPraticas() throws IOException, ConfigurationException, ServiceException{
 		Map<String,Double> mediasProvasPraticas = new HashMap<String,Double>();
 		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
 			//predicado para filtrar o que mostrar nas notas (provas e roteiros
 			@Override
 			public boolean test(String t) {
-				return Constants.PATTERN_PROVA_PRATICA.matcher(t).matches();
+				return Constants.PATTERN_PROVA_PRATICA.matcher(t).matches()
+						|| Constants.PATTERN_PROVA_REPOSICAO.matcher(t).matches();
 			}
 		});
 		Map<String,Student> alunos = Configuration.getInstance().getStudents();
@@ -271,6 +297,28 @@ public class Util {
 		
 		return mediasProvasPraticas;
 	}
+	
+	public static Map<String,Double> buildMediasRoteiros() throws IOException, ConfigurationException, ServiceException{
+		Map<String,Double> mediasRoteiros = new HashMap<String,Double>();
+		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
+			//predicado para filtrar o que mostrar nas notas (provas e roteiros
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_ROTEIRO.matcher(t).matches();
+			}
+		});
+		Map<String,Student> alunos = Configuration.getInstance().getStudents();
+		alunos.keySet().forEach( m -> {
+			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
+				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
+				return item!=null ? item.getNotaTestes() + item.getNotaDesign()*0.6: 0.0;
+			}).sum();
+			mediasRoteiros.put(m,(double)somatorioNotas/Constants.QUANTIDADE_ROTEIROS);
+		});
+		
+		return mediasRoteiros;
+	}
+
 	
 	public static void writeCorrectionComment(String id, String matriculaAluno, 
 			String notaDesignStr, String classificacaoStr, String comment) throws IOException{
@@ -499,6 +547,46 @@ public class Util {
         return atividades;
 	}
 
+	public static Map<String,Double> loadSpreadsheetsMediasEDA() throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+		Map<String,Double> mediasEDA = new HashMap<String,Double>();
+		mediasEDA.putAll(loadSpreadsheetMediasEDA(Constants.ID_MEDIASEDA_SHEET_T1));
+		mediasEDA.putAll(loadSpreadsheetMediasEDA(Constants.ID_MEDIASEDA_SHEET_T2));
+		
+		return mediasEDA;
+	}
+	
+	public static Map<String,Double> loadSpreadsheetMediasEDA(String idGoogleDrive) throws IOException, ServiceException, ConfigurationException{
+
+		Map<String,Double> mediasEDA = new HashMap<String,Double>();
+		
+		SpreadsheetService service = new SpreadsheetService("Sheet1");
+
+            String sheetUrl =
+                "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
+
+            // Use this String as url
+            URL url = new URL(sheetUrl);
+
+            // Get Feed of Spreadsheet url
+            ListFeed lf = service.getFeed(url, ListFeed.class);
+
+            //Iterate over feed to get cell value
+            for (ListEntry le : lf.getEntries()) {
+                CustomElementCollection cec = le.getCustomElements();
+                //Pass column name to access it's cell values
+                String matricula = cec.getValue("mat".toLowerCase());
+                String mediaEDA = cec.getValue("MédiaParcialEDA".toLowerCase());
+                if(matricula == null){
+                	break;
+                }
+                mediaEDA = mediaEDA.replace(',', '.');
+				mediasEDA.put(matricula, Double.valueOf(mediaEDA));
+            }
+            
+		
+        return mediasEDA;
+	}
+	
 	/**
 	 * Carrega os nomes dos alunso paseando-se nas matriculas. Os alunos
 	 * fornecem a matricula e o nome sera pego da lista dos amtriculados excel).
@@ -1359,6 +1447,13 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
+		Map<String,Student> alunos = Util.loadStudentLists();
+		mediasEDA.forEach((m,med) -> {
+			if(alunos.get(m) != null){
+				System.out.println(alunos.get(m).getNome() + " teve media de EDA " + med);
+			}
+		});
 		Submission sub = Util.getSubmissionForStudent("R02-01", "116110707");
 		System.out.println(sub.generateSubmittedFileLink());
 		Map<String,Double> medias = Util.buildMediasProvasPraticas();

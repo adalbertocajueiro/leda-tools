@@ -55,6 +55,9 @@ public abstract class Constants {
 	public static final String ID_ATIVIDADES_SHEET_T1 = "15rxyKxDJ4-dSIfdh1ZGZvpL7femQG27P_ESTeSseJGA";
 	public static final String ID_ATIVIDADES_SHEET_T2 = "1S7Ru2RFei-0lgEHTn2L6XRYajiX8Se4yryuw8sR404A";
 
+	public static final String ID_MEDIASEDA_SHEET_T2 = "1LEccFlOjV4o3FsJEeOYFtqzaJOHHd9q4gYurcWx95cU";
+	public static final String ID_MEDIASEDA_SHEET_T1 = "1Qwpele7sF0WAb5GDqKiEq1MMUT9Ij4qJlEw3P5ey4fM";
+
 	static{
 		try {
 			Properties prop = Util.loadProperties();

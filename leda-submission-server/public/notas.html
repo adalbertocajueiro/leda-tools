@@ -60,7 +60,8 @@
 				</#list>
 				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Media dos Roteiros">MR</th>
 				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Media das Provas Práticas">MPP</th>
-				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Media das Provas Teoricas 9EDA)">MPT</th>
+				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Media das Provas Teoricas (EDA)">MPT</th>
+				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Nota da Final">NF</th>
 				<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Media Final">MF</th>
 				</thead>
 				<tbody>
@@ -72,6 +73,10 @@
 							<#assign qtdeRoteiros = 17>
 							<#assign somaNotasProvas = 0>
 							<#assign qtdeProvas = 4>
+							<#assign mediaRoteiros = mediasRoteiros[aluno.matricula]>
+							<#assign mediaProvasPraticas = mediasProvasPraticas[aluno.matricula]>
+							<#assign mediaProvasTeoricas = (mediasProvasTeoricas[aluno.matricula])!"-">
+							<#assign mediaSemFinal = mediasSemFinal[aluno.matricula]>
 							<#list correctionReports?values as corrReport>
 							  <#if corrReport??>
 							  <#assign atividade = atividades[corrReport.id]>
@@ -89,10 +94,11 @@
 							  </#if>
 							  </#if>
 							</#list>
-							<td class="text-xs-center font-weight-bold">${somaNotasRoteiros/qtdeRoteiros}
-							<td class="text-xs-center font-weight-bold">${somaNotasProvas/qtdeProvas}
+							<td class="text-xs-center font-weight-bold">${mediaRoteiros}
+							<td class="text-xs-center font-weight-bold">${mediaProvasPraticas}
+							<td class="text-xs-center font-weight-bold">${mediaProvasTeoricas}
 							<td class="text-xs-center font-weight-bold">
-							<td class="text-xs-center font-weight-bold">
+							<td class="text-xs-center font-weight-bold">${mediaSemFinal}
 					</#if>
 				</#list>
 				</tbody>

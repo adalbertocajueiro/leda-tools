@@ -403,7 +403,10 @@ public class SubmissionServer extends Jooby {
         html.put("alunos",Configuration.getInstance().getStudents().values().stream()
         		.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
         		.collect(Collectors.toList()));
-
+        html.put("mediasProvasPraticas", Util.buildMediasProvasPraticas());
+        html.put("mediasSemFinal", Util.buildMediasLEDASemFinal());
+        html.put("mediasProvasTeoricas", Util.loadSpreadsheetsMediasEDA());
+        html.put("mediasRoteiros", Util.buildMediasRoteiros());
         return html;
 	  });
 	
