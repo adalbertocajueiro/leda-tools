@@ -420,6 +420,23 @@ public class SubmissionServer extends Jooby {
 
 	});
 	
+	get("/exportToExcel",(req,resp) -> {
+		String id = req.param("id").value();
+
+		File fileToSend = null;
+		try {
+			fileToSend = Util.exportRoteiroToExcel(id);
+			if(fileToSend != null){
+				resp.type(MediaType.octetstream);
+		    	resp.download(fileToSend);
+			}else{
+				resp.send("Arquivo excel nao gerado para atividade " + id);
+			}
+		} catch (ConfigurationException | IOException | AtividadeException e) {
+			resp.send(e.getMessage());
+		}
+
+	});
 	
 	
 	get("/correct", (req,resp) -> {

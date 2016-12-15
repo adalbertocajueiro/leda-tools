@@ -47,8 +47,13 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jdom2.JDOMException;
 
@@ -342,6 +347,75 @@ public class Util {
 			
 		}
 		
+	}
+	public static File exportRoteiroToExcel(String id) throws IOException, BiffException{
+		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		File outputFile = null;
+		if(atividadeFolder.exists()){
+			CorrectionReport report = Util.loadCorrectionReport(id);
+			if(report != null){
+				
+				XSSFWorkbook workbook = new XSSFWorkbook();
+				XSSFSheet sheet = workbook.createSheet(id);
+				//Create a new row in current sheet with the header
+				Row row = sheet.createRow(0);
+				String[] headers = {"","Matricula","Nome", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
+				XSSFCellStyle style = workbook.createCellStyle();
+				XSSFFont font = workbook.createFont();
+				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+				style.setFont(font);
+				style.setAlignment(CellStyle.ALIGN_CENTER);
+				
+				for (int i = 0; i < headers.length; i++) {
+					//Create a new cell in current row
+					Cell cell = row.createCell(i);
+					cell.setCellValue(headers[i]);
+					cell.setCellStyle(style);					
+				}
+				
+				
+				Map<String,Student> alunos = Util.loadStudentLists();
+				int count = 1;
+				for (CorrectionReportItem cri : report.getReportItems()) {
+					Row newRow = sheet.createRow(count);
+					Cell cellNumber = newRow.createCell(0);
+					cellNumber.setCellValue(count);
+					count++;
+					Cell cellMat = newRow.createCell(1);
+					Student aluno = alunos.get(cri.getMatricula());
+					cellMat.setCellValue(cri.getMatricula());
+					Cell cellNome = newRow.createCell(2);
+					cellNome.setCellValue(aluno.getNome());
+					Cell cellNotaTestes = newRow.createCell(3);
+					cellNotaTestes.setCellValue(cri.getNotaTestes());
+					Cell cellNotaDesign = newRow.createCell(4);
+					cellNotaDesign.setCellValue(cri.getNotaDesign());
+					Cell cellNotaFinal = newRow.createCell(5);
+					cellNotaFinal.setCellValue(cri.getNotaTestes() + cri.getNotaDesign()*0.6);
+					Cell cellClassificacao = newRow.createCell(6);
+					cellClassificacao.setCellValue(cri.getClassification().name());
+					Cell cellComentario = newRow.createCell(7);
+					cellComentario.setCellValue(cri.getComentario());
+					
+				}
+				for (int i = 0; i < headers.length; i++) {
+					sheet.autoSizeColumn(i);
+				}
+				try {
+					outputFile = new File(atividadeFolder,id + ".xlsx");
+					FileOutputStream out = new FileOutputStream(outputFile);
+					workbook.write(out);
+					out.close();
+					System.out.println("Excel written successfully in " + outputFile.getAbsolutePath());
+					
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return outputFile;
 	}
 	
 	public static void writeCorrectionReport(CorrectionReport report, 
@@ -1447,6 +1521,7 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Util.exportRoteiroToExcel("R02-01");
 		Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
 		Map<String,Student> alunos = Util.loadStudentLists();
 		mediasEDA.forEach((m,med) -> {
