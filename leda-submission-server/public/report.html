@@ -42,6 +42,10 @@
 			<!-- <p>Nome da suite: ${report.testSuiteName} --> 
 			<p>Número de testes: ${report.numberOfTests?string?keep_before(".")}
 			<br>
+			
+			<p class="pull-xs-12">Download em formato Excel (XLSX) <a href="exportToExcel?id=${id}"><img src="excel.svg" width="26" data-toggle="tooltip" data-placement="left" title='Download de dados no formato excel (XLSX)'/></a> 
+			(a exportação produz uma planilha menos detalhada)</p>
+			
 			<br>
 			<table id="report" class="table table-hover table-bordered">
 				<thead class="bg-success">
