@@ -295,6 +295,7 @@ public class SubmissionServer extends Jooby {
 		Map<String,List<Submission>> submissoes = Util.allSubmissions(showAll);
 		
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
+		orderedKeys.forEach( s -> System.out.println("Key: " + s + " - tem submissoes " + submissoes.get(s).size()));
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
 		html.put("chavesOrdenadas",orderedKeys);

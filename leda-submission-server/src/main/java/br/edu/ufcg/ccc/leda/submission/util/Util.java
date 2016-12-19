@@ -1175,8 +1175,6 @@ public class Util {
 					
 				});
 		
-		}else{
-			throw new RuntimeException("Pasta da atividade " + atividadeFolder.getName() + "(" + atividadeFolder.getName().length() + ")");
 		}
 		return result.stream().sorted( (s1,s2) -> s1.getAluno().getNome().compareTo(s2.getAluno().getNome())).collect(Collectors.toList());
 		
