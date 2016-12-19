@@ -59,6 +59,7 @@
 					<!-- th class="text-xs-center">Download</th -->
 				</thead>
 				<tbody>
+				<#if submissoes[id]??>
 				<#list submissoes[id] as submissao>
 						<#if submissao.arquivoSubmetido??>
 							<tr><td>${submissao.aluno.nome}<td class="text-xs-center">${formatter.format(submissao.arquivoSubmetido.lastModified()?number_to_datetime)}
@@ -80,6 +81,7 @@
 							</#if>
 						</#if>
 				</#list>
+				</#if>
 				</tbody>
 			</table>
         </div>
