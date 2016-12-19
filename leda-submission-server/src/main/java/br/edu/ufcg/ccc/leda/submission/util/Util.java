@@ -1175,6 +1175,8 @@ public class Util {
 					
 				});
 		
+		}else{
+			throw new RuntimeException("Pasta da atividade " + atividadeFolder.getName() + "(" + atividadeFolder.getName().length() + ")");
 		}
 		return result.stream().sorted( (s1,s2) -> s1.getAluno().getNome().compareTo(s2.getAluno().getNome())).collect(Collectors.toList());
 		
@@ -1521,6 +1523,7 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		List<Submission> submissoes = Util.submissions(new File(Constants.CURRENT_SEMESTER_FOLDER,"R01-01"));
 		Util.exportRoteiroToExcel("R02-01");
 		Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
 		Map<String,Student> alunos = Util.loadStudentLists();
