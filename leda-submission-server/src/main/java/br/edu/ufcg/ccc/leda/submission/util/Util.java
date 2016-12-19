@@ -1120,7 +1120,7 @@ public class Util {
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
-		System.out.println("Semestre atual: " + currentSemester.getAbsolutePath());
+		//System.out.println("Semestre atual: " + currentSemester.getAbsolutePath());
 		if(currentSemester.exists()){
 			File[] folders = currentSemester.listFiles(new FileFilter() {
 				
@@ -1138,9 +1138,10 @@ public class Util {
 			//System.out.println("Subpastas encotnradas: " + folders.length);
 			for (int i = 0; i < folders.length; i++) {
 				String folderName = folders[i].getName();
-				System.out.print(folders[i].getAbsolutePath() + "(" + folderName + ")");
 				List<Submission> submissions = submissions(folders[i]);
-				System.out.println(" submissoes " + submissions!= null);
+				System.out.println(folders[i].getAbsolutePath() + "(" + folderName + ") " + submissions!= null?submissions.size():0);
+				
+				//System.out.println(" submissoes " + submissions!= null);
 				result.put(folderName,submissions);
 			}
 		}
