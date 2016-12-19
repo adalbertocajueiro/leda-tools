@@ -1135,11 +1135,12 @@ public class Util {
 							
 				}
 			});
-			System.out.println("Subpastas encotnradas: " + folders.length);
+			System.out.println("Subpastas encontradas: " + folders.length);
 			for (int i = 0; i < folders.length; i++) {
 				String folderName = folders[i].getName();
 				List<Submission> submissions = submissions(folders[i]);
-				System.out.println(folders[i].getAbsolutePath() + "(" + folderName + ") " + submissions!= null?submissions.size():0);
+				System.out.print(folders[i].getAbsolutePath() + "(" + folderName + ") ");
+				System.out.println(submissions!= null?submissions.size():0);
 				
 				//System.out.println(" submissoes " + submissions!= null);
 				result.put(folderName,submissions);
