@@ -293,9 +293,10 @@ public class SubmissionServer extends Jooby {
 	get("/submissoes", (req) -> {
 		boolean showAll = Boolean.valueOf(req.param("showAll").value());
 		Map<String,List<Submission>> submissoes = Util.allSubmissions(showAll);
-		submissoes.forEach( (s,l) -> {
-			System.out.println("Chave " + s + " - tem submissoes " + l!=null?l.size():0);
-		});
+
+		System.out.println("Servidor: Mapeamento possui: " + submissoes.keySet().size() + " chaves");
+		System.out.println("Servidor: Mapeamento possui: " + submissoes.values().size() + " valores");
+
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
