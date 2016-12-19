@@ -298,6 +298,12 @@ public class SubmissionServer extends Jooby {
 		System.out.println("Servidor: Mapeamento possui: " + submissoes.values().size() + " valores");
 
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
+		
+		for (String chave : orderedKeys) {
+			System.out.println(chave + " - " + submissoes.get(chave));
+		}
+
+		
 		View html = Results.html("submissoes");
 		html.put("submissoes",submissoes);
 		html.put("chavesOrdenadas",orderedKeys);
