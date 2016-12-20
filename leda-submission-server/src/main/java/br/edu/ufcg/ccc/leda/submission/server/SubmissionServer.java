@@ -300,7 +300,7 @@ public class SubmissionServer extends Jooby {
 		Collection<String> orderedKeys = submissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 		
 		for (String chave : orderedKeys) {
-			System.out.println(chave + " - " + submissoes.get(chave));
+			System.out.println(chave + " - " + submissoes.get(chave)!=null?submissoes.get(chave).size():null);
 		}
 
 		

@@ -1150,7 +1150,7 @@ public class Util {
 		System.out.println("Mapeamento possui: " + result.keySet().size() + " chaves");
 		System.out.println("Mapeamento possui: " + result.values().size() + " valores");
 		for (String chave : result.keySet()) {
-			System.out.println(chave + " - " + result.get(chave));
+			System.out.println(chave + " - " + result.get(chave)!=null?result.get(chave).size():null);
 		}
 		return result;
 	}
