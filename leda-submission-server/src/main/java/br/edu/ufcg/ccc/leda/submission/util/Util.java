@@ -1120,7 +1120,7 @@ public class Util {
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
-		System.out.println("Semestre atual: " + currentSemester.getAbsolutePath());
+		//System.out.println("Semestre atual: " + currentSemester.getAbsolutePath());
 		if(currentSemester.exists()){
 			File[] folders = currentSemester.listFiles(new FileFilter() {
 				
@@ -1135,23 +1135,18 @@ public class Util {
 							
 				}
 			});
-			System.out.println("Subpastas encontradas: " + folders.length);
+			//System.out.println("Subpastas encontradas: " + folders.length);
 			for (int i = 0; i < folders.length; i++) {
 				String folderName = folders[i].getName();
 				List<Submission> submissions = submissions(folders[i]);
-				System.out.print(folders[i].getAbsolutePath() + "(" + folderName + ") ");
-				System.out.println(submissions!= null?submissions.size():0);
+				//System.out.print(folders[i].getAbsolutePath() + "(" + folderName + ") ");
+				//System.out.println(submissions!= null?submissions.size():0);
 				
 				//System.out.println(" submissoes " + submissions!= null);
 				result.put(folderName,submissions);
 			}
 		}
 		
-		System.out.println("Mapeamento possui: " + result.keySet().size() + " chaves");
-		System.out.println("Mapeamento possui: " + result.values().size() + " valores");
-		for (String chave : result.keySet()) {
-			System.out.println(chave + " - " + result.get(chave)!=null?result.get(chave).size():null);
-		}
 		return result;
 	}
 	
