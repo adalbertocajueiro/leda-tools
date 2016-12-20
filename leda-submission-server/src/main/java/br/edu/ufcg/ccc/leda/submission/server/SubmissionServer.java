@@ -306,6 +306,24 @@ public class SubmissionServer extends Jooby {
 		resp.send("Submissoes: <br>\n" + submissions.toString());*/
 	});
 	
+	get("/submissao", (req,resp) -> {
+		String id = req.param("id").value();
+
+		File folder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		List<Submission> submissoes = Util.submissions(folder);
+
+		StringBuilder sb  = new StringBuilder();
+		sb.append("Submissoes: " + submissoes.size() + "\n<br>\n");
+		submissoes.forEach(s -> {
+			sb.append(s.getAluno().getNome() + "\n<br>");
+		});
+		
+		resp.send(sb.toString());
+		/*String id = req.param("id").value();
+		StringBuffer submissions = FileUtilities.listSubmissions(id);
+		resp.send("Submissoes: <br>\n" + submissions.toString());*/
+	});
+	
 	get("/correctionThreads", (req,resp) -> {
 		ArrayList<Thread> threads = CorrectionManager.getInstance().getExecuting();
 		StringBuilder result = new StringBuilder();
