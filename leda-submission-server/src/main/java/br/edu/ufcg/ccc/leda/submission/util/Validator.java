@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -29,12 +30,24 @@ public class Validator {
 		}
 		GregorianCalendar dataAtual = new GregorianCalendar();
 		if(atividade instanceof Prova){
+			//se for prova de reposicao e o aluno tiver feito o download da prova correspondente entao neo permite
+			//ele fazer download 
+			//se id for de uma prova de revisao tem que ver na prova correspondente a ela
+			if(Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
+				String idProvaPratica = "PP" + id.charAt(2);
+				List<String> fizeramDownload = Util.alunosDownload(idProvaPratica);
+				if(fizeramDownload.contains(matricula)){
+					throw new AtividadeException("Ja existe um registro de download da prova " 
+						+ idProvaPratica + " para o estudante " + matricula + ". Downlaod da prova de reposicao nao permitido!!! ");					
+				}
+			}
+
 			if(dataAtual.before(atividade.getDataHora()) || 
 					dataAtual.after(((Prova) atividade).getDataHoraLimiteEnvioNormal())){
 				throw new AtividadeException("Prova " + id + " disponivel para download apenas entre " +
 					Util.formatDate(atividade.getDataHora()) + " e " + Util.formatDate(((Prova) atividade).getDataHoraLimiteEnvioNormal())+ ".\n"
 					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
-			}			
+			}
 		} else if (atividade instanceof Roteiro){
 			if(dataAtual.before(atividade.getDataHora())){
 				throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
@@ -172,6 +185,18 @@ public class Validator {
 				throw new AtividadeException("Envio da prova " + id + " possivel apenas entre " + Util.formatDate(atividade.getDataHora())
 						+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioNormal()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
+			//se for prova de reposicao e o aluno tiver feito o download da prova correspondente entao neo permite
+			//ele fazer download 
+			//se id for de uma prova de revisao tem que ver na prova correspondente a ela
+			if(Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
+				String idProvaPratica = "PP" + id.charAt(2);
+				List<String> fizeramDownload = Util.alunosDownload(idProvaPratica);
+				if(fizeramDownload.contains(config.getMatricula())){
+					throw new AtividadeException("Ja existe um registro de download da prova " 
+						+ idProvaPratica + " para o estudante " + config.getMatricula() + ". Envio da prova de reposicao nao permitido!!! ");					
+				}
+			}
+
 			
 		} else{ //eh roteiro
 					

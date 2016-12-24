@@ -1031,6 +1031,34 @@ public class Util {
 		return target;
 	}
 	
+	public static void compactAllData() throws IOException{
+		File[] foldersToCompact = 
+				Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
+					
+					@Override
+					public boolean accept(File pathname) {
+						return Constants.PATTERN_PROVA.matcher(pathname.getName()).matches()
+								|| Constants.PATTERN_ROTEIRO.matcher(pathname.getName()).matches();
+					}
+				});
+		Runnable compaction = new Runnable() {
+			
+			@Override
+			public void run() {
+				for (File file : foldersToCompact) {
+					try {
+						compact(file);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		Thread compactionThread = new Thread(compaction);
+		compactionThread.start();
+	}
+	
 	public static void removeFilesByPrefix(File folder, String prefix) throws IOException{
 		File[] files = folder.listFiles(new FileFilter() {
 			

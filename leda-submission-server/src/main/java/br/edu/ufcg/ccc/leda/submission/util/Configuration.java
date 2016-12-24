@@ -1,6 +1,7 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,12 @@ public class Configuration {
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
 		} catch (ServiceException e) {
+			e.printStackTrace();
+			monitores = Util.loadSpreadsheetMonitorFromExcel();
+			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			ipsAutorizados.add("150.165.74");
+			ipsAutorizados.add("150.165.54");
+		} catch (ConnectException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);

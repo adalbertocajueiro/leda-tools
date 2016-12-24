@@ -289,6 +289,11 @@ public class SubmissionServer extends Jooby {
         
 		//resp.send(copies.toString());
 	  });
+	get("/compactAll", (req,resp) -> {
+		Util.compactAllData();
+        
+		resp.send("Compactacao dos dados iniciada...");
+	  });
 	
 	get("/submissoes", (req) -> {
 		boolean showAll = Boolean.valueOf(req.param("showAll").value());
