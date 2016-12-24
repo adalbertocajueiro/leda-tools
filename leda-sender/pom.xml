@@ -8,13 +8,11 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>${parent.groupId}</groupId>
 	<artifactId>leda-sender-tool</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>${parent.version}</version>
 	<name>LEDA HTTP Sender Mojo</name>
-	<!-- url>http://150.165.15.99:10060/nexus/content/repositories/br.edu.ufcg/</url -->
-	<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
+	<url>${plugin.repository.url}</url>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -101,14 +99,12 @@
 		<repository>
 			<id>ufcg-maven2</id>
 			<name>Internal Snapshots</name>
-			<!-- url>http://150.165.15.99:10080/nexus/content/repositories/br.edu.ufcg/</url -->
-			<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
+			<url>${plugin.repository.url}</url>
 		</repository>
 		<snapshotRepository>
 			<id>ufcg-maven2</id>
 			<name>Internal Snapshots</name>
-			<!-- url>http://150.165.15.99:10080/nexus/content/repositories/br.edu.ufcg/</url -->
-			<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
+			<url>${plugin.repository.url}</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
