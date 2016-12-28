@@ -1139,13 +1139,13 @@ public class Util {
 		//precisa ordenar as submissoes pelas datas de cada atividade
 		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
 
-		Map<String,List<Submission>> result = new HashMap<String,List<Submission>>();
-		/*new TreeMap<String,List<Submission>>(
+		Map<String,List<Submission>> result = //new HashMap<String,List<Submission>>();
+		new TreeMap<String,List<Submission>>(
 				(s1,s2) -> {
 					Atividade a1 = atividades.get(s1);
 					Atividade a2 = atividades.get(s2);
-					return (int)(a1.getDataHora().getTimeInMillis() - a2.getDataHora().getTimeInMillis());
-				});*/
+					return a1.getDataHora().compareTo(a2.getDataHora());
+				});
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
@@ -1175,6 +1175,11 @@ public class Util {
 				result.put(folderName,submissions);
 			}
 		}
+		/*Map<String,List<Submission>> resultFinal = result.keySet().stream().sorted( (id1,id2) ->{
+			Atividade a1 = atividades.get(id1);
+			Atividade a2 = atividades.get(id2);
+			return a1.getDataHora().compareTo(a2.getDataHora());
+		}).collect(Collectors.toMap(id -> id, id -> result.get(id)));*/
 		
 		return result;
 	}

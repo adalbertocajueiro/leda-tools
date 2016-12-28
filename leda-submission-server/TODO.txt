@@ -93,4 +93,4 @@ config também pode implementar a opcao de mostrar os de revisao ou nao.
   tem que continuar com o sistema de links para poder passear no codigo fonte completo do aluno OK
   tem que pensar em que links relativos vai gerar, mas manter a estrutura de links simbolicos e assets no servidor. OK
 - plotar apenas as faltas dos roteiros que ja aconteceram e ja fechou a data de envio. - OK
-- criar uma planilha de notas semelhante as faltas, com a nota dos roteiros e das provas praticas.
+- criar uma planilha de notas semelhante as faltas, com a nota dos roteiros e das provas praticas. - OK
