@@ -8,11 +8,12 @@
 	<packaging>pom</packaging>
 
 	<name>All tools used in LEDA: correction tool, compaction tool and submission tool</name>
-	<url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</plugin.repository.url>
+		<!-- plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</plugin.repository.url -->
+		<plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</plugin.repository.url>
+		
 	</properties>
 
 	<modules>
@@ -27,8 +28,7 @@
     <profile>
       <id>server</id>
       <properties>
-
-		<injected.plugin.repository.url>http://10.4.4.174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url>
+		<injected.plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</injected.plugin.repository.url>
       </properties>
     </profile>
     
@@ -38,7 +38,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <injected.plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url>
+        <injected.plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</injected.plugin.repository.url>
       </properties>   
     </profile>
   </profiles>
@@ -58,12 +58,13 @@
 	</build>
 	<distributionManagement>
 		<repository>
-			<id>ufcg-maven2</id>
+			<id>ufcg-leda</id>
 			<name>Internal Snapshots</name>
 			<url>${plugin.repository.url}</url>
+			<layout>default</layout>
 		</repository>
 		<snapshotRepository>
-			<id>ufcg-maven2</id>
+			<id>ufcg-leda</id>
 			<name>Internal Snapshots</name>
 			<url>${plugin.repository.url}</url>
 		</snapshotRepository>

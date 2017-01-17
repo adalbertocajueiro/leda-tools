@@ -94,17 +94,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>ufcg-maven2</id>
-			<name>Internal Snapshots</name>
-			<url>${plugin.repository.url}</url>
-		</repository>
-		<snapshotRepository>
-			<id>ufcg-maven2</id>
-			<name>Internal Snapshots</name>
-			<url>${plugin.repository.url}</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

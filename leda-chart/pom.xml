@@ -10,17 +10,8 @@
 
 	<artifactId>leda-chart-tool</artifactId>
 	<packaging>maven-plugin</packaging>
-	<name>LEDA Chart Genarator Mojo</name>
+	<name>LEDA Chart Generator Mojo</name>
 	<url>${plugin.repository.url}</url>
-
-	<developers>
-		<developer>
-			<email>gustavo.hqo@gmail.com</email>
-			<name>Gustavo Henrique Queiroz de Oliveira</name>
-			<url>https://github.com/Gustavohqo</url>
-			<id>Gustavohqo</id>
-		</developer>
-	</developers>
 
 	<dependencies>
 		<dependency>
@@ -97,17 +88,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>ufcg-maven2</id>
-			<name>Internal Snapshots</name>
-			<url>${plugin.repository.url}</url>
-		</repository>
-		<snapshotRepository>
-			<id>ufcg-maven2</id>
-			<name>Internal Snapshots</name>
-			<url>${plugin.repository.url}</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
