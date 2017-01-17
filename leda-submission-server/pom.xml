@@ -32,7 +32,7 @@
 	<repositories>
 		<repository>
 			<id>ufcg-leda</id>
-			<url>${injected.plugin.repository.url}</url>
+			<url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url>
 			<layout>default</layout>
 			<snapshots>
 				<enabled>true</enabled>
