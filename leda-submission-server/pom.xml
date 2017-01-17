@@ -31,7 +31,7 @@
 
 	<repositories>
 		<repository>
-			<id>ufcg-maven2</id>
+			<id>ufcg-leda</id>
 			<url>${injected.plugin.repository.url}</url>
 			<layout>default</layout>
 			<snapshots>
