@@ -22,14 +22,14 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<submission.server.url>http://10.4.4.174/submission</submission.server.url>
+				<submission.server.url>http://150.165.85.29:81</submission.server.url>
 			</properties>
 		</profile>
 
 		<profile>
 			<id>local</id>
 			<properties>
-				<submission.server.url>http://web.cloud.lsd.ufcg.edu.br:44174/submission</submission.server.url>
+				<submission.server.url>http://150.165.85.29:81</submission.server.url>
 			</properties>
 		</profile>
 		
