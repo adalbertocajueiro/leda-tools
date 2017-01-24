@@ -295,6 +295,20 @@ public class SubmissionServer extends Jooby {
 		resp.send("Compactacao dos dados iniciada...");
 	  });
 	
+	get("/compact", (req,resp) -> {
+		String id = req.param("id").value();
+		
+		File fileToSend = Util.compact(id);
+        
+		if(fileToSend != null){
+			resp.type(MediaType.octetstream);
+	    	resp.download(fileToSend);
+		}else{
+			resp.send("Arquivo compactado nao gerado para atividade " + id);
+		}
+		
+	  });
+	
 	get("/submissoes", (req) -> {
 		boolean showAll = Boolean.valueOf(req.param("showAll").value());
 		Map<String,List<Submission>> submissoes = Util.allSubmissions(showAll);

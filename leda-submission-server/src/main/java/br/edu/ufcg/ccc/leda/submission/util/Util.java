@@ -1031,6 +1031,24 @@ public class Util {
 		return target;
 	}
 	
+	public static File compact(String id) throws IOException{
+		File folder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+		//id pode ser d euma prova ou de um roteiro
+		File target = null;
+		Compactor compactor = new Compactor();
+		//File uploadFolder = new File(Constants.UPLOAD_FOLDER);
+		//File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
+		//File folder = new File(currentSemester,id);
+		if(folder.exists()){
+			//target = new File(currentSemester,id + ".zip");
+			target = new File(folder.getParentFile(), folder.getName() + ".zip");
+			compactor.zipFolder(folder, target);
+		}else{
+			throw new FileNotFoundException("Missing folder: " + folder.getAbsolutePath());			
+		}
+		
+		return target;
+	}
 	public static void compactAllData() throws IOException{
 		File[] foldersToCompact = 
 				Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
