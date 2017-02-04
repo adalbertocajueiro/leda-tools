@@ -68,11 +68,19 @@ public class Configuration {
 	public Map<String, Student> getStudents() {
 		return students;
 	}
-	public Map<String, Atividade> getRoteiros() {
-		Map<String,Atividade> roteiros = new TreeMap();
-		roteiros.putAll(atividades.values().stream().filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova))).collect(Collectors.toMap(ativ -> ativ.getId(), ativ -> ativ)));
-
-		return roteiros; 
+	public List<Atividade> getRoteiros() {
+		/*Map<String,Atividade> roteiros = new TreeMap();
+		roteiros.putAll(atividades.values().stream()
+				.filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova)))
+				.sorted((ativ1,ativ2) -> ativ1.getDataHora().compareTo(ativ2.getDataHora()))
+				.collect(Collectors.toMap(ativ -> ativ.getId(), ativ -> ativ)));
+		
+		return roteiros; */
+		
+		return atividades.values().stream()
+				.filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova)))
+				.sorted((ativ1,ativ2) -> ativ1.getDataHora().compareTo(ativ2.getDataHora()))
+				.collect(Collectors.toList());
 	}
 	public Map<String, Atividade> getProvas() {
 		Map<String,Atividade> provas = new TreeMap(Util.comparatorProvas());

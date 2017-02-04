@@ -42,7 +42,7 @@
 					<th class="text-xs-center">Ambiente</th> 
 				</thead>
 				<tbody>
-				<#list config.getRoteiros()?values as roteiro>
+				<#list config.getRoteiros() as roteiro>
 						<tr><td>${roteiro.id} <td><#if roteiro.nome??>${roteiro.nome}</#if>
 						<td class="text-xs-center">${formatter.format(roteiro.dataHora.time)}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
