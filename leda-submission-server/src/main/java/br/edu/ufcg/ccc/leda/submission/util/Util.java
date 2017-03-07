@@ -259,6 +259,35 @@ public class Util {
 		return result;
 	}
 
+	//retorna as medias com final sem filtrar por turma
+	public static Map<String,Double> buildMediasLEDAComFinal() throws IOException, ConfigurationException, ServiceException{
+		Map<String,Double> mediasLEDAComFinal = new HashMap<String,Double>();
+		Map<String,Double> mediasLEDASemfinal = Util.buildMediasLEDASemFinal();
+		
+		//vem com as notas finais de todas as turmas
+		Map<String,CorrectionReport> notasDaFinal = Util.loadCorrectionReports( new Predicate<String>() {
+			//predicado para filtrar as provas finais
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA_FINAL.matcher(t).matches();
+			}
+		});
+		Set<String> idsProvasFinais = notasDaFinal.keySet();
+		idsProvasFinais.forEach(id -> {
+			mediasLEDASemfinal.forEach( (mat,med) -> {
+				CorrectionReportItem item = notasDaFinal.get(id).getCorrectionReportItemforStudent(mat);
+				double nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
+				double notaComFinal = med*0.6 + nf*0.4;
+				if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
+					notaComFinal = med;
+				}
+				mediasLEDAComFinal.put(mat,notaComFinal);
+			});
+			
+		});
+		return mediasLEDAComFinal;
+	}
+	
 	public static Map<String,Double> buildMediasLEDASemFinal() throws IOException, ConfigurationException, ServiceException{
 		Map<String,Double> mediasSemFinal = new HashMap<String,Double>();
 		Map<String,Double> mediasProvasTeoricas = Util.loadSpreadsheetsMediasEDA();
@@ -347,6 +376,185 @@ public class Util {
 			
 		}
 		
+	}
+	
+	public static File exportPlaninhaGeralToExcel(String turma) throws ConfigurationException, IOException, ServiceException, BiffException{
+		File outputFile = null;
+		//busca todos os relatorios de correcao das atividades qe valem ponto
+		//elas veem ordenadas por data
+		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
+			//predicado para filtrar o que mostrar nas notas (provas e roteiros
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA.matcher(t).matches()
+						|| Constants.PATTERN_ROTEIRO.matcher(t).matches();
+			}
+		});
+		
+		//filtra pela turma
+		List<CorrectionReport> reportsDaTurma = correctionReports.values().stream()
+		.filter( cr -> cr.getId().endsWith(turma))
+		.collect(Collectors.toList());
+		
+		//pega todas as atividades listadas em ordem cronologica e agrupadas por turma
+		/*List<Atividade> atividadesDaTurma = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.groupingBy( Atividade::getTurma))
+        		.get(turma)
+        		.stream().filter( a -> matchesRoteiroOuProva(a.getId()))
+        		.collect(Collectors.toList());*/
+
+		outputFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_FILE_NOTAS_FINAIS_NAME + "-" + turma + ".xlsx");
+
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		String[] headersAtividades = {"","Matricula","Nome", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
+
+		reportsDaTurma.forEach( cr -> {
+			try {
+				createSheetAtividade(workbook, headersAtividades, cr);
+			} catch (BiffException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		Map<String,Student> alunos = Util.loadStudentLists();
+		//filtra a media dos roteiros apenas para determinada turma
+		Map<String,Double> mediasRoteirosDaTurma = new HashMap<String,Double>();
+		Map<String,Double> mediasRoteirosTodosAlunos = Util.buildMediasRoteiros();
+		mediasRoteirosTodosAlunos.keySet().stream().forEach( mat ->{
+			if(alunos.get(mat).getTurma().equals(turma)){
+				mediasRoteirosDaTurma.put(mat, mediasRoteirosTodosAlunos.get(mat));
+			}
+		});
+		
+		createSheetSumarizacao(workbook, mediasRoteirosDaTurma,
+				Util.buildMediasProvasPraticas(), Util.loadSpreadsheetsMediasEDA(), 
+				Util.buildMediasLEDAComFinal());
+		
+		try {
+			FileOutputStream out = new FileOutputStream(outputFile);
+			workbook.write(out);
+			out.close();
+			System.out.println("Excel for current semester written successfully in " + outputFile.getAbsolutePath());
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return outputFile;
+	}
+	
+	//apenas medias roteiros precisam ser filtrados por turma
+	private static void createSheetSumarizacao(XSSFWorkbook workbook,
+			Map<String,Double> mediasRoteiros, Map<String,Double> mediasProvasPraticas,
+			Map<String,Double> mediasProvasTeoricasEDA,Map<String,Double> mediasFinais) throws BiffException, IOException{
+		XSSFSheet sheet = workbook.createSheet("Sumarizacao");
+		
+		Row row = sheet.createRow(0);
+		String[] headers = {"","Matricula","Nome", "MR","MPP","MPT","Media Final Semestre"};
+		XSSFCellStyle style = workbook.createCellStyle();
+		XSSFFont font = workbook.createFont();
+		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		
+		for (int i = 0; i < headers.length; i++) {
+			//Create a new cell in current row
+			Cell cell = row.createCell(i);
+			cell.setCellValue(headers[i]);
+			cell.setCellStyle(style);					
+		}
+		
+		
+		Map<String,Student> alunos = Util.loadStudentLists();
+		int count = 1;
+		Set<String> matriculas = mediasRoteiros.keySet();
+		for (String mat : matriculas) {
+			Row newRow = sheet.createRow(count);
+			Cell cellNumber = newRow.createCell(0);
+			cellNumber.setCellValue(count);
+			count++;
+			Cell cellMat = newRow.createCell(1);
+			Student aluno = alunos.get(mat);
+			cellMat.setCellValue(mat);
+			Cell cellNome = newRow.createCell(2);
+			cellNome.setCellValue(aluno.getNome());
+			Cell cellMediaRoteiros = newRow.createCell(3);
+			cellMediaRoteiros.setCellValue(mediasRoteiros.get(mat));
+			Cell cellMediaProvasPraticas = newRow.createCell(4);
+			cellMediaProvasPraticas.setCellValue(mediasProvasPraticas.get(mat));
+			Cell cellMediaProvasTeoricasEDA = newRow.createCell(5);
+			if(mediasProvasTeoricasEDA.get(mat) != null){
+				cellMediaProvasTeoricasEDA.setCellValue(mediasProvasTeoricasEDA.get(mat));
+			}else{
+				cellMediaProvasTeoricasEDA.setCellValue("-");				
+			}
+			Cell cellMediaFinal = newRow.createCell(6);
+			if(mediasFinais.get(mat) != null){
+				cellMediaFinal.setCellValue(mediasFinais.get(mat));
+			}else{
+				cellMediaFinal.setCellValue("-");				
+			}
+		}
+		for (int i = 0; i < headers.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+	}
+	private static void createSheetAtividade(XSSFWorkbook workbook, String[] headers,CorrectionReport report) throws BiffException, IOException{
+		XSSFSheet sheet = workbook.createSheet(report.getId());
+		Row row = sheet.createRow(0);
+		//String[] headers = {"","Matricula","Nome", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
+		XSSFCellStyle style = workbook.createCellStyle();
+		XSSFFont font = workbook.createFont();
+		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		
+		for (int i = 0; i < headers.length; i++) {
+			//Create a new cell in current row
+			Cell cell = row.createCell(i);
+			cell.setCellValue(headers[i]);
+			cell.setCellStyle(style);					
+		}
+		
+		
+		Map<String,Student> alunos = Util.loadStudentLists();
+		int count = 1;
+		for (CorrectionReportItem cri : report.getReportItems()) {
+			Row newRow = sheet.createRow(count);
+			Cell cellNumber = newRow.createCell(0);
+			cellNumber.setCellValue(count);
+			count++;
+			Cell cellMat = newRow.createCell(1);
+			Student aluno = alunos.get(cri.getMatricula());
+			cellMat.setCellValue(cri.getMatricula());
+			Cell cellNome = newRow.createCell(2);
+			cellNome.setCellValue(aluno.getNome());
+			Cell cellNotaTestes = newRow.createCell(3);
+			cellNotaTestes.setCellValue(cri.getNotaTestes());
+			Cell cellNotaDesign = newRow.createCell(4);
+			cellNotaDesign.setCellValue(cri.getNotaDesign());
+			Cell cellNotaFinal = newRow.createCell(5);
+			cellNotaFinal.setCellValue(cri.getNotaTestes() + cri.getNotaDesign()*0.6);
+			Cell cellClassificacao = newRow.createCell(6);
+			cellClassificacao.setCellValue(cri.getClassification().name());
+			Cell cellComentario = newRow.createCell(7);
+			cellComentario.setCellValue(cri.getComentario());
+			
+		}
+		for (int i = 0; i < headers.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+
+	}
+	private static boolean matchesRoteiroOuProva(String id){
+		return Constants.PATTERN_PROVA.matcher(id).matches()
+				|| Constants.PATTERN_ROTEIRO.matcher(id).matches();
 	}
 	public static File exportRoteiroToExcel(String id) throws IOException, BiffException{
 		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
@@ -1031,7 +1239,8 @@ public class Util {
 		return target;
 	}
 	
-	public static File compact(String id) throws IOException{
+	public static File compact(String id) throws IOException, BiffException{
+		Util.exportRoteiroToExcel(id); //exporta para excel de forma que a planilah seja incluida no arquivo compactado
 		File folder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
 		//id pode ser d euma prova ou de um roteiro
 		File target = null;
@@ -1578,6 +1787,7 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Util.exportPlaninhaGeralToExcel("01");
 		List<Submission> submissoes = Util.submissions(new File(Constants.CURRENT_SEMESTER_FOLDER,"R01-01"));
 		Util.exportRoteiroToExcel("R02-01");
 		Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
