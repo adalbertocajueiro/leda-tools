@@ -405,7 +405,7 @@ public class Util {
         		.stream().filter( a -> matchesRoteiroOuProva(a.getId()))
         		.collect(Collectors.toList());*/
 
-		outputFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_FILE_NOTAS_FINAIS_NAME + "-" + turma + ".xlsx");
+		outputFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_FILE_NOTAS_FINAIS_NAME + "-T" + turma + ".xlsx");
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		String[] headersAtividades = {"","Matricula","Nome", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
