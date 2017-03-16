@@ -357,21 +357,12 @@ public class SubmissionServer extends Jooby {
 		resp.send(result.toString());
 	});
 	
-	get("/reload", (req,resp) -> {
-		Configuration.getInstance().reload();
-		//chain.next("config",req,resp);
-		
-		//StringBuilder result = new StringBuilder();
-		//result.append("Configuration instance reloaded! New values bellow...<br>");
-		//result.append(Configuration.getInstance().toString());
-		
-		//resp.send(result.toString());
-		//View html = Results.html("configuration");
-        //html.put("config",Configuration.getInstance());
-        resp.redirect("menu");
-        //return html;
-		
+	get("/requestReload", (req) -> {
+		View html = Results.html("modal-reload");
+        return html;
 	});
+	
+	
 	//get("/report/", req -> Results.html("report/generated-report"));
 	
 	get("/config", (req) -> {
@@ -555,6 +546,23 @@ public class SubmissionServer extends Jooby {
 			}
 		});*/
 
+	  post("/reload", (req,resp) -> {
+			boolean reloadIPs = Boolean.valueOf(req.param("reloadIPs").value());
+			//System.out.println("RELOAD IPS: " + reloadIPs);
+			Configuration.getInstance().reload(reloadIPs);
+			//StringBuilder result = new StringBuilder();
+			//result.append("Configuration instance reloaded! New values bellow...<br>");
+			//result.append(reloadIPs);
+			
+			//resp.send(result.toString());
+			//View html = Results.html("configuration");
+	        //html.put("config",Configuration.getInstance());
+	        
+			resp.redirect("menu");
+	        //return html;
+			
+		});
+	  
 		post("/download",(req,resp) -> {
 			String id = req.param("id").value();
 			String matricula = req.param("matricula").value();

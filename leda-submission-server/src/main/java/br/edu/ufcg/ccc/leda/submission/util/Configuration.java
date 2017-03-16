@@ -19,11 +19,14 @@ public class Configuration {
 	private Map<String, Student> students;
 	private Map<String,Atividade> atividades;
 	private List<Corretor> monitores;
-	private ArrayList<String> ipsAutorizados = new ArrayList<String>();
+	private ArrayList<String> ipsAutorizados;
 	
 	private static Configuration instance;
 	
 	private Configuration() throws ConfigurationException, IOException {
+		if(ipsAutorizados == null){
+			ipsAutorizados = new ArrayList<String>();
+		}
 		try {
 			students = Util.loadStudentLists();
 			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
@@ -53,6 +56,30 @@ public class Configuration {
 			ipsAutorizados.add("150.165.54");
 		}
 	}
+	
+	private Configuration(ArrayList<String> ips) throws ConfigurationException, IOException {
+		ipsAutorizados = ips;
+		try {
+			students = Util.loadStudentLists();
+			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
+			Util.loadSpreadsheetSenhasFromExcel(monitores);
+			atividades = Util.loadSpreadsheetsAtividades(monitores);
+		} catch (BiffException e) {
+			throw new ConfigurationException(e);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			monitores = Util.loadSpreadsheetMonitorFromExcel();
+			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+		} catch (ConnectException e) {
+			e.printStackTrace();
+			monitores = Util.loadSpreadsheetMonitorFromExcel();
+			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			monitores = Util.loadSpreadsheetMonitorFromExcel();
+			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+		}
+	}
 	public static Configuration getInstance() throws ConfigurationException, IOException, ServiceException {
 		if(instance == null){
 			instance = new Configuration();
@@ -61,8 +88,12 @@ public class Configuration {
 	}
 	
 	
-	public void reload() throws Exception{
-		instance = new Configuration();
+	public void reload(boolean reloadIPs) throws Exception{
+		if(reloadIPs){
+			instance = new Configuration();
+		}else{
+			instance = new Configuration(instance.ipsAutorizados);
+		}
 	}
 	
 	public Map<String, Student> getStudents() {
