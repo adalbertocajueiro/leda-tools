@@ -189,8 +189,12 @@ public class Validator {
 			//ele fazer download 
 			//se id for de uma prova de revisao tem que ver na prova correspondente a ela
 			if(Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
-				String idProvaPratica = "PP" + id.charAt(2);
+				String idProvaPratica = "PP" + id.substring(2);
 				List<String> fizeramDownload = Util.alunosDownload(idProvaPratica);
+				if(fizeramDownload.size() == 0){
+					throw new AtividadeException("Registro de downloads da prova " 
+							+ idProvaPratica + " não encontrados. Favor contactar o prof. com urgencia!");										
+				}
 				if(fizeramDownload.contains(config.getMatricula())){
 					throw new AtividadeException("Ja existe um registro de download da prova " 
 						+ idProvaPratica + " para o estudante " + config.getMatricula() + ". Envio da prova de reposicao nao permitido!!! ");					
