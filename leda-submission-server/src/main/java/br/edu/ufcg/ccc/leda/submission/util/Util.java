@@ -1221,7 +1221,8 @@ public class Util {
 			}
 	}
 
-	public static File compact(File folder) throws IOException{
+	public static File compact(File folder) throws IOException, BiffException{
+		Util.exportRoteiroToExcel(folder.getName());
 		//id pode ser d euma prova ou de um roteiro
 		File target = null;
 		Compactor compactor = new Compactor();
@@ -1276,6 +1277,9 @@ public class Util {
 					try {
 						compact(file);
 					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (BiffException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

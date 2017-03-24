@@ -16,6 +16,8 @@ import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 
+import jxl.read.biff.BiffException;
+
 public class AutomaticCorrector {
 
 	
@@ -110,7 +112,7 @@ public class AutomaticCorrector {
 		return task;
 	}*/
 	
-	public void executeMaven(File projectFolder) throws MavenInvocationException, IOException{
+	public void executeMaven(File projectFolder) throws MavenInvocationException, IOException, BiffException{
 		Invoker invoker = new DefaultInvoker();
 		System.setProperty("maven.home", Constants.MAVEN_HOME_FOLDER);
 		if (projectFolder.isDirectory()) {
