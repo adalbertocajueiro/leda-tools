@@ -1375,7 +1375,11 @@ public class Util {
 				(s1,s2) -> {
 					Atividade a1 = atividades.get(s1);
 					Atividade a2 = atividades.get(s2);
-					return a1.getDataHora().compareTo(a2.getDataHora());
+					if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+						return a1.getNome().compareTo(a2.getNome());
+					}else{
+						return a1.getDataHora().compareTo(a2.getDataHora());
+					}
 				});
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
