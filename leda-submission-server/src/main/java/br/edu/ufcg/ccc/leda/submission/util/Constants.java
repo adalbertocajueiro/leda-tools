@@ -3,6 +3,8 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -11,13 +13,7 @@ public abstract class Constants {
 	public static final int HORAS_LIMITE_NORMAL = 12;
 	public static final int HORAS_LIMITE_ATRASO = 48;
 	
-	public static final int TURMAS = 2;
-
 	public static final String DEFAULT_CONFIG_FOLDER_NAME = "conf";
-	public static final String EXCEL_FILE_ROTEIRO = "Roteiros.xlsx";
-	public static final String EXCEL_FILE_PROVA = "Provas.xlsx";
-	public static final String JSON_FILE_ROTEIRO = "Roteiros.json";
-	public static final String JSON_FILE_PROVA = "Provas.json";
 
 	public static final String SUBMISSIONS_FOLDER_NAME = "subs";
 	public static final String REPORTS_FOLDER_NAME = "public/reports";
@@ -25,6 +21,7 @@ public abstract class Constants {
 	public static final String PROVAS_FOLDER_NAME = "provas";
 
 	public static final String EXCEL_FILE_NOTAS_FINAIS_NAME = "NotasFinaisSemestre";
+	public static final String EXCEL_SENHAS_FILE_NAME = "Senhas.xlsx";
 	public static File DEFAULT_CONFIG_FOLDER;
 	public static File UPLOAD_FOLDER;
 	public static File ROTEIROS_FOLDER;
@@ -36,9 +33,11 @@ public abstract class Constants {
 	public static String MAVEN_HOME_FOLDER;
 	public static int QUANTIDADE_PROVAS;
 	public static int QUANTIDADE_ROTEIROS;
+	public static List<String> activitySheetIds;
+	public static List<String> authorizedIPs;
+	public static List<String> edaSheetIds;
 	
-	public static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
-	public static final String GENERATED_REPORT_FILE = "target/generated-report.html";
+	//public static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
 
 	public static final Pattern PATTERN_AULA = Pattern.compile("A[0-9]{2}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_ROTEIRO = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
@@ -52,12 +51,9 @@ public abstract class Constants {
 	public static final String AUTOR_MATRICULA = "autor.matricula";
 	public static final String AUTOR_NOME = "autor.nome";
 
-	public static final String ID_MONITORES_SHEET = "15T_KSFA1ABUvZV_p0IVjcxa90yBJUw0794p7GO8OHEA";
-	public static final String ID_ATIVIDADES_SHEET_T1 = "15rxyKxDJ4-dSIfdh1ZGZvpL7femQG27P_ESTeSseJGA";
-	public static final String ID_ATIVIDADES_SHEET_T2 = "1S7Ru2RFei-0lgEHTn2L6XRYajiX8Se4yryuw8sR404A";
+	public static String ID_MONITORES_SHEET;
 
-	public static final String ID_MEDIASEDA_SHEET_T2 = "1LEccFlOjV4o3FsJEeOYFtqzaJOHHd9q4gYurcWx95cU";
-	public static final String ID_MEDIASEDA_SHEET_T1 = "1Qwpele7sF0WAb5GDqKiEq1MMUT9Ij4qJlEw3P5ey4fM";
+	public static final String CODIGO_LEDA = "1411179";
 
 	static{
 		try {
@@ -67,6 +63,25 @@ public abstract class Constants {
 			MAVEN_HOME_FOLDER = prop.getProperty("mavenHomeFolder");
 			QUANTIDADE_PROVAS = Integer.valueOf(prop.getProperty("quantidadeProvas"));
 			QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
+			ID_MONITORES_SHEET = prop.getProperty("idSheetMonitores");
+			activitySheetIds = new ArrayList<String>();
+			authorizedIPs = new ArrayList<String>();
+			edaSheetIds = new ArrayList<String>();
+			
+			String ids = prop.getProperty("activitySheetIds");
+			for (String id : ids.split(",")) {
+				activitySheetIds.add(id.trim());
+			}
+			
+			String ips = prop.getProperty("authorizedIPs");
+			for (String ip : ips.split(",")) {
+				authorizedIPs.add(ip.trim());
+			}
+			
+			String edaIds = prop.getProperty("edaSheetIds");
+			for (String id : edaIds.split(",")) {
+				edaSheetIds.add(id.trim());
+			}
 			
 			DEFAULT_CONFIG_FOLDER = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
     		if(!DEFAULT_CONFIG_FOLDER.exists()){
@@ -88,8 +103,7 @@ public abstract class Constants {
 			if(!PROVAS_FOLDER.exists()){
 				PROVAS_FOLDER.mkdirs();
 			}
-			//System.out.println("Property UPLOAD_FOLDER: " + UPLOAD_FOLDER);
-			//System.out.println("Property CURRENT_SEMESTER: " + CURRENT_SEMESTER);
+			
 		} catch (IOException e) {
 			System.out.println("Properties not loaded. system will exit");
 			e.printStackTrace();

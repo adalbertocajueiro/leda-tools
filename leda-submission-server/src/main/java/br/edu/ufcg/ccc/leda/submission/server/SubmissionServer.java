@@ -77,6 +77,9 @@ public class SubmissionServer extends Jooby {
 		}	
 	}
 	
+	public static void main(final String[] args) {
+		run(SubmissionServer::new, args);
+	}
 	
 	public Path  saveUpload(File f, String folder) throws IOException{
 		File fout = new File(folder + File.separator + f.getName().substring(f.getName().indexOf(".") + 1));
@@ -121,6 +124,31 @@ public class SubmissionServer extends Jooby {
 	    return gson.toJson(Configuration.getInstance().getStudents());
 	}).produces("json");
 	
+	post("/uploadSheet", (req,resp) -> {
+		String tipoPlanilha = req.param("tipoPlanilha").value();
+		String senha = req.param("senha").value();
+		Upload upload = req.file("arquivo");
+		//validacao se a senha é de algum professor
+		boolean profValido = Configuration.getInstance().getMonitores().stream()
+		.filter(c -> (c instanceof Professor) && c.getSenha().equals(senha))
+		.findFirst().isPresent();
+		if(profValido){
+			if(tipoPlanilha.equals("FREQUENCIA")){
+				FileUtilities.salvarFrequencia(upload.file());
+			}else{
+				FileUtilities.salvarArquivoSenhas(upload.file());
+			}
+		}else{
+			throw new RuntimeException("Senha informada não é de professor algum");
+		}
+				
+	    resp.send("arquivo da frequencia carregado");
+	});
+	get("/requestUploadSheet", (req) -> {
+        View html = Results.html("uploadSheet");
+        
+        return html;
+    });
 	get("/alunos", (req) -> {
         Map<String,Student> alunos = Configuration.getInstance().getStudents();
         View html = Results.html("alunos");

@@ -7,26 +7,28 @@
 	<parent>
 		<groupId>org.jooby</groupId>
 		<artifactId>jooby-project</artifactId>
-		<version>1.0.0.CR7</version>
-		<relativePath/>
+		<version>1.1.0</version>
+		<relativePath />
 	</parent>
 
 	<artifactId>leda-submission-server</artifactId>
 	<groupId>br.edu.ufcg.ccc</groupId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>LEDA Submission Server</name>
-	
+
 
 	<description>Submission server used in LEDA</description>
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
 		<semestre.letivo>2016.2</semestre.letivo>
-		<!-- Startup class -->
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
-		<!--  injected.plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</injected.plugin.repository.url -->
+		<idSheetMonitores>15T_KSFA1ABUvZV_p0IVjcxa90yBJUw0794p7GO8OHEA</idSheetMonitores>
 		<quantidadeProvas>4</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
+		<activitySheetIds>15rxyKxDJ4-dSIfdh1ZGZvpL7femQG27P_ESTeSseJGA,1S7Ru2RFei-0lgEHTn2L6XRYajiX8Se4yryuw8sR404A</activitySheetIds>
+		<authorizedIPs>150.165.74,150.165.54</authorizedIPs>
+		<edaSheetIds>1LEccFlOjV4o3FsJEeOYFtqzaJOHHd9q4gYurcWx95cU,1Qwpele7sF0WAb5GDqKiEq1MMUT9Ij4qJlEw3P5ey4fM</edaSheetIds>
 	</properties>
 
 	<repositories>
@@ -39,7 +41,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<profiles>
 		<profile>
 			<id>server</id>
@@ -62,11 +64,6 @@
 	</profiles>
 
 	<dependencies>
-		<!-- Jooby -->
-		<dependency>
-			<groupId>org.jooby</groupId>
-			<artifactId>jooby</artifactId>
-		</dependency>
 
 		<!-- Server -->
 		<dependency>
@@ -94,6 +91,12 @@
 			<classifier>tests</classifier>
 		</dependency>
 
+<dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
 		<!-- Fluent HC -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -157,42 +160,31 @@
 			<version>0.9.6</version>
 		</dependency>
 		<!-- dependency to send email -->
-		<!--  dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>javax.mail-api</artifactId>
-			<version>1.5.5</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jooby</groupId>
-			<artifactId>jooby-pac4j</artifactId>
-		</dependency -->
+		<!-- dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> 
+			<version>1.4.7</version> </dependency> <dependency> <groupId>javax.mail</groupId> 
+			<artifactId>javax.mail-api</artifactId> <version>1.5.5</version> </dependency> 
+			<dependency> <groupId>org.jooby</groupId> <artifactId>jooby-pac4j</artifactId> 
+			</dependency -->
 		<dependency>
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-correction-tool</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
 		<dependency>
-		    <groupId>org.jdom</groupId>
-		    <artifactId>jdom2</artifactId>
-		    <version>2.0.6</version>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+			<version>2.0.6</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-math3</artifactId>
-		    <version>3.6.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
 		</dependency>
-						
+
 	</dependencies>
 
 	<build>
