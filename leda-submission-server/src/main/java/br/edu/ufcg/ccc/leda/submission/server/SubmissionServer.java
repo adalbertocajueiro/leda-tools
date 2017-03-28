@@ -140,7 +140,16 @@ public class SubmissionServer extends Jooby {
 	get("/cronograma", (req) -> {
         Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
         View html = Results.html("cronograma");
-        Map<String,List<Atividade>> atividadesAgrupadas = atividades.values().stream().sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora())).collect(Collectors.groupingBy( Atividade::getTurma));
+        Map<String,List<Atividade>> atividadesAgrupadas = atividades.values()
+        		.stream()
+        		.sorted( (a1,a2) -> {
+        			if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+						return a1.getNome().compareTo(a2.getNome());
+					}else{
+						return a1.getDataHora().compareTo(a2.getDataHora());
+					}
+        			//a1.getDataHora().compareTo(a2.getDataHora())        		
+        		}).collect(Collectors.groupingBy( Atividade::getTurma));
         html.put("atividades", atividadesAgrupadas);
         
         return html;
