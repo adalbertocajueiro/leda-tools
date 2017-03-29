@@ -421,7 +421,8 @@ public class SubmissionServer extends Jooby {
 	get("/faltas", (req) -> {
 
 		Map<String,List<Submission>> submissoes = Util.allSubmissions(true);
-
+		Map<String,Map<String,Boolean>> totalFaltas = 
+				Util.totalizacaoFaltas();
 
         Map<String,List<Atividade>> atividadesAgrupadas = 
         		Configuration.getInstance().getAtividades().values().stream()
@@ -430,6 +431,7 @@ public class SubmissionServer extends Jooby {
 
         View html = Results.html("faltas");
 		html.put("submissoes",submissoes);
+		html.put("totalFaltas",totalFaltas);
         html.put("turmas",atividadesAgrupadas.keySet());
         html.put("atividades", Configuration.getInstance().getAtividades());
         html.put("semestre",Constants.CURRENT_SEMESTER);

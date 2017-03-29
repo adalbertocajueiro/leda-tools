@@ -67,23 +67,19 @@
 					<#if aluno.turma == turma>
 						<tr>
 							<td>${aluno.nome}
-							<#assign totalFaltas = 0>
+							<#assign numFaltas = 0>
 							<#list submissoes?keys as id>
 							  <#assign atividade = atividades[id]>
 							  <#if id?keep_after("-") == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime)>
-								<#list submissoes[id] as sub>
-									<#if sub.aluno.matricula == aluno.matricula>
-										<#if sub.arquivoSubmetido??>
-											<td class="text-xs-center">
-										<#else>
-											<td class="text-xs-center" style="color:red">F
-											<#assign totalFaltas = totalFaltas + 2>
-										</#if>
-									</#if>
-								</#list>
+								<#if totalFaltas[aluno.matricula][id]>
+									<td class="text-xs-center">
+								<#else>
+									<td class="text-xs-center" style="color:red">F
+									<#assign numFaltas = numFaltas + 2>
+								</#if>
 							  </#if>
 							</#list>
-							<td class="text-xs-center font-weight-bold" <#if (totalFaltas > 14)>style="color:red"</#if>>${totalFaltas}
+							<td class="text-xs-center font-weight-bold" <#if (numFaltas > 14)>style="color:red"</#if>>${numFaltas}
 					</#if>
 				</#list>
 				

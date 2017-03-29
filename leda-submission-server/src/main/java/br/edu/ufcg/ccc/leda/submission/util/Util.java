@@ -1406,6 +1406,75 @@ public class Util {
 		return result;
 	}
 	
+	public static Map<String,Map<String,Boolean>> totalizacaoFaltas() throws ConfigurationException, IOException, ServiceException{
+		// o retorno eh do tipo matricula -> {idAtividade -> presenca(boolean)}
+		Map<String,Map<String,Boolean>> result = new HashMap<String,Map<String,Boolean>>();
+		Map<String,List<Submission>> todasSubmissoes = 
+				Util.allSubmissions(false); //sem roteiros de revisao
+		Map<String,Student> alunos = Configuration.getInstance().getStudents();
+		
+		//varre todos os alunos procurando as presencas nas submissoes dele
+		//e levando em consideração as reposicoes
+		alunos.forEach( (mat,aluno) -> {
+			Map<String,Boolean> presencasAluno = new HashMap<String,Boolean>();
+			todasSubmissoes.forEach( (id,list) -> {
+				Submission sub = list.stream().filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().orElse(null);
+				boolean submeteu = false;
+				if(sub != null){
+					if(sub.getArquivoSubmetido() != null){
+						submeteu = true;
+					}else{
+						submeteu = verificaPresencaReposicao(mat,id,todasSubmissoes);
+					}				
+				}
+				//precisa antes de inserir julgar as provas normais e de reposicao
+				//para nao contar dobrado
+				presencasAluno.put(id, submeteu);
+			});
+			result.put(mat, presencasAluno);
+		});
+		return result;
+	}
+	
+	/**
+	 * Verifica se para uma dada prova, se o aluno esteve presente na prova ou nao reposicao
+	 * nenhuma falta deve ser registrada. Se nao houve envio para nenhuma delas entao 
+	 * deve registrar falta apenas na prova pratica e nao na reposicao. 
+	 * @param id
+	 * @param todasSubmissoes
+	 * @return
+	 */
+	private static boolean verificaPresencaReposicao(String mat, String id, Map<String, List<Submission>> todasSubmissoes) {
+		boolean presenca = false;
+		if(Constants.PATTERN_PROVA_PRATICA.matcher(id).matches()){ //eh prova pratica e ja nao teve submissao para ela
+			//tem que verificar se teve submissao para a respectiva prova de reposicao
+			String idProvaReposicao = "PR"+ id.charAt(2)+ id.substring(3);
+			List<Submission> submissoes = 
+					todasSubmissoes.get(idProvaReposicao);
+			if(submissoes != null){
+				Submission sub = submissoes.stream()
+						.filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().orElse(null);
+				if(sub != null){
+					presenca = sub.getArquivoSubmetido() != null;
+				}
+			}
+		} else if (Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
+			//eh prova de reposicao e tem que verificar se teve submissao para a respectiva
+			//prova pratica. se sim, entao nao precisa registrar falta na reposicao
+			String idProvaPratica = "PP"+ id.charAt(2)+ id.substring(3);
+			List<Submission> submissoes = 
+					todasSubmissoes.get(idProvaPratica);
+			if(submissoes != null){
+				Submission sub = submissoes.stream()
+						.filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().get();
+				if(sub != null){
+					presenca = sub.getArquivoSubmetido() != null;
+				}
+			}
+		} 
+		return presenca;
+	}
+
 	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
 		//precisa ordenar as submissoes pelas datas de cada atividade
 		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
