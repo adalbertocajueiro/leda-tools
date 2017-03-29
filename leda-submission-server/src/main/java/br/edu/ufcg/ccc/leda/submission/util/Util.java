@@ -1458,8 +1458,8 @@ public class Util {
 					presenca = sub.getArquivoSubmetido() != null;
 				}
 			}
-		} /*else if (Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
-			//eh prova de reposicao e tem que verificar se teve submissao para a respectiva
+		} else if (Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
+			/*//eh prova de reposicao e tem que verificar se teve submissao para a respectiva
 			//prova pratica. se sim, entao nao precisa registrar falta na reposicao
 			String idProvaPratica = "PP"+ id.charAt(2)+ id.substring(3);
 			List<Submission> submissoes = 
@@ -1470,8 +1470,9 @@ public class Util {
 				if(sub != null){
 					presenca = sub.getArquivoSubmetido() != null;
 				}
-			}
-		} */
+			}*/
+			presenca = true;
+		} 
 		return presenca;
 	}
 
