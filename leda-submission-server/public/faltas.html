@@ -71,8 +71,13 @@
 							<#list submissoes?keys as id>
 							  <#assign atividade = atividades[id]>
 							  <#if id?keep_after("-") == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime)>
-								<#if totalFaltas[aluno.matricula][id]>
-									<td class="text-xs-center">
+								<#if totalFaltas[aluno.matricula][id]??>
+									<#if totalFaltas[aluno.matricula][id]>
+										<td class="text-xs-center">
+									<#else>
+										<td class="text-xs-center" style="color:red">F
+										<#assign numFaltas = numFaltas + 2>
+									</#if>
 								<#else>
 									<td class="text-xs-center" style="color:red">F
 									<#assign numFaltas = numFaltas + 2>
