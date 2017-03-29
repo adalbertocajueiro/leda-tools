@@ -442,7 +442,8 @@ public class SubmissionServer extends Jooby {
         		.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
         		.collect(Collectors.toList()));
         html.put("mediasProvasPraticas", Util.buildMediasProvasPraticas());
-        html.put("mediasSemFinal", Util.buildMediasLEDASemFinal());
+        html.put("notasDaFinal", Util.getNotasDaFinal());
+        html.put("mediasComFinal", Util.buildMediasLEDAComFinal());
         html.put("mediasProvasTeoricas", Util.loadSpreadsheetsMediasEDA());
         html.put("mediasRoteiros", Util.buildMediasRoteiros());
         return html;

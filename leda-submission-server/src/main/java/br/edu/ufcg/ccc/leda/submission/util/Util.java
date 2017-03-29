@@ -231,6 +231,35 @@ public class Util {
 		return result;
 	}
 	
+	// retorna as notas das finais de todos os alunos
+	public static Map<String, Double> getNotasDaFinal() throws IOException, ConfigurationException, ServiceException {
+		Map<String, Double> notasDaFinal = new HashMap<String, Double>();
+		Map<String, Student> alunos = Configuration.getInstance().getStudents();
+
+		// vem com as notas finais de todas as turmas
+		Map<String, CorrectionReport> relatoriosDaFinal = Util.loadCorrectionReports(new Predicate<String>() {
+			// predicado para filtrar as provas finais
+			@Override
+			public boolean test(String t) {
+				return Constants.PATTERN_PROVA_FINAL.matcher(t).matches();
+			}
+		});
+		if (relatoriosDaFinal.size() != 0) {
+			CorrectionReport reportFinais = relatoriosDaFinal.values().stream().findFirst().get();
+			alunos.forEach((mat, aluno) -> {
+				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
+				double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				notasDaFinal.put(mat, nota);
+			});
+
+		} else {
+			alunos.forEach((mat, aluno) -> {
+				notasDaFinal.put(mat, 0.0);
+			});
+		}
+
+		return notasDaFinal;
+	}
 	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException{
 		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
         	int res = 1;
@@ -265,17 +294,17 @@ public class Util {
 		Map<String,Double> mediasLEDASemfinal = Util.buildMediasLEDASemFinal();
 		
 		//vem com as notas finais de todas as turmas
-		Map<String,CorrectionReport> notasDaFinal = Util.loadCorrectionReports( new Predicate<String>() {
+		Map<String,CorrectionReport> relatorioDaFinal = Util.loadCorrectionReports( new Predicate<String>() {
 			//predicado para filtrar as provas finais
 			@Override
 			public boolean test(String t) {
 				return Constants.PATTERN_PROVA_FINAL.matcher(t).matches();
 			}
 		});
-		Set<String> idsProvasFinais = notasDaFinal.keySet();
-		idsProvasFinais.forEach(id -> {
+		if(relatorioDaFinal.size() == 1){
+			CorrectionReport reportFinais = relatorioDaFinal.values().stream().findFirst().get();
 			mediasLEDASemfinal.forEach( (mat,med) -> {
-				CorrectionReportItem item = notasDaFinal.get(id).getCorrectionReportItemforStudent(mat);
+				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
 				double nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
 				double notaComFinal = med*0.6 + nf*0.4;
 				if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
@@ -284,7 +313,11 @@ public class Util {
 				mediasLEDAComFinal.put(mat,notaComFinal);
 			});
 			
-		});
+		}else{
+			mediasLEDASemfinal.forEach( (mat,med) -> {
+				mediasLEDAComFinal.put(mat,med);
+			});
+		}
 		return mediasLEDAComFinal;
 	}
 	
