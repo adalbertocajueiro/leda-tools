@@ -231,6 +231,34 @@ public class Util {
 		return result;
 	}
 	
+	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException{
+		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
+        	int res = 1;
+        	if(cr1.charAt(0) != cr2.charAt(0)){
+        		res = cr2.charAt(0) -  cr1.charAt(0);
+        	} else{
+        		res = cr1.compareTo(cr2);
+        	}
+        	return res;
+        
+		});
+		
+		File[] atividadesFiltradas = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return patternValidator.test(pathname.getName());
+			}
+		});
+		for (int i = 0; i < atividadesFiltradas.length; i++) {
+			CorrectionReport report = Util.loadCorrectionReport(atividadesFiltradas[i].getName());
+			if(report != null){
+				result.put(atividadesFiltradas[i].getName(), report);
+			}
+		}
+		return result;
+	}
+	
 	// retorna as notas das finais de todos os alunos
 	public static Map<String, Double> getNotasDaFinal() throws IOException, ConfigurationException, ServiceException {
 		Map<String, Double> notasDaFinal = new HashMap<String, Double>();
@@ -260,33 +288,7 @@ public class Util {
 
 		return notasDaFinal;
 	}
-	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException{
-		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
-        	int res = 1;
-        	if(cr1.charAt(0) != cr2.charAt(0)){
-        		res = cr2.charAt(0) -  cr1.charAt(0);
-        	} else{
-        		res = cr1.compareTo(cr2);
-        	}
-        	return res;
-        
-		});
-		
-		File[] atividadesFiltradas = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
-			
-			@Override
-			public boolean accept(File pathname) {
-				return patternValidator.test(pathname.getName());
-			}
-		});
-		for (int i = 0; i < atividadesFiltradas.length; i++) {
-			CorrectionReport report = Util.loadCorrectionReport(atividadesFiltradas[i].getName());
-			if(report != null){
-				result.put(atividadesFiltradas[i].getName(), report);
-			}
-		}
-		return result;
-	}
+	
 
 	//retorna as medias com final sem filtrar por turma
 	public static Map<String,Double> buildMediasLEDAComFinal() throws IOException, ConfigurationException, ServiceException{
