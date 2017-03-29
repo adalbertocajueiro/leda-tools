@@ -80,7 +80,8 @@
 							<#assign mediaRoteiros = mediasRoteiros[aluno.matricula]>
 							<#assign mediaProvasPraticas = mediasProvasPraticas[aluno.matricula]>
 							<#assign mediaProvasTeoricas = (mediasProvasTeoricas[aluno.matricula])!"-">
-							<#assign mediaSemFinal = mediasSemFinal[aluno.matricula]>
+							<#assign notaDaFinal = notasDaFinal[aluno.matricula]>
+							<#assign mediaComFinal = mediasComFinal[aluno.matricula]>
 							<#list correctionReports?values as corrReport>
 							  <#if corrReport??>
 							  <#assign atividade = atividades[corrReport.id]>
@@ -101,8 +102,14 @@
 							<td class="text-xs-center font-weight-bold">${mediaRoteiros}
 							<td class="text-xs-center font-weight-bold">${mediaProvasPraticas}
 							<td class="text-xs-center font-weight-bold">${mediaProvasTeoricas}
-							<td class="text-xs-center font-weight-bold">
-							<td class="text-xs-center font-weight-bold">${mediaSemFinal}
+							<td class="text-xs-center font-weight-bold">${notaDaFinal}
+							<#if (mediaComFinal >= 7.0)>
+								<td class="text-xs-center font-weight-bold" style="color:blue">${mediaComFinal}
+							<#elseif (mediaComFinal >= 5.0)>
+								<td class="text-xs-center font-weight-bold">${mediaComFinal}
+							<#else>
+								<td class="text-xs-center font-weight-bold" style="color:red">${mediaComFinal}
+							</#if>
 					</#if>
 				</#list>
 				</tbody>
