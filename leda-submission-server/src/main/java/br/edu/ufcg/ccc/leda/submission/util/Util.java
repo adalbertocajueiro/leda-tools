@@ -307,10 +307,22 @@ public class Util {
 			CorrectionReport reportFinais = relatorioDaFinal.values().stream().findFirst().get();
 			mediasLEDASemfinal.forEach( (mat,med) -> {
 				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
-				double nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
-				double notaComFinal = med*0.6 + nf*0.4;
-				if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
-					notaComFinal = med;
+				double nf = 0.0;
+				double notaComFinal = med;
+
+				if(item != null){
+					nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
+					notaComFinal = med*0.6 + nf*0.4;
+					
+					if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
+						notaComFinal = med;
+					}
+				}else{
+					//Student aluno = students.get(mat);
+					//System.out.println("Aluno sem nota final: " + mat + "-" + aluno.getNome() +"-Turma " + aluno.getTurma());
+					if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
+						notaComFinal = med;
+					}
 				}
 				mediasLEDAComFinal.put(mat,notaComFinal);
 			});
