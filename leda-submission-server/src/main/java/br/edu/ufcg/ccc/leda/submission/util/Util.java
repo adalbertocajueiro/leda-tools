@@ -276,8 +276,13 @@ public class Util {
 			CorrectionReport reportFinais = relatoriosDaFinal.values().stream().findFirst().get();
 			alunos.forEach((mat, aluno) -> {
 				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
-				double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
-				notasDaFinal.put(mat, nota);
+				if(item != null){
+					double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+					notasDaFinal.put(mat, nota);
+				}else{
+					double nota = 0.0;
+					notasDaFinal.put(mat, nota);					
+				}
 			});
 
 		} else {
@@ -293,7 +298,7 @@ public class Util {
 	public static Map<String,Double> buildMediasLEDAComFinal() throws IOException, ConfigurationException, ServiceException{
 		Map<String,Double> mediasLEDAComFinal = new HashMap<String,Double>();
 		Map<String,Double> mediasLEDASemfinal = Util.buildMediasLEDASemFinal();
-		
+		Map<String, Student> students = Configuration.getInstance().getStudents();
 		//vem com as notas finais de todas as turmas
 		Map<String,CorrectionReport> relatorioDaFinal = Util.loadCorrectionReports( new Predicate<String>() {
 			//predicado para filtrar as provas finais
@@ -306,10 +311,22 @@ public class Util {
 			CorrectionReport reportFinais = relatorioDaFinal.values().stream().findFirst().get();
 			mediasLEDASemfinal.forEach( (mat,med) -> {
 				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
-				double nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
-				double notaComFinal = med*0.6 + nf*0.4;
-				if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
-					notaComFinal = med;
+				double nf = 0.0;
+				double notaComFinal = 0.0;
+
+				if(item != null){
+					nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
+					notaComFinal = med*0.6 + nf*0.4;
+					
+					if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
+						notaComFinal = med;
+					}
+				}else{
+					//Student aluno = students.get(mat);
+					//System.out.println("Aluno sem nota final: " + mat + "-" + aluno.getNome() +"-Turma " + aluno.getTurma());
+					if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
+						notaComFinal = med;
+					}
 				}
 				mediasLEDAComFinal.put(mat,notaComFinal);
 			});
@@ -1906,6 +1923,9 @@ public class Util {
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		Map<String, Double> mediasFinais = Util.buildMediasLEDAComFinal();
+		Map<String, Double> mediasSemFinais = Util.buildMediasLEDASemFinal();
+		Double mediaComFinal = mediasFinais.get("115211289");
+		Double mediaSemFinal = mediasSemFinais.get("115211289");
 		Map<String, Student> students = Util.loadStudentLists();
 		students.forEach((s,e) -> {
 			System.out.println(e.getNome() + " - " + e.getTurma());
