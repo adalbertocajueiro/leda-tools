@@ -312,7 +312,7 @@ public class Util {
 			mediasLEDASemfinal.forEach( (mat,med) -> {
 				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
 				double nf = 0.0;
-				double notaComFinal = 0.0;
+				double notaComFinal = med;
 
 				if(item != null){
 					nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
