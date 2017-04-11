@@ -321,44 +321,35 @@ public class Util {
 	public static Map<String,Double> buildMediasLEDAComFinal() throws IOException, ConfigurationException, ServiceException{
 		Map<String,Double> mediasLEDAComFinal = new HashMap<String,Double>();
 		Map<String,Double> mediasLEDASemfinal = Util.buildMediasLEDASemFinal();
-		
+		Map<String, Student> alunos = Configuration.getInstance().getStudents();
 		//vem com as notas finais de todas as turmas
-		Map<String,CorrectionReport> relatorioDaFinal = Util.loadCorrectionReports( new Predicate<String>() {
+		Map<String,CorrectionReport> relatoriosDaFinal = Util.loadCorrectionReports( new Predicate<String>() {
 			//predicado para filtrar as provas finais
 			@Override
 			public boolean test(String t) {
 				return Constants.PATTERN_PROVA_FINAL.matcher(t).matches();
 			}
 		});
-		if(relatorioDaFinal.size() == 1){
-			CorrectionReport reportFinais = relatorioDaFinal.values().stream().findFirst().get();
-			mediasLEDASemfinal.forEach( (mat,med) -> {
-				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
-				double nf = 0.0;
-				double notaComFinal = med;
-
-				if(item != null){
-					nf = item.getNotaTestes() + item.getNotaDesign()*0.6;
-					notaComFinal = med*0.6 + nf*0.4;
-					
-					if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
-						notaComFinal = med;
-					}
-				}else{
-					//Student aluno = students.get(mat);
-					//System.out.println("Aluno sem nota final: " + mat + "-" + aluno.getNome() +"-Turma " + aluno.getTurma());
-					if( med >= 7.0){ //para os alunos que nao precisavam ir pra final
-						notaComFinal = med;
-					}
+		mediasLEDASemfinal.forEach( (mat,med) -> { //ja coloca as medias sem final por default
+			mediasLEDAComFinal.put(mat,med);
+		});
+		alunos.forEach((mat, aluno) -> {
+			CorrectionReport report = relatoriosDaFinal.values().stream()
+			.filter(rep -> rep.getId().endsWith(aluno.getTurma()))
+			.findFirst().orElse(null);
+			if(report != null){
+				CorrectionReportItem item = report.getCorrectionReportItemforStudent(mat);
+				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				double notaDaFinal = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				double mediaSemFinal = mediasLEDASemfinal.get(mat);
+				double nota = mediaSemFinal;
+				if(nota <= 7.0){
+					nota = mediaSemFinal*0.6 + notaDaFinal*0.4;
 				}
-				mediasLEDAComFinal.put(mat,notaComFinal);
-			});
-			
-		}else{
-			mediasLEDASemfinal.forEach( (mat,med) -> {
-				mediasLEDAComFinal.put(mat,med);
-			});
-		}
+				mediasLEDAComFinal.put(mat, nota);
+			}
+		});
+		
 		return mediasLEDAComFinal;
 	}
 	
