@@ -276,8 +276,13 @@ public class Util {
 			CorrectionReport reportFinais = relatoriosDaFinal.values().stream().findFirst().get();
 			alunos.forEach((mat, aluno) -> {
 				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
-				double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
-				notasDaFinal.put(mat, nota);
+				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				double nota = 0.0;
+				if(item != null){
+					nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				}
+				
+				notasDaFinal.put(mat, nota);				
 			});
 
 		} else {
