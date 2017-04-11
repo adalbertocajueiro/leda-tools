@@ -231,14 +231,16 @@ public class Util {
 		return result;
 	}
 	
-	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException{
+	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException, ConfigurationException, ServiceException{
+		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
 		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
         	int res = 1;
-        	if(cr1.charAt(0) != cr2.charAt(0)){
+        	res = atividades.get(cr1).getDataHora().compareTo(atividades.get(cr2).getDataHora());
+        	/*if(cr1.charAt(0) != cr2.charAt(0)){
         		res = cr2.charAt(0) -  cr1.charAt(0);
         	} else{
         		res = cr1.compareTo(cr2);
-        	}
+        	}*/
         	return res;
         
 		});
@@ -256,6 +258,10 @@ public class Util {
 				result.put(atividadesFiltradas[i].getName(), report);
 			}
 		}
+		//result = result.values().stream()
+		//.sorted( (cr1,cr2) -> atividades.get(cr1.getId()).getDataHora().compareTo(atividades.get(cr2.getId()).getDataHora()))
+		//.collect(Collectors.toMap(cr -> cr.getId(), cr -> cr));
+		
 		return result;
 	}
 	
@@ -272,10 +278,25 @@ public class Util {
 				return Constants.PATTERN_PROVA_FINAL.matcher(t).matches();
 			}
 		});
-		if (relatoriosDaFinal.size() != 0) {
-			CorrectionReport reportFinais = relatoriosDaFinal.values().stream().findFirst().get();
-			alunos.forEach((mat, aluno) -> {
-				CorrectionReportItem item = reportFinais.getCorrectionReportItemforStudent(mat);
+		//alunos.forEach((mat, aluno) -> { //ja preenche com todos os alunos e nota de final 0.0 por default
+		//	notasDaFinal.put(mat, 0.0);
+		//});
+		alunos.forEach((mat, aluno) -> {
+			CorrectionReport report = relatoriosDaFinal.values().stream()
+			.filter(rep -> rep.getId().endsWith(aluno.getTurma()))
+			.findFirst().orElse(null);
+			if(report != null){
+				CorrectionReportItem item = report.getCorrectionReportItemforStudent(mat);
+				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				double nota = 0.0;
+				if(item != null){
+					nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				}
+				
+				notasDaFinal.put(mat, nota);
+			}
+			/*relatoriosDaFinal.forEach((id,report) -> {
+				CorrectionReportItem item = report.getCorrectionReportItemforStudent(mat);
 				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
 				double nota = 0.0;
 				if(item != null){
@@ -283,14 +304,9 @@ public class Util {
 				}
 				
 				notasDaFinal.put(mat, nota);				
-			});
-
-		} else {
-			alunos.forEach((mat, aluno) -> {
-				notasDaFinal.put(mat, 0.0);
-			});
-		}
-
+			});*/
+		});
+		
 		return notasDaFinal;
 	}
 	
@@ -1916,6 +1932,20 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		System.out.println("Teste de match: " + Constants.PATTERN_PROVA_FINAL.matcher("PF1-02").matches());
+		Map<String, Double> notasDaFinal = Util.getNotasDaFinal();
+		Map<String,Student> students = Configuration.getInstance().getStudents();
+		notasDaFinal.forEach((mat,nota) -> {
+			Student aluno = students.get(mat);
+			if(mat != null){
+				if(aluno.getTurma().equals("02")){
+					System.out.println("Aluno: " + aluno.getNome() + " - " + nota);
+				}
+			}else{
+				System.out.println("Estudante " + aluno.getMatricula() + " nao encontrado na lista dos alunos");
+			}
+		});
+		System.out.println(notasDaFinal.size());
 		Util.exportPlaninhaGeralToExcel("01");
 		List<Submission> submissoes = Util.submissions(new File(Constants.CURRENT_SEMESTER_FOLDER,"R01-01"));
 		Util.exportRoteiroToExcel("R02-01");
