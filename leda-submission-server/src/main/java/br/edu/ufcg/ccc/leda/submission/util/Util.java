@@ -235,12 +235,12 @@ public class Util {
 		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
 		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
         	int res = 1;
-        	res = atividades.get(cr1).getDataHora().compareTo(atividades.get(cr2).getDataHora());
-        	/*if(cr1.charAt(0) != cr2.charAt(0)){
+        	//res = atividades.get(cr1).getDataHora().compareTo(atividades.get(cr2).getDataHora());
+        	if(cr1.charAt(0) != cr2.charAt(0)){
         		res = cr2.charAt(0) -  cr1.charAt(0);
         	} else{
         		res = cr1.compareTo(cr2);
-        	}*/
+        	}
         	return res;
         
 		});

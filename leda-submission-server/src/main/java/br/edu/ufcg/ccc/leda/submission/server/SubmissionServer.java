@@ -421,10 +421,19 @@ public class SubmissionServer extends Jooby {
 	
 	get("/notas", (req) -> {
 
-        Map<String,List<Atividade>> atividadesAgrupadas = 
-        		Configuration.getInstance().getAtividades().values().stream()
-        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
-        		.collect(Collectors.groupingBy( Atividade::getTurma));
+		Map<String,List<Atividade>> atividadesAgrupadas = 
+				Configuration.getInstance().getAtividades().values()
+        		.stream()
+        		.sorted( (a1,a2) -> {
+        			if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+						return a1.getNome().compareTo(a2.getNome());
+					}else{
+						return a1.getDataHora().compareTo(a2.getDataHora());
+					}
+        			//a1.getDataHora().compareTo(a2.getDataHora())        		
+        		}).collect(Collectors.groupingBy( Atividade::getTurma));
+		
+       
 
         View html = Results.html("notas");
         Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
@@ -437,7 +446,7 @@ public class SubmissionServer extends Jooby {
 		});
                 
 		html.put("correctionReports",correctionReports); 
-        html.put("turmas",atividadesAgrupadas.keySet());
+        html.put("atividadesAgrupadas",atividadesAgrupadas);
         html.put("atividades", Configuration.getInstance().getAtividades());
         html.put("semestre",Constants.CURRENT_SEMESTER);
         html.put("alunos",Configuration.getInstance().getStudents().values().stream()

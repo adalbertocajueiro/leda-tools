@@ -26,7 +26,7 @@
 <div id="content">
 	<ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
 		<#assign active = 'true'>
-		<#list turmas as turma>
+		<#list atividadesAgrupadas?keys as turma>
 			<#if active='true'> 
 				<li class="nav-item"><a class="nav-link active" href='#t${turma}' role="tab" data-toggle="tab">Turma ${turma}</a></li>
 				<#assign active='false'>
@@ -37,7 +37,7 @@
     </ul>
 	<#assign active = 'true'>
     <div id="my-tab-content" class="tab-content">
-		<#list turmas as turma>
+		<#list atividadesAgrupadas?keys as turma>
 			<#if active='true'> 
 				<div role="tabpanel" class="tab-pane fade in active" id="t${turma}">
 				<#assign active='false'>
