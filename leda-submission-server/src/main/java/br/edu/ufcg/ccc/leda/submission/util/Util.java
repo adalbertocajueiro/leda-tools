@@ -343,7 +343,7 @@ public class Util {
 				double notaDaFinal = item.getNotaTestes() + item.getNotaDesign() * 0.6;
 				double mediaSemFinal = mediasLEDASemfinal.get(mat);
 				double nota = mediaSemFinal;
-				if(nota <= 7.0){
+				if(nota <= 7.0 && nota >= 4.0){
 					nota = mediaSemFinal*0.6 + notaDaFinal*0.4;
 				}
 				mediasLEDAComFinal.put(mat, nota);
