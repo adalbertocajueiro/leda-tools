@@ -233,17 +233,23 @@ public class Util {
 	
 	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException, ConfigurationException, ServiceException{
 		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
-		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>((cr1,cr2) -> {
-        	int res = 1;
+		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>( //(cr1,cr2) -> {
+        	
         	//res = atividades.get(cr1).getDataHora().compareTo(atividades.get(cr2).getDataHora());
-        	if(cr1.charAt(0) != cr2.charAt(0)){
+        	/*if(cr1.charAt(0) != cr2.charAt(0)){
         		res = cr2.charAt(0) -  cr1.charAt(0);
         	} else{
         		res = cr1.compareTo(cr2);
-        	}
-        	return res;
-        
-		});
+        	}*/
+        	(cr1Id,cr2Id) -> {
+				Atividade a1 = atividades.get(cr1Id);
+				Atividade a2 = atividades.get(cr2Id);
+				if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+					return a1.getNome().compareTo(a2.getNome());
+				}else{
+					return a1.getDataHora().compareTo(a2.getDataHora());
+				}
+        	});
 		
 		File[] atividadesFiltradas = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
 			
@@ -539,34 +545,40 @@ public class Util {
 		}
 		
 		
-		Map<String,Student> alunos = Util.loadStudentLists();
+		List<Student> alunos = Util.loadStudentLists().values()
+				.stream().sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toList());
+		System.out.println(alunos);
 		int count = 1;
 		Set<String> matriculas = mediasRoteiros.keySet();
-		for (String mat : matriculas) {
-			Row newRow = sheet.createRow(count);
-			Cell cellNumber = newRow.createCell(0);
-			cellNumber.setCellValue(count);
-			count++;
-			Cell cellMat = newRow.createCell(1);
-			Student aluno = alunos.get(mat);
-			cellMat.setCellValue(mat);
-			Cell cellNome = newRow.createCell(2);
-			cellNome.setCellValue(aluno.getNome());
-			Cell cellMediaRoteiros = newRow.createCell(3);
-			cellMediaRoteiros.setCellValue(mediasRoteiros.get(mat));
-			Cell cellMediaProvasPraticas = newRow.createCell(4);
-			cellMediaProvasPraticas.setCellValue(mediasProvasPraticas.get(mat));
-			Cell cellMediaProvasTeoricasEDA = newRow.createCell(5);
-			if(mediasProvasTeoricasEDA.get(mat) != null){
-				cellMediaProvasTeoricasEDA.setCellValue(mediasProvasTeoricasEDA.get(mat));
-			}else{
-				cellMediaProvasTeoricasEDA.setCellValue("-");				
-			}
-			Cell cellMediaFinal = newRow.createCell(6);
-			if(mediasFinais.get(mat) != null){
-				cellMediaFinal.setCellValue(mediasFinais.get(mat));
-			}else{
-				cellMediaFinal.setCellValue("-");				
+		for (Student al: alunos) {
+			String mat  = al.getMatricula();
+			if(matriculas.contains(mat)){
+				Row newRow = sheet.createRow(count);
+				Cell cellNumber = newRow.createCell(0);
+				cellNumber.setCellValue(count);
+				count++;
+				Cell cellMat = newRow.createCell(1);
+				Student aluno = al;
+				cellMat.setCellValue(mat);
+				Cell cellNome = newRow.createCell(2);
+				cellNome.setCellValue(aluno.getNome());
+				Cell cellMediaRoteiros = newRow.createCell(3);
+				cellMediaRoteiros.setCellValue(mediasRoteiros.get(mat));
+				Cell cellMediaProvasPraticas = newRow.createCell(4);
+				cellMediaProvasPraticas.setCellValue(mediasProvasPraticas.get(mat));
+				Cell cellMediaProvasTeoricasEDA = newRow.createCell(5);
+				if(mediasProvasTeoricasEDA.get(mat) != null){
+					cellMediaProvasTeoricasEDA.setCellValue(mediasProvasTeoricasEDA.get(mat));
+				}else{
+					cellMediaProvasTeoricasEDA.setCellValue("-");				
+				}
+				Cell cellMediaFinal = newRow.createCell(6);
+				if(mediasFinais.get(mat) != null){
+					cellMediaFinal.setCellValue(mediasFinais.get(mat));
+				}else{
+					cellMediaFinal.setCellValue("-");				
+				}
 			}
 		}
 		for (int i = 0; i < headers.length; i++) {
