@@ -511,7 +511,7 @@ public class SubmissionServer extends Jooby {
 
 		File fileToSend = null;
 		try {
-			fileToSend = Util.exportPlaninhaGeralToExcel(turma);
+			fileToSend = Util.exportPlaninhaGeralFaltasToExcel(turma);
 			if(fileToSend != null){
 				resp.type(MediaType.octetstream);
 		    	resp.download(fileToSend);
