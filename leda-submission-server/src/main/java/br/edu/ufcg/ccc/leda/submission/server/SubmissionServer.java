@@ -506,6 +506,23 @@ public class SubmissionServer extends Jooby {
 
 	});
 	
+	get("/exportToExcelFaltasSemestre",(req,resp) -> {
+		String turma = req.param("turma").value();
+
+		File fileToSend = null;
+		try {
+			fileToSend = Util.exportPlaninhaGeralToExcel(turma);
+			if(fileToSend != null){
+				resp.type(MediaType.octetstream);
+		    	resp.download(fileToSend);
+			}else{
+				resp.send("Arquivo excel nao gerado para a turma " + turma);
+			}
+		} catch (ConfigurationException | IOException | AtividadeException e) {
+			resp.send(e.getMessage());
+		}
+
+	});
 	
 	get("/correct", (req,resp) -> {
 		String id = req.param("id").value();

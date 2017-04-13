@@ -25,6 +25,7 @@ public abstract class Constants {
 	public static final String PROVAS_FOLDER_NAME = "provas";
 
 	public static final String EXCEL_FILE_NOTAS_FINAIS_NAME = "NotasFinaisSemestre";
+	public static final String EXCEL_FILE_FALTAS_NAME = "FaltasSemestre";
 	public static File DEFAULT_CONFIG_FOLDER;
 	public static File UPLOAD_FOLDER;
 	public static File ROTEIROS_FOLDER;

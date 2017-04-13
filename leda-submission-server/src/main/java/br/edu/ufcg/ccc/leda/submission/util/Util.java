@@ -514,6 +514,104 @@ public class Util {
 		return outputFile;
 	}
 	
+	public static File exportPlaninhaGeralFaltasToExcel(String turma) throws ConfigurationException, IOException, ServiceException, BiffException{
+		File outputFile = null;
+		//filtra os alunos por turma e ordena por nome
+		List<Student> alunosDaTurma = Configuration.getInstance().getStudents()
+				.values().stream()
+				.filter(a -> a.getTurma().equals(turma))
+				.sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
+				.collect(Collectors.toList());
+		//pegar as atividaeds filtradas por turma, que ja aconteceram e e ordenada por data
+		List<Atividade> atividadesDaTurma = 
+        		Configuration.getInstance().getAtividades().values().stream()
+        		.filter(a -> a.getTurma().equals(turma))
+        		.filter(a -> !Constants.PATTERN_AULA.matcher(a.getId()).matches())
+        		.filter(a -> a.getDataHora().before(new GregorianCalendar()))
+        		.sorted( (a1,a2) -> a1.getDataHora().compareTo(a2.getDataHora()))
+        		.collect(Collectors.toList());
+		
+		//busca todas as submissoes ordenadas por data
+		//Map<String,List<Submission>> allSubmissions = Util.allSubmissions(true);
+
+		outputFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_FILE_FALTAS_NAME + "-T" + turma + ".xlsx");
+
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		ArrayList<String> headers = new ArrayList<String>();
+		headers.add("");
+		headers.add("Matricula");
+		headers.add("Nome");
+		atividadesDaTurma.forEach(ativ ->{
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+			headers.add(ativ.getId().substring(0, 3)+ "(" + df.format(ativ.getDataHora().getTime())+ ")");
+		});
+		
+		String[] headersAtividades = headers.toArray(new String[0]);
+		XSSFSheet sheet = workbook.createSheet("Faltas");
+		
+		Row row = sheet.createRow(0);
+		XSSFCellStyle style = workbook.createCellStyle();
+		XSSFFont font = workbook.createFont();
+		font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		
+		for (int i = 0; i < headersAtividades.length; i++) {
+			//Create a new cell in current row
+			Cell cell = row.createCell(i);
+			cell.setCellValue(headersAtividades[i]);
+			cell.setCellStyle(style);					
+		}
+		int countLine = 1;
+		
+		for (Student al: alunosDaTurma) {			
+			String mat  = al.getMatricula();
+			//if(matriculas.contains(mat)){
+			Row newRow = sheet.createRow(countLine);
+			countLine++;
+			Cell cellNumber = newRow.createCell(0);
+			cellNumber.setCellValue(countLine);				
+			Cell cellMat = newRow.createCell(1);
+			Student aluno = al;
+			cellMat.setCellValue(mat);
+			Cell cellNome = newRow.createCell(2);
+			cellNome.setCellValue(aluno.getNome());
+
+			for (int countColumn = 0;countColumn < atividadesDaTurma.size();countColumn++){
+				XSSFCellStyle style2 = workbook.createCellStyle();
+				style2.setAlignment(CellStyle.ALIGN_CENTER);
+				Cell cellAtividadeAtual = newRow.createCell(countColumn + 3);
+				cellAtividadeAtual.setCellStyle(style2);
+				Atividade atividadeAtual = atividadesDaTurma.get(countColumn);
+				Submission sub = Util.getSubmissionForStudent(atividadeAtual.getId(), al.getMatricula());
+				if(sub != null){
+					String submeteu = sub.getArquivoSubmetido() != null?"":"F";
+					cellAtividadeAtual.setCellValue(submeteu);
+				}else{
+					cellAtividadeAtual.setCellValue("F");					
+				}
+			}
+		}
+		for (int i = 0; i < headersAtividades.length; i++) {
+			sheet.autoSizeColumn(i);
+		}
+		
+		
+		
+		try {
+			FileOutputStream out = new FileOutputStream(outputFile);
+			workbook.write(out);
+			out.close();
+			workbook.close();
+			System.out.println("Excel for current semester written successfully in " + outputFile.getAbsolutePath());
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return outputFile;
+	}
 	//apenas medias roteiros precisam ser filtrados por turma
 	private static void createSheetSumarizacao(XSSFWorkbook workbook,
 			Map<String,Double> mediasRoteiros, Map<String,Double> mediasProvasPraticas,
@@ -539,7 +637,7 @@ public class Util {
 		List<Student> alunos = Util.loadStudentLists().values()
 				.stream().sorted( (a1,a2) -> a1.getNome().compareTo(a2.getNome()))
 				.collect(Collectors.toList());
-		System.out.println(alunos);
+		//System.out.println(alunos);
 		int count = 1;
 		Set<String> matriculas = mediasRoteiros.keySet();
 		for (Student al: alunos) {
@@ -1427,8 +1525,9 @@ public class Util {
 	
 	public static Submission getSubmissionForStudent(String idAtividade, String matricula) throws ConfigurationException, IOException, ServiceException{
 		Submission result = null;
-		Map<String,List<Submission>> allSubmissions = Util.allSubmissions(false);
-		List<Submission> submissions = allSubmissions.get(idAtividade);
+		//Map<String,List<Submission>> allSubmissions = Util.allSubmissions(false);
+		File folder = new File(Constants.CURRENT_SEMESTER_FOLDER,idAtividade);
+		List<Submission> submissions = Util.submissions(folder);
 		if(submissions != null){
 			result = submissions.stream().filter( s -> s.getAluno().getMatricula().equals(matricula))
 				.findFirst().orElse(null);
@@ -1936,6 +2035,7 @@ public class Util {
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		System.out.println("Teste de match: " + Constants.PATTERN_PROVA_FINAL.matcher("PF1-02").matches());
+		File excel = Util.exportPlaninhaGeralFaltasToExcel("01");
 		Map<String, Double> notasDaFinal = Util.getNotasDaFinal();
 		Map<String,Student> students = Configuration.getInstance().getStudents();
 		notasDaFinal.forEach((mat,nota) -> {
