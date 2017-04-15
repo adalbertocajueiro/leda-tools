@@ -96,3 +96,4 @@ config também pode implementar a opcao de mostrar os de revisao ou nao.
 - criar uma planilha de notas semelhante as faltas, com a nota dos roteiros e das provas praticas. - OK
 - implementar geracao de planilha excel de totalização para download como as planilahs individuais de cada atividade. - OK
 - na hora de compactar, já pode gerar a planilha de notas e comentarios da atividade para incluir na compactacao. - OK
+- os envios ja pdoem guardar uma lista dos alunos que enviaram para facilitar o levantamento das faltas.

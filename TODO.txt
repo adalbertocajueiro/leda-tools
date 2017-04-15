@@ -1,3 +1,19 @@
+-Refazer o video sobre o site da disciplina e o sistema de submissão
+ * comentar sobre as informações gerais da disciplina
+ * falar sobre as opcoes do menu do site
+ * falar o ID das aulas
+ * tentar comentar sobre informações que nao dependam de data nem de semstre
+ * dar uma descricao completa mostrando as planilhas de notas também e as faltas
+
+- Fazer video sobre as ferramentas de LEDA
+ * como baixar os projetos e ordem de compilacao
+ * falar para que serve cada ferramenta: chart, sender, compactor, correction, submission-server
+ * falar sobre repositorio de artefatos (onde esta e como fazer o deploy para ele)
+ * falar do servidor de submissao e como colocar ele no ar
+ * como criar um novo roteiro (sorting ou estrutura de dados) e mandar para o servidor
+ * como criar uma nova prova e mandar para o servidor
+ 
+
 formatadores de codigo
 
 https://github.com/revelc/formatter-maven-plugin
