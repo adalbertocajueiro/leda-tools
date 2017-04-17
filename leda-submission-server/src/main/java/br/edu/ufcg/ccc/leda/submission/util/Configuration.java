@@ -29,39 +29,36 @@ public class Configuration {
 		}
 		try {
 			students = Util.loadStudentLists();
-			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
+			monitores = Util.loadSpreadsheetMonitor();
 			Util.loadSpreadsheetSenhasFromExcel(monitores);
 			atividades = Util.loadSpreadsheetsAtividades(monitores);
-			ipsAutorizados.add("150.165.74");
-			ipsAutorizados.add("150.165.54");
+			ipsAutorizados.addAll(Constants.authorizedIPs);
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
-			ipsAutorizados.add("150.165.74");
-			ipsAutorizados.add("150.165.54");
+			ipsAutorizados.addAll(Constants.authorizedIPs);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
-			ipsAutorizados.add("150.165.74");
-			ipsAutorizados.add("150.165.54");
+			ipsAutorizados.addAll(Constants.authorizedIPs);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
 			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
-			ipsAutorizados.add("150.165.74");
-			ipsAutorizados.add("150.165.54");
+			ipsAutorizados.addAll(Constants.authorizedIPs);
 		}
 	}
-	
+
+
 	private Configuration(ArrayList<String> ips) throws ConfigurationException, IOException {
 		ipsAutorizados = ips;
 		try {
 			students = Util.loadStudentLists();
-			monitores = Util.loadSpreadsheetMonitor(Constants.ID_MONITORES_SHEET);
+			monitores = Util.loadSpreadsheetMonitor();
 			Util.loadSpreadsheetSenhasFromExcel(monitores);
 			atividades = Util.loadSpreadsheetsAtividades(monitores);
 		} catch (BiffException e) {

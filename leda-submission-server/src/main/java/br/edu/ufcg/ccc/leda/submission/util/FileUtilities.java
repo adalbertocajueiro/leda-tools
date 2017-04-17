@@ -286,10 +286,8 @@ public class FileUtilities {
 			if(!configFolder.exists()){
 				throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 			}
-			File jsonFileProvas = new File(configFolder,Constants.JSON_FILE_PROVA);
-			//System.out.println("Escrevendo no json: " + jsonFileRoteiros.getAbsolutePath());
-			//System.out.println("Json existe: " + jsonFileRoteiros.exists());
-			Util.writeProvasToJson(provas, jsonFileProvas);
+			//File jsonFileProvas = new File(configFolder,Constants.JSON_FILE_PROVA);
+			//Util.writeProvasToJson(provas, jsonFileProvas);
 
 			/*
 			//agora eh persistir os dados dos roteiros em JSON
@@ -459,6 +457,58 @@ public class FileUtilities {
 			return res;
 		});
 		return result;
+	}
+	
+	/**
+	 * Salva a frequencia na pasta do CURRENT_SEMESTER, sobrescrevendo o arquivo de frequencia
+	 * da mesma turma. O arquivo eh o do download do controle academico. 
+	 * @param excelFileFrequencia
+	 * @throws IOException 
+	 */
+	public static void salvarFrequencia(File excelFileFrequencia) throws IOException{
+		String turma = Util.extractTurmaFromExcelFile(excelFileFrequencia);
+		if(!turma.equals("0")){ //arquivo parseado corretamente
+			//remove o que já tem la e depois salva
+			File[] frequencias = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
+				
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.getName().startsWith("frequencia") && pathname.getName().contains("-" + turma + "_");
+				}
+			});
+			if(frequencias != null){
+				if(frequencias.length == 1){
+					Files.delete(frequencias[0].toPath());
+				}
+			}
+			int index = excelFileFrequencia.getName().indexOf("frequencia");
+			String name = excelFileFrequencia.getName().substring(index);
+			
+			File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,name);
+			if (!fout.exists()) {
+				fout.mkdirs();
+			}
+			Files.move(excelFileFrequencia.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+		}
+
+	}
+	
+	public static void salvarArquivoSenhas(File excelFileSenhas) throws IOException{
+		File senhas = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_SENHAS_FILE_NAME);
+		if(senhas.exists()){
+			Files.delete(senhas.toPath());
+		}
+		int index = excelFileSenhas.getName().indexOf(Constants.EXCEL_SENHAS_FILE_NAME);
+		String name = excelFileSenhas.getName().substring(index);
+		
+		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,name);
+		if (!fout.exists()) {
+			fout.mkdirs();
+		}
+		Files.move(excelFileSenhas.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+
 	}
 
 }

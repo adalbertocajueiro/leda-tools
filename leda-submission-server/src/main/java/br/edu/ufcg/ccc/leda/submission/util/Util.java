@@ -284,6 +284,7 @@ public class Util {
 				return Constants.PATTERN_PROVA_FINAL.matcher(t).matches();
 			}
 		});
+
 		//alunos.forEach((mat, aluno) -> { //ja preenche com todos os alunos e nota de final 0.0 por default
 		//	notasDaFinal.put(mat, 0.0);
 		//});
@@ -316,7 +317,6 @@ public class Util {
 		return notasDaFinal;
 	}
 	
-
 	//retorna as medias com final sem filtrar por turma
 	public static Map<String,Double> buildMediasLEDAComFinal() throws IOException, ConfigurationException, ServiceException{
 		Map<String,Double> mediasLEDAComFinal = new HashMap<String,Double>();
@@ -897,13 +897,13 @@ public class Util {
         bos.close();
     }
 	
-	public static List<Corretor> loadSpreadsheetMonitor(String idGoogleDrive) throws IOException, ServiceException{
+	public static List<Corretor> loadSpreadsheetMonitor() throws IOException, ServiceException{
 		ArrayList<Corretor> monitores = new ArrayList<Corretor>();
 		
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
         
         String sheetUrl =
-            "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
+            "https://spreadsheets.google.com/feeds/list/" + Constants.ID_MONITORES_SHEET + "/default/public/values";
 
         // Use this String as url
         URL url = new URL(sheetUrl);
@@ -936,9 +936,9 @@ public class Util {
 	
 	public static Map<String,Atividade> loadSpreadsheetsAtividades(List<Corretor> corretores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
-		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T1, corretores));
-		atividades.putAll(loadSpreadsheetAtividades(Constants.ID_ATIVIDADES_SHEET_T2, corretores));
-		
+		for (String id : Constants.activitySheetIds) {
+			atividades.putAll(loadSpreadsheetAtividades(id, corretores));
+		}
 		return atividades;
 	}
 	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Corretor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
@@ -1000,8 +1000,9 @@ public class Util {
 
 	public static Map<String,Double> loadSpreadsheetsMediasEDA() throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Double> mediasEDA = new HashMap<String,Double>();
-		mediasEDA.putAll(loadSpreadsheetMediasEDA(Constants.ID_MEDIASEDA_SHEET_T1));
-		mediasEDA.putAll(loadSpreadsheetMediasEDA(Constants.ID_MEDIASEDA_SHEET_T2));
+		for (String id : Constants.edaSheetIds) {
+			mediasEDA.putAll(loadSpreadsheetMediasEDA(id));
+		}
 		
 		return mediasEDA;
 	}
@@ -1055,7 +1056,7 @@ public class Util {
 	 */
 	public static Map<String, Student> loadStudentLists() throws IOException, BiffException {
 		Map<String, Student> result = new HashMap<String, Student>();
-		File configFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
+		File configFolder = Constants.CURRENT_SEMESTER_FOLDER;
 		if(!configFolder.exists()){
 			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
 		}
@@ -1076,6 +1077,13 @@ public class Util {
 		return result;
 	}
 
+	public static void uploadStudentList(File excelFile) throws FileNotFoundException{
+		File configFolder = Constants.CURRENT_SEMESTER_FOLDER;
+		
+		if(!configFolder.exists()){
+			throw new FileNotFoundException("Missing config folder: " + configFolder.getAbsolutePath());
+		}
+	}
 	/**
 	 * Arquivo excel tem que ter extensao xlsx
 	 * 
@@ -1124,16 +1132,14 @@ public class Util {
 		myWorkBook.close();
 	}
 
-	private static String extractTurmaFromExcelFile(File excelFile){
-		String turma = "00";
+	public static String extractTurmaFromExcelFile(File excelFile){
+		String turma = "0";
 		String nomeArquivo = excelFile.getName();
-		if(nomeArquivo.indexOf("-01_") != -1){
-			turma = "01";
-		} else if (nomeArquivo.indexOf("-02_") != -1){
-			turma = "02";
-		} else if (nomeArquivo.indexOf("-03_") != -1){
-			turma = "03";
-		}
+		int indexOfCodigoLeda = nomeArquivo.indexOf(Constants.CODIGO_LEDA);
+		if(indexOfCodigoLeda != -1){
+			char numeroTurma = nomeArquivo.charAt(indexOfCodigoLeda + Constants.CODIGO_LEDA.length() + 2);
+			turma = turma + numeroTurma;
+		} 
 		
 		return turma;
 	}
@@ -1280,7 +1286,7 @@ public class Util {
 	}
 
 	public static void loadSpreadsheetSenhasFromExcel(List<Corretor> corretores) throws IOException{
-		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Senhas.xlsx");
+		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_SENHAS_FILE_NAME);
 		FileInputStream fis = new FileInputStream(excelFile);
 		
 		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
@@ -1596,7 +1602,11 @@ public class Util {
 					todasSubmissoes.get(idProvaPratica);
 			if(submissoes != null){
 				Submission sub = submissoes.stream()
+<<<<<<< HEAD
 						.filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().get();
+=======
+						.filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().orElse(null);
+>>>>>>> adalberto_2017.1
 				if(sub != null){
 					presenca = sub.getArquivoSubmetido() != null;
 				}
@@ -1605,6 +1615,7 @@ public class Util {
 		} 
 		return presenca;
 	}
+
 	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
 		//precisa ordenar as submissoes pelas datas de cada atividade
 		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
@@ -2034,21 +2045,16 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
-		System.out.println("Teste de match: " + Constants.PATTERN_PROVA_FINAL.matcher("PF1-02").matches());
-		File excel = Util.exportPlaninhaGeralFaltasToExcel("01");
-		Map<String, Double> notasDaFinal = Util.getNotasDaFinal();
-		Map<String,Student> students = Configuration.getInstance().getStudents();
-		notasDaFinal.forEach((mat,nota) -> {
-			Student aluno = students.get(mat);
-			if(mat != null){
-				if(aluno.getTurma().equals("02")){
-					System.out.println("Aluno: " + aluno.getNome() + " - " + nota);
-				}
-			}else{
-				System.out.println("Estudante " + aluno.getMatricula() + " nao encontrado na lista dos alunos");
-			}
+
+		Map<String, Double> mediasFinais = Util.buildMediasLEDAComFinal();
+		Map<String, Double> mediasSemFinais = Util.buildMediasLEDASemFinal();
+		Double mediaComFinal = mediasFinais.get("115211289");
+		Double mediaSemFinal = mediasSemFinais.get("115211289");
+		Map<String, Student> students = Util.loadStudentLists();
+		students.forEach((s,e) -> {
+			System.out.println(e.getNome() + " - " + e.getTurma());
 		});
-		System.out.println(notasDaFinal.size());
+
 		Util.exportPlaninhaGeralToExcel("01");
 		List<Submission> submissoes = Util.submissions(new File(Constants.CURRENT_SEMESTER_FOLDER,"R01-01"));
 		Util.exportRoteiroToExcel("R02-01");
