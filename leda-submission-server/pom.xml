@@ -21,10 +21,10 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2016.2</semestre.letivo>
+		<semestre.letivo>2017.1</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<idSheetMonitores>15T_KSFA1ABUvZV_p0IVjcxa90yBJUw0794p7GO8OHEA</idSheetMonitores>
-		<quantidadeProvas>4</quantidadeProvas>
+		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
 		<activitySheetIds>15rxyKxDJ4-dSIfdh1ZGZvpL7femQG27P_ESTeSseJGA,1S7Ru2RFei-0lgEHTn2L6XRYajiX8Se4yryuw8sR404A</activitySheetIds>
 		<authorizedIPs>150.165.74,150.165.54</authorizedIPs>
@@ -91,12 +91,12 @@
 			<classifier>tests</classifier>
 		</dependency>
 
-<dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <scope>test</scope>
-    </dependency>
-    
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Fluent HC -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

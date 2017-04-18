@@ -4,11 +4,12 @@
  * falar o ID das aulas
  * tentar comentar sobre informações que nao dependam de data nem de semstre
  * dar uma descricao completa mostrando as planilhas de notas também e as faltas
+OK
 
 - Fazer video sobre as ferramentas de LEDA
- * como baixar os projetos e ordem de compilacao
- * falar para que serve cada ferramenta: chart, sender, compactor, correction, submission-server
- * falar sobre repositorio de artefatos (onde esta e como fazer o deploy para ele)
+ * como baixar os projetos e ordem de compilacao - OK
+ * falar para que serve cada ferramenta: chart, sender, compactor, correction, submission-server - OK
+ * falar sobre repositorio de artefatos (onde esta e como fazer o deploy para ele) - OK
  * falar do servidor de submissao e como colocar ele no ar
  * como criar um novo roteiro (sorting ou estrutura de dados) e mandar para o servidor
  * como criar uma nova prova e mandar para o servidor

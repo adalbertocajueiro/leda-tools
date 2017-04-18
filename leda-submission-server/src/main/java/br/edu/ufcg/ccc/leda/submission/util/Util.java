@@ -1287,47 +1287,49 @@ public class Util {
 
 	public static void loadSpreadsheetSenhasFromExcel(List<Corretor> corretores) throws IOException{
 		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_SENHAS_FILE_NAME);
-		FileInputStream fis = new FileInputStream(excelFile);
+		if(excelFile.exists()){
+			FileInputStream fis = new FileInputStream(excelFile);
+			
+			org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+			org.apache.poi.ss.usermodel.Sheet mySheet = null;
+			try{
+				myWorkBook = new XSSFWorkbook (fis);
+				mySheet = myWorkBook.getSheetAt(0);
+			}catch(POIXMLException ex){
+				//problema na leitura do arquivo excel
+				ex.printStackTrace();
+			}
 		
-		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
-		org.apache.poi.ss.usermodel.Sheet mySheet = null;
-		try{
-			myWorkBook = new XSSFWorkbook (fis);
-			mySheet = myWorkBook.getSheetAt(0);
-		}catch(POIXMLException ex){
-			//problema na leitura do arquivo excel
-			ex.printStackTrace();
-		}
+			Iterator<Row> rowIterator = mySheet.iterator();
+			while (rowIterator.hasNext()) {
+	            Row row = rowIterator.next();
+	            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
+	            if(cellIterator.hasNext()){
+	            	org.apache.poi.ss.usermodel.Cell cellMatricula = row.getCell(0);
+	            	if(cellMatricula != null){
+	            		String matricula = null;
+	            		if(cellMatricula.getCellType() != XSSFCell.CELL_TYPE_STRING){
+	            			matricula = String.valueOf((int)cellMatricula.getNumericCellValue()); //
+	            		}else{
+	            			matricula = cellMatricula.getStringCellValue();
+	            		}
 	
-		Iterator<Row> rowIterator = mySheet.iterator();
-		while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator(); 
-            if(cellIterator.hasNext()){
-            	org.apache.poi.ss.usermodel.Cell cellMatricula = row.getCell(0);
-            	if(cellMatricula != null){
-            		String matricula = null;
-            		if(cellMatricula.getCellType() != XSSFCell.CELL_TYPE_STRING){
-            			matricula = String.valueOf((int)cellMatricula.getNumericCellValue()); //
-            		}else{
-            			matricula = cellMatricula.getStringCellValue();
-            		}
-
-            		if(!matricula.equals("Matricula") && matricula.length() > 1){ //pode trabalhar aqui com o matcher
-            			org.apache.poi.ss.usermodel.Cell cellSenha = row.getCell(1); //celula com o nome
-                        String senha = cellSenha != null? (cellSenha.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellSenha.getNumericCellValue()):cellSenha.getStringCellValue():"";
-                        	
-                        String matr = matricula;
-                        Corretor corretor = corretores.stream().filter(c -> c.getMatricula().equals(matr))
-                        		.findFirst().orElse(null);
-                        if(corretor != null){
-                        	corretor.setSenha(senha);
-                        }
-            		}
-            	}
-            }
+	            		if(!matricula.equals("Matricula") && matricula.length() > 1){ //pode trabalhar aqui com o matcher
+	            			org.apache.poi.ss.usermodel.Cell cellSenha = row.getCell(1); //celula com o nome
+	                        String senha = cellSenha != null? (cellSenha.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellSenha.getNumericCellValue()):cellSenha.getStringCellValue():"";
+	                        	
+	                        String matr = matricula;
+	                        Corretor corretor = corretores.stream().filter(c -> c.getMatricula().equals(matr))
+	                        		.findFirst().orElse(null);
+	                        if(corretor != null){
+	                        	corretor.setSenha(senha);
+	                        }
+	            		}
+	            	}
+	            }
+			}
+			myWorkBook.close();
 		}
-		myWorkBook.close();
 	}
 	private static Atividade createAtividade(String id, String nome, String descricao,
 			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
