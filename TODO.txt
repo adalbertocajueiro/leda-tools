@@ -10,6 +10,7 @@ OK
  * como baixar os projetos e ordem de compilacao - OK
  * falar para que serve cada ferramenta: chart, sender, compactor, correction, submission-server - OK
  * falar sobre repositorio de artefatos (onde esta e como fazer o deploy para ele) - OK
+ * falar sobre a infraestrutura de VMs e como importar os projetos no Eclipse e mandar para o servidor - OK
  * falar do servidor de submissao e como colocar ele no ar
  * como criar um novo roteiro (sorting ou estrutura de dados) e mandar para o servidor
  * como criar uma nova prova e mandar para o servidor

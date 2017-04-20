@@ -1544,6 +1544,15 @@ public class Util {
 		return result;
 	}
 	
+	/**
+	 * Retorna um Map<matricula,Map<idAtividade,Boolean>>
+	 * para cada matricula ja existe um mapeamento das presencas em todos os roteiros 
+	 * que o aluno participou
+	 * @return
+	 * @throws ConfigurationException
+	 * @throws IOException
+	 * @throws ServiceException
+	 */
 	public static Map<String,Map<String,Boolean>> totalizacaoFaltas() throws ConfigurationException, IOException, ServiceException{
 		// o retorno eh do tipo matricula -> {idAtividade -> presenca(boolean)}
 		Map<String,Map<String,Boolean>> result = new HashMap<String,Map<String,Boolean>>();
@@ -1599,25 +1608,87 @@ public class Util {
 		} else if (Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
 			/*//eh prova de reposicao e tem que verificar se teve submissao para a respectiva
 			//prova pratica. se sim, entao nao precisa registrar falta na reposicao
-			String idProvaPratica = "PP"+ id.charAt(2)+ id.substring(3);
-			List<Submission> submissoes = 
-					todasSubmissoes.get(idProvaPratica);
-			if(submissoes != null){
-				Submission sub = submissoes.stream()
-<<<<<<< HEAD
-						.filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().get();
-=======
-						.filter( s -> s.getAluno().getMatricula().equals(mat)).findFirst().orElse(null);
->>>>>>> adalberto_2017.1
-				if(sub != null){
-					presenca = sub.getArquivoSubmetido() != null;
-				}
-			}*/
+			*/
 			presenca = true;
 		} 
 		return presenca;
 	}
 
+	@Deprecated
+	private static boolean verificaPresencaReposicaoSemSubmissao(String mat, String id, Map<String, List<String>> todasPresencas) {
+		boolean presenca = false;
+		if(Constants.PATTERN_PROVA_PRATICA.matcher(id).matches()){ //eh prova pratica e ja nao teve submissao para ela
+			//tem que verificar se teve submissao para a respectiva prova de reposicao
+			String idProvaReposicao = "PR"+ id.charAt(2)+ id.substring(3);
+			List<String> presencas = 
+					todasPresencas.get(idProvaReposicao);
+			if(presencas != null){
+				presenca = presencas.contains(mat);
+			}
+		} else if (Constants.PATTERN_PROVA_REPOSICAO.matcher(id).matches()){
+			/*//eh prova de reposicao e tem que verificar se teve submissao para a respectiva
+			//prova pratica. se sim, entao nao precisa registrar falta na reposicao
+			*/
+			presenca = true;
+		} 
+		return presenca;
+	}
+	/**
+	 * Coleta todas as presencas em todas as atividades retornando um mapeamento entre
+	 * idAtividade -> List<matriculas dos que enviaram>
+	 */
+	@Deprecated
+	public static Map<String,List<String>> obterTodasPresencas(){
+		Map<String,List<String>> todasPresencas = new TreeMap<String,List<String>>();
+		
+		if(Constants.CURRENT_SEMESTER_FOLDER.exists()){
+			File[] folders = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
+				
+				@Override
+				public boolean accept(File arg0) {
+					boolean matches = Constants.PATTERN_ROTEIRO.matcher(arg0.getName()).matches()
+							|| Constants.PATTERN_PROVA.matcher(arg0.getName()).matches()
+							|| Constants.PATTERN_ROTEIRO_REVISAO.matcher(arg0.getName()).matches();
+					return matches;
+				}
+			});
+			//System.out.println("Subpastas encontradas: " + folders.length);
+			if(folders != null){
+				for (int i = 0; i < folders.length; i++) {
+					String folderName = folders[i].getName();
+					List<String> presencas = getPresencas(folders[i]);
+					
+					//System.out.println(" submissoes " + submissions!= null);
+					todasPresencas.put(folderName,presencas);
+				}
+			}
+		}
+		return todasPresencas;
+	}
+	/**
+	 * pega todas as presencas e preenche um list com as matriculas dos que enviaram
+	 * @param folder a pasta da atividade. Tem que ir buscar na pasta das submissoes
+	 * dessa atividade
+	 */
+	@Deprecated
+	private static List<String> getPresencas(File folder){
+		ArrayList<String> enviaram = new ArrayList<String>();
+		File subs = new File(folder,Constants.SUBMISSIONS_FOLDER_NAME);
+		if(subs.exists()){
+			File[] submetidos = subs.listFiles( f -> {
+				return f.getName().endsWith(".zip");
+			});
+			if(submetidos != null){
+				if(submetidos.length > 0){
+					for (File file : submetidos) {
+						String name = file.getName(); 
+						enviaram.add(name.substring(0,name.indexOf("-")));
+					}
+				}
+			}
+		}
+		return enviaram;
+	}
 	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
 		//precisa ordenar as submissoes pelas datas de cada atividade
 		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();

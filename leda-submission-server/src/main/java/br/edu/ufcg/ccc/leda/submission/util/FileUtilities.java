@@ -392,6 +392,7 @@ public class FileUtilities {
 		// historico de todas as submissoes do aluno
 		result = UploadLogger.logSubmission(fout, config,student.getNome());
 		
+		
 		return result;
 	}
 
