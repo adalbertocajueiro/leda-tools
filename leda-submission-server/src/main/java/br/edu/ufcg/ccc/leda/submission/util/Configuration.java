@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -106,6 +105,7 @@ public class Configuration {
 		return roteiros; */
 		
 		return atividades.values().stream()
+				.filter(a -> !(a instanceof RoteiroEspecial))
 				.filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova)))
 				.sorted((ativ1,ativ2) -> ativ1.getDataHora().compareTo(ativ2.getDataHora()))
 				.collect(Collectors.toList());
@@ -137,8 +137,17 @@ public class Configuration {
 	public List<Corretor> getMonitores() {
 		return monitores;
 	}
+	//exclui os roteiros especiais que nao devem aparecer no cronograma
 	public Map<String, Atividade> getAtividades() {
-		return atividades;
+		return atividades.values().stream()
+				.filter( a -> !(a instanceof RoteiroEspecial))
+				.collect(Collectors.toMap(a -> a.getId(), a -> a));
+	}
+	//retorna uma lista dos roteiros especiais
+	public List<Atividade> getRoteirosEspeciais() {
+		return atividades.values().stream()
+				.filter( a -> a instanceof RoteiroEspecial)
+				.collect(Collectors.toList());
 	}
 	
 	

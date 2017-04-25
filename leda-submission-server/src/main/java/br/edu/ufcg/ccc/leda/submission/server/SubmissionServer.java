@@ -591,6 +591,17 @@ public class SubmissionServer extends Jooby {
 		resp.redirect("menuLeftCorrecao?id=" + id);
 		//return html;
 	});
+	
+	get("/roteirosEspeciais", (req,resp) -> {
+		List<Atividade> roteirosEspeciais = Configuration.getInstance().getRoteirosEspeciais();
+		StringBuffer sb = new StringBuffer();
+		roteirosEspeciais.forEach(re -> {
+			sb.append(re.getId() + " - " + re.getNome() + "\n<br>");
+		});
+		resp.send(sb.toString());
+		
+		//return html;
+	});
   }
 
   {

@@ -1339,6 +1339,10 @@ public class Util {
 		Atividade result = null;
 		if(Constants.PATTERN_AULA.matcher(id).matches()){
 			result = new Aula(id,nome,descricao,dataHoraLiberacao,linksVideoAulas,monitores);			
+		}else if(Constants.PATTERN_ROTEIRO_ESPECIAL.matcher(id).matches()){
+			result = new RoteiroEspecial(id,nome,descricao,dataHoraLiberacao,
+					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
+					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
 		}else if(Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){
 			result = new RoteiroRevisao(id,nome,descricao,dataHoraLiberacao,
 					linksVideoAulas,dataHoraEnvioNormal,dataHoraLimiteEnvioAtraso,
@@ -1691,8 +1695,12 @@ public class Util {
 	}
 	public static Map<String,List<Submission>> allSubmissions(boolean showAll) throws ConfigurationException, IOException, ServiceException{
 		//precisa ordenar as submissoes pelas datas de cada atividade
-		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
-
+		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades()
+				.values()
+				.stream()
+				.filter( a -> !(a instanceof RoteiroEspecial))
+				.collect(Collectors.toMap( a -> a.getId(), a -> a));
+				
 		Map<String,List<Submission>> result = //new HashMap<String,List<Submission>>();
 		new TreeMap<String,List<Submission>>(
 				(s1,s2) -> {

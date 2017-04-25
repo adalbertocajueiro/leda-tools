@@ -88,10 +88,12 @@ public class FileUtilities {
 		String id = config.getId();
 		File folderAtividade = new File(Constants.PROVAS_FOLDER,id);
 		if(Constants.PATTERN_ROTEIRO.matcher(id).matches() || 
-				Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches()){
+				Constants.PATTERN_ROTEIRO_REVISAO.matcher(id).matches() ||
+				Constants.PATTERN_ROTEIRO_ESPECIAL.matcher(id).matches()){
 			
 			folderAtividade = new File(Constants.ROTEIROS_FOLDER,id);
 		} 
+		
 		if (config.getId().contains("X")) {
 			id = id.substring(0, id.indexOf("X"));
 		}
@@ -162,33 +164,36 @@ public class FileUtilities {
 				//System.out.println(result);
 				
 				//ja cria também os links simbolicos para possibilitar a correcao
-				String os = System.getProperty("os.name");
-				if(!os.startsWith("Windows")){
-					//windows nao permite a criação de links symbolicos 
-					//System.out.println("Link to: " + uploadSubFolderTarget);
-					Path newLink = (new File(Constants.REPORTS_FOLDER_NAME)).toPath();
-					Path target = new File(Constants.CURRENT_SEMESTER_FOLDER,id).toPath();
-					//se target nao existe entao ja cria ela
-					if(!Files.exists(target)){
-						Files.createDirectory(target);
+				//apenas se a atividade nao for roteiro especial
+				if(!Constants.PATTERN_ROTEIRO_ESPECIAL.matcher(id).matches()){
+					String os = System.getProperty("os.name");
+					if(!os.startsWith("Windows")){
+						//windows nao permite a criação de links symbolicos 
+						//System.out.println("Link to: " + uploadSubFolderTarget);
+						Path newLink = (new File(Constants.REPORTS_FOLDER_NAME)).toPath();
+						Path target = new File(Constants.CURRENT_SEMESTER_FOLDER,id).toPath();
+						//se target nao existe entao ja cria ela
+						if(!Files.exists(target)){
+							Files.createDirectory(target);
+						}
+						Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+						
+					}else{
+						//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
+						Path newLink = (new File(Constants.REPORTS_FOLDER_NAME)).toPath();
+						Path target = new File(Constants.CURRENT_SEMESTER_FOLDER,id).toPath();
+						//System.out.println("Link: " + newLink);
+						//System.out.println("Target: " + target);
+						
+						//se target nao existe entao ja cria ela
+						if(!Files.exists(newLink)){
+							Files.createDirectory(newLink);
+						}
+						if(!Files.exists(target)){
+							Files.createDirectory(target);
+						}
+						
 					}
-					Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
-					
-				}else{
-					//pode-se copiar por completo mas isso deve ser feito apos a execucao do corretor
-					Path newLink = (new File(Constants.REPORTS_FOLDER_NAME)).toPath();
-					Path target = new File(Constants.CURRENT_SEMESTER_FOLDER,id).toPath();
-					//System.out.println("Link: " + newLink);
-					//System.out.println("Target: " + target);
-					
-					//se target nao existe entao ja cria ela
-					if(!Files.exists(newLink)){
-						Files.createDirectory(newLink);
-					}
-					if(!Files.exists(target)){
-						Files.createDirectory(target);
-					}
-					
 				}
 		}
 		

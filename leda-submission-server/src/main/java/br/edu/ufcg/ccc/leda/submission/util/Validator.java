@@ -135,7 +135,13 @@ public class Validator {
 		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
 		Atividade atividade = atividades.get(config.getId());
 		if (atividade == null) {
-			throw new AtividadeException("Atividade (roteiro ou prova) " + config.getId() + " nao cadastrada");
+			List<Atividade> roteirosEspeciais = Configuration.getInstance().getRoteirosEspeciais();
+			atividade = roteirosEspeciais.stream()
+					.filter( a -> a.getId().equals(config.getId()))
+					.findFirst().orElse(null);
+			if(atividade == null){
+				throw new AtividadeException("Atividade (roteiro ou prova) " + config.getId() + " nao cadastrada");
+			}
 		}
 	}
 		
