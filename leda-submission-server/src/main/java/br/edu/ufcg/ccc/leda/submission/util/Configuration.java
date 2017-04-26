@@ -150,5 +150,8 @@ public class Configuration {
 				.collect(Collectors.toList());
 	}
 	
-	
+	public static void main(String[] args) throws ConfigurationException, IOException, ServiceException {
+		List<Corretor> corretores = Configuration.getInstance().getMonitores();
+		int i = corretores.size();
+	}
 }

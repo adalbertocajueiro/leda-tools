@@ -592,16 +592,32 @@ public class SubmissionServer extends Jooby {
 		//return html;
 	});
 	
-	get("/roteirosEspeciais", (req,resp) -> {
+	get("/roteirosEspeciais", (req) -> {
 		List<Atividade> roteirosEspeciais = Configuration.getInstance().getRoteirosEspeciais();
-		StringBuffer sb = new StringBuffer();
-		roteirosEspeciais.forEach(re -> {
-			sb.append(re.getId() + " - " + re.getNome() + "\n<br>");
-		});
-		resp.send(sb.toString());
-		
-		//return html;
+        View html = Results.html("roteirosEspeciais");
+        html.put("roteirosEspeciais",roteirosEspeciais);
+
+        return html;
 	});
+
+	get("/downloadRoteiroEspecial", (req,resp) -> {
+		String id = req.param("id").value();
+
+		File fileToSend = null;
+		try {
+			fileToSend = FileUtilities.getEnvironmentAtividade(id,"");
+			
+			resp.type(MediaType.octetstream);
+		    if(fileToSend != null){
+		    	resp.download(fileToSend);
+		    }else{
+		    	throw new RuntimeException("Arquivo de ambiente nao encontrado para atividade: " + id);
+		    }		
+		} catch (ConfigurationException | IOException | AtividadeException e) {
+			resp.send(e.getMessage());
+		}
+	});
+
   }
 
   {

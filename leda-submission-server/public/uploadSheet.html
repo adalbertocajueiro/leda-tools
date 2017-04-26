@@ -24,7 +24,7 @@
 	<label class="col-form-label-sm" data-toggle="tooltip" data-placement="right" title="Selecione o tipo de arquivo a ser enviado">Selecione: </label> 
 	<select class="custom-select" id="tipoPlanilha" name="tipoPlanilha">
 		<option value="FREQUENCIA">Lista de frequencia</option>
-		<option value="SENHAS">Lista de monitores</option>
+		<option value="SENHAS">Lista de monitores/senhas</option>
 	</select><br><br>
 	<label class="custom-file">
 	  <input type="file" id="arquivo" name="arquivo" class="form-control-file"><br>
@@ -41,7 +41,7 @@ $(document).ready(function(){
 
 function validateAndSubmitForm(){
 	var senha = document.getElementById('senha').value;
-	alert('Campo de senha' + senha);
+	//alert('Campo de senha' + senha);
 	if(senha == null || senha == ""){
 		alert('Campo de senha precisa ser preenchido');
 		return false;

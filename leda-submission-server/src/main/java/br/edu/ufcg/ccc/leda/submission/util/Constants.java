@@ -22,7 +22,7 @@ public abstract class Constants {
 
 	public static final String EXCEL_FILE_NOTAS_FINAIS_NAME = "NotasFinaisSemestre";
 	public static final String EXCEL_FILE_FALTAS_NAME = "FaltasSemestre";
-	public static final String EXCEL_SENHAS_FILE_NAME = "Senhas.xlxs";
+	public static final String EXCEL_SENHAS_FILE_NAME = "Senhas.xlsx";
 	public static File DEFAULT_CONFIG_FOLDER;
 	public static File UPLOAD_FOLDER;
 	public static File ROTEIROS_FOLDER;

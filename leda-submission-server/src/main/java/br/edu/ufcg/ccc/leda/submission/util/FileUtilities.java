@@ -38,32 +38,42 @@ public class FileUtilities {
 	
 	public static File getEnvironmentAtividade(String id, String matricula) throws ConfigurationException, IOException, AtividadeException, ServiceException{
 		File environment = null;
-		
-		//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
-		File provaUploadFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
-		DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
-		String content = "VAZIO"; 
-		//verifica se esta sendo requisitado dentro do prazo. faz om o validator
-
-		try {
-			Validator.validateDownloadAmbiente(id, matricula);
-			//Validator.validateProvaDownload(id,matricula);
-		} catch (AtividadeException e) {
-			content = "[ERRO]:aluno " + matricula + " tentou fazer download da atividade (roteiro ou prova) " + id + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
-			logger.log(content);
-			throw e;
-		}
-		
-		//pega o roteiro para obter o arquivo e mandar de volta
-		Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
-		Atividade atividade = atividades.get(id);
-		if(atividade instanceof Roteiro){
+		if(Constants.PATTERN_ROTEIRO_ESPECIAL.matcher(id).matches()){
+			//requisicao de um downlaod de roteiro especial - ignorar matricula
+			
+			Atividade atividade = Configuration.getInstance().getRoteirosEspeciais()
+					.stream()
+					.filter( a -> a.getId().equals(id))
+					.findFirst().orElse(null);
+					
 			environment = ((Roteiro) atividade).getArquivoAmbiente();
+		}else{
+			//faz o registro do download feito pelo aluno ou mensagem de erro do acesso do download
+			File provaUploadFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
+			DownloadProvaLogger logger = new DownloadProvaLogger(provaUploadFolder);
+			String content = "VAZIO"; 
+			//verifica se esta sendo requisitado dentro do prazo. faz om o validator
 	
-			Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
-			Student requester = studentsMap.get(matricula);
-			content = "[DOWNLOAD]:atividade (roteiro ou prova) " + id + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
-			logger.log(content);
+			try {
+				Validator.validateDownloadAmbiente(id, matricula);
+				//Validator.validateProvaDownload(id,matricula);
+			} catch (AtividadeException e) {
+				content = "[ERRO]:aluno " + matricula + " tentou fazer download da atividade (roteiro ou prova) " + id + " em " + Util.formatDate(new GregorianCalendar()) + ":" + e.getMessage();
+				logger.log(content);
+				throw e;
+			}
+			
+			//pega o roteiro para obter o arquivo e mandar de volta
+			Map<String,Atividade> atividades = Configuration.getInstance().getAtividades();
+			Atividade atividade = atividades.get(id);
+			if(atividade instanceof Roteiro){
+				environment = ((Roteiro) atividade).getArquivoAmbiente();
+		
+				Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
+				Student requester = studentsMap.get(matricula);
+				content = "[DOWNLOAD]:atividade (roteiro ou prova) " + id + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
+				logger.log(content);
+			}
 		}
 		return environment;
 	}
