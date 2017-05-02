@@ -133,6 +133,37 @@ public class Util {
 		return students;
 	}
 	
+	public static double[] getPesos(String url) throws ClientProtocolException, IOException{
+		double[] resp = new double[2];
+		
+		CloseableHttpClient client = HttpClientBuilder.create().build();
+	    try {
+	        HttpGet request = new HttpGet(url);
+	        CloseableHttpResponse response = client.execute(request);
+
+	        System.out.println("Response Code : "
+	                        + response.getStatusLine().getStatusCode());
+
+	        BufferedReader rd = new BufferedReader(
+	        	new InputStreamReader(response.getEntity().getContent()));
+
+	        StringBuffer result = new StringBuffer();
+	        String line = "";
+	        while ((line = rd.readLine()) != null) {
+	        	result.append(line);
+	        }
+	        
+	        String[] pesos = line.split(",");
+	        int index = 0;
+	        for (String peso : pesos) {
+				resp[index++] = Double.parseDouble(peso);
+			}
+	    } finally {
+	        client.close();
+	    }
+		return resp;
+	}
+
 	private static String readLines(File f) throws IOException{
 		StringBuilder result = new StringBuilder();
 		FileReader fr = new FileReader(f);

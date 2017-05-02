@@ -5,12 +5,15 @@ import java.util.ArrayList;
 public class CorrectionReport {
 	private String id;
 	private String matriculaCorretor;
-	private ArrayList<CorrectionReportItem> reportItems;
+	private int numberOfTests;
+	private ArrayList<CorrectionReportItem> reportItems; 
 	
-	public CorrectionReport(String id, String matriculaCorretor, ArrayList<CorrectionReportItem> reportItems) {
+	public CorrectionReport(String id, String matriculaCorretor, 
+			int numberOfTests, ArrayList<CorrectionReportItem> reportItems) {
 		super();
 		this.id = id;
 		this.matriculaCorretor = matriculaCorretor;
+		this.numberOfTests = numberOfTests;
 		this.reportItems = reportItems;
 	}
 	
@@ -73,6 +76,14 @@ public class CorrectionReport {
 
 	public void setReportItems(ArrayList<CorrectionReportItem> reportItems) {
 		this.reportItems = reportItems;
+	}
+
+	public int getNumberOfTests() {
+		return numberOfTests;
+	}
+
+	public void setNumberOfTests(int numberOfTests) {
+		this.numberOfTests = numberOfTests;
 	}
 	
 	

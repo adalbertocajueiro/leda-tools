@@ -4,17 +4,22 @@ public class CorrectionReportItem {
 	private String matricula;
 	private String comentario = "";
 	private CorrectionClassification classification;
+	private CodeAdequacy adequacy;
+	private TestReportItem testReportItem;
 	private double notaDesign;
 	private double notaTestes;
 	
-	public CorrectionReportItem(String matricula, String comentario, CorrectionClassification classification,
-			double notaDesign, double notaTestes) {
+	public CorrectionReportItem(String matricula, String comentario, 
+			CorrectionClassification classification, CodeAdequacy adequacy,
+			TestReportItem testReportItem) {
 		super();
 		this.matricula = matricula;
 		this.comentario = comentario;
+		this.testReportItem = testReportItem;
 		this.classification = classification;
+		this.adequacy = adequacy;
 		this.notaDesign = calculateNotaDesignDefault(classification);
-		this.notaTestes = notaTestes;
+		this.notaTestes = calculateNotaTestes();
 	}
 
 	private double calculateNotaDesignDefault(CorrectionClassification classification) {
@@ -38,6 +43,44 @@ public class CorrectionReportItem {
 		return nota;
 	}
 
+	private double calculateNotaTestes(){
+		double nota = 0.0;
+		
+		int testesAConsiderar = this.testReportItem.getTotalTests() - this.testReportItem.getSkipped();
+		nota = (testsPassed()/testesAConsiderar)*10;
+		return nota;
+	}
+	
+	private int testsPassed(){
+		int passed = 0;
+		if(testReportItem.hasSubmitted() && !testReportItem.hasCompilationError()){
+			passed = this.testReportItem.getTotalTests() - this.testReportItem.getErrors() - this.testReportItem.getFailures() - this.testReportItem.getSkipped();
+			if(passed < 0){
+				passed = 0;
+			}else{
+				//score = passed/(this.totalTests - this.skipped)*4.0;
+				switch (adequacy) {
+				case NENHUM:
+					passed = 0;
+					break;
+				case PARCIAL:
+					passed = passed - passed/2;
+					break;
+				case TOTAL:
+					break;
+				}
+			}
+
+		}
+		return passed;
+	}
+	
+	public double calcularNotaFinal(double pesoTestes, double pesoDesign){
+		double nota = 0.0;
+		nota = notaTestes*pesoTestes + notaDesign*pesoDesign;
+		
+		return nota;
+	}
 	public String getMatricula() {
 		return matricula;
 	}
@@ -76,6 +119,15 @@ public class CorrectionReportItem {
 
 	public void setNotaTestes(double notaTestes) {
 		this.notaTestes = notaTestes;
+	}
+
+	public CodeAdequacy getAdequacy() {
+		return adequacy;
+	}
+
+	public void setAdequacy(CodeAdequacy adequacy) {
+		this.adequacy = adequacy;
+		this.notaTestes = this.calculateNotaTestes();
 	}
 	
 	

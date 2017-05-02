@@ -29,6 +29,8 @@
 		<activitySheetIds>1NlibMSLjj75cxQt6kFTsj5A2P4XsHMA_anmIYbbjWYY</activitySheetIds>
 		<authorizedIPs>150.165.74,150.165.54</authorizedIPs>
 		<edaSheetIds>1LEccFlOjV4o3FsJEeOYFtqzaJOHHd9q4gYurcWx95cU,1Qwpele7sF0WAb5GDqKiEq1MMUT9Ij4qJlEw3P5ey4fM</edaSheetIds>
+		<pesoTestes>0.4</pesoTestes>
+		<pesoDesign>0.6</pesoDesign>
 	</properties>
 
 	<repositories>

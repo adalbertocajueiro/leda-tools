@@ -38,6 +38,9 @@ public abstract class Constants {
 	public static List<String> authorizedIPs;
 	public static List<String> edaSheetIds;
 	
+	public static double PESO_TESTES;
+	public static double PESO_DESIGN;
+	
 	//public static final String MAVEN_OUTPUT_FILE = "maven-output.txt";
 
 	public static final Pattern PATTERN_AULA = Pattern.compile("A[0-9]{2}-[0-9][0-9[X]]");
@@ -66,6 +69,9 @@ public abstract class Constants {
 			QUANTIDADE_PROVAS = Integer.valueOf(prop.getProperty("quantidadeProvas"));
 			QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
 			ID_MONITORES_SHEET = prop.getProperty("idSheetMonitores");
+			PESO_TESTES = Double.parseDouble(prop.getProperty("pesoTestes","0.4"));
+			PESO_TESTES = Double.parseDouble(prop.getProperty("pesoDesign","0.6"));
+			
 			activitySheetIds = new ArrayList<String>();
 			authorizedIPs = new ArrayList<String>();
 			edaSheetIds = new ArrayList<String>();

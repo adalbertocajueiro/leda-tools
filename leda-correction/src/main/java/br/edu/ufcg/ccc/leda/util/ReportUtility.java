@@ -228,7 +228,9 @@ public class ReportUtility {
 			throws IOException, JDOMException {
 		
 		String id = submissionsFolder.getParentFile().getName();
-		CorrectionReport report = new CorrectionReport(id,matriculaCorretor, new ArrayList<CorrectionReportItem>());
+		CorrectionReport report = 
+				new CorrectionReport(id,matriculaCorretor, 
+						testReport.getNumberOfTests(), new ArrayList<CorrectionReportItem>());
 		String turma = submissionsFolder.getParentFile().getName().substring(4);
 		List<Student> alunosDaTurma = alunos.values().stream().filter(s -> s.getTurma().equals(turma))
 				.sorted((s1,s2) -> s1.getNome().compareTo(s2.getNome())).collect(Collectors.toList());
@@ -242,11 +244,10 @@ public class ReportUtility {
 			if(!reportItem.hasSubmitted()){
 				classification = CorrectionClassification.FALTA;
 			}
-			double notaTestes = reportItem.calculateTestScore();
-			
+		
 			CorrectionReportItem item = 
 					new CorrectionReportItem(student.getMatricula(), "",
-							classification,0,notaTestes);
+							classification,CodeAdequacy.TOTAL,reportItem);
 			report.getReportItems().add(item);
 		}
 

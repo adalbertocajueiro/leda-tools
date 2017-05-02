@@ -61,8 +61,8 @@
 - sera que pode ser tudo salvo em json e fazemos um viewer (freemarker) para construirmos o 
   relatorio? (abordagem melhor porque separa model de viewer) SIM - feito - OK
 - correcao completamente online e salva no JSON. - OK
-- fazer um gerador de XLSX a partir do JSON para arquivamento e exportacao para o controle academico.
-- precisa colocar anota dos testes sem o peso. O peso é calculado automaticamente na totalização das notas.
-- incluir uma nota de adequacao do que foi pedido. Isso impactaria na nota dos testes caso o aluno nao seguiu o recomendado.
+- fazer um gerador de XLSX a partir do JSON para arquivamento e exportacao para o controle academico. - OK
+- precisa colocar anota dos testes sem o peso. O peso é calculado automaticamente na totalização das notas. - OK
+- incluir uma nota de adequacao do que foi pedido. Isso impactaria na nota dos testes caso o aluno nao seguiu o recomendado. - OK (mostrar a adequacao do codigo como hint nanota de testes)
 - incluir um novo metodo em correctionreportitem que dado a nota de testes e a nota de design ele calcula via percentuais 
   a nota final.
