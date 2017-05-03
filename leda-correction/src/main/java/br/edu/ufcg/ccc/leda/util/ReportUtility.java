@@ -247,7 +247,7 @@ public class ReportUtility {
 		
 			CorrectionReportItem item = 
 					new CorrectionReportItem(student.getMatricula(), "",
-							classification,CodeAdequacy.TOTAL,reportItem);
+							classification,CodeAdequacy.ALTA,reportItem);
 			report.getReportItems().add(item);
 		}
 

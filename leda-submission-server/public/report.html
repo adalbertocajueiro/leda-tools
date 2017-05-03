@@ -56,9 +56,9 @@
 					<th class="text-xs-center"><font color="blue">Falhas</font></th>
 					<th class="text-xs-center">Pulados</th>
 					<th class="text-xs-center">Tempo</th>
-					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota dos testes'>T</th>
+					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota dos testes. Pode ser afetada pela adequação do código com as restrições colocadas para a atividade'>T</th>
 					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota de design'>D</th>
-					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota final (T + D*0.6)'>F</th>
+					<th class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Nota final (T*0.4 + D*0.6)'>F</th>
 					<th class="text-xs-center">Detalhes</th>
 						<!-- th class="text-xs-center">Matricula</th -->	
 					</thead>
@@ -79,10 +79,16 @@
 								<td class="text-xs-center">${reportItem.skipped?string?keep_before(".")}
 								<td class="text-xs-center">${reportItem.time}
 								<#if correctionReport??>
-									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
+									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).calculateNotaTestes()>
 									<#assign notaDesign = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaDesign>
-									<#assign notaFinal = (notaTestes*0.4 + notaDesign*0.6) >
-									<td class="text-xs-center">${notaTestes}
+									<#assign notaFinal = (notaTestes*pesoTeste + notaDesign*pesoDesign) >
+									<#if correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).adequacy == "ALTA">
+									<td class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Adequação ALTA: nota de testes não sofreu penalizações'>${notaTestes}
+									<#elseif correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).adequacy == "MEDIA">
+									<td class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Adequação MEDIA: nota de testes sofreu redução de 50%'>${notaTestes}									
+									<#else>
+									<td class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Adequação BAIXA: nota de testes sofreu redução de 100%'>${notaTestes}									
+									</#if>
 									<td class="text-xs-center">${notaDesign}
 									<td class="text-xs-center"><strong>${notaFinal}</strong>
 								<#else>
@@ -149,10 +155,16 @@
 								<td class="text-xs-center">${reportItem.skipped?string?keep_before(".")}
 								<td class="text-xs-center">${reportItem.time}
 								<#if correctionReport??>
-									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaTestes>
+									<#assign notaTestes = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).calculateNotaTestes()>
 									<#assign notaDesign = correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).notaDesign>
-									<#assign notaFinal = (notaTestes*0.4 + notaDesign*0.6) >
-									<td class="text-xs-center">${notaTestes}
+									<#assign notaFinal = (notaTestes*pesoTeste + notaDesign*pesoDesign) >
+									<#if correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).adequacy == "ALTA">
+									<td class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Adequação ALTA: nota de testes não sofreu penalizações'>${notaTestes}
+									<#elseif correctionReport.getCorrectionReportItemforStudent(reportItem.matricula).adequacy == "MEDIA">
+									<td class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Adequação MEDIA: nota de testes sofreu redução de 50%'>${notaTestes}									
+									<#else>
+									<td class="text-xs-center" data-toggle="tooltip" data-placement="top" title='Adequação BAIXA: nota de testes sofreu redução de 100%'>${notaTestes}									
+									</#if>
 									<td class="text-xs-center">${notaDesign}
 									<td class="text-xs-center"><strong>${notaFinal}</strong>
 								<#else>

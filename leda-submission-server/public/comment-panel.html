@@ -28,13 +28,20 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
  </head>
 <body data-spy="scroll">
 <#setting number_format=",##0.0">
+
 <div class="container">
 	<#if corretor?? && (corretor?length > 0)>
 		<form id="commentForm" role="form" method="POST" action="addComment">
 				<div>
 					<input type="hidden" id="id" name="id" value="${id}">
 					<input type="hidden" id="matricula" name="matricula"  value="${matricula}">
-					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">
+					<input type="hidden" id="corretor" name="corretor"  value="${corretorMat}">					
+					<#if correctionReportItem??>
+						<input type="hidden" id="notaTestesOriginal" name="notaTestesOriginal"  value="${correctionReportItem.calculateNotaTestesSemAdequacao()}">
+					<#else>
+						<input type="hidden" id="notaTestesOriginal" name="notaTestesOriginal"  value="0.0">
+					</#if>
+
 					<label class="col-form-label-sm">Comentários do aluno: <#if aluno??>${aluno.nome}</#if></label>
 					<br>
 					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="top" title="Classifique o aluno baseado nos comentários">Classificação: </label> 
@@ -50,7 +57,20 @@ alert("Key Pressed: " + String.fromCharCode(e.charCode) + "\n"
 						</#if>
 					</select>
 					<br>
-					<label class="col-form-label-sm">Nota dos testes: </label> <input type="text" class="text-xs-center" name="notaTestes" disabled id="notaTestes" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.notaTestes}'</#if>>
+					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="top" title="Escolha a adequação do código do aluno com o que foi pedido">Adequação: </label>
+					<select class="custom-select" id="adequacaoAluno" name="adequacaoAluno" onchange="javascript:mudarNotaTeste();">
+						<#if correctionReportItem??>
+							<#list adequacao as itemAdequacao>
+								<option value="${itemAdequacao}" <#if itemAdequacao == correctionReportItem.adequacy>selected</#if> >${itemAdequacao.getAdequacao()}</option>
+							</#list>
+						<#else>
+							<#list adequacao as itemAdequacao>
+								<option value="${itemAdequacao}">${itemAdequacao.getAdequacao()}</option>
+							</#list>
+						</#if>
+					</select>
+					<br>
+					<label class="col-form-label-sm">Nota dos testes: </label> <input type="text" class="text-xs-center" name="notaTestes" disabled id="notaTestes" maxlength="4" size="2" <#if correctionReportItem??>value='${correctionReportItem.calculateNotaTestes()}'</#if>>
 					<br>
 					<label class="col-form-label-sm" data-toggle="tooltip" data-placement="bottom" title='Não modifique essa nota! Apenas o professor modifica!!!'>Nota de design: </label>					
 					<input class="text-xs-center" type="text" id="notaDesign" name="notaDesign" maxlength="4" size="2" <#if correctionReportItem??> value=${correctionReportItem.notaDesign}</#if> onchange='javascript:ajustarNotaDesign();'>
@@ -103,10 +123,25 @@ function mudarNotaDesign(){
 	return true;
 }
 
+function mudarNotaTeste(){
+	var adeq = document.getElementById('adequacaoAluno').value;
+	if(adeq == 'BAIXA'){ //penalizar em 100%
+		document.getElementById('notaTestes').value = '0.0'; 
+	} else if(adeq == 'MEDIA'){
+		var notaTestes = parseFloat(document.getElementById('notaTestesOriginal').value)/2;
+		document.getElementById('notaTestes').value = notaTestes.toFixed(1); 
+	} else{
+		var notaTestes = parseFloat(document.getElementById('notaTestesOriginal').value);
+		document.getElementById('notaTestes').value = notaTestes.toFixed(1); 
+	}
+	//ajustar a nota final porque a de teste pode ter sido afetada
+	return ajustarNotaDesign()
+}
+
 function ajustarNotaDesign(){
 	var notaDes = parseFloat(document.getElementById('notaDesign').value);
 	var notaTestes = parseFloat(document.getElementById('notaTestes').value);
-	var notaRoteiro = (notaTestes + notaDes*0.6);	
+	var notaRoteiro = (notaTestes*0.4 + notaDes*0.6);	
 	document.getElementById('notaRoteiro').value = notaRoteiro.toFixed(1);
 	return true;
 }

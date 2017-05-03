@@ -45,6 +45,14 @@ public class CorrectionReport {
 		reportItem.setClassification(classificacao);
 	}
 	
+	public void setAdequacao(String matriculaAluno, CodeAdequacy adequacy){
+		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);
+		if(reportItem == null){
+			throw new CorrectionReportException("Nao pode adicionar adequacao ao aluno " + matriculaAluno + " para atividade " + id);
+		}
+		reportItem.setAdequacy(adequacy);
+	}
+	
 	public String getComentario(String matriculaAluno){
 		CorrectionReportItem reportItem =  reportItems.stream().filter(item -> item.getMatricula().equals(matriculaAluno)).findFirst().orElse(null);
 		if(reportItem == null){

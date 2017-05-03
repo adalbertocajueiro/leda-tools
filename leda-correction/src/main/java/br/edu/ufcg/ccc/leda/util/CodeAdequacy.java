@@ -11,7 +11,7 @@ import java.util.Arrays;
  *
  */
 public enum CodeAdequacy {
-	NENHUM("Nenhum"),PARCIAL("Parcial"),TOTAL("Total");
+	BAIXA("Baixa"),MEDIA("Media"),ALTA("Alta");
 
 	private String adequacao;
 

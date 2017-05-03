@@ -80,7 +80,7 @@
 							<#assign mediaRoteiros = mediasRoteiros[aluno.matricula]>
 							<#assign mediaProvasPraticas = mediasProvasPraticas[aluno.matricula]>
 							<#assign mediaProvasTeoricas = (mediasProvasTeoricas[aluno.matricula])!"-">
-							<#assign notaDaFinal = notasDaFinal[aluno.matricula]>
+							<#assign notaDaFinal = notasDaFinal[aluno.matricula]!0.0>
 							<#assign mediaComFinal = mediasComFinal[aluno.matricula]>
 							<#list correctionReports?values as corrReport>
 							  <#if corrReport??>

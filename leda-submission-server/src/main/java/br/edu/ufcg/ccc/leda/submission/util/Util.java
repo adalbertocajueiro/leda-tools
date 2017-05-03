@@ -68,6 +68,7 @@ import com.google.gdata.data.spreadsheet.ListFeed;
 import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
+import br.edu.ufcg.ccc.leda.util.CodeAdequacy;
 import br.edu.ufcg.ccc.leda.util.Compactor;
 import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
 import br.edu.ufcg.ccc.leda.util.CorrectionReport;
@@ -297,7 +298,7 @@ public class Util {
 				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
 				double nota = 0.0;
 				if(item != null){
-					nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+					nota = item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign() * Constants.PESO_DESIGN;
 				}
 				
 				notasDaFinal.put(mat, nota);
@@ -340,7 +341,7 @@ public class Util {
 			if(report != null){
 				CorrectionReportItem item = report.getCorrectionReportItemforStudent(mat);
 				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
-				double notaDaFinal = item.getNotaTestes() + item.getNotaDesign() * 0.6;
+				double notaDaFinal = item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign() * Constants.PESO_DESIGN;
 				double mediaSemFinal = mediasLEDASemfinal.get(mat);
 				double nota = mediaSemFinal;
 				if(nota <= 7.0 && nota >= 4.0){
@@ -389,7 +390,7 @@ public class Util {
 		alunos.keySet().forEach( m -> {
 			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
 				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
-				return item!=null ? item.getNotaTestes() + item.getNotaDesign()*0.6: 0.0;
+				return item!=null ? item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
 			}).sum();
 			mediasProvasPraticas.put(m,(double)somatorioNotas/Constants.QUANTIDADE_PROVAS);
 		});
@@ -410,7 +411,7 @@ public class Util {
 		alunos.keySet().forEach( m -> {
 			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
 				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
-				return item!=null ? item.getNotaTestes() + item.getNotaDesign()*0.6: 0.0;
+				return item!=null ? item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
 			}).sum();
 			mediasRoteiros.put(m,(double)somatorioNotas/Constants.QUANTIDADE_ROTEIROS);
 		});
@@ -420,7 +421,7 @@ public class Util {
 
 	
 	public static void writeCorrectionComment(String id, String matriculaAluno, 
-			String notaDesignStr, String classificacaoStr, String comment) throws IOException{
+			String notaDesignStr, String classificacaoStr, String adequacaoStr, String comment) throws IOException{
 		
 		File atividadeFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,id);
 		if(atividadeFolder.exists()){
@@ -433,9 +434,12 @@ public class Util {
 				double notaDesign = Double.valueOf(notaDesignStr);
 				CorrectionClassification classificacao = 
 						CorrectionClassification.valueOf(classificacaoStr);
+				CodeAdequacy adequacao = CodeAdequacy.valueOf(adequacaoStr);
 				report.setNotaDesign(matriculaAluno, notaDesign);
 				report.setClassificacao(matriculaAluno, classificacao);
 				report.setComentario(matriculaAluno,comment.trim());
+				report.setAdequacao(matriculaAluno, adequacao);
+				
 				Utilities.writeCorrectionReportToJson(report, correctionReportFile);
 			}
 			
@@ -473,7 +477,7 @@ public class Util {
 		outputFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_FILE_NOTAS_FINAIS_NAME + "-T" + turma + ".xlsx");
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
-		String[] headersAtividades = {"","Matricula","Nome", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
+		String[] headersAtividades = {"","Matricula","Nome", "Adequacao", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
 
 		reportsDaTurma.forEach( cr -> {
 			try {
@@ -704,15 +708,17 @@ public class Util {
 			cellMat.setCellValue(cri.getMatricula());
 			Cell cellNome = newRow.createCell(2);
 			cellNome.setCellValue(aluno.getNome());
-			Cell cellNotaTestes = newRow.createCell(3);
+			Cell cellAdequacao = newRow.createCell(3);
+			cellAdequacao.setCellValue(cri.getAdequacy().toString());
+			Cell cellNotaTestes = newRow.createCell(4);
 			cellNotaTestes.setCellValue(cri.getNotaTestes());
-			Cell cellNotaDesign = newRow.createCell(4);
+			Cell cellNotaDesign = newRow.createCell(5);
 			cellNotaDesign.setCellValue(cri.getNotaDesign());
-			Cell cellNotaFinal = newRow.createCell(5);
-			cellNotaFinal.setCellValue(cri.getNotaTestes() + cri.getNotaDesign()*0.6);
-			Cell cellClassificacao = newRow.createCell(6);
+			Cell cellNotaFinal = newRow.createCell(6);
+			cellNotaFinal.setCellValue(cri.getNotaTestes()*Constants.PESO_TESTES + cri.getNotaDesign()*Constants.PESO_DESIGN);
+			Cell cellClassificacao = newRow.createCell(7);
 			cellClassificacao.setCellValue(cri.getClassification().name());
-			Cell cellComentario = newRow.createCell(7);
+			Cell cellComentario = newRow.createCell(8);
 			cellComentario.setCellValue(cri.getComentario());
 			
 		}
@@ -733,10 +739,14 @@ public class Util {
 			if(report != null){
 				
 				XSSFWorkbook workbook = new XSSFWorkbook();
-				XSSFSheet sheet = workbook.createSheet(id);
+				//XSSFSheet sheet = workbook.createSheet(id);
 				//Create a new row in current sheet with the header
-				Row row = sheet.createRow(0);
-				String[] headers = {"","Matricula","Nome", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
+				//Row row = sheet.createRow(0);
+				String[] headers = {"","Matricula","Nome", "Adequacao", "Nota Testes","Nota Design","Nota","Classificação","Comentarios"};
+
+				createSheetAtividade(workbook, headers, report);
+				
+				/*
 				XSSFCellStyle style = workbook.createCellStyle();
 				XSSFFont font = workbook.createFont();
 				font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
@@ -768,7 +778,7 @@ public class Util {
 					Cell cellNotaDesign = newRow.createCell(4);
 					cellNotaDesign.setCellValue(cri.getNotaDesign());
 					Cell cellNotaFinal = newRow.createCell(5);
-					cellNotaFinal.setCellValue(cri.getNotaTestes() + cri.getNotaDesign()*0.6);
+					cellNotaFinal.setCellValue(cri.getNotaTestes()*Constants.PESO_TESTES + cri.getNotaDesign()*Constants.PESO_DESIGN);
 					Cell cellClassificacao = newRow.createCell(6);
 					cellClassificacao.setCellValue(cri.getClassification().name());
 					Cell cellComentario = newRow.createCell(7);
@@ -777,7 +787,7 @@ public class Util {
 				}
 				for (int i = 0; i < headers.length; i++) {
 					sheet.autoSizeColumn(i);
-				}
+				}*/
 				try {
 					outputFile = new File(atividadeFolder,id + ".xlsx");
 					FileOutputStream out = new FileOutputStream(outputFile);
@@ -2126,7 +2136,10 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
-
+		CorrectionReport rep = Util.loadCorrectionReport("R10-01");
+		CorrectionReportItem ri = rep.getCorrectionReportItemforStudent("113210438");
+		double testes = ri.calculateNotaTestes();
+		File f = Util.exportRoteiroToExcel("R10-01");
 		Map<String, Double> mediasFinais = Util.buildMediasLEDAComFinal();
 		Map<String, Double> mediasSemFinais = Util.buildMediasLEDASemFinal();
 		Double mediaComFinal = mediasFinais.get("115211289");

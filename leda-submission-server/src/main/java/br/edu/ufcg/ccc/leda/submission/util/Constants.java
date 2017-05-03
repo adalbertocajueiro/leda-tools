@@ -70,7 +70,7 @@ public abstract class Constants {
 			QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
 			ID_MONITORES_SHEET = prop.getProperty("idSheetMonitores");
 			PESO_TESTES = Double.parseDouble(prop.getProperty("pesoTestes","0.4"));
-			PESO_TESTES = Double.parseDouble(prop.getProperty("pesoDesign","0.6"));
+			PESO_DESIGN = Double.parseDouble(prop.getProperty("pesoDesign","0.6"));
 			
 			activitySheetIds = new ArrayList<String>();
 			authorizedIPs = new ArrayList<String>();

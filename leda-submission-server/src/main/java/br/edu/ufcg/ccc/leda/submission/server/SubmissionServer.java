@@ -42,6 +42,7 @@ import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
 import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
+import br.edu.ufcg.ccc.leda.util.CodeAdequacy;
 import br.edu.ufcg.ccc.leda.util.CorrectionReport;
 import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
@@ -232,6 +233,8 @@ public class SubmissionServer extends Jooby {
 		html.put("corretorMat",corretorPar);
 		html.put("corretor", session.get("corretor"));
 		html.put("classificacao",CorrectionClassification.values());
+		html.put("adequacao",CodeAdequacy.values());
+		
 		
 		CorrectionReport report = Util.loadCorrectionReport(id);
 		
@@ -577,7 +580,8 @@ public class SubmissionServer extends Jooby {
         //html.put("studentsTestList", similarityMatrix.getStudentsTestList());
         //html.put("matrix",similarityMatrix.getSimilarities());
         }
-        //html.put(values);
+        html.put("pesoTeste",Constants.PESO_TESTES);
+        html.put("pesoDesign",Constants.PESO_DESIGN);        
 
         return html;
         
@@ -814,6 +818,7 @@ public class SubmissionServer extends Jooby {
 		String matriculaAluno = req.param("matricula").value();
 		String matriculaCorretorPar = req.param("corretor").value();
 		String classificacaoStr = req.param("classificacaoAluno").value();
+		String adequacaoStr = req.param("adequacaoAluno").value();
 		String notaDesignStr = req.param("notaDesign").value();
 		String comentario = req.param("comentario").value();
 
@@ -823,7 +828,7 @@ public class SubmissionServer extends Jooby {
 			//throw new RuntimeException("Corretor nao logado!");
 			resp.redirect("commentPanel?id=" + id + "&matricula=&corretor="+matriculaCorretorPar);
 		}else{
-			Util.writeCorrectionComment(id, matriculaAluno, notaDesignStr, classificacaoStr, comentario);
+			Util.writeCorrectionComment(id, matriculaAluno, notaDesignStr, classificacaoStr, adequacaoStr, comentario);
 			resp.redirect("commentPanel?id=" + id + "&matricula=" + matriculaAluno + "&corretor=" + matriculaCorretorPar); 
 		}
 		

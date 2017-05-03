@@ -7,7 +7,6 @@ public class CorrectionReportItem {
 	private CodeAdequacy adequacy;
 	private TestReportItem testReportItem;
 	private double notaDesign;
-	private double notaTestes;
 	
 	public CorrectionReportItem(String matricula, String comentario, 
 			CorrectionClassification classification, CodeAdequacy adequacy,
@@ -19,7 +18,6 @@ public class CorrectionReportItem {
 		this.classification = classification;
 		this.adequacy = adequacy;
 		this.notaDesign = calculateNotaDesignDefault(classification);
-		this.notaTestes = calculateNotaTestes();
 	}
 
 	private double calculateNotaDesignDefault(CorrectionClassification classification) {
@@ -43,15 +41,23 @@ public class CorrectionReportItem {
 		return nota;
 	}
 
-	private double calculateNotaTestes(){
+	public double calculateNotaTestes(){
 		double nota = 0.0;
 		
 		int testesAConsiderar = this.testReportItem.getTotalTests() - this.testReportItem.getSkipped();
-		nota = (testsPassed()/testesAConsiderar)*10;
+		nota = ((double)(testsPassed(true)/(double)testesAConsiderar))*10;
 		return nota;
 	}
 	
-	private int testsPassed(){
+	public double calculateNotaTestesSemAdequacao(){
+		double nota = 0.0;
+		
+		int testesAConsiderar = this.testReportItem.getTotalTests() - this.testReportItem.getSkipped();
+		nota = ((double)(testsPassed(false)/(double)testesAConsiderar))*10;
+		return nota;
+	}
+	
+	private int testsPassed(boolean considerarAdequacao){
 		int passed = 0;
 		if(testReportItem.hasSubmitted() && !testReportItem.hasCompilationError()){
 			passed = this.testReportItem.getTotalTests() - this.testReportItem.getErrors() - this.testReportItem.getFailures() - this.testReportItem.getSkipped();
@@ -59,15 +65,17 @@ public class CorrectionReportItem {
 				passed = 0;
 			}else{
 				//score = passed/(this.totalTests - this.skipped)*4.0;
-				switch (adequacy) {
-				case NENHUM:
-					passed = 0;
-					break;
-				case PARCIAL:
-					passed = passed - passed/2;
-					break;
-				case TOTAL:
-					break;
+				if(considerarAdequacao){
+					switch (adequacy) {
+					case BAIXA:
+						passed = 0;
+						break;
+					case MEDIA:
+						passed = passed - passed/2;
+						break;
+					case ALTA:
+						break;
+					}
 				}
 			}
 
@@ -77,9 +85,13 @@ public class CorrectionReportItem {
 	
 	public double calcularNotaFinal(double pesoTestes, double pesoDesign){
 		double nota = 0.0;
-		nota = notaTestes*pesoTestes + notaDesign*pesoDesign;
+		nota = calculateNotaTestes()*pesoTestes + notaDesign*pesoDesign;
 		
 		return nota;
+	}
+	
+	public double getNotaTestes(){
+		return calculateNotaTestes();
 	}
 	public String getMatricula() {
 		return matricula;
@@ -113,21 +125,12 @@ public class CorrectionReportItem {
 		this.notaDesign = notaDesign;
 	}
 
-	public double getNotaTestes() {
-		return notaTestes;
-	}
-
-	public void setNotaTestes(double notaTestes) {
-		this.notaTestes = notaTestes;
-	}
-
 	public CodeAdequacy getAdequacy() {
 		return adequacy;
 	}
 
 	public void setAdequacy(CodeAdequacy adequacy) {
 		this.adequacy = adequacy;
-		this.notaTestes = this.calculateNotaTestes();
 	}
 	
 	
