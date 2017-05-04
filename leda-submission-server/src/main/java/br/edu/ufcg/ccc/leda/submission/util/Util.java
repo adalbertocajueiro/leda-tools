@@ -2137,6 +2137,7 @@ public class Util {
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		CorrectionReport rep = Util.loadCorrectionReport("R10-01");
+		List<Corretor> monits = Util.loadSpreadsheetMonitor();
 		CorrectionReportItem ri = rep.getCorrectionReportItemforStudent("113210438");
 		double testes = ri.calculateNotaTestes();
 		File f = Util.exportRoteiroToExcel("R10-01");

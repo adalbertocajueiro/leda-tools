@@ -66,3 +66,4 @@
 - incluir uma nota de adequacao do que foi pedido. Isso impactaria na nota dos testes caso o aluno nao seguiu o recomendado. - OK (mostrar a adequacao do codigo como hint nanota de testes)
 - incluir um novo metodo em correctionreportitem que dado a nota de testes e a nota de design ele calcula via percentuais 
   a nota final. - OK
+- verificar se a re-correcao faz sumir a nota de design anterior e a adequacao. Devem ser mantidos os comentarios, a nota de design e a adequacao - OK

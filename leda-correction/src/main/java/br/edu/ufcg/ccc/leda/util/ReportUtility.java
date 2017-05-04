@@ -314,7 +314,7 @@ public class ReportUtility {
 						alunos,testReport);
 		
 		File jsonCorrectionFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-correction.json");
-		//se ja existe algum correction report, ele aproveita as classificacoes e as notas 
+		//se ja existe algum correction report, ele aproveita as classificacoes, as adequacoes e as notas 
 		//do report existente
 		if(jsonCorrectionFile.exists()){
 			CorrectionReport existingReport = Utilities.loadCorrectionReportFromJson(jsonCorrectionFile);
@@ -327,6 +327,7 @@ public class ReportUtility {
 						cri.setClassification(existingItem.getClassification());
 						cri.setNotaDesign(existingItem.getNotaDesign());
 						cri.setComentario(existingItem.getComentario());
+						cri.setAdequacy(existingItem.getAdequacy());
 					}
 				});
 		}

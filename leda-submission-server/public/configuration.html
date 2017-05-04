@@ -19,6 +19,7 @@
 
 <!-------->
 <div id="content">
+	<br>
     <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
         <li class="nav-item"><a class="nav-link active" href="#roteiros" role="tab" data-toggle="tab">Roteiros</a></li>
         <li class="nav-item"><a class="nav-link" href="#provas" role="tab" data-toggle="tab">Provas</a></li>
@@ -30,7 +31,7 @@
 	<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
     <div id="my-tab-content" class="tab-content">
         <div  role="tabpanel" class="tab-pane fade in active" id="roteiros">
-            <p><h5>Roteiros</h5>
+            <br>
             <table id="roteiros" class="table table-hover table-bordered">
 				<thead class="bg-success">
 					<th class="text-xs-center">ID</th>
@@ -54,7 +55,7 @@
 			</table>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="provas">
-            <p><h5>Provas</h5>
+            <br>
             <table id="provas" class="table table-hover table-bordered">
 				<thead class="bg-success">
 					<th class="text-xs-center">ID</th>
@@ -75,7 +76,8 @@
 			</table>
         </div>
 		<div role="tabpanel" class="tab-pane fade" id="ips">
-            <p><h5>IPs Autorizados para envio de prova</h5>
+            <br>
+			<p>IPs Autorizados para envio de prova<p>
 			<ul>
 				<#list config.ipsAutorizados as ip>
 						<li>${ip}
