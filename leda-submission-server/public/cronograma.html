@@ -153,10 +153,14 @@
 								<#if atividade.id?starts_with("A")>
 									${(atividade.nome)!""}
 								<#else>
-									<#if (.now > atividade.dataHora.time?datetime) >
-										<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+									<#if !(atividade.id?starts_with("RR"))>
+										<#if (.now > atividade.dataHora.time?datetime) >
+											<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+										<#else>
+											<a href='#' data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</a>
+										</#if>
 									<#else>
-										<a href='#' data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</a>
+										<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
 									</#if>
 									<ul>
 									<li>Corretor: 
@@ -200,11 +204,17 @@
 								<#if atividade.id?starts_with("A")>
 									${(atividade.nome)!""}
 								<#else>
-									<#if (.now > atividade.dataHora.time?datetime) >
-										<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+									<#if !(atividade.id?starts_with("RR"))>
+										<#if (.now > atividade.dataHora.time?datetime) >
+											<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+										<#else>
+											<a href='#' data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</a>
+										</#if>
 									<#else>
-										<a href='#' data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</a>
-									</#if>									<ul>
+										<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
+									</#if>
+																		
+									<ul>
 									<li>Corretor: 
 										<#if atividade.corretor??> 
 											<span data-toggle="tooltip" data-placement="top" title="${atividade.corretor.email}">${atividade.corretor.nome?split(" ")[0]}</span>
