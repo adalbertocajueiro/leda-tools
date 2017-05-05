@@ -115,6 +115,38 @@ public class Configuration {
 		provas.putAll(atividades.values().stream().filter(ativ -> (ativ instanceof Prova)).collect(Collectors.toMap(ativ -> ativ.getId(), ativ -> ativ)));
 		return provas;
 	}
+	public List<String> getTurmas(){
+		return new ArrayList<String>(this.atividades.values().stream().collect(Collectors.groupingBy( Atividade::getTurma)).keySet());
+	}
+	/**
+	 * retorna a lista de todos os roteiros que valem ponto ordenados por data
+	 * @return
+	 */
+	public List<Atividade> getRoteirosPontuados(){
+		//precisa filtrar ainda para deixar apenas os de uma turma
+		return atividades.values().stream()
+				.filter(a -> !(a instanceof RoteiroEspecial))//exclui roteiro especial
+				.filter(a -> !(a instanceof RoteiroRevisao)) //exclui o de revisao
+				.filter(a -> !(a instanceof Prova)) //exclui prova
+				.filter(ativ -> (ativ instanceof Roteiro))
+				.sorted((ativ1,ativ2) -> ativ1.getDataHora().compareTo(ativ2.getDataHora()))
+				.collect(Collectors.groupingBy( Atividade::getTurma))
+				.values()
+				.stream()
+				.findFirst().orElse(null);
+	}
+
+	public List<Atividade> getProvasDistintas(){
+		return atividades.values().stream()
+				.filter(a -> a instanceof Prova) //pega apenas prova
+				.filter(a -> Constants.PATTERN_PROVA_PRATICA.matcher(a.getId()).matches()) //deixa apenas as provas praticas
+				.sorted((ativ1,ativ2) -> ativ1.getDataHora().compareTo(ativ2.getDataHora()))
+				.collect(Collectors.groupingBy( Atividade::getTurma))
+				.values()
+				.stream()
+				.findFirst().orElse(null);
+	}
+	
 	public ArrayList<String> getIpsAutorizados() {
 		return ipsAutorizados;
 	}

@@ -32,8 +32,8 @@ public abstract class Constants {
 	public static String UPLOAD_FOLDER_NAME;
 	public static String CURRENT_SEMESTER;
 	public static String MAVEN_HOME_FOLDER;
-	public static int QUANTIDADE_PROVAS;
-	public static int QUANTIDADE_ROTEIROS;
+	//public static int QUANTIDADE_PROVAS;
+	//public static int QUANTIDADE_ROTEIROS;
 	public static List<String> activitySheetIds;
 	public static List<String> authorizedIPs;
 	public static List<String> edaSheetIds;
@@ -66,8 +66,8 @@ public abstract class Constants {
 			UPLOAD_FOLDER_NAME = prop.getProperty("upload.folder");
 			CURRENT_SEMESTER = prop.getProperty("semestre.letivo");
 			MAVEN_HOME_FOLDER = prop.getProperty("mavenHomeFolder");
-			QUANTIDADE_PROVAS = Integer.valueOf(prop.getProperty("quantidadeProvas"));
-			QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
+			//QUANTIDADE_PROVAS = Integer.valueOf(prop.getProperty("quantidadeProvas"));
+			//QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
 			ID_MONITORES_SHEET = prop.getProperty("idSheetMonitores");
 			PESO_TESTES = Double.parseDouble(prop.getProperty("pesoTestes","0.4"));
 			PESO_DESIGN = Double.parseDouble(prop.getProperty("pesoDesign","0.6"));

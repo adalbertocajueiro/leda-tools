@@ -387,12 +387,13 @@ public class Util {
 			}
 		});
 		Map<String,Student> alunos = Configuration.getInstance().getStudents();
+		int numeroProvas = Configuration.getInstance().getProvasDistintas().size();
 		alunos.keySet().forEach( m -> {
 			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
 				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
 				return item!=null ? item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
 			}).sum();
-			mediasProvasPraticas.put(m,(double)somatorioNotas/Constants.QUANTIDADE_PROVAS);
+			mediasProvasPraticas.put(m,(double)somatorioNotas/numeroProvas);
 		});
 		
 		return mediasProvasPraticas;
@@ -408,12 +409,13 @@ public class Util {
 			}
 		});
 		Map<String,Student> alunos = Configuration.getInstance().getStudents();
+		int numeroRoteiros = Configuration.getInstance().getRoteirosPontuados().size();
 		alunos.keySet().forEach( m -> {
 			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
 				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
 				return item!=null ? item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
 			}).sum();
-			mediasRoteiros.put(m,(double)somatorioNotas/Constants.QUANTIDADE_ROTEIROS);
+			mediasRoteiros.put(m,(double)somatorioNotas/numeroRoteiros);
 		});
 		
 		return mediasRoteiros;

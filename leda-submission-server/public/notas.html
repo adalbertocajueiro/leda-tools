@@ -78,10 +78,19 @@
 							<#assign somaNotasProvas = 0>
 							<#assign qtdeProvas = 4>
 							<#assign mediaRoteiros = mediasRoteiros[aluno.matricula]>
+							<#if mediaRoteiros?is_nan>
+								<#assign mediaRoteiros = 0.0>
+							</#if>
 							<#assign mediaProvasPraticas = mediasProvasPraticas[aluno.matricula]>
+							<#if mediaProvasPraticas?is_nan>
+								<#assign mediaProvasPraticas = 0.0>
+							</#if>
 							<#assign mediaProvasTeoricas = (mediasProvasTeoricas[aluno.matricula])!"-">
 							<#assign notaDaFinal = notasDaFinal[aluno.matricula]!0.0>
 							<#assign mediaComFinal = mediasComFinal[aluno.matricula]>
+							<#if mediaComFinal?is_nan>
+								<#assign mediaComFinal = 0.0>
+							</#if>
 							<#list correctionReports?values as corrReport>
 							  <#if corrReport??>
 							  <#assign atividade = atividades[corrReport.id]>
