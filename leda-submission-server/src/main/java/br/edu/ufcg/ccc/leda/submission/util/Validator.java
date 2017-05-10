@@ -48,7 +48,7 @@ public class Validator {
 					Util.formatDate(atividade.getDataHora()) + " e " + Util.formatDate(((Prova) atividade).getDataHoraLimiteEnvioNormal())+ ".\n"
 					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
-		} else if (atividade instanceof Roteiro){
+		} else if (atividade instanceof Roteiro && !(atividade instanceof RoteiroRevisao)){
 			if(dataAtual.before(atividade.getDataHora())){
 				throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
 					Util.formatDate(atividade.getDataHora()) + ".\n"
