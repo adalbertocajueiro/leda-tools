@@ -3,6 +3,7 @@ package br.edu.ufcg.ccc.leda.submission.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +50,22 @@ public class Validator {
 					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
 		} else if (atividade instanceof Roteiro && !(atividade instanceof RoteiroRevisao)){
-			if(dataAtual.before(atividade.getDataHora())){
-				throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
-					Util.formatDate(atividade.getDataHora()) + ".\n"
-					+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+			//restricao para Adrews fazer download antecipado
+			if(matricula.equals("116110125")){
+				GregorianCalendar dataLiberacao 
+					= (GregorianCalendar) atividade.getDataHora().clone();
+				dataLiberacao.add(Calendar.HOUR_OF_DAY, -3);
+				if(dataAtual.before(dataLiberacao)){
+					throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
+							Util.formatDate(dataLiberacao) + ".\n"
+							+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));			
+				}
+			}else{
+				if(dataAtual.before(atividade.getDataHora())){
+					throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
+						Util.formatDate(atividade.getDataHora()) + ".\n"
+						+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
+				}
 			}
 		}
 		

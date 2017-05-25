@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.google.gdata.util.ServiceException;
@@ -104,10 +107,23 @@ public class Configuration {
 		
 		return roteiros; */
 		
+		Comparator<Atividade> comparadorDatas = 
+				new Comparator<Atividade>() {
+					
+					@Override
+					public int compare(Atividade a1, Atividade a2) {
+						if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+							return a2.getId().compareTo(a1.getId());
+						}else{
+							return a1.getDataHora().compareTo(a2.getDataHora());
+						}
+					}
+				};
+				
 		return atividades.values().stream()
 				.filter(a -> !(a instanceof RoteiroEspecial))
 				.filter(ativ -> (ativ instanceof Roteiro && !(ativ instanceof Prova)))
-				.sorted((ativ1,ativ2) -> ativ1.getDataHora().compareTo(ativ2.getDataHora()))
+				.sorted(comparadorDatas)
 				.collect(Collectors.toList());
 	}
 	public Map<String, Atividade> getProvas() {
@@ -170,11 +186,53 @@ public class Configuration {
 		return monitores;
 	}
 	//exclui os roteiros especiais que nao devem aparecer no cronograma
+	//ja retorna as atividades ordenadas por data
 	public Map<String, Atividade> getAtividades() {
+		Comparator<Atividade> comparadorDatas = 
+				new Comparator<Atividade>() {
+					
+					@Override
+					public int compare(Atividade a1, Atividade a2) {
+						if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+							return a1.getId().compareTo(a2.getId());
+						}else{
+							return a1.getDataHora().compareTo(a2.getDataHora());
+						}
+					}
+				};
 		return atividades.values().stream()
 				.filter( a -> !(a instanceof RoteiroEspecial))
+				.sorted(comparadorDatas)
 				.collect(Collectors.toMap(a -> a.getId(), a -> a));
 	}
+	
+
+	public Map<String, List<Atividade>> getAtividadesAgrupadasPorTurma() {
+		Comparator<Atividade> comparadorDatas = 
+				new Comparator<Atividade>() {
+					
+					@Override
+					public int compare(Atividade a1, Atividade a2) {
+						if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+							return a1.getId().compareTo(a2.getId());
+						}else{
+							return a1.getDataHora().compareTo(a2.getDataHora());
+						}
+					}
+				};
+				
+		Map<String,List<Atividade>> atividadesAgrupadas = 
+				this.getAtividades()
+				.values()
+				.stream()
+				.collect(Collectors.groupingBy(Atividade::getTurma));
+		
+		atividadesAgrupadas.values()
+		.forEach(l -> l.sort(comparadorDatas));
+		
+		return atividadesAgrupadas;
+	}
+	
 	//retorna uma lista dos roteiros especiais
 	public List<Atividade> getRoteirosEspeciais() {
 		return atividades.values().stream()
