@@ -118,7 +118,7 @@ function mudarNotaDesign(){
 	}
 	var notaDes = parseFloat(document.getElementById('notaDesign').value);
 	var notaTestes = parseFloat(document.getElementById('notaTestes').value);
-	var notaRoteiro = (notaTestes + notaDes*0.6);	
+	var notaRoteiro = (notaTestes*0.4 + notaDes*0.6);	
 	document.getElementById('notaRoteiro').value = notaRoteiro.toFixed(1);
 	return true;
 }
