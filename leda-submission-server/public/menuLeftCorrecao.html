@@ -46,7 +46,7 @@
 		<#if corretorSessao??>
 			<!-- p><a class="btn btn-warning" onclick="parent.document.getElementById('topframe').src='surefireReport?id=${id}';parent.document.getElementById('bottomframe').src='commentPanel?id=${id}&corretor=${corretor.getMatricula()}';location.href='logoutCorretor?id=${id}'">Logout</a></p -->
 		
-			<p><a class="btn btn-warning" onclick="parent.window.location.href = './menu';">Logout</a></p>
+			<p><a class="btn btn-warning" onclick="parent.window.location.href = 'logoutCorretor?id=${id}';">Logout</a></p>
 
 			<p><a class="btn btn-info" href="./reports/GuiaDeFatoresDeQualidadeDeOOEJava.pdf" target="_blank">Fatores de qualidade</a>
 
