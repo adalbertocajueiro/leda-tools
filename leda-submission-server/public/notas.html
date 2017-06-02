@@ -76,7 +76,7 @@
 							<#assign somaNotasRoteiros = 0>
 							<#assign qtdeRoteiros = 17>
 							<#assign somaNotasProvas = 0>
-							<#assign qtdeProvas = 4>
+							<#assign qtdeProvas = 3>
 							<#assign mediaRoteiros = mediasRoteiros[aluno.matricula]>
 							<#if mediaRoteiros?is_nan>
 								<#assign mediaRoteiros = 0.0>
@@ -96,7 +96,7 @@
 							  <#assign atividade = atividades[corrReport.id]>
 							  <#if corrReport.id?keep_after("-") == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime)>
 								<#assign corrReportItem = corrReport.getCorrectionReportItemforStudent(aluno.matricula)>
-								<#assign notaAtividade = (corrReportItem.notaTestes + (corrReportItem.notaDesign*0.6))>
+								<#assign notaAtividade = (corrReportItem.calcularNotaFinal(0.4,0.6))>
 								<#if corrReport.id?starts_with("R")>
 									<#assign somaNotasRoteiros = somaNotasRoteiros + notaAtividade>
 								<#else>
