@@ -125,26 +125,7 @@ public class SubmissionServer extends Jooby {
 	    return gson.toJson(Configuration.getInstance().getStudents());
 	}).produces("json");
 	
-	post("/uploadSheet", (req,resp) -> {
-		String tipoPlanilha = req.param("tipoPlanilha").value();
-		String senha = req.param("senha").value();
-		Upload upload = req.file("arquivo");
-		//validacao se a senha é de algum professor
-		boolean profValido = Configuration.getInstance().getMonitores().stream()
-		.filter(c -> (c instanceof Professor) && c.getSenha().equals(senha))
-		.findFirst().isPresent();
-		if(profValido){
-			if(tipoPlanilha.equals("FREQUENCIA")){
-				FileUtilities.salvarFrequencia(upload.file());
-			}else{
-				FileUtilities.salvarArquivoSenhas(upload.file());
-			}
-		}else{
-			throw new RuntimeException("Senha informada não é de professor algum");
-		}
-				
-	    resp.send("arquivo da frequencia carregado");
-	});
+	
 	get("/requestUploadSheet", (req) -> {
         View html = Results.html("uploadSheet");
         
@@ -584,10 +565,11 @@ public class SubmissionServer extends Jooby {
 	  });
 	
 	get("/logoutCorretor", (req,resp) -> {
-		String id = req.param("id").value();
+		//String id = req.param("id").value();
 		Session session = req.session();
 		session.set("corretor", "");
-		resp.redirect("menuLeftCorrecao?id=" + id);
+		//resp.redirect("menuLeftCorrecao?id=" + id);
+		resp.redirect("menu");
 		//return html;
 	});
 	
@@ -829,6 +811,31 @@ public class SubmissionServer extends Jooby {
 		
 		//Gson gson = new Gson();	
 	    //return gson.toJson("Comentario salvo");
+	});
+	
+	post("/uploadSheet", (req) -> {
+		View html = Results.html("modal-uploadSheet");
+		
+		String tipoPlanilha = req.param("tipoPlanilha").value();
+		String senha = req.param("senha").value();
+		Upload upload = req.file("arquivo");
+		//validacao se a senha é de algum professor
+		boolean profValido = Configuration.getInstance().getMonitores().stream()
+		.filter(c -> (c instanceof Professor) && c.getSenha().equals(senha))
+		.findFirst().isPresent();
+		if(profValido){
+			if(tipoPlanilha.equals("FREQUENCIA")){
+				FileUtilities.salvarFrequencia(upload.file());
+			}else{
+				FileUtilities.salvarArquivoSenhas(upload.file());
+			}
+		}else{
+			throw new RuntimeException("Senha informada não é de professor algum");
+		}
+				
+	    //resp.send("arquivo da frequencia carregado");
+	    
+	    return html;
 	});
 	//use(new Auth().basic("*", MyUserClientLoginValidator.class));
 	//new SimpleTestTokenAuthenticator(){
