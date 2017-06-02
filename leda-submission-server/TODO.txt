@@ -97,3 +97,4 @@ config também pode implementar a opcao de mostrar os de revisao ou nao.
 - implementar geracao de planilha excel de totalização para download como as planilahs individuais de cada atividade. - OK
 - na hora de compactar, já pode gerar a planilha de notas e comentarios da atividade para incluir na compactacao. - OK
 - colocar a adequacao no form de correcao. - OK
+- usar uma sessao que tenha timeout!!!!!
