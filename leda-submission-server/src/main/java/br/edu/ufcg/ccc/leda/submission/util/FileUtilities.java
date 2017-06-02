@@ -76,15 +76,19 @@ public class FileUtilities {
 		String result = "";
 		int numeroTurmas = Configuration.getInstance().getTurmas().size();
 		//System.out.println("Tem " + numeroTurmas + " turmas");
-		for (int i = 1; i <= numeroTurmas; i++) {
-			if (config.getId().contains("X")) {
-				String idSemX = config.getId().replace("X", String.valueOf(i));
-				ProfessorUploadConfiguration newConfig = new ProfessorUploadConfiguration(idSemX, config.getSemestre(), config.getTurma(), config.getNumeroTurmas());
-				result = result + saveProfessorSubmission(ambiente, projetoCorrecao,newConfig,i) + "\n";
-			}else{
-				result = result + saveProfessorSubmission(ambiente, projetoCorrecao,config,i) + "\n";
-		
+		if(config.getId().contains("X")){
+			for (int i = 1; i <= numeroTurmas; i++) {
+				if (config.getId().contains("X")) {
+					String idSemX = config.getId().replace("X", String.valueOf(i));
+					ProfessorUploadConfiguration newConfig = new ProfessorUploadConfiguration(idSemX, config.getSemestre(), config.getTurma(), config.getNumeroTurmas());
+					result = result + saveProfessorSubmission(ambiente, projetoCorrecao,newConfig,i) + "\n";
+				}else{
+					result = result + saveProfessorSubmission(ambiente, projetoCorrecao,config,i) + "\n";
+			
+				}
 			}
+		}else{
+			result = result + saveProfessorSubmission(ambiente, projetoCorrecao,config, Integer.valueOf(config.getId().substring(5))) + "\n";
 		}
 		
 		return result;
@@ -135,6 +139,9 @@ public class FileUtilities {
 		// System.out.println("Arquivos copiados");
 		// adicionando os arquivos no respectivo roteiro
 		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
+		if(Constants.PATTERN_ROTEIRO_ESPECIAL.matcher(id).matches()){
+			atividades = Configuration.getInstance().getTodasAtividades();
+		}
 		Atividade atividade = atividades.get(config.getId());
 		if (atividade != null) {
 			((Roteiro) atividade).setArquivoAmbiente(foutEnv);
@@ -371,4 +378,8 @@ public class FileUtilities {
 
 	}
 
+	public static void main(String[] args) throws ConfigurationException, IOException, AtividadeException, ServiceException {
+		File env = FileUtilities.getEnvironmentAtividade("RE3-01", "");
+		String name = env.getName();
+	}
 }

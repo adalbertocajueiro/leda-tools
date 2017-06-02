@@ -235,11 +235,27 @@ public class Configuration {
 	
 	//retorna uma lista dos roteiros especiais
 	public List<Atividade> getRoteirosEspeciais() {
+		Comparator<Atividade> comparadorDatas = 
+				new Comparator<Atividade>() {
+					
+					@Override
+					public int compare(Atividade a1, Atividade a2) {
+						if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+							return a1.getId().compareTo(a2.getId());
+						}else{
+							return a1.getDataHora().compareTo(a2.getDataHora());
+						}
+					}
+				};
 		return atividades.values().stream()
 				.filter( a -> a instanceof RoteiroEspecial)
+				.sorted(comparadorDatas)
 				.collect(Collectors.toList());
 	}
 	
+	public Map<String,Atividade> getTodasAtividades(){
+		return this.atividades;
+	}
 	public static void main(String[] args) throws ConfigurationException, IOException, ServiceException {
 		List<Corretor> corretores = Configuration.getInstance().getMonitores();
 		int i = corretores.size();
