@@ -51,7 +51,7 @@ public class Validator {
 			}
 		} else if (atividade instanceof Roteiro && !(atividade instanceof RoteiroRevisao)){
 			//restricao para Adrews fazer download antecipado
-			if(matricula.equals("116110125")){
+			if(matricula.equals("116110125") && !(atividade instanceof Prova)){
 				GregorianCalendar dataLiberacao 
 					= (GregorianCalendar) atividade.getDataHora().clone();
 				dataLiberacao.add(Calendar.HOUR_OF_DAY, -3);
