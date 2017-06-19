@@ -1,0 +1,33 @@
+<HTML>
+<HEAD></HEAD>
+<BODY>
+<CODE><PRE>
+<A NAME="token0">0:</A>1(0)-1(29):PACKAGE_DECLARATION:package sorting.simpleSorting;
+<A NAME="token1">1:</A>3(32)-3(62):IMPORT_DECLARATION:import sorting.AbstractSorting;
+<A NAME="token2">2:</A>10(306)-10(385):CLASS_DECLARATION:public class SelectionSort&lt;T extends Comparable&lt;T&gt;&gt; extends AbstractSorting&lt;T&gt; {
+<A NAME="token3">3:</A>13(412)-13(459):METHOD_DECLARATION:sort(T[] array, int leftIndex, int rightIndex) {
+<A NAME="token4">4:</A>14(463)-14(505):FOR:for(int i = leftIndex; i &lt; rightIndex; i++)
+<A NAME="token5">5:</A>14(471)-14(483):VARIABLE_DECLARATION:i = leftIndex
+<A NAME="token6">6:</A>14(502)-14(504):ASSIGNMENT:i++
+<A NAME="token7">7:</A>14(506)-14(506):BLOCK:{
+<A NAME="token8">8:</A>15(515)-15(521):VARIABLE_DECLARATION:min = i
+<A NAME="token9">9:</A>16(527)-16(564):FOR:for(int j = i+1; j &lt;= rightIndex; j++)
+<A NAME="token10">10:</A>16(535)-16(541):VARIABLE_DECLARATION:j = i+1
+<A NAME="token11">11:</A>16(561)-16(563):ASSIGNMENT:j++
+<A NAME="token12">12:</A>16(565)-16(565):BLOCK:{
+<A NAME="token13">13:</A>17(571)-17(608):IF:if(array[min].compareTo(array[j]) &gt; 0)
+<A NAME="token14">14:</A>17(574)-17(603):METHOD_INVOCATION:array[min].compareTo(array[j])
+<A NAME="token15">15:</A>17(609)-17(609):BLOCK:{
+<A NAME="token16">16:</A>18(616)-18(622):ASSIGNMENT:min = j
+<A NAME="token17">17:</A>19(629)-19(629):BLOCK_END:}
+<A NAME="token18">18:</A>19(629)-19(629):IF_END:}
+<A NAME="token19">19:</A>20(634)-20(634):BLOCK_END:}
+<A NAME="token20">20:</A>20(634)-20(634):FOR_END:}
+<A NAME="token21">21:</A>21(639)-21(667):METHOD_INVOCATION:util.Util.swap(array, min, i)
+<A NAME="token22">22:</A>22(672)-22(672):BLOCK_END:}
+<A NAME="token23">23:</A>22(672)-22(672):FOR_END:}
+<A NAME="token24">24:</A>23(675)-23(675):METHOD_DECLARATION_END:}
+<A NAME="token25">25:</A>24(677)-24(677):CLASS_DECLARATION_END:}
+</PRE></CODE>
+</BODY>
+</HTML>

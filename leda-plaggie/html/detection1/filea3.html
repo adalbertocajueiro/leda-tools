@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<TITLE>D:\UFCG\leda\leda-tools\leda-plaggie\src\main\resources\subs\116210442-FILIPE PIRES GUIMARAES\src\main\java\sorting\simpleSorting\SelectionSort.java</TITLE>
+</HEAD>
+<BODY>
+<H1>D:\UFCG\leda\leda-tools\leda-plaggie\src\main\resources\subs\116210442-FILIPE PIRES GUIMARAES\src\main\java\sorting\simpleSorting\SelectionSort.java</H1>
+<CODE><PRE>
+package sorting.simpleSorting;
+
+<A NAME="match0"></A><A HREF="fileb3.html#match0" TARGET="right">0</A>:import sorting.AbstractSorting;
+0:
+0:/**
+0: * The selection sort algorithm chooses the smallest element from the array and
+0: * puts it in the first position. Then chooses the second smallest element and
+0: * stores it in the second position, and so on until the array is sorted.
+0: */
+0:public class SelectionSort&lt;T extends Comparable&lt;T&gt;&gt; extends AbstractSorting&lt;T&gt; {
+0:
+0:	@Override
+0:	public void sort(T[] array, int leftIndex, int rightIndex) {
+0:		for(int i = leftIndex; i &lt; rightIndex; i++){
+0:			int min = i;
+0:			for(int j = i+1; j &lt;= rightIndex; j++){
+0:				if(array[min].compareTo(array[j]) &gt; 0){
+0:					min = j;
+0:				}
+0:			}
+0:			util.Util.swap(array, min, i);
+0:		}
+0:	}
+0:}
+</PRE></CODE>
+</BODY>
+</HTML>

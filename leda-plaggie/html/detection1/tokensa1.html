@@ -1,0 +1,29 @@
+<HTML>
+<HEAD></HEAD>
+<BODY>
+<CODE><PRE>
+<A NAME="token0">0:</A>1(0)-1(29):PACKAGE_DECLARATION:package sorting.simpleSorting;
+<A NAME="token1">1:</A>3(32)-3(62):IMPORT_DECLARATION:import sorting.AbstractSorting;
+<A NAME="token2">2:</A>11(330)-11(409):CLASS_DECLARATION:public class InsertionSort&lt;T extends Comparable&lt;T&gt;&gt; extends AbstractSorting&lt;T&gt; {
+<A NAME="token3">3:</A>14(436)-14(483):METHOD_DECLARATION:sort(T[] array, int leftIndex, int rightIndex) {
+<A NAME="token4">4:</A>15(487)-15(528):FOR:for(int j=leftIndex+1; j&lt;=rightIndex; j++)
+<A NAME="token5">5:</A>15(495)-15(507):VARIABLE_DECLARATION:j=leftIndex+1
+<A NAME="token6">6:</A>15(525)-15(527):ASSIGNMENT:j++
+<A NAME="token7">7:</A>15(529)-15(529):BLOCK:{
+<A NAME="token8">8:</A>16(536)-16(549):VARIABLE_DECLARATION:key = array[j]
+<A NAME="token9">9:</A>17(559)-17(565):VARIABLE_DECLARATION:i = j-1
+<A NAME="token10">10:</A>18(571)-18(618):WHILE:while(i&gt;=leftIndex &amp;&amp; array[i].compareTo(key)&gt;0)
+<A NAME="token11">11:</A>18(593)-18(615):METHOD_INVOCATION:array[i].compareTo(key)
+<A NAME="token12">12:</A>18(619)-18(619):BLOCK:{
+<A NAME="token13">13:</A>19(625)-19(645):ASSIGNMENT:array[i+1] = array[i]
+<A NAME="token14">14:</A>20(652)-20(654):ASSIGNMENT:i--
+<A NAME="token15">15:</A>21(660)-21(660):WHILE_END:}
+<A NAME="token16">16:</A>21(660)-21(660):BLOCK_END:}
+<A NAME="token17">17:</A>22(665)-22(680):ASSIGNMENT:array[i+1] = key
+<A NAME="token18">18:</A>23(685)-23(685):BLOCK_END:}
+<A NAME="token19">19:</A>23(685)-23(685):FOR_END:}
+<A NAME="token20">20:</A>24(688)-24(688):METHOD_DECLARATION_END:}
+<A NAME="token21">21:</A>25(690)-25(690):CLASS_DECLARATION_END:}
+</PRE></CODE>
+</BODY>
+</HTML>

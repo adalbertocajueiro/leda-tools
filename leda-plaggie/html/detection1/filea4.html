@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<TITLE>D:\UFCG\leda\leda-tools\leda-plaggie\src\main\resources\subs\116210442-FILIPE PIRES GUIMARAES\src\main\java\sorting\simpleSorting\BubbleSort.java</TITLE>
+</HEAD>
+<BODY>
+<H1>D:\UFCG\leda\leda-tools\leda-plaggie\src\main\resources\subs\116210442-FILIPE PIRES GUIMARAES\src\main\java\sorting\simpleSorting\BubbleSort.java</H1>
+<CODE><PRE>
+package sorting.simpleSorting;
+
+<A NAME="match0"></A><A HREF="fileb4.html#match0" TARGET="right">0</A>:import sorting.AbstractSorting;
+0:
+0:/**
+0: * The bubble sort algorithm iterates over the array multiple times, pushing big
+0: * elements to the right by swapping adjacent elements, until the array is
+0: * sorted.
+0: */
+0:public class BubbleSort&lt;T extends Comparable&lt;T&gt;&gt; extends AbstractSorting&lt;T&gt; {
+0:
+0:	@Override
+0:	public void sort(T[] array, int leftIndex, int rightIndex) {
+0:		for(int i=leftIndex; i &lt; rightIndex; i++){
+0:			for(int j = i+1; j &lt;= rightIndex; j++){
+0:				if(array[i].compareTo(array[j]) &gt; 0){
+0:					util.Util.swap(array, i, j);
+0:				}
+0:			}
+0:		}
+0:	}
+0:}
+</PRE></CODE>
+</BODY>
+</HTML>

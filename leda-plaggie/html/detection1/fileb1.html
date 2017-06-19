@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE>D:\UFCG\leda\leda-tools\leda-plaggie\src\main\resources\subs\115210859-HECTOR HIAGO DE MEDEIROS\src\main\java\sorting\simpleSorting\InsertionSort.java</TITLE>
+</HEAD>
+<BODY>
+<H1>D:\UFCG\leda\leda-tools\leda-plaggie\src\main\resources\subs\115210859-HECTOR HIAGO DE MEDEIROS\src\main\java\sorting\simpleSorting\InsertionSort.java</H1>
+<CODE><PRE>
+<A NAME="match0"></A><A HREF="filea1.html#match0" TARGET="left">0</A>:package sorting.simpleSorting;
+0:
+0:import sorting.AbstractSorting;
+0:
+0:/**
+0: * As the insertion sort algorithm iterates over the array, it makes the
+0: * assumption that the visited positions are already sorted in ascending order,
+0: * which means it only needs to find the right position for the current element
+0: * and insert it there.
+0: */
+0:public class InsertionSort&lt;T extends Comparable&lt;T&gt;&gt; extends AbstractSorting&lt;T&gt; {
+0:
+0:	@Override
+0:	public void sort(T[] array, int leftIndex, int rightIndex) {
+0:		for (int j = leftIndex +1; j &lt;= rightIndex; j++) {
+0:			T key = array[j];
+0:			int i = j - 1;
+0:			while ((i &gt;= 0)&amp;&amp; (array[i].compareTo(key))&gt; 0) {
+0:				array[i+1] = array[i];
+0:				i--;
+0:				
+0:			}
+0:			array[i+1]= key;
+0:		}
+0:	}
+0:}
+</PRE></CODE>
+</BODY>
+</HTML>

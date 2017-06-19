@@ -1,0 +1,34 @@
+<HTML>
+<HEAD></HEAD>
+<BODY>
+<CODE><PRE>
+<A NAME="token0">0:</A>1(0)-1(29):PACKAGE_DECLARATION:package sorting.simpleSorting;
+<A NAME="token1">1:</A>3(32)-3(62):IMPORT_DECLARATION:import sorting.AbstractSorting;
+<A NAME="token2">2:</A>4(64)-4(80):IMPORT_DECLARATION:import util.Util;
+<A NAME="token3">3:</A>11(324)-11(403):CLASS_DECLARATION:public class SelectionSort&lt;T extends Comparable&lt;T&gt;&gt; extends AbstractSorting&lt;T&gt; {
+<A NAME="token4">4:</A>14(430)-14(477):METHOD_DECLARATION:sort(T[] array, int leftIndex, int rightIndex) {
+<A NAME="token5">5:</A>15(481)-15(525):FOR:for (int i = leftIndex; i &lt;= rightIndex; i++)
+<A NAME="token6">6:</A>15(490)-15(502):VARIABLE_DECLARATION:i = leftIndex
+<A NAME="token7">7:</A>15(522)-15(524):ASSIGNMENT:i++
+<A NAME="token8">8:</A>15(527)-15(527):BLOCK:{
+<A NAME="token9">9:</A>16(536)-16(545):VARIABLE_DECLARATION:minimo = i
+<A NAME="token10">10:</A>17(551)-17(589):FOR:for (int j = i+1; j &lt;= rightIndex; j++)
+<A NAME="token11">11:</A>17(560)-17(566):VARIABLE_DECLARATION:j = i+1
+<A NAME="token12">12:</A>17(586)-17(588):ASSIGNMENT:j++
+<A NAME="token13">13:</A>17(591)-17(591):BLOCK:{
+<A NAME="token14">14:</A>18(597)-18(638):IF:if (array[j].compareTo(array[minimo]) &lt; 0)
+<A NAME="token15">15:</A>18(601)-18(633):METHOD_INVOCATION:array[j].compareTo(array[minimo])
+<A NAME="token16">16:</A>18(640)-18(640):BLOCK:{
+<A NAME="token17">17:</A>19(647)-19(656):ASSIGNMENT:minimo = j
+<A NAME="token18">18:</A>20(663)-20(663):BLOCK_END:}
+<A NAME="token19">19:</A>20(663)-20(663):IF_END:}
+<A NAME="token20">20:</A>21(668)-21(668):BLOCK_END:}
+<A NAME="token21">21:</A>21(668)-21(668):FOR_END:}
+<A NAME="token22">22:</A>22(673)-22(699):METHOD_INVOCATION:Util.swap(array, i, minimo)
+<A NAME="token23">23:</A>23(704)-23(704):BLOCK_END:}
+<A NAME="token24">24:</A>23(704)-23(704):FOR_END:}
+<A NAME="token25">25:</A>24(707)-24(707):METHOD_DECLARATION_END:}
+<A NAME="token26">26:</A>25(710)-25(710):CLASS_DECLARATION_END:}
+</PRE></CODE>
+</BODY>
+</HTML>
