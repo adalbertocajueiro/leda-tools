@@ -12,6 +12,13 @@ public class SimilarityAnalysisResult {
 		this.fileStudent2 = fileStudent2;
 		this.similarity = similarity;
 	}
+	public String getMatriculaStudent1(){
+		return PlagRunner.getStudentAnalysisFolderName(this.fileStudent1);
+	}
+	
+	public String getMatriculaStudent2(){
+		return PlagRunner.getStudentAnalysisFolderName(this.fileStudent2);
+	}
 	public File getFileStudent1() {
 		return fileStudent1;
 	}
