@@ -28,198 +28,230 @@ import plag.parser.report.HtmlPrintable;
  * Configuration class for the plagiarism comparison tool.
  *
  */
-public class Configuration
-    implements HtmlPrintable
-{
-    
-    public boolean printTokenLists;
+public class Configuration implements HtmlPrintable {
 
-    public int minimumMatchLength;
-    
-    public boolean useRecursive;
-    
-    public boolean fullFileDetectionReports;
-    
-    public boolean statFileDetectionReports;
+	public boolean printTokenLists;
 
-    public boolean debugMessages;
+	public int minimumMatchLength;
 
-    public boolean htmlReport;
+	public boolean useRecursive;
 
-    public String htmlDir;
+	public boolean fullFileDetectionReports;
 
-    public double minimumSubmissionSimilarityValue;
+	public boolean statFileDetectionReports;
 
-    public boolean cacheTokenLists;
-    
-    public boolean createResultFile;
+	public boolean debugMessages;
 
-    public boolean readResultsFromFile;
+	public boolean htmlReport;
 
-    public String resultFile;
+	public String htmlDir;
 
-    public boolean severalSubmissionDirectories;
+	public double minimumSubmissionSimilarityValue;
 
-    public String submissionDirectory;
+	public boolean cacheTokenLists;
 
-    public String excludeFiles;
+	public boolean createResultFile;
 
-    public double minimumFileSimilarityValueToReport;
+	public boolean readResultsFromFile;
 
-    public String excludeSubdirectories;
+	public String resultFile;
 
-    public String templates;
+	public boolean severalSubmissionDirectories;
 
-    public boolean excludeInterfaces;
+	public String submissionDirectory;
 
-    public String blacklistFile;
+	public String excludeFiles;
 
-    public boolean showAllBlacklistedResults;
+	public double minimumFileSimilarityValueToReport;
 
-    public String codeTokenizer;
+	public String excludeSubdirectories;
 
-    public String filenameFilter;
+	public String templates;
 
-    public int maximumDetectionResultsToReport;
+	public boolean excludeInterfaces;
 
-    private String getProperty(Properties prop, String propName) 
-	throws ConfigurationException 
-    {
-	String ret = null;
-	ret = prop.getProperty(propName);
-	if (ret == null) {
-	    throw new ConfigurationException("Property "+propName+" not found in configuration file");
+	public String blacklistFile;
+
+	public boolean showAllBlacklistedResults;
+
+	public String codeTokenizer;
+
+	public String filenameFilter;
+
+	public int maximumDetectionResultsToReport;
+
+	private String getProperty(Properties prop, String propName) throws ConfigurationException {
+		String ret = null;
+		ret = prop.getProperty(propName);
+		if (ret == null) {
+			throw new ConfigurationException("Property " + propName + " not found in configuration file");
+		}
+		return ret;
 	}
-	return ret;
-    }
 
-    /**
-     * Reads the configuration from file specified by the parameter.
-     */
-    public Configuration(File file) 
-	throws FileNotFoundException, IOException, ConfigurationException
-    {
-	Properties prop = new Properties();
-	prop.load(new FileInputStream(file));
-	
-	minimumMatchLength = Integer.parseInt(this.getProperty(prop, "plag.parser.plaggie.minimumMatchLength"));
-	
-	maximumDetectionResultsToReport = 
-	    Integer.parseInt(this.getProperty(prop, "plag.parser.plaggie.maximumDetectionResultsToReport"));
+	/**
+	 * Reads the configuration from file specified by the parameter.
+	 */
+	public Configuration(File file) throws FileNotFoundException, IOException, ConfigurationException {
+		Properties prop = new Properties();
+		prop.load(new FileInputStream(file));
 
-	debugMessages = (this.getProperty(prop, "plag.parser.plaggie.debugMessages").equals("true"));
-	printTokenLists = (this.getProperty(prop, "plag.parser.plaggie.printTokenLists").equals("true"));
-	
-	useRecursive = (this.getProperty(prop, "plag.parser.plaggie.useRecursive").equals("true"));
-	
-	// Whether to print full tion reports between files.
-	fullFileDetectionReports =
-	    (this.getProperty(prop, "plag.parser.plaggie.fileDetectionReports").equals("full"));
-	statFileDetectionReports = 
-	    (this.getProperty(prop, "plag.parser.plaggie.fileDetectionReports").equals("stats"));
+		minimumMatchLength = Integer.parseInt(this.getProperty(prop, "plag.parser.plaggie.minimumMatchLength"));
 
-	htmlReport = 
-	    (this.getProperty(prop, "plag.parser.plaggie.htmlReport").equals("true"));
+		maximumDetectionResultsToReport = Integer
+				.parseInt(this.getProperty(prop, "plag.parser.plaggie.maximumDetectionResultsToReport"));
 
-	htmlDir = this.getProperty(prop, "plag.parser.plaggie.htmlDir");
+		debugMessages = (this.getProperty(prop, "plag.parser.plaggie.debugMessages").equals("true"));
+		printTokenLists = (this.getProperty(prop, "plag.parser.plaggie.printTokenLists").equals("true"));
 
-	minimumSubmissionSimilarityValue = Double.parseDouble(this.getProperty(prop, "plag.parser.plaggie.minimumSubmissionSimilarityValue"));
+		useRecursive = (this.getProperty(prop, "plag.parser.plaggie.useRecursive").equals("true"));
 
-	cacheTokenLists = 
-	    (this.getProperty(prop, "plag.parser.plaggie.cacheTokenLists").equals("true"));
+		// Whether to print full tion reports between files.
+		fullFileDetectionReports = (this.getProperty(prop, "plag.parser.plaggie.fileDetectionReports").equals("full"));
+		statFileDetectionReports = (this.getProperty(prop, "plag.parser.plaggie.fileDetectionReports").equals("stats"));
 
-	createResultFile = 
-	    (this.getProperty(prop, "plag.parser.plaggie.createResultFile").equals("true"));
+		htmlReport = (this.getProperty(prop, "plag.parser.plaggie.htmlReport").equals("true"));
 
-	readResultsFromFile = 
-	    (this.getProperty(prop, "plag.parser.plaggie.readResultsFromFile").equals("true"));
+		htmlDir = this.getProperty(prop, "plag.parser.plaggie.htmlDir");
 
-	resultFile = 
-	    this.getProperty(prop, "plag.parser.plaggie.resultFile");
+		minimumSubmissionSimilarityValue = Double
+				.parseDouble(this.getProperty(prop, "plag.parser.plaggie.minimumSubmissionSimilarityValue"));
 
-	severalSubmissionDirectories = 
-	    (this.getProperty(prop, "plag.parser.plaggie.severalSubmissionDirectories").equals("true"));
-	
-	submissionDirectory = 
-	    this.getProperty(prop, "plag.parser.plaggie.submissionDirectory");
+		cacheTokenLists = (this.getProperty(prop, "plag.parser.plaggie.cacheTokenLists").equals("true"));
 
-	excludeFiles = 
-	    this.getProperty(prop, "plag.parser.plaggie.excludeFiles");
+		createResultFile = (this.getProperty(prop, "plag.parser.plaggie.createResultFile").equals("true"));
 
-	minimumFileSimilarityValueToReport = 
-	    Double.parseDouble(this.getProperty(prop, "plag.parser.plaggie.minimumFileSimilarityValueToReport"));
+		readResultsFromFile = (this.getProperty(prop, "plag.parser.plaggie.readResultsFromFile").equals("true"));
 
-	excludeSubdirectories = 
-	    this.getProperty(prop, "plag.parser.plaggie.excludeSubdirectories");
-	
-	templates =
-	    this.getProperty(prop, "plag.parser.plaggie.templates");
-	
-	excludeInterfaces = 
-	    (this.getProperty(prop, "plag.parser.plaggie.excludeInterfaces").equals("true"));
+		resultFile = this.getProperty(prop, "plag.parser.plaggie.resultFile");
 
-	showAllBlacklistedResults = 
-	    (this.getProperty(prop, "plag.parser.plaggie.showAllBlacklistedResults").equals("true"));
-	
+		severalSubmissionDirectories = (this.getProperty(prop, "plag.parser.plaggie.severalSubmissionDirectories")
+				.equals("true"));
 
-	blacklistFile = 
-	    this.getProperty(prop, "plag.parser.plaggie.blacklistFile");
+		submissionDirectory = this.getProperty(prop, "plag.parser.plaggie.submissionDirectory");
 
-	codeTokenizer = 
-	    this.getProperty(prop, "plag.parser.plaggie.codeTokenizer");
+		excludeFiles = this.getProperty(prop, "plag.parser.plaggie.excludeFiles");
 
-	filenameFilter = 
-	    this.getProperty(prop, "plag.parser.plaggie.filenameFilter");
-	
-    }
+		minimumFileSimilarityValueToReport = Double
+				.parseDouble(this.getProperty(prop, "plag.parser.plaggie.minimumFileSimilarityValueToReport"));
 
-    private void printHtmlBooleanValue(PrintStream out, String title, boolean value)
-    {
-	out.println("<TR><TD>"+title+"</TD><TD>"+value+"</TD></TR>");
-    }
+		excludeSubdirectories = this.getProperty(prop, "plag.parser.plaggie.excludeSubdirectories");
 
-    private void printHtmlStringValue(PrintStream out, String title, String value)
-    {
-	out.println("<TR><TD>"+title+"</TD><TD>"+value+"</TD></TR>");
-    }
+		templates = this.getProperty(prop, "plag.parser.plaggie.templates");
 
-    private void printHtmlDoubleValue(PrintStream out, String title, double value)
-    {
-	out.println("<TR><TD>"+title+"</TD><TD>"+value+"</TD></TR>");
-    }
+		excludeInterfaces = (this.getProperty(prop, "plag.parser.plaggie.excludeInterfaces").equals("true"));
 
-    private void printHtmlIntegerValue(PrintStream out, String title, int value)
-    {
-	out.println("<TR><TD>"+title+"</TD><TD>"+value+"</TD></TR>");
-    }
+		showAllBlacklistedResults = (this.getProperty(prop, "plag.parser.plaggie.showAllBlacklistedResults")
+				.equals("true"));
 
+		blacklistFile = this.getProperty(prop, "plag.parser.plaggie.blacklistFile");
 
-    /**
-     * Writes the configuration data as an HTML table in the given print stream.
-     */
-    public void printHtmlReport(PrintStream out) {
-	out.println("<TABLE BORDER=\"1\">");
-	printHtmlIntegerValue(out,"Minimum match length used",minimumMatchLength);
-	printHtmlBooleanValue(out,"Recurse subdirectories", useRecursive);
-	printHtmlStringValue(out,"Html report directory", htmlDir);
-	printHtmlDoubleValue(out,"Minimum submission similarity to report", minimumSubmissionSimilarityValue);
-	printHtmlIntegerValue(out,"Maximum number of detection results to report", maximumDetectionResultsToReport);
-	printHtmlDoubleValue(out,"Minimum file similarity to report",minimumFileSimilarityValueToReport);
-	printHtmlStringValue(out,"Code tokenizer used",codeTokenizer);
-	printHtmlStringValue(out,"Filename filter used", filenameFilter);
-	if (createResultFile) {
-	    printHtmlStringValue(out,"Detection results stored in file", resultFile);
+		codeTokenizer = this.getProperty(prop, "plag.parser.plaggie.codeTokenizer");
+
+		filenameFilter = this.getProperty(prop, "plag.parser.plaggie.filenameFilter");
+
 	}
-	if (readResultsFromFile) {
-	    printHtmlStringValue(out,"Detection results read from file", resultFile);
+
+	public Configuration(Properties prop) throws ConfigurationException {
+
+		minimumMatchLength = Integer.parseInt(this.getProperty(prop, "plag.parser.plaggie.minimumMatchLength"));
+
+		maximumDetectionResultsToReport = Integer
+				.parseInt(this.getProperty(prop, "plag.parser.plaggie.maximumDetectionResultsToReport"));
+
+		debugMessages = (this.getProperty(prop, "plag.parser.plaggie.debugMessages").equals("true"));
+		printTokenLists = (this.getProperty(prop, "plag.parser.plaggie.printTokenLists").equals("true"));
+
+		useRecursive = (this.getProperty(prop, "plag.parser.plaggie.useRecursive").equals("true"));
+
+		// Whether to print full tion reports between files.
+		fullFileDetectionReports = (this.getProperty(prop, "plag.parser.plaggie.fileDetectionReports").equals("full"));
+		statFileDetectionReports = (this.getProperty(prop, "plag.parser.plaggie.fileDetectionReports").equals("stats"));
+
+		htmlReport = (this.getProperty(prop, "plag.parser.plaggie.htmlReport").equals("true"));
+
+		htmlDir = this.getProperty(prop, "plag.parser.plaggie.htmlDir");
+
+		minimumSubmissionSimilarityValue = Double
+				.parseDouble(this.getProperty(prop, "plag.parser.plaggie.minimumSubmissionSimilarityValue"));
+
+		cacheTokenLists = (this.getProperty(prop, "plag.parser.plaggie.cacheTokenLists").equals("true"));
+
+		createResultFile = (this.getProperty(prop, "plag.parser.plaggie.createResultFile").equals("true"));
+
+		readResultsFromFile = (this.getProperty(prop, "plag.parser.plaggie.readResultsFromFile").equals("true"));
+
+		resultFile = this.getProperty(prop, "plag.parser.plaggie.resultFile");
+
+		severalSubmissionDirectories = (this.getProperty(prop, "plag.parser.plaggie.severalSubmissionDirectories")
+				.equals("true"));
+
+		submissionDirectory = this.getProperty(prop, "plag.parser.plaggie.submissionDirectory");
+
+		excludeFiles = this.getProperty(prop, "plag.parser.plaggie.excludeFiles");
+
+		minimumFileSimilarityValueToReport = Double
+				.parseDouble(this.getProperty(prop, "plag.parser.plaggie.minimumFileSimilarityValueToReport"));
+
+		excludeSubdirectories = this.getProperty(prop, "plag.parser.plaggie.excludeSubdirectories");
+
+		templates = this.getProperty(prop, "plag.parser.plaggie.templates");
+
+		excludeInterfaces = (this.getProperty(prop, "plag.parser.plaggie.excludeInterfaces").equals("true"));
+
+		showAllBlacklistedResults = (this.getProperty(prop, "plag.parser.plaggie.showAllBlacklistedResults")
+				.equals("true"));
+
+		blacklistFile = this.getProperty(prop, "plag.parser.plaggie.blacklistFile");
+
+		codeTokenizer = this.getProperty(prop, "plag.parser.plaggie.codeTokenizer");
+
+		filenameFilter = this.getProperty(prop, "plag.parser.plaggie.filenameFilter");
+
 	}
-	if (severalSubmissionDirectories) {
-	    printHtmlStringValue(out,"Checked submissions in subdirectory",submissionDirectory);
+
+	private void printHtmlBooleanValue(PrintStream out, String title, boolean value) {
+		out.println("<TR><TD>" + title + "</TD><TD>" + value + "</TD></TR>");
 	}
-	printHtmlStringValue(out, "Excluded files",excludeFiles);
-	printHtmlStringValue(out, "Excluded subdirectories", excludeSubdirectories);
-	printHtmlStringValue(out, "Excluded code in template files", templates);
-	printHtmlBooleanValue(out, "Interface code excluded", excludeInterfaces);
-	out.println("</TABLE>");
-    }
+
+	private void printHtmlStringValue(PrintStream out, String title, String value) {
+		out.println("<TR><TD>" + title + "</TD><TD>" + value + "</TD></TR>");
+	}
+
+	private void printHtmlDoubleValue(PrintStream out, String title, double value) {
+		out.println("<TR><TD>" + title + "</TD><TD>" + value + "</TD></TR>");
+	}
+
+	private void printHtmlIntegerValue(PrintStream out, String title, int value) {
+		out.println("<TR><TD>" + title + "</TD><TD>" + value + "</TD></TR>");
+	}
+
+	/**
+	 * Writes the configuration data as an HTML table in the given print stream.
+	 */
+	public void printHtmlReport(PrintStream out) {
+		out.println("<TABLE BORDER=\"1\">");
+		printHtmlIntegerValue(out, "Minimum match length used", minimumMatchLength);
+		printHtmlBooleanValue(out, "Recurse subdirectories", useRecursive);
+		printHtmlStringValue(out, "Html report directory", htmlDir);
+		printHtmlDoubleValue(out, "Minimum submission similarity to report", minimumSubmissionSimilarityValue);
+		printHtmlIntegerValue(out, "Maximum number of detection results to report", maximumDetectionResultsToReport);
+		printHtmlDoubleValue(out, "Minimum file similarity to report", minimumFileSimilarityValueToReport);
+		printHtmlStringValue(out, "Code tokenizer used", codeTokenizer);
+		printHtmlStringValue(out, "Filename filter used", filenameFilter);
+		if (createResultFile) {
+			printHtmlStringValue(out, "Detection results stored in file", resultFile);
+		}
+		if (readResultsFromFile) {
+			printHtmlStringValue(out, "Detection results read from file", resultFile);
+		}
+		if (severalSubmissionDirectories) {
+			printHtmlStringValue(out, "Checked submissions in subdirectory", submissionDirectory);
+		}
+		printHtmlStringValue(out, "Excluded files", excludeFiles);
+		printHtmlStringValue(out, "Excluded subdirectories", excludeSubdirectories);
+		printHtmlStringValue(out, "Excluded code in template files", templates);
+		printHtmlBooleanValue(out, "Interface code excluded", excludeInterfaces);
+		out.println("</TABLE>");
+	}
 }

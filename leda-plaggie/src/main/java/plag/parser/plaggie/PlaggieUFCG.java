@@ -25,10 +25,14 @@ import plag.parser.java.*;
 import plag.parser.report.*;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.TreeSet;
+
+import br.edu.ufcg.ccc.leda.util.Student;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
@@ -45,29 +49,38 @@ import java.net.URL;
  * see the configuration file (plaggie.properties).
  *
  */
-public class Plaggie {
+public class PlaggieUFCG {
 
-	private static final String CONF_FILE = "/plaggie.properties";
+	
 
-	private static Configuration config = null;
+	private static File ANALYSIS_FOLDER;
+
+	private static Configuration config;
 
 	private static Runtime runtime;
 
-	private static CodeTokenizer codeTokenizer = null;
+	private static CodeTokenizer codeTokenizer;
 
 	public static ArrayList detResults = new ArrayList();
 
 	/**
-	 * Reads the configuration file and initializes the config object.
+	 * Recebe a pasta contendo todas as subpastas, arquivos de configuracao, etc
+	 * ja pronta para rodar a analise. Cria arquivos, pastas e relatorios todos
+	 * nessa pasta de analise.
+	 * 
+	 * @param analysisFolder
+	 * @throws Exception
 	 */
-	private static void configure(String confFile) throws Exception {
-		config = new Configuration(new File(confFile));
+	public PlaggieUFCG(File analysisFolder, Properties prop) throws Exception {
+		ANALYSIS_FOLDER = analysisFolder;
+		configure(prop);
 	}
 
 	/**
-	 * Reads the configuration file and initializes the config object.
+	 * Initializes the config object.
+	 * @throws ConfigurationException 
 	 */
-	private static void configure(Properties prop) throws Exception {
+	private void configure(Properties prop) throws ConfigurationException{
 		config = new Configuration(prop);
 	}
 
@@ -93,6 +106,10 @@ public class Plaggie {
 	 * the configuration, especially parameter severalSubmissionDirectories.
 	 */
 	private static ArrayList getDirectorySubmissions(File directory) throws Exception {
+		// quando passado apenas um parametro ele se todna a pasta com as
+		// submissoes a serem analisadas
+		ANALYSIS_FOLDER = directory;
+
 		File[] files = directory.listFiles();
 		ArrayList submissions = new ArrayList();
 
@@ -150,7 +167,8 @@ public class Plaggie {
 		HashMap blacklist = new HashMap();
 		if (!(config.blacklistFile == null || config.blacklistFile.equals(""))) {
 			try {
-				BufferedReader bin = new BufferedReader(new FileReader(config.blacklistFile));
+				File file = new File(ANALYSIS_FOLDER, config.blacklistFile);
+				BufferedReader bin = new BufferedReader(new FileReader(file));
 				String s;
 				Integer dummy = new Integer(0);
 				while ((s = bin.readLine()) != null) {
@@ -297,7 +315,8 @@ public class Plaggie {
 
 		PlagSym.init();
 
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(config.resultFile)));
+		File file = new File(ANALYSIS_FOLDER, config.resultFile);
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
 		detResults = (ArrayList) ois.readObject();
 
@@ -314,7 +333,8 @@ public class Plaggie {
 	 */
 	private static void storeDetectionResultsInFile(ArrayList detResults) throws Exception {
 		System.out.println("Generating result file " + config.resultFile);
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(config.resultFile)));
+		File file = new File(ANALYSIS_FOLDER, config.resultFile);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(detResults);
 		oos.writeObject(Stats.getInstance());
 		oos.close();
@@ -343,7 +363,8 @@ public class Plaggie {
 
 		SubmissionReportGenerator repGen = null;
 		if (config.htmlReport) {
-			repGen = new SimpleHtmlSubmissionReportGenerator(new File(config.htmlDir), codeTokenizer,
+			File dir = new File(ANALYSIS_FOLDER, config.htmlDir);
+			repGen = new SimpleHtmlSubmissionReportGenerator(dir, codeTokenizer,
 					config.maximumDetectionResultsToReport);
 		} else {
 			repGen = new SimpleTextSubmissionReportGenerator(System.out, generateFileDetectionReports, fileRepGen);
@@ -416,8 +437,8 @@ public class Plaggie {
 	private static boolean createHtmlDirectory() throws Exception {
 
 		String sDir = config.htmlDir;
-
-		File dir = new File(sDir);
+		// File file = new File(ANALYSIS_FOLDER,config.htmlDir);
+		File dir = new File(ANALYSIS_FOLDER, sDir);
 
 		BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
 
@@ -431,7 +452,7 @@ public class Plaggie {
 			 * input = b.readLine(); if ((input.length() == 0) ||
 			 * (input.toUpperCase().charAt(0) == 'Y')) { dir.mkdir(); return
 			 * true; } else { return false; }
-			 */ 
+			 */
 		}
 
 		File[] files = dir.listFiles();
@@ -440,16 +461,15 @@ public class Plaggie {
 			return true;
 		} else {
 			// The HTML directory is not empty
-			System.out.print("HTML report directory " + sDir
-					+ " is not empty. Do you want to delete the directory contents and generate a new report? [Y]/n :");
-			String input = b.readLine();
-			if ((input.length() == 0) || (input.toUpperCase().charAt(0) == 'Y')) {
-				removeDirectory(dir, false);
-				return true;
-			} else {
-				return false;
-			}
-		}
+			removeDirectory(dir, false);
+			return true;
+			/*
+			 * System.out.print("HTML report directory " + sDir +
+			 * " is not empty. Do you want to delete the directory contents and generate a new report? [Y]/n :"
+			 * ); String input = b.readLine(); if ((input.length() == 0) ||
+			 * (input.toUpperCase().charAt(0) == 'Y')) { removeDirectory(dir,
+			 * false); return true; } else { return false; }
+			 */ }
 	}
 
 	/**
@@ -475,76 +495,27 @@ public class Plaggie {
 		}
 	}
 
-	/**
-	 * The main program. Parses the command line parameters and runs the
-	 * detection algorithm and generates the report.
-	 */
-	public static void main(String[] args) {
+	public void run(String[] fileNames) {
+
 		try {
 			runtime = Runtime.getRuntime();
 
 			// -- Print program info
-			System.out.println("Plaggie - Plagiarism Detection tool");
-
-			// -- Read the configuration file
-
-			String confFile = CONF_FILE;
-			InputStream is = Plaggie.class.getResourceAsStream(CONF_FILE);
-			// URI uri = new URI(is.)
-			URL url = Plaggie.class.getResource(CONF_FILE);
-			File fConfFile = new File(url.toURI().getPath());
-			if (!fConfFile.exists()) {
-				System.out.println("Configuration file " + confFile + " not found!");
-				System.exit(1);
-			}
-			String completeConfFile = url.toURI().getPath();
-			try {
-				configure(completeConfFile);
-			} catch (ConfigurationException ce) {
-				System.out.println(ce.getMessage());
-				System.exit(1);
-			}
-
-			// -- Read the command line configuration
-
-			int argc = 0;
-			while ((args.length > argc) && (args[argc].startsWith("-"))) {
-				if (args[argc].charAt(1) == 's') {
-					// minimumSubmissionSimilarityCount
-					double minSubSim = Double.parseDouble(args[argc].substring(2));
-					System.out.println(
-							"Command line config: Setting minimum submission similarity value to " + minSubSim);
-					config.minimumSubmissionSimilarityValue = minSubSim;
-				}
-				if (args[argc].substring(1).equals("nohtml")) {
-					// No HTML report
-					System.out.println("Command line config: No html report generated");
-					config.htmlReport = false;
-				}
-				argc++;
+			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			System.out.println("Running Plaggie - Plagiarism Detection tool");
+			System.out.println("Folder: " + ANALYSIS_FOLDER.getAbsolutePath());
+			System.out.println("Files to be analysed: ");
+			for (int i = 0; i < fileNames.length; i++) {
+				System.out.println(" - " + fileNames[i]);
 			}
 
 			Debug.setEnabled(config.debugMessages);
-
-			// -- Check the remaining command line parameters
-			if (args.length <= argc) {
-				throw new IllegalArgumentException("No directories and/or files specified on command line");
-			}
 
 			// -- Create or erase the html directory if necessary
 			if (config.htmlReport) {
 				if (!createHtmlDirectory()) {
 					System.exit(0);
 				}
-			}
-
-			// -- Get the directory(or file) names given as command
-			// -- line parameters
-			File file1 = new File(args[argc]);
-			argc++;
-			File file2 = null;
-			if (args.length > argc) {
-				file2 = new File(args[argc]);
 			}
 
 			// -- Create the code tokenizer object for parsing the source code
@@ -575,42 +546,7 @@ public class Plaggie {
 				Stats.newDistribution("maximum_file_similarities");
 
 				// Create the submissions
-
-				if (file2 == null) {
-					// file1 should now be a directory, which contains
-					// subdirectories, which each contain
-					// submission of one student
-					if (!file1.isDirectory()) {
-						throw new IllegalArgumentException("Not a directory: " + file1.getPath());
-					}
-					submissions = getDirectorySubmissions(file1);
-				} else {
-					// two parameters, each is a directory or a file name.
-					// Create the submissions and add
-					// them to the list.
-
-					submissions = new ArrayList();
-
-					FilenameFilter filter = generateFilenameFilter();
-
-					if (file1.isDirectory()) {
-						DirectorySubmission sub = new DirectorySubmission(file1, filter, config.useRecursive);
-						submissions.add(sub);
-						Stats.incCounter("submissions");
-					} else {
-						submissions.add(new SingleFileSubmission(file1));
-						Stats.incCounter("submissions");
-					}
-
-					if (file2.isDirectory()) {
-						submissions.add(new DirectorySubmission(file2, filter, config.useRecursive));
-						Stats.incCounter("submissions");
-					} else {
-						submissions.add(new SingleFileSubmission(file2));
-						Stats.incCounter("submissions");
-					}
-
-				}
+				submissions = getDirectorySubmissions(ANALYSIS_FOLDER);
 
 				// -- Create distributions for all the submissions' similarity
 				// values
