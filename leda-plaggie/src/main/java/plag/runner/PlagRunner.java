@@ -2,6 +2,7 @@ package plag.runner;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -10,12 +11,23 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import org.jdom2.Content;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.filter.Filter;
+import org.jdom2.input.SAXBuilder;
+
+import br.edu.ufcg.ccc.leda.util.MavenUtility;
 import br.edu.ufcg.ccc.leda.util.Student;
+import br.edu.ufcg.ccc.leda.util.Util;
+import br.edu.ufcg.ccc.leda.util.XMLFileUtility;
 import plag.parser.CachingDetectionResult;
 import plag.parser.SubmissionDetectionResult;
 import plag.parser.plaggie.ConfigurationException;
@@ -27,20 +39,20 @@ public class PlagRunner {
 	private static final String CONF_FILE = "/plaggie.properties";
 	public static final String ANALYSIS_FOLDER_NAME = "analysis";
 	private File analysisFolder;
-	private File atividadeFolder;
+	private String atividadeId;
+	private File currentSemesterFolder;	
 	private Properties properties;
+	private static final double threshold = 0.99;
 	
 	
-	public PlagRunner(File atividadeFolder) throws URISyntaxException, IOException {
+	public PlagRunner(File currentSemesterFolder, String atividadeId) throws URISyntaxException, IOException {
 		this.properties = loadConfigFile();
-		if(!atividadeFolder.exists()){
-			throw new RuntimeException("Pasta da atividade " + atividadeFolder.getAbsolutePath() + " nao encontrada!");
-		}
-		this.analysisFolder = new File(atividadeFolder,ANALYSIS_FOLDER_NAME);
+		this.atividadeId = atividadeId;
+		this.currentSemesterFolder = currentSemesterFolder;
+		this.analysisFolder = new File(currentSemesterFolder,ANALYSIS_FOLDER_NAME);
 		if(!this.analysisFolder.exists()){
 			analysisFolder.mkdir();
 		}
-		this.atividadeFolder = atividadeFolder;
 	}
 
 	
@@ -53,14 +65,13 @@ public class PlagRunner {
 		this.analysisFolder = analysisFolder;
 	}
 
-
-	public File getAtividadeFolder() {
-		return atividadeFolder;
+	public File getCurrentSemesterFolder() {
+		return currentSemesterFolder;
 	}
 
 
-	public void setAtividadeFolder(File atividadeFolder) {
-		this.atividadeFolder = atividadeFolder;
+	public void setCurrentSemesterFolder(File currentSemesterFolder) {
+		this.currentSemesterFolder = currentSemesterFolder;
 	}
 
 
@@ -73,13 +84,98 @@ public class PlagRunner {
 		this.properties = properties;
 	}
 
+	
+	public String getAtividadeId() {
+		return atividadeId;
+	}
 
-	public ArrayList<SimilarityAnalysisResult> runPlagiarismAnalysis(String submissionsSubFolderName,String[] fileNames) throws Exception{
-		File submissionsFolder = new File(this.atividadeFolder,submissionsSubFolderName);
-		if(!submissionsFolder.exists()){
-			throw new RuntimeException("Pasta de submissoes " + submissionsFolder.getAbsolutePath() + " nao encontrada!");
+
+	public void setAtividadeId(String atividadeId) {
+		this.atividadeId = atividadeId;
+	}
+
+
+	/**
+	 * a analise deve proceder apenas quando existir o projeto de correcao criado e executado
+	 * para a atividade. o procedimento eh pegar as os arquivos a serem considerados 
+	 * diretamente do arquivo pom.xml. depois vai em todas as turmas e copia os arquivos 
+	 * para comparacao. a pasta das analises deve ser leda-upload/<current-semester>/analysis
+	 * cada analise vai gerar um arquivo .json com as similaridades entre matriculas
+	 * A plotagem pode ser por nome
+	 *  
+	 * @param atividadeId o ID da atividade sem a turma. Tem formato RRX,PPX,RXX,PRX,PFX
+	 * @throws Exception 
+	 */
+	public List<SimilarityAnalysisResult> runPlagiarismAnalysis() throws Exception{
+		List<SimilarityAnalysisResult> result = new ArrayList<SimilarityAnalysisResult>();
+		List<String> fileNames = new ArrayList<String>();
+		List<File> atividadeSubFolders = new ArrayList<File>();
+		
+		//pega todas as pastas de todas as turmas dessa atividade
+		//coloca os arquivos a serem comparados numa lista
+		File[] atividades = this.currentSemesterFolder.listFiles(new FileFilter() {
+		
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isDirectory() && pathname.getName().startsWith(atividadeId);
+			}
+		});
+		if(atividades.length > 0){
+			for (int i = 0; i < atividades.length; i++) {
+				File atividadeTurma = atividades[i];
+				XMLFileUtility xmlUtil = new XMLFileUtility();
+				File pomFile = new File(atividadeTurma,"pom.xml");
+				if(pomFile.exists()){
+					//TODO tem dependencia com a pasta de submissoes 
+					File submissoesAtividade = new File(atividadeTurma,"subs");
+					if(submissoesAtividade.exists()){
+						atividadeSubFolders.add(submissoesAtividade);
+					}
+					Document xmlDoc = xmlUtil.loadXMLFile(pomFile);
+					Element fileNamesElement = xmlUtil.getElement(xmlDoc.getRootElement(), "fileNames");
+					List<Element> files = fileNamesElement.getChildren()
+							.stream()
+							.filter(e -> e instanceof Element)
+							.collect(Collectors.toList());
+					for (Element element : files) { //varre os elementos que nao <name>Classe.java</name>
+						String className = element.getText();
+						fileNames.add(className);
+					}
+				}
+			}
+			fileNames = fileNames.stream().distinct().collect(Collectors.toList());
 		}
-		ArrayList detResults = this.plagAnalysis(submissionsFolder, fileNames);
+		
+		result = runPlagiarismAnalysis(analysisFolder, atividadeId, atividadeSubFolders, fileNames);
+		result = result
+				.stream()
+				.filter(sar -> sar.getSimilarity() > threshold)
+				.collect(Collectors.toList());
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param analysisFolder
+	 * @param atividadeId o id da atividade em formato reduzido (sem turma)
+	 * @param submissionsSubFolderName
+	 * @param fileNames
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<SimilarityAnalysisResult> runPlagiarismAnalysis(File analysisFolder, String atividadeId, 
+			List<File> submissionFolders, List<String> fileNames) throws Exception{
+		//cria a pasta para rodar a analise da atividade
+		File analiseAtividadeFolder = new File(analysisFolder,atividadeId);
+		if(!analiseAtividadeFolder.exists()){
+			analiseAtividadeFolder.mkdir();
+		}
+		for (File submissionFolder : submissionFolders) {
+			prepareAnalysisFolder(analiseAtividadeFolder, submissionFolder, fileNames);
+		}
+		//rodar o plag em analiseAtividadeFolder
+		ArrayList detResults = this.plagAnalysis(analiseAtividadeFolder, fileNames);
 		return this.processResults(detResults);
 	}
 	
@@ -110,16 +206,16 @@ public class PlagRunner {
 	 * @param fileNames
 	 * @throws Exception 
 	 */
-	public ArrayList plagAnalysis(File submissionsFolder,String[] fileNames) throws Exception {
+	public ArrayList plagAnalysis(File analysisFolder,List<String> fileNames) throws Exception {
 		//precisa: usar uma pasta temporaria (cria uma pasta analysis na pasta da atividade)
 		//criar uma pasta para cada aluno (pode ser a matricula)
 		//copiar apenas os arquivos especificos informados na lista
 		// para a pasta do aluno correspondente. 
-		createAnalysisFolder(submissionsFolder, fileNames);
+		//prepareAnalysisFolder(submissionsFolder, fileNames);
 		
 		//depois roda a analise na pasta de analises gerada. cria uma configuracao
 		//padrao ou especifica 
-		PlaggieUFCG plag = new PlaggieUFCG(this.analysisFolder,this.properties);
+		PlaggieUFCG plag = new PlaggieUFCG(analysisFolder,this.properties);
 		plag.run(fileNames);
 		
 		return plag.detResults;
@@ -137,11 +233,9 @@ public class PlagRunner {
 	 * @return
 	 * @throws IOException 
 	 */
-	private File createAnalysisFolder(File submissionsFolder, String[] fileNames) throws IOException{
-		File analysisFolder = new File(submissionsFolder.getParentFile(),ANALYSIS_FOLDER_NAME);
-		if(!analysisFolder.exists()){
-			analysisFolder.mkdirs();
-		}
+	private void prepareAnalysisFolder(File atividadeAnalysisFolder, 
+			File submissionsFolder, List<String> fileNames) throws IOException{
+		
 		File[] subFolders = submissionsFolder.listFiles(new FileFilter() {
 			
 			@Override
@@ -153,12 +247,11 @@ public class PlagRunner {
 			for (int i = 0; i < subFolders.length; i++) {
 				File studentFolder = subFolders[i];
 				File studentAnalysisSubFolder = 
-						new File(analysisFolder,studentFolder.getName());
+						new File(atividadeAnalysisFolder,studentFolder.getName());
 				if(!studentAnalysisSubFolder.exists()){
 					studentAnalysisSubFolder.mkdirs();
 				}
-				for (int j = 0; j < fileNames.length; j++) {
-					String fileName = fileNames[j];
+				for (String fileName : fileNames) {
 					File found = searchFile(studentFolder, fileName);
 					if(found != null){
 						//copia normalmente para a pasta do aluno 
@@ -172,7 +265,7 @@ public class PlagRunner {
 				}
 			}
 		}
-		return analysisFolder;
+		
 	}
 	
 	/**
@@ -266,11 +359,16 @@ public class PlagRunner {
 		return analysisResults;
 	}
 	
+	public Document loadXMLFile(File pomFile) throws IOException, JDOMException {
+		SAXBuilder saxBuilder = new SAXBuilder();
+		//InputStream is = XMLFileUtility.class.getResourceAsStream(filePath);
+		Document document = saxBuilder.build(pomFile);
+
+		return document;
+	}
 	public static void main(String[] args) throws Exception {
-		String[] fileNames = {"SimultaneousBubblesort.java","InsertionSort.java","BubbleSort.java","SelectionSort.java"};
-		File atividadeFolder = new File("D:\\trash2\\leda-upload\\2017.1\\R01-01");
-		PlagRunner pr = new PlagRunner(atividadeFolder);
-		ArrayList<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis("subs", fileNames);
+		PlagRunner pr = new PlagRunner(new File("D:\\trash2\\leda-upload\\2017.1"),"PP1");
+		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis();
 		int i = 1;
 		for (SimilarityAnalysisResult r : results) {
 			System.out.println(i++ + " File: " + r.getFileStudent1().getName() + ": (" + r.getMatriculaStudent1() + "," + r.getMatriculaStudent2() + ") with similariry " + r.getSimilarity());
