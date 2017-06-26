@@ -379,7 +379,7 @@ public class FileUtilities {
 	}
 
 	public static void main(String[] args) throws ConfigurationException, IOException, AtividadeException, ServiceException {
-		File env = FileUtilities.getEnvironmentAtividade("RE3-01", "");
+		File env = FileUtilities.getEnvironmentAtividade("PR1-01", "115210941");
 		String name = env.getName();
 	}
 }

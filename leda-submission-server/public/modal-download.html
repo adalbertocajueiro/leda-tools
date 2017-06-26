@@ -42,6 +42,9 @@
         <div class="modal-body" style="padding:20px 25px;">
           <form role="form" id="form" action="download" method="POST">
             <!-- div class="form-group" -->
+			  <#if id?starts_with("P")>
+			    <label style="color:red">Se voce fizer o download de uma prova e nao submeter (por qualquer motivo) perdera o direito a reposicao!</label>
+			  </#if>
               <label for="matricula"><span class="glyphicon glyphicon-user"></span> Matricula</label>
               <input type="hidden" name="id" value="${id}">
 			  <input type="text" class="form-control" id="matricula" name="matricula" placeholder="Numero de Matricula">
