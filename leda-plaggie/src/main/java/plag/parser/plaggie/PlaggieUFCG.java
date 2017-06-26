@@ -25,6 +25,7 @@ import plag.parser.java.*;
 import plag.parser.report.*;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ArrayList;
@@ -495,7 +496,7 @@ public class PlaggieUFCG {
 		}
 	}
 
-	public void run(String[] fileNames) {
+	public void run(List<String> fileNames) {
 
 		try {
 			runtime = Runtime.getRuntime();
@@ -505,8 +506,8 @@ public class PlaggieUFCG {
 			System.out.println("Running Plaggie - Plagiarism Detection tool");
 			System.out.println("Folder: " + ANALYSIS_FOLDER.getAbsolutePath());
 			System.out.println("Files to be analysed: ");
-			for (int i = 0; i < fileNames.length; i++) {
-				System.out.println(" - " + fileNames[i]);
+			for (String name : fileNames) {
+				System.out.println(" - " + name);				
 			}
 
 			Debug.setEnabled(config.debugMessages);

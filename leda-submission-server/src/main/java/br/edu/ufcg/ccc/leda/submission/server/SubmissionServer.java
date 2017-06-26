@@ -551,8 +551,8 @@ public class SubmissionServer extends Jooby {
         CorrectionReport corrReport = Util.loadCorrectionReport(id);
         html.put("correctionReport",corrReport);
         if(corrReport != null){
-        	SimilarityMatrix similarityMatrix = Util.buildSimilarityMatrix(id);
-        	html.put("sMatrix", similarityMatrix);
+        	//SimilarityMatrix similarityMatrix = Util.buildSimilarityMatrix(id);
+        	//html.put("sMatrix", similarityMatrix);
         //html.put("studentsTestList", similarityMatrix.getStudentsTestList());
         //html.put("matrix",similarityMatrix.getSimilarities());
         }
