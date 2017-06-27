@@ -5,9 +5,11 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,10 +44,12 @@ public class PlagRunner {
 	private String atividadeId;
 	private File currentSemesterFolder;	
 	private Properties properties;
-	private static final double threshold = 0.99;
+	private static double THRESHOLD = 0.99;
+	private File analysisFolderInServer;
 	
 	
-	public PlagRunner(File currentSemesterFolder, String atividadeId) throws URISyntaxException, IOException {
+	public PlagRunner(File currentSemesterFolder, String atividadeId,
+			File analysisFolderInServer) throws URISyntaxException, IOException {
 		this.properties = loadConfigFile();
 		this.atividadeId = atividadeId;
 		this.currentSemesterFolder = currentSemesterFolder;
@@ -53,6 +57,19 @@ public class PlagRunner {
 		if(!this.analysisFolder.exists()){
 			analysisFolder.mkdir();
 		}
+		this.analysisFolderInServer = analysisFolderInServer;
+	}
+	
+	public PlagRunner(Properties prop, File currentSemesterFolder, String atividadeId,
+			File analysisFolderInServer) throws URISyntaxException, IOException {
+		this.properties = prop;
+		this.atividadeId = atividadeId;
+		this.currentSemesterFolder = currentSemesterFolder;
+		this.analysisFolder = new File(currentSemesterFolder,ANALYSIS_FOLDER_NAME);
+		if(!this.analysisFolder.exists()){
+			analysisFolder.mkdir();
+		}
+		this.analysisFolderInServer = analysisFolderInServer;
 	}
 
 	
@@ -109,6 +126,7 @@ public class PlagRunner {
 	public List<SimilarityAnalysisResult> runPlagiarismAnalysis() throws Exception{
 		List<SimilarityAnalysisResult> result = new ArrayList<SimilarityAnalysisResult>();
 		List<String> fileNames = new ArrayList<String>();
+		//PASTAS CONTENDO AS SUBMISSOES
 		List<File> atividadeSubFolders = new ArrayList<File>();
 		
 		//pega todas as pastas de todas as turmas dessa atividade
@@ -149,7 +167,7 @@ public class PlagRunner {
 		result = runPlagiarismAnalysis(analysisFolder, atividadeId, atividadeSubFolders, fileNames);
 		result = result
 				.stream()
-				.filter(sar -> sar.getSimilarity() > threshold)
+				.filter(sar -> sar.getSimilarity() > THRESHOLD)
 				.collect(Collectors.toList());
 		
 		return result;
@@ -176,6 +194,7 @@ public class PlagRunner {
 		}
 		//rodar o plag em analiseAtividadeFolder
 		ArrayList detResults = this.plagAnalysis(analiseAtividadeFolder, fileNames);
+		
 		return this.processResults(detResults);
 	}
 	
@@ -185,9 +204,9 @@ public class PlagRunner {
 		Properties prop = new Properties();
 		
 		String confFile = CONF_FILE;
-		InputStream is = Plaggie.class.getResourceAsStream(CONF_FILE);
+		InputStream is = PlagRunner.class.getResourceAsStream(CONF_FILE);
 		// URI uri = new URI(is.)
-		URL url = Plaggie.class.getResource(CONF_FILE);
+		URL url = PlagRunner.class.getResource(CONF_FILE);
 		File fConfFile = new File(url.toURI().getPath());
 		if (!fConfFile.exists()) {
 			System.out.println("Configuration file " + confFile + " not found!");
@@ -268,6 +287,8 @@ public class PlagRunner {
 		
 	}
 	
+	
+	
 	/**
 	 * O nome do arquivo file tem o padrao $/matricula-NOME/$ onde matrcula
 	 * eh um numero de 9 digitos. depois vem o menos e depois o nome
@@ -342,8 +363,10 @@ public class PlagRunner {
 						CachingDetectionResult r = (CachingDetectionResult)o;
 						try {
 							SimilarityAnalysisResult newResult
-							 = new SimilarityAnalysisResult(r.getFileA(),r.getFileB(),Math.max(r.getSimilarityA(), r.getSimilarityB()));
-							analysisResults.add(newResult);
+							 = new SimilarityAnalysisResult(r.getFileA(),r.getFileB(),
+									 Math.max(r.getSimilarityA(), r.getSimilarityB()),
+									 analysisFolderInServer);
+							analysisResults.add(newResult);							
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -367,7 +390,7 @@ public class PlagRunner {
 		return document;
 	}
 	public static void main(String[] args) throws Exception {
-		PlagRunner pr = new PlagRunner(new File("D:\\trash2\\leda-upload\\2017.1"),"PP1");
+		PlagRunner pr = new PlagRunner(new File("D:\\trash2\\leda-upload\\2017.1"),"PP1",new File("D:\\UFCG\\leda\\leda-tools\\leda-submission-server\\public\\reports\\analysis"));
 		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis();
 		int i = 1;
 		for (SimilarityAnalysisResult r : results) {

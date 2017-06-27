@@ -598,6 +598,29 @@ public class SubmissionServer extends Jooby {
 			resp.send(e.getMessage());
 		}
 	});
+	get("/analisarPlagios", (req,resp) -> {
+		String id = req.param("id").value();
+		if(id.length() != 3){
+			resp.send("Id nao pode conter a turma. Ex: RXX,PPX,PRX,PFX");
+		}else{
+			//Util.runPlagiarismAnalysis(id);
+			Util.startPlagiarismAnalysis(id);
+			resp.send("Analise de plagios iniciada");
+		}
+	});
+	
+	get("/plagios", (req) -> {
+		String id = req.param("id").value();
+        View html = Results.html("plagios");
+        if(id.length() != 3){
+        	throw new RuntimeException("Id nao pode conter a turma. Ex: RXX,PPX,PRX,PFX");
+        }else{
+            html.put("id",id);
+            html.put("plagios",Util.loadPlagiarismAnalysisResult(id));
+            html.put("students",Configuration.getInstance().getStudents());
+            return html;
+        }
+	});
 
   }
 

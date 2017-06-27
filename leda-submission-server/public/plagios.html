@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Altas similaridades detectadas</title>
+<!-- Le styles -->
+<link href="./tether/1.3.3/css/tether.css" rel="stylesheet">
+<link href="./bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+
+<script src="./jquery/3.1.1/jquery.min.js"></script>
+<script src="./tether/1.3.3/js/tether.min.js"></script>
+<script src="./bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+<br>
+<h4>Similaridades de código detectadas</h4>
+<br>
+<!-------->
+<div id="content">
+	<ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
+		<li class="nav-item"><a class="nav-link active" href='#${id}' role="tab" data-toggle="tab">${id}</a></li>
+    </ul>
+ 	<#assign gray = 'true'>
+	<#assign active = 'true'>
+    <div id="my-tab-content" class="tab-content">
+		<br>
+		<a href="reports/analysis/${id}/html/index.html">Veja a análise detalhada gerada pela ferramenta</a>
+		<br>
+		<div role="tabpanel" class="tab-pane fade in active" id="${id}">
+			<br>
+            <table id="${id}" class="table table-hover table-bordered">
+				<thead class="bg-success">
+					<th class="text-xs-center">Arquivo do Estudante 1</th>
+					<th class="text-xs-center">Arquivo do Estudante 2</th>
+					<th class="text-xs-center">Similaridade</th>
+				</thead>
+				<tbody>
+				<#list plagios as plagio>
+					<#if gray == 'true'>
+						<tr class="table-warning">
+							<td data-toggle="tooltip" data-placement="top" title='${plagio.getMatriculaStudent1()}-${students[plagio.getMatriculaStudent1()].nome}'><a href="reports/analysis/${plagio.generateLinkFileStudent1()}">${plagio.fileStudent1.getName()}</a>
+							<td data-toggle="tooltip" data-placement="top" title='${plagio.getMatriculaStudent2()}-${students[plagio.getMatriculaStudent2()].nome}'><a href="reports/analysis/${plagio.generateLinkFileStudent2()}">${plagio.fileStudent2.getName()}</a>
+							<td class="text-xs-center">${plagio.getSimilarity()?string.percent}
+							<#assign gray = 'false'>
+					<#else>
+						<tr class="table-info">
+							<td data-toggle="tooltip" data-placement="top" title='${plagio.getMatriculaStudent1()}-${students[plagio.getMatriculaStudent1()].nome}'><a href="reports/analysis/${plagio.generateLinkFileStudent1()}">${plagio.fileStudent1.getName()}</a>
+							<td data-toggle="tooltip" data-placement="top" title='${plagio.getMatriculaStudent2()}-${students[plagio.getMatriculaStudent2()].nome}'><a href="reports/analysis/${plagio.generateLinkFileStudent2()}">${plagio.fileStudent2.getName()}</a>
+							<td class="text-xs-center">${plagio.getSimilarity()?string.percent}
+							<#assign gray = 'true'>
+					</#if>
+				</#list>
+				</tbody>
+			</table>
+            
+        </div>
+	</div>
+
+
+<script type="text/javascript">
+    $('#tabs a').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	})
+</script>  
+
+</div> <!-- container -->
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
+
+
+
+</body>
+</html>

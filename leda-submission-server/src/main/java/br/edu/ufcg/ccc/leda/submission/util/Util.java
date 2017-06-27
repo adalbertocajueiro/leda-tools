@@ -12,8 +12,10 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,6 +78,9 @@ import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 import jxl.read.biff.BiffException;
+import plag.parser.plaggie.PlaggieUFCG;
+import plag.runner.PlagRunner;
+import plag.runner.SimilarityAnalysisResult;
 
 public class Util {
 
@@ -181,6 +186,84 @@ public class Util {
 		return result;
 	}
 	
+	/**
+	 * Roda a analise de plagios emuma thread a parte
+	 */
+	public static void startPlagiarismAnalysis(String atividadeId){
+		Thread analysisThread = new Thread(() -> {
+		     try {
+				Util.runPlagiarismAnalysis(atividadeId);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
+		analysisThread.start();
+	}
+	
+	/**
+	 * Metodo que executa a analise de similaridade de uam atividade e salva os resultados 
+	 * em um json. Os resultados sao salvos na pasta <current-semester>/analysis/ID.
+	 * Um link em /public/reports/analysys/ID tambem precisa ser criado.
+	 * 
+	 * @param atividadeId o id da atividade sem a turma
+	 * @throws Exception 
+	 */
+	public static void runPlagiarismAnalysis(String atividadeId) throws Exception{
+		File reportsFolder = new File(Constants.REPORTS_FOLDER_NAME);
+		if(!reportsFolder.exists()){
+			reportsFolder.mkdir();
+		}
+		File analysisFolderInServer = new File(reportsFolder,Constants.ANALYSIS_FOLDER_NAME + File.separator + atividadeId);
+		if(!analysisFolderInServer.exists()){
+			analysisFolderInServer.mkdirs();
+		}
+		//precisa criar link simbolico 
+		String os = System.getProperty("os.name");
+		if (!os.startsWith("Windows")) {
+			// windows nao permite a criação de links symbolicos
+			// System.out.println("Link to: " + uploadSubFolderTarget);
+			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
+			Path newLink = analysisFolderInServer.toPath();
+			// se target nao existe entao ja cria ela
+			if (!Files.exists(target)) {
+				Files.createDirectory(target);
+			}
+			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+
+		} else {
+			// pode-se copiar por completo mas isso deve ser feito apos
+			// a execucao do corretor
+			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
+			Path newLink = analysisFolderInServer.toPath();
+			// System.out.println("Link: " + newLink);
+			// System.out.println("Target: " + target);
+
+			// se target nao existe entao ja cria ela
+			if (!Files.exists(newLink)) {
+				Files.createDirectory(newLink);
+			}
+			if (!Files.exists(target)) {
+				Files.createDirectory(target);
+			}
+
+		}
+		PlagRunner pr = new PlagRunner(Constants.PLAGIARISM_PROPERTIES,Constants.CURRENT_SEMESTER_FOLDER,atividadeId,analysisFolderInServer);
+		
+		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis();
+		
+		File jsonFile = new File(pr.getAnalysisFolder(),atividadeId + "-analysis-result.json");
+		Util.writeAnalysisResultToJson(results, jsonFile);
+	} 
+	
+	public static void writeAnalysisResultToJson(List<SimilarityAnalysisResult> analises, File jsonFile) throws ConfigurationException, IOException{
+		Gson gson = new Gson();
+
+		FileWriter fw = new FileWriter(jsonFile);
+		gson.toJson(analises, fw);
+		fw.flush();
+		fw.close();
+	}
+	
 	public static void writeRoteirosToJson(Map<String,Roteiro> roteiros, File jsonFile) throws ConfigurationException, IOException{
 		Gson gson = new Gson();
 
@@ -206,6 +289,22 @@ public class Util {
 		gson.toJson(filesOwners, fw);
 		fw.flush();
 		fw.close();
+	}
+	
+	public static List<SimilarityAnalysisResult> loadPlagiarismAnalysisResult(String atividadeId)
+			throws IOException{
+		Gson gson = new Gson();
+		File jsonFile = new File(Constants.ANALYSIS_FOLDER,atividadeId + "-analysis-result.json");
+        FileReader fr = new FileReader(jsonFile);
+        List<SimilarityAnalysisResult> result = gson.fromJson(fr, new TypeToken<List<SimilarityAnalysisResult>>(){}.getType());
+		return result;
+	}
+	
+	public static List<SimilarityAnalysisResult> loadAnalysisResultFromJson(File jsonFile) throws IOException{
+		Gson gson = new Gson();
+        FileReader fr = new FileReader(jsonFile);
+        List<SimilarityAnalysisResult> result = gson.fromJson(fr, new TypeToken<List<SimilarityAnalysisResult>>(){}.getType());
+		return result;
 	}
 	
 	public static TestReport loadTestReport(String id) throws IOException{
@@ -856,7 +955,14 @@ public class Util {
 		
 		return p;
 	}
-	
+	public static Properties loadPlagiarismProperties() throws IOException{
+		Properties p = new Properties();
+		File confFolder = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
+		FileReader fr = new FileReader(new File(confFolder,"plaggie.properties"));
+		p.load(fr);
+		
+		return p;
+	}
 	public static GregorianCalendar buildDate(String dataHora) throws WrongDateHourFormatException{
 		GregorianCalendar result = null;
 		if(dataHora != null){
@@ -2125,7 +2231,7 @@ public class Util {
 	}
 	
 
-	public static void main(String[] args) throws ConfigurationException, IOException, WrongDateHourFormatException, ServiceException, BiffException, JDOMException {
+	public static void main(String[] args) throws Exception {
 		//Util.sendEmail("adalberto.cajueiro@gmail.com", "adalberto.cajueiro@gmail.com", "Teste", "conteudo", "adalberto.cajueiro@gmail.com", "acfcaju091401");
 		//Util.send2();
 		//System.out.println("Email enviado");
@@ -2138,6 +2244,12 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		List<SimilarityAnalysisResult> res = Util.loadPlagiarismAnalysisResult("PP1");
+		for (SimilarityAnalysisResult sar : res) {
+			System.out.println(sar.generateLinkFileStudent1());
+			System.out.println(sar.generateLinkFileStudent2());						
+		}
+		Util.runPlagiarismAnalysis("PP1");
 		Map<String,Map<String,Boolean>> totalFaltas = Util.totalizacaoFaltas();
 		totalFaltas.size();
 		CorrectionReport rep = Util.loadCorrectionReport("R10-01");
