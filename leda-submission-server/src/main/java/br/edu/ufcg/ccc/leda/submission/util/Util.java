@@ -213,9 +213,9 @@ public class Util {
 		if(!reportsFolder.exists()){
 			reportsFolder.mkdir();
 		}
-		File analysisFolderInServer = new File(reportsFolder,Constants.ANALYSIS_FOLDER_NAME + File.separator + atividadeId);
+		File analysisFolderInServer = new File(reportsFolder,Constants.ANALYSIS_FOLDER_NAME);
 		if(!analysisFolderInServer.exists()){
-			analysisFolderInServer.mkdirs();
+			analysisFolderInServer.mkdir();
 		}
 		//precisa criar link simbolico 
 		String os = System.getProperty("os.name");
@@ -223,7 +223,7 @@ public class Util {
 			// windows nao permite a criação de links symbolicos
 			// System.out.println("Link to: " + uploadSubFolderTarget);
 			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
-			Path newLink = analysisFolderInServer.toPath();
+			Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
 			// se target nao existe entao ja cria ela
 			if (!Files.exists(target)) {
 				Files.createDirectory(target);
@@ -234,7 +234,7 @@ public class Util {
 			// pode-se copiar por completo mas isso deve ser feito apos
 			// a execucao do corretor
 			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
-			Path newLink = analysisFolderInServer.toPath();
+			Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
 			// System.out.println("Link: " + newLink);
 			// System.out.println("Target: " + target);
 
