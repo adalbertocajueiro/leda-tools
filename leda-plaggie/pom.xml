@@ -4,13 +4,15 @@
 	<parent>
 		<groupId>br.edu.ufcg.ccc</groupId>
 		<artifactId>leda-tools</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>leda-plaggie-tool</artifactId>
 	<name>LEDA Plaggie Tool</name>
-
+	<url>${plugin.repository.url}</url>
+	<packaging>maven-plugin</packaging>
+	
 	<!--  groupId>br.edu.ufcg.ccc</groupId>
 	<packaging>maven-plugin</packaging-->
 

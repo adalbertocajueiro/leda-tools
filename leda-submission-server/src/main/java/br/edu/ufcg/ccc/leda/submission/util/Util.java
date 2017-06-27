@@ -293,11 +293,15 @@ public class Util {
 	
 	public static List<SimilarityAnalysisResult> loadPlagiarismAnalysisResult(String atividadeId)
 			throws IOException{
-		Gson gson = new Gson();
+        List<SimilarityAnalysisResult> result = null;
+
+        Gson gson = new Gson();
 		File jsonFile = new File(Constants.ANALYSIS_FOLDER,atividadeId + "-analysis-result.json");
-        FileReader fr = new FileReader(jsonFile);
-        List<SimilarityAnalysisResult> result = gson.fromJson(fr, new TypeToken<List<SimilarityAnalysisResult>>(){}.getType());
-		return result;
+		if(jsonFile.exists()){
+			FileReader fr = new FileReader(jsonFile);
+        	result = gson.fromJson(fr, new TypeToken<List<SimilarityAnalysisResult>>(){}.getType());
+		}
+        return result;
 	}
 	
 	public static List<SimilarityAnalysisResult> loadAnalysisResultFromJson(File jsonFile) throws IOException{
