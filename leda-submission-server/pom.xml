@@ -152,9 +152,9 @@
 		</dependency>
 		<!-- para usar o metodo de compactar uma pasta completa -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>br.edu.ufcg.ccc</groupId>
+			<version>1.0.0-SNAPSHOT</version>
 			<artifactId>leda-compactor-tool</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.odiszapc</groupId>
@@ -201,6 +201,7 @@
 				<directory>public</directory>
 				<excludes>
 					<exclude>**</exclude>
+					<exclude>analysis</exclude>
 				</excludes>
 			</resource>
 			<resource>
