@@ -224,10 +224,9 @@ public class Util {
 			// System.out.println("Link to: " + uploadSubFolderTarget);
 			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
 			Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
-			// se target nao existe entao ja cria ela
-			if (!Files.exists(target)) {
-				Files.createDirectory(target);
-			}
+			System.out.println("%%%%TARGET: " + target.toString());
+			System.out.println("%%%%LINK: " + newLink.toString());
+			System.out.println("%%%%%EXECUTING: " + "ln -s " + target + " " + newLink);
 			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 
 		} else {

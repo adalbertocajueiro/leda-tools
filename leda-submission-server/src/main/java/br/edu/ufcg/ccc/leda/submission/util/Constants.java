@@ -117,7 +117,7 @@ public abstract class Constants {
 			}
 			ANALYSIS_FOLDER = new File(CURRENT_SEMESTER_FOLDER, Constants.ANALYSIS_FOLDER_NAME);
     		if(!ANALYSIS_FOLDER.exists()){
-    			ANALYSIS_FOLDER.mkdirs();
+    			ANALYSIS_FOLDER.mkdir();
     		}
 		} catch (IOException e) {
 			System.out.println("Properties not loaded. system will exit");

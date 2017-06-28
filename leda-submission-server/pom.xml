@@ -33,7 +33,7 @@
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
 
-	<repositories>
+	<!-- repositories>
 		<repository>
 			<id>ufcg-leda</id>
 			<url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url>
@@ -42,7 +42,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories -->
 
 	<profiles>
 		<profile>
