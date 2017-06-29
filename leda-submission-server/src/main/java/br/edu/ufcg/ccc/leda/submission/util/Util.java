@@ -221,7 +221,7 @@ public class Util {
 			realAnalysisFolder.mkdir();
 		}else{ //clean and create again
 			FileUtils.cleanDirectory(realAnalysisFolder);
-			System.out.println("%%%% Folder " + realAnalysisFolder.getAbsolutePath() + " cleaned");
+			System.out.println("%%%% Folder " + realAnalysisFolder.getAbsolutePath() + " cleaned. " + realAnalysisFolder.listFiles().length);
 		}
 		File analysisFolderInServer = new File(reportsFolder,Constants.ANALYSIS_FOLDER_NAME);
 		if(!analysisFolderInServer.exists()){
