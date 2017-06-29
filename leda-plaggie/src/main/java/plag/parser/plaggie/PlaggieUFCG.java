@@ -498,6 +498,18 @@ public class PlaggieUFCG {
 			Stats.setInstance(new Stats()); //zerar todos os contadores
 			runtime = Runtime.getRuntime();
 
+			//printing counters
+			System.out.println("PRINTING COUNTERS");
+			Stats.getInstance().counters.forEach((K,V) ->{
+				System.out.println(" - " + K + " = " + V);
+			});
+			//printing countersLimits
+			System.out.println("PRINTING COUNTERS LIMITS");
+			Stats.getInstance().counterLimits.forEach((K,V) ->{
+				System.out.println(" - " + K + " = " + V);
+			});
+			//printing distributions
+			
 			// -- Print program info
 			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			System.out.println("Running Plaggie - Plagiarism Detection tool");

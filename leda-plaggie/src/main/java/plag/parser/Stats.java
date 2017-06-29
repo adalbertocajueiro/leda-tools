@@ -29,11 +29,11 @@ public class Stats implements Serializable {
 
 	private static Stats instance = new Stats();
 
-	private HashMap counters = new HashMap();
+	public HashMap counters = new HashMap();
 
-	private HashMap counterLimits = new HashMap();
+	public HashMap counterLimits = new HashMap();
 
-	private HashMap distributions = new HashMap();
+	public HashMap distributions = new HashMap();
 
 	private int longestCounterName = 0;
 
