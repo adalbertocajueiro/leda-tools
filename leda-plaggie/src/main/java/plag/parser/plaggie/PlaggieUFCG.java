@@ -495,7 +495,7 @@ public class PlaggieUFCG {
 	}
 
 	public void run(List<String> fileNames) throws Exception{
-
+			Stats.setInstance(new Stats()); //zerar todos os contadores
 			runtime = Runtime.getRuntime();
 
 			// -- Print program info
