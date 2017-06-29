@@ -17,6 +17,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.FileAttributeView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -229,6 +231,8 @@ public class Util {
 		}
 		Path target = realAnalysisFolder.toPath();
 		Path newLink = new File(analysisFolderInServer,atividadeId).toPath().toAbsolutePath();
+		Files.deleteIfExists(newLink);
+		
 		//precisa criar link simbolico 
 		String os = System.getProperty("os.name");
 		if (!os.startsWith("Windows")) {
@@ -237,7 +241,8 @@ public class Util {
 			System.out.println("%%%% TARGET: " + target.toString());
 			System.out.println("%%%% LINK: " + newLink.toString());
 			System.out.println("%%%%% EXECUTING: " + "ln -s " + target + " " + newLink);
-			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
+			Files.createSymbolicLink(newLink, target);
+			//Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 
 		} else {
 			// se target nao existe entao ja cria ela
@@ -2250,12 +2255,14 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Util.runPlagiarismAnalysis("PP1");
+		Util.runPlagiarismAnalysis("PP1");
 		List<SimilarityAnalysisResult> res = Util.loadPlagiarismAnalysisResult("PP1");
 		for (SimilarityAnalysisResult sar : res) {
 			System.out.println(sar.generateLinkFileStudent1());
 			System.out.println(sar.generateLinkFileStudent2());						
 		}
-		Util.runPlagiarismAnalysis("PP1");
+		
 		Map<String,Map<String,Boolean>> totalFaltas = Util.totalizacaoFaltas();
 		totalFaltas.size();
 		CorrectionReport rep = Util.loadCorrectionReport("R10-01");
