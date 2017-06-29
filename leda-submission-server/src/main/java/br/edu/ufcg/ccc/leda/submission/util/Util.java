@@ -228,15 +228,15 @@ public class Util {
 			analysisFolderInServer.mkdir();
 		}
 		Path target = realAnalysisFolder.toPath();
-		Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
+		Path newLink = new File(analysisFolderInServer,atividadeId).toPath().toAbsolutePath();
 		//precisa criar link simbolico 
 		String os = System.getProperty("os.name");
 		if (!os.startsWith("Windows")) {
 			// windows nao permite a criação de links symbolicos
 			// System.out.println("Link to: " + uploadSubFolderTarget);
-			System.out.println("%%%%TARGET: " + target.toString());
-			System.out.println("%%%%LINK: " + newLink.toString());
-			System.out.println("%%%%%EXECUTING: " + "ln -s " + target + " " + newLink);
+			System.out.println("%%%% TARGET: " + target.toString());
+			System.out.println("%%%% LINK: " + newLink.toString());
+			System.out.println("%%%%% EXECUTING: " + "ln -s " + target + " " + newLink);
 			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 
 		} else {
