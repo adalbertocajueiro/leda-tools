@@ -9,15 +9,13 @@ public class SimilarityAnalysisResult {
 	private File fileStudent1;
 	private File fileStudent2;
 	private double similarity;
-	private File analysisFolderInServer;
 	
 	public SimilarityAnalysisResult(File fileStudent1, File fileStudent2, 
-			double similarity, File analysisFolderInServer) {
+			double similarity) {
 		super();
 		this.fileStudent1 = fileStudent1;
 		this.fileStudent2 = fileStudent2;
 		this.similarity = similarity;
-		this.analysisFolderInServer = analysisFolderInServer;
 	}
 	public String getMatriculaStudent1(){
 		return PlagRunner.getStudentAnalysisFolderName(this.fileStudent1);
@@ -43,12 +41,6 @@ public class SimilarityAnalysisResult {
 	}
 	public void setSimilarity(double similarity) {
 		this.similarity = similarity;
-	}
-	public File getAnalysisFolderInServer() {
-		return analysisFolderInServer;
-	}
-	public void setAnalysisFolderInServer(File analysisFolderInServer) {
-		this.analysisFolderInServer = analysisFolderInServer;
 	}
 	
 	public String generateLinkFileStudent1(){

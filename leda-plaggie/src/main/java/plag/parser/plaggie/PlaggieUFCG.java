@@ -52,8 +52,6 @@ import java.net.URL;
  */
 public class PlaggieUFCG {
 
-	
-
 	private static File ANALYSIS_FOLDER;
 
 	private static Configuration config;
@@ -496,9 +494,8 @@ public class PlaggieUFCG {
 		}
 	}
 
-	public void run(List<String> fileNames) {
+	public void run(List<String> fileNames) throws Exception{
 
-		try {
 			runtime = Runtime.getRuntime();
 
 			// -- Print program info
@@ -515,7 +512,8 @@ public class PlaggieUFCG {
 			// -- Create or erase the html directory if necessary
 			if (config.htmlReport) {
 				if (!createHtmlDirectory()) {
-					System.exit(0);
+					//System.exit(0);
+					throw new RuntimeException("Nao foi possivel criar diretorio html");
 				}
 			}
 
@@ -573,12 +571,6 @@ public class PlaggieUFCG {
 			// -- Report the results
 			generateReport(detResults, submissions);
 
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
 	}
 
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -210,33 +212,34 @@ public class Util {
 	 */
 	public static void runPlagiarismAnalysis(String atividadeId) throws Exception{
 		File reportsFolder = new File(Constants.REPORTS_FOLDER_NAME);
-		if(!reportsFolder.exists()){
-			reportsFolder.mkdir();
+		File parentAnalysisFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.ANALYSIS_FOLDER_NAME);
+		if(!parentAnalysisFolder.exists()){
+			parentAnalysisFolder.mkdir();
+		}
+		File realAnalysisFolder = new File(parentAnalysisFolder,atividadeId);
+		if(!realAnalysisFolder.exists()){
+			realAnalysisFolder.mkdir();
+		}else{ //clean and create again
+			FileUtils.cleanDirectory(realAnalysisFolder);
+			System.out.println("%%%% Folder " + realAnalysisFolder.getAbsolutePath() + " cleaned");
 		}
 		File analysisFolderInServer = new File(reportsFolder,Constants.ANALYSIS_FOLDER_NAME);
 		if(!analysisFolderInServer.exists()){
 			analysisFolderInServer.mkdir();
 		}
+		Path target = realAnalysisFolder.toPath();
+		Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
 		//precisa criar link simbolico 
 		String os = System.getProperty("os.name");
 		if (!os.startsWith("Windows")) {
 			// windows nao permite a criação de links symbolicos
 			// System.out.println("Link to: " + uploadSubFolderTarget);
-			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
-			Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
 			System.out.println("%%%%TARGET: " + target.toString());
 			System.out.println("%%%%LINK: " + newLink.toString());
 			System.out.println("%%%%%EXECUTING: " + "ln -s " + target + " " + newLink);
 			Runtime.getRuntime().exec("ln -s " + target + " " + newLink);
 
 		} else {
-			// pode-se copiar por completo mas isso deve ser feito apos
-			// a execucao do corretor
-			Path target = (new File(Constants.ANALYSIS_FOLDER,atividadeId)).toPath();
-			Path newLink = new File(analysisFolderInServer,atividadeId).toPath();
-			// System.out.println("Link: " + newLink);
-			// System.out.println("Target: " + target);
-
 			// se target nao existe entao ja cria ela
 			if (!Files.exists(newLink)) {
 				Files.createDirectory(newLink);
