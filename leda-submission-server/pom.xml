@@ -177,7 +177,6 @@
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-plaggie-tool</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
