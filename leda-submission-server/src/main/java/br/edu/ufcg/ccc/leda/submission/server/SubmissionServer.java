@@ -25,31 +25,33 @@ import org.jooby.ftl.Ftl;
 import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
-import br.edu.ufcg.ccc.leda.submission.util.Submission;
+import br.edu.ufcg.ccc.leda.submission.util.Atividade;
+import br.edu.ufcg.ccc.leda.submission.util.Aula;
+import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
 import br.edu.ufcg.ccc.leda.submission.util.ConfigurationException;
+import br.edu.ufcg.ccc.leda.submission.util.Constants;
 import br.edu.ufcg.ccc.leda.submission.util.CorrectionManager;
 import br.edu.ufcg.ccc.leda.submission.util.Corretor;
+import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
 import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.Professor;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
-import br.edu.ufcg.ccc.leda.submission.util.SimilarityMatrix;
-import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
+import br.edu.ufcg.ccc.leda.submission.util.RoteiroEspecial;
+import br.edu.ufcg.ccc.leda.submission.util.RoteiroRevisao;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
+import br.edu.ufcg.ccc.leda.submission.util.Submission;
 import br.edu.ufcg.ccc.leda.submission.util.Util;
-import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
 import br.edu.ufcg.ccc.leda.util.CodeAdequacy;
+import br.edu.ufcg.ccc.leda.util.CorrectionClassification;
 import br.edu.ufcg.ccc.leda.util.CorrectionReport;
 import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.TestReportItem;
-import br.edu.ufcg.ccc.leda.submission.util.FileCopy;
-import br.edu.ufcg.ccc.leda.submission.util.Atividade;
-import br.edu.ufcg.ccc.leda.submission.util.Constants;
 
 /**
  * @author jooby generator
@@ -104,6 +106,9 @@ public class SubmissionServer extends Jooby {
   {
 	use(new Ftl());
 	//use(new Jade());
+	//session(EhSessionStore.class);
+	
+	cookieSession();
 	
 	get("/", (req,resp) -> {
 		resp.send("Hello World!");
@@ -200,13 +205,22 @@ public class SubmissionServer extends Jooby {
 		
 		Student aluno = Configuration.getInstance().getStudents().get(matriculaAluno);
 		
-
+		Atividade atividade = 
+				Configuration.getInstance().getAtividades().get(id);
+		Corretor corretorAtribuido = null;
+		if(atividade != null && (atividade instanceof Roteiro)){
+			corretorAtribuido = ((Roteiro)atividade).getCorretor();
+			
+		}
+		
+		
 		View html = Results.html("comment-panel");
 		html.put("id",id);
 		html.put("matricula", matriculaAluno);
 		html.put("aluno",aluno);
-		html.put("corretorMat",corretorPar);
-		html.put("corretor", session.get("corretor"));
+		html.put("corretorMat",corretorPar); //corretor informado
+		html.put("corretorAtribuido",corretorAtribuido); //corretor atribuido
+		html.put("corretor", session.get("corretor").value()); //corretor logado
 		html.put("classificacao",CorrectionClassification.values());
 		html.put("adequacao",CodeAdequacy.values());
 		
@@ -259,7 +273,9 @@ public class SubmissionServer extends Jooby {
         	//System.out.println("%%%% CORRETOR: " + ((Roteiro) atividade).getCorretor());
         }
         if(corretor != null && !corretor.equals("")){
-        	html.put("corretorSessao",corretor);
+        	if(corretor.equals(((Roteiro) atividade).getCorretor().getMatricula())){
+        		html.put("corretorSessao",corretor);
+        	}
         }
 		return html;
     });
@@ -567,7 +583,7 @@ public class SubmissionServer extends Jooby {
 	get("/logoutCorretor", (req,resp) -> {
 		//String id = req.param("id").value();
 		Session session = req.session();
-		session.set("corretor", "");
+		session.unset("corretor");
 		//resp.redirect("menuLeftCorrecao?id=" + id);
 		resp.redirect("menu");
 		//return html;
@@ -598,10 +614,34 @@ public class SubmissionServer extends Jooby {
 			resp.send(e.getMessage());
 		}
 	});
+	get("/analisarPlagios", (req,resp) -> {
+		String id = req.param("id").value();
+		if(id.length() != 3){
+			resp.send("Id nao pode conter a turma. Ex: RXX,PPX,PRX,PFX");
+		}else{
+			//Util.runPlagiarismAnalysis(id);
+			Util.startPlagiarismAnalysis(id);
+			resp.send("Analise de plagios iniciada");
+		}
+	});
+	
+	get("/plagios", (req) -> {
+		String id = req.param("id").value();
+        View html = Results.html("plagios");
+        if(id.length() != 3){
+        	throw new RuntimeException("Id nao pode conter a turma. Ex: RXX,PPX,PRX,PFX");
+        }else{
+            html.put("id",id);
+            html.put("plagios",Util.loadPlagiarismAnalysisResult(id));
+            html.put("students",Configuration.getInstance().getStudents());
+            return html;
+        }
+	});
 
   }
 
   {
+	  cookieSession();
 		/*post("/downloadProva",(req,resp) -> {
 			String prova = req.param("prova").value();
 			String matricula = req.param("matricula").value();

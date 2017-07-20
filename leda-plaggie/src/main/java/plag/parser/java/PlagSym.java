@@ -104,20 +104,21 @@ public class PlagSym {
     }
 
     public static void init(String filename, int multilineThreshold,
-			    boolean printLineNumbers) {
+			    boolean printLineNumbers) throws Exception {
 	PlagSym.printLineNumbers = printLineNumbers;
 	init(filename, multilineThreshold);
     }
 
-    public static void init(String filename, int multilineThreshold) {
+    public static void init(String filename, int multilineThreshold) throws Exception {
 	PlagSym.multiLineThreshold = multilineThreshold;
 	PlagSym.init(filename);
     }
 
     /**
      * Initializes the token printing for the given file.
+     * @throws Exception 
      */
-    public static void init(String filename) {
+    public static void init(String filename) throws Exception {
 	initValueStrings();
 	fileContents = new StringBuffer(10000);
 	tokens = new TokenList(filename);
@@ -154,7 +155,8 @@ public class PlagSym {
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
-	    System.exit(1);
+	    //System.exit(1);
+	    throw e;
 	}
     }
 

@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jooby</groupId>
 		<artifactId>jooby-project</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.3</version>
 		<relativePath />
 	</parent>
 
@@ -33,16 +33,9 @@
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>ufcg-leda</id>
-			<url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	<!-- repositories> <repository> <id>ufcg-leda</id> <url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url> 
+		<layout>default</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+		</repository> </repositories -->
 
 	<profiles>
 		<profile>
@@ -152,9 +145,9 @@
 		</dependency>
 		<!-- para usar o metodo de compactar uma pasta completa -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>br.edu.ufcg.ccc</groupId>
+			<version>1.0.0-SNAPSHOT</version>
 			<artifactId>leda-compactor-tool</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.odiszapc</groupId>
@@ -173,6 +166,12 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
+		<dependency>
+			<groupId>br.edu.ufcg.ccc</groupId>
+			<artifactId>leda-plaggie-tool</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
 		<dependency>
 			<groupId>org.jdom</groupId>
@@ -187,6 +186,17 @@
 			<version>3.6.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!--  dependency>
+			<groupId>org.jooby</groupId>
+			<artifactId>jooby-hazelcast</artifactId>
+		</dependency -->
 	</dependencies>
 
 	<build>
@@ -195,6 +205,7 @@
 				<directory>public</directory>
 				<excludes>
 					<exclude>**</exclude>
+					<exclude>analysis</exclude>
 				</excludes>
 			</resource>
 			<resource>

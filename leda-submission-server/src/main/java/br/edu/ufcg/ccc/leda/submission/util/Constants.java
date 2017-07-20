@@ -16,6 +16,7 @@ public abstract class Constants {
 	public static final String DEFAULT_CONFIG_FOLDER_NAME = "conf";
 
 	public static final String SUBMISSIONS_FOLDER_NAME = "subs";
+	public static final String ANALYSIS_FOLDER_NAME = "analysis";
 	public static final String REPORTS_FOLDER_NAME = "public/reports";
 	public static final String ROTEIROS_FOLDER_NAME = "roteiros";
 	public static final String PROVAS_FOLDER_NAME = "provas";
@@ -28,6 +29,8 @@ public abstract class Constants {
 	public static File ROTEIROS_FOLDER;
 	public static File PROVAS_FOLDER;
 	public static File CURRENT_SEMESTER_FOLDER;
+	public static File ANALYSIS_FOLDER;
+	public static Properties PLAGIARISM_PROPERTIES;
 	
 	public static String UPLOAD_FOLDER_NAME;
 	public static String CURRENT_SEMESTER;
@@ -63,6 +66,7 @@ public abstract class Constants {
 	static{
 		try {
 			Properties prop = Util.loadProperties();
+			PLAGIARISM_PROPERTIES = Util.loadPlagiarismProperties();
 			UPLOAD_FOLDER_NAME = prop.getProperty("upload.folder");
 			CURRENT_SEMESTER = prop.getProperty("semestre.letivo");
 			MAVEN_HOME_FOLDER = prop.getProperty("mavenHomeFolder");
@@ -111,7 +115,10 @@ public abstract class Constants {
 			if(!PROVAS_FOLDER.exists()){
 				PROVAS_FOLDER.mkdirs();
 			}
-			
+			ANALYSIS_FOLDER = new File(CURRENT_SEMESTER_FOLDER, Constants.ANALYSIS_FOLDER_NAME);
+    		if(!ANALYSIS_FOLDER.exists()){
+    			ANALYSIS_FOLDER.mkdir();
+    		}
 		} catch (IOException e) {
 			System.out.println("Properties not loaded. system will exit");
 			e.printStackTrace();
