@@ -26,6 +26,7 @@ import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.submission.util.Atividade;
+import br.edu.ufcg.ccc.leda.submission.util.Aula;
 import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
@@ -38,6 +39,8 @@ import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.Professor;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
+import br.edu.ufcg.ccc.leda.submission.util.RoteiroEspecial;
+import br.edu.ufcg.ccc.leda.submission.util.RoteiroRevisao;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
@@ -202,13 +205,22 @@ public class SubmissionServer extends Jooby {
 		
 		Student aluno = Configuration.getInstance().getStudents().get(matriculaAluno);
 		
-
+		Atividade atividade = 
+				Configuration.getInstance().getAtividades().get(id);
+		Corretor corretorAtribuido = null;
+		if(atividade != null && (atividade instanceof Roteiro)){
+			corretorAtribuido = ((Roteiro)atividade).getCorretor();
+			
+		}
+		
+		
 		View html = Results.html("comment-panel");
 		html.put("id",id);
 		html.put("matricula", matriculaAluno);
 		html.put("aluno",aluno);
-		html.put("corretorMat",corretorPar);
-		html.put("corretor", session.get("corretor"));
+		html.put("corretorMat",corretorPar); //corretor informado
+		html.put("corretorAtribuido",corretorAtribuido); //corretor atribuido
+		html.put("corretor", session.get("corretor").value()); //corretor logado
 		html.put("classificacao",CorrectionClassification.values());
 		html.put("adequacao",CodeAdequacy.values());
 		
