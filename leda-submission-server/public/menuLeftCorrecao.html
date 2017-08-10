@@ -37,7 +37,7 @@
     </style>
 
  </head>
-<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="15" onload="reloadCommentPanel();">
 <div class="container">
 	<br>
 	<p>Atividade: ${id}</p>
@@ -120,6 +120,13 @@ $(document).ready(function(){
 $('#myModal').on('shown.bs.modal', function() {
     $("#senha").focus();
 });
+</script>
+
+<script>
+function reloadCommentPanel(){
+	var bottomFrame = parent.document.getElementById("bottomframe");
+	bottomFrame.src=bottomFrame.src;
+}
 </script>
 </body>
 </html>
