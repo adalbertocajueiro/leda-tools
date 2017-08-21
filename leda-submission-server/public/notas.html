@@ -104,7 +104,12 @@
 										<#assign somaNotasProvas = somaNotasProvas + notaAtividade>
 									</#if>				
 								</#if>
-								<td class="text-xs-center"> ${notaAtividade}
+                                <#if corrReport.id?starts_with("P")>
+                                    <td class="text-xs-center text-info"> ${notaAtividade}
+                                <#else>
+                                    <td class="text-xs-center"> ${notaAtividade}
+                                </#if>
+								
 							  </#if>
 							  </#if>
 							</#list>
