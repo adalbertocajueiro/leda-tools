@@ -5764,11 +5764,6 @@ a.bg-success:focus, a.bg-success:hover {
   background-color: #5bc0de !important;
 }
 
-.bg-info-light {
-  color: #fff !important;
-  background-color: #aadeee !important;
-}
-
 a.bg-info:focus, a.bg-info:hover {
   background-color: #31b0d5 !important;
 }
