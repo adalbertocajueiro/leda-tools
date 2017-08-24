@@ -12,13 +12,10 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.FileAttributeView;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +79,6 @@ import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 import jxl.read.biff.BiffException;
-import plag.parser.plaggie.PlaggieUFCG;
 import plag.runner.PlagRunner;
 import plag.runner.SimilarityAnalysisResult;
 
@@ -492,10 +488,9 @@ public class Util {
 		Map<String,Double> mediasProvasPraticas = buildMediasProvasPraticas();
 		FileWriter fw = new FileWriter(csv);
 		StringBuilder content = new StringBuilder();
-		content.append("Matricula , MPP" + "\r\n");
-		
+		content.append("Matricula,MPP" + "\r\n");
 		mediasProvasPraticas.forEach((mat,mpp) -> {
-			content.append(mat + " , " + mpp);
+			content.append(mat + "," + String.format( "%.2f",mpp).replace(',', '.'));
 			content.append("\r\n");
 		});
 		
@@ -2298,6 +2293,9 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		DecimalFormat df = new DecimalFormat("#.##");
+		System.out.println(String.format( "%.2f",0.0));
+		System.out.println(String.format( "%.2f",0.0).replace(',', '.'));
 		Util.buildMediasProvasPraticasCSV();
 		Util.runPlagiarismAnalysis("PP1");
 		Util.runPlagiarismAnalysis("PP1");
