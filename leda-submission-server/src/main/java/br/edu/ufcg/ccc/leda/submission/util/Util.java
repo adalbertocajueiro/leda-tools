@@ -483,11 +483,11 @@ public class Util {
 	}
 	
 	public static File buildMediasProvasPraticasCSV() throws IOException, ConfigurationException, ServiceException{
-		File csv = new File(Constants.CURRENT_SEMESTER_FOLDER,"MediasProvasPraticas-" + Constants.CURRENT_SEMESTER + ".csv");
+		File csv = new File(Constants.CURRENT_SEMESTER_FOLDER,"MediasProvasPraticas-" + Constants.CURRENT_SEMESTER + ".xlsx");
 		
 		Map<String,Double> mediasProvasPraticas = buildMediasProvasPraticas();
 		FileWriter fw = new FileWriter(csv);
-		StringBuilder content = new StringBuilder();
+		/*StringBuilder content = new StringBuilder();
 		content.append("Matricula,MPP" + "\r\n");
 		mediasProvasPraticas.forEach((mat,mpp) -> {
 			content.append(mat + "," + String.format( "%.2f",mpp).replace(',', '.'));
@@ -497,17 +497,21 @@ public class Util {
 		fw.write(content.toString());
 		fw.close();
 		System.out.println("CSV das medias das provas praticas salvo comsucesso em " + csv.getAbsolutePath());
-
-		/*XSSFWorkbook workbook = new XSSFWorkbook();
+*/
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("MPP");
 		Row row = sheet.createRow(0);
 		Cell cellMatHdr = row.createCell(0);
-		cellMatHdr.setCellValue("Matricula,MPP");
+		cellMatHdr.setCellValue("Matricula");
+		Cell cellMPPHdr = row.createCell(1);
+		cellMPPHdr.setCellValue("MPP");
 		int count = 1;
 		for (String mat : mediasProvasPraticas.keySet()) {
 			Row newRow = sheet.createRow(count++);
-			Cell cellMatMPP = newRow.createCell(0);
-			cellMatMPP.setCellValue(mat+","+mediasProvasPraticas.get(mat));
+			Cell cellMat = newRow.createCell(0);
+			cellMat.setCellValue(mat);
+			Cell cellMPP = newRow.createCell(1);
+			cellMPP.setCellValue(Double.parseDouble(String.format( "%.2f",mediasProvasPraticas.get(mat)).replace(',', '.')));
 		}
 		try {
 			FileOutputStream out = new FileOutputStream(csv);
@@ -519,7 +523,7 @@ public class Util {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
 		return csv;
 	}
