@@ -486,6 +486,49 @@ public class Util {
 		return mediasSemFinal;
 	}
 	
+	public static File buildMediasProvasPraticasCSV() throws IOException, ConfigurationException, ServiceException{
+		File csv = new File(Constants.CURRENT_SEMESTER_FOLDER,"MediasProvasPraticas-" + Constants.CURRENT_SEMESTER + ".csv");
+		
+		Map<String,Double> mediasProvasPraticas = buildMediasProvasPraticas();
+		FileWriter fw = new FileWriter(csv);
+		StringBuilder content = new StringBuilder();
+		content.append("Matricula,MPP" + "\r\n");
+		
+		mediasProvasPraticas.forEach((mat,mpp) -> {
+			content.append(mat + "," + mpp);
+			content.append("\r\n");
+		});
+		
+		fw.write(content.toString());
+		fw.close();
+		System.out.println("CSV das medias das provas praticas salvo comsucesso em " + csv.getAbsolutePath());
+
+		/*XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet("MPP");
+		Row row = sheet.createRow(0);
+		Cell cellMatHdr = row.createCell(0);
+		cellMatHdr.setCellValue("Matricula,MPP");
+		int count = 1;
+		for (String mat : mediasProvasPraticas.keySet()) {
+			Row newRow = sheet.createRow(count++);
+			Cell cellMatMPP = newRow.createCell(0);
+			cellMatMPP.setCellValue(mat+","+mediasProvasPraticas.get(mat));
+		}
+		try {
+			FileOutputStream out = new FileOutputStream(csv);
+			workbook.write(out);
+			out.close();
+			System.out.println("CSV das medias das provas praticas salvo comsucesso em " + csv.getAbsolutePath());
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		
+		return csv;
+	}
+	
 	public static Map<String,Double> buildMediasProvasPraticas() throws IOException, ConfigurationException, ServiceException{
 		Map<String,Double> mediasProvasPraticas = new HashMap<String,Double>();
 		Map<String,CorrectionReport> correctionReports = Util.loadCorrectionReports(new Predicate<String>() {
@@ -2255,6 +2298,7 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Util.buildMediasProvasPraticasCSV();
 		Util.runPlagiarismAnalysis("PP1");
 		Util.runPlagiarismAnalysis("PP1");
 		List<SimilarityAnalysisResult> res = Util.loadPlagiarismAnalysisResult("PP1");

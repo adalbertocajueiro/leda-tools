@@ -441,6 +441,21 @@ public class SubmissionServer extends Jooby {
 		return gson.toJson(Util.buildMediasProvasPraticas());
 	  }).produces("json");
 	
+	get("/mediaProvasPraticasCSV", (req,resp) -> {
+		File fileToSend = null;
+		try {
+			fileToSend = Util.buildMediasProvasPraticasCSV();
+			if(fileToSend != null){
+				resp.type(MediaType.octetstream);
+		    	resp.download(fileToSend);
+			}else{
+				resp.send("Arquivo CSV com medias das provas praticas nao gerado");
+			}
+		} catch (ConfigurationException | IOException | AtividadeException e) {
+			resp.send(e.getMessage());
+		}
+	  });
+	
 	get("/notas", (req) -> {
 
 		Map<String,List<Atividade>> atividadesAgrupadas = 
