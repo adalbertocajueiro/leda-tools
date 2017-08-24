@@ -113,16 +113,16 @@
 							  </#if>
 							  </#if>
 							</#list>
-							<td class="text-xs-center font-weight-bold">${mediaRoteiros}
-							<td class="text-xs-center font-weight-bold">${mediaProvasPraticas}
-							<td class="text-xs-center font-weight-bold">${mediaProvasTeoricas}
+							<td class="text-xs-center font-weight-bold table-warning">${mediaRoteiros}
+							<td class="text-xs-center font-weight-bold table-warning">${mediaProvasPraticas}
+							<td class="text-xs-center font-weight-bold table-warning">${mediaProvasTeoricas}
 							<td class="text-xs-center font-weight-bold">${notaDaFinal}
 							<#if (mediaComFinal >= 7.0)>
-								<td class="text-xs-center font-weight-bold" style="color:blue">${mediaComFinal}
+								<td class="text-xs-center font-weight-bold table-danger" style="color:blue">${mediaComFinal}
 							<#elseif (mediaComFinal >= 5.0)>
-								<td class="text-xs-center font-weight-bold">${mediaComFinal}
+								<td class="text-xs-center font-weight-bold table-danger">${mediaComFinal}
 							<#else>
-								<td class="text-xs-center font-weight-bold" style="color:red">${mediaComFinal}
+								<td class="text-xs-center font-weight-bold table-danger" style="color:red">${mediaComFinal}
 							</#if>
 					</#if>
 				</#list>
