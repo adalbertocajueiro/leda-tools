@@ -492,10 +492,10 @@ public class Util {
 		Map<String,Double> mediasProvasPraticas = buildMediasProvasPraticas();
 		FileWriter fw = new FileWriter(csv);
 		StringBuilder content = new StringBuilder();
-		content.append("Matricula,MPP" + "\r\n");
+		content.append("Matricula , MPP" + "\r\n");
 		
 		mediasProvasPraticas.forEach((mat,mpp) -> {
-			content.append(mat + "," + mpp);
+			content.append(mat + " , " + mpp);
 			content.append("\r\n");
 		});
 		
