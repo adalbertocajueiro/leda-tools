@@ -57,7 +57,7 @@
 					<#assign t = corrReport.id?keep_after("-")>
 					<#assign atividade = atividades[corrReport.id]>
 					<#if t == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime) >
-						<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="">${corrReport.id?keep_before("-")}</th>
+						<th class="text-xs-center"><a href="report?id=${corrReport.id}" data-toggle="tooltip" data-placement="top" title='Relatório detalhado de correção'>${corrReport.id?keep_before("-")}</a></th>
 					</#if>
 					</#if>
 				
