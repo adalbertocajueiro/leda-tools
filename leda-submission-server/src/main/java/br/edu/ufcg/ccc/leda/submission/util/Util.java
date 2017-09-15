@@ -12,13 +12,10 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.FileAttributeView;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +79,6 @@ import br.edu.ufcg.ccc.leda.util.CorrectionReportItem;
 import br.edu.ufcg.ccc.leda.util.TestReport;
 import br.edu.ufcg.ccc.leda.util.Utilities;
 import jxl.read.biff.BiffException;
-import plag.parser.plaggie.PlaggieUFCG;
 import plag.runner.PlagRunner;
 import plag.runner.SimilarityAnalysisResult;
 
@@ -484,6 +480,52 @@ public class Util {
 			mediasSemFinal.put(mat, mediaSemFinal);
 		});
 		return mediasSemFinal;
+	}
+	
+	public static File buildMediasProvasPraticasCSV() throws IOException, ConfigurationException, ServiceException{
+		File csv = new File(Constants.CURRENT_SEMESTER_FOLDER,"MediasProvasPraticas-" + Constants.CURRENT_SEMESTER + ".xlsx");
+		
+		Map<String,Double> mediasProvasPraticas = buildMediasProvasPraticas();
+		FileWriter fw = new FileWriter(csv);
+		/*StringBuilder content = new StringBuilder();
+		content.append("Matricula,MPP" + "\r\n");
+		mediasProvasPraticas.forEach((mat,mpp) -> {
+			content.append(mat + "," + String.format( "%.2f",mpp).replace(',', '.'));
+			content.append("\r\n");
+		});
+		
+		fw.write(content.toString());
+		fw.close();
+		System.out.println("CSV das medias das provas praticas salvo comsucesso em " + csv.getAbsolutePath());
+*/
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet("MPP");
+		Row row = sheet.createRow(0);
+		Cell cellMatHdr = row.createCell(0);
+		cellMatHdr.setCellValue("Matricula");
+		Cell cellMPPHdr = row.createCell(1);
+		cellMPPHdr.setCellValue("MPP");
+		int count = 1;
+		for (String mat : mediasProvasPraticas.keySet()) {
+			Row newRow = sheet.createRow(count++);
+			Cell cellMat = newRow.createCell(0);
+			cellMat.setCellValue(mat);
+			Cell cellMPP = newRow.createCell(1);
+			cellMPP.setCellValue(Double.parseDouble(String.format( "%.2f",mediasProvasPraticas.get(mat)).replace(',', '.')));
+		}
+		try {
+			FileOutputStream out = new FileOutputStream(csv);
+			workbook.write(out);
+			out.close();
+			System.out.println("CSV das medias das provas praticas salvo comsucesso em " + csv.getAbsolutePath());
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return csv;
 	}
 	
 	public static Map<String,Double> buildMediasProvasPraticas() throws IOException, ConfigurationException, ServiceException{
@@ -2255,6 +2297,10 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		DecimalFormat df = new DecimalFormat("#.##");
+		System.out.println(String.format( "%.2f",0.0));
+		System.out.println(String.format( "%.2f",0.0).replace(',', '.'));
+		Util.buildMediasProvasPraticasCSV();
 		Util.runPlagiarismAnalysis("PP1");
 		Util.runPlagiarismAnalysis("PP1");
 		List<SimilarityAnalysisResult> res = Util.loadPlagiarismAnalysisResult("PP1");

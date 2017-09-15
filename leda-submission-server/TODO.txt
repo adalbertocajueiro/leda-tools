@@ -97,4 +97,10 @@ config também pode implementar a opcao de mostrar os de revisao ou nao.
 - implementar geracao de planilha excel de totalização para download como as planilahs individuais de cada atividade. - OK
 - na hora de compactar, já pode gerar a planilha de notas e comentarios da atividade para incluir na compactacao. - OK
 - colocar a adequacao no form de correcao. - OK
-- usar uma sessao que tenha timeout!!!!!
+- usar uma sessao que tenha timeout!!!!! - OK
+- na tela de comentarios colocar informacoes detalhadas dos testes e nao apenas a nota de teste (P,E,F,S). - OK
+- tentar implementar uma correcao automatica logo no envio. Precisaria corrigir individualmente e montar relatorios individuais.
+  O relatorio geral seria montado a partir dos individuais que ja foram corrigidos. Precisaria também ter uma forma de recorrigir 
+  todos. Tem que ver onde ficam os comentarios de cada estudante.
+- tentar conectarmelhor as telas do sistema: da tela de notas gerais ir para telas individuais de cada atividade.
+- colocar uma linha com a media de cada atividade na planilha geral.

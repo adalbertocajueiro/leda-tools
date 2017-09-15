@@ -57,7 +57,7 @@
 					<#assign t = corrReport.id?keep_after("-")>
 					<#assign atividade = atividades[corrReport.id]>
 					<#if t == turma && (.now > atividade.dataHoraLimiteEnvioAtraso.time?datetime) >
-						<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="">${corrReport.id?keep_before("-")}</th>
+						<th class="text-xs-center"><a class="btn-link bg-success" href="report?id=${corrReport.id}" data-toggle="tooltip" data-placement="top" title='Relatório detalhado de correção'>${corrReport.id?keep_before("-")}</a></th>
 					</#if>
 					</#if>
 				
@@ -104,20 +104,25 @@
 										<#assign somaNotasProvas = somaNotasProvas + notaAtividade>
 									</#if>				
 								</#if>
-								<td class="text-xs-center"> ${notaAtividade}
+                                <#if corrReport.id?starts_with("P")>
+                                    <td class="text-xs-center table-info"> ${notaAtividade}
+                                <#else>
+                                    <td class="text-xs-center"> ${notaAtividade}
+                                </#if>
+								
 							  </#if>
 							  </#if>
 							</#list>
-							<td class="text-xs-center font-weight-bold">${mediaRoteiros}
-							<td class="text-xs-center font-weight-bold">${mediaProvasPraticas}
-							<td class="text-xs-center font-weight-bold">${mediaProvasTeoricas}
+							<td class="text-xs-center font-weight-bold table-warning">${mediaRoteiros}
+							<td class="text-xs-center font-weight-bold table-warning">${mediaProvasPraticas}
+							<td class="text-xs-center font-weight-bold table-warning">${mediaProvasTeoricas}
 							<td class="text-xs-center font-weight-bold">${notaDaFinal}
 							<#if (mediaComFinal >= 7.0)>
-								<td class="text-xs-center font-weight-bold" style="color:blue">${mediaComFinal}
+								<td class="text-xs-center font-weight-bold table-danger" style="color:blue">${mediaComFinal}
 							<#elseif (mediaComFinal >= 5.0)>
-								<td class="text-xs-center font-weight-bold">${mediaComFinal}
+								<td class="text-xs-center font-weight-bold table-danger">${mediaComFinal}
 							<#else>
-								<td class="text-xs-center font-weight-bold" style="color:red">${mediaComFinal}
+								<td class="text-xs-center font-weight-bold table-danger" style="color:red">${mediaComFinal}
 							</#if>
 					</#if>
 				</#list>
