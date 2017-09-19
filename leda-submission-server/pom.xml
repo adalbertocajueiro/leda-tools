@@ -21,7 +21,7 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2017.1</semestre.letivo>
+		<semestre.letivo>2017.2</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<idSheetMonitores>1O8va7ybfUQuqp5EyxdYansGpxAKZDmO1To8GDA80QX8</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
@@ -53,7 +53,7 @@
 			</activation>
 			<properties>
 				<upload.folder>D:\trash2\leda-upload</upload.folder>
-				<mavenHomeFolder>D:\apache-maven-3.2.5</mavenHomeFolder>
+				<mavenHomeFolder>D:\apache-maven-3.5.0</mavenHomeFolder>
 			</properties>
 		</profile>
 	</profiles>
