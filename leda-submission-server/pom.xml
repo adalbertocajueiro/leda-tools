@@ -23,12 +23,12 @@
 		<jooby.version>${project.parent.version}</jooby.version>
 		<semestre.letivo>2017.2</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
-		<idSheetMonitores>1O8va7ybfUQuqp5EyxdYansGpxAKZDmO1To8GDA80QX8</idSheetMonitores>
+		<idSheetMonitores>18TWvZkhondBly0x4zK6RkgK1k5Lzkbwyg1PWxhcpmzE</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
 		<activitySheetIds>1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU,1qSZbn06x_oTN0Z9Zbl2H1JZF4hKjhwyjWU0m2D6HJAQ</activitySheetIds>
 		<authorizedIPs>150.165.74,150.165.54</authorizedIPs>
-		<edaSheetIds>1hr_1IPyLVLP536HM9Q72QPQV-hnIdOXcupCwm86xQWc,1SvRgjKB7IO_qwieo6PcDIWzIe1rqk723SsQo2NaoxH0</edaSheetIds>
+		<edaSheetIds>1boyrI4pLZZuev_iCfdErRN0QE7uYDNy5OqJhz7MliMQ</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>

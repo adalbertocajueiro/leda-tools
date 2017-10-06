@@ -1198,6 +1198,7 @@ public class Util {
                 CustomElementCollection cec = le.getCustomElements();
                 //Pass column name to access it's cell values
                 String matricula = cec.getValue("mat".toLowerCase());
+                
                 String mediaEDA = cec.getValue("MédiaParcialEDA".toLowerCase());
                 if(matricula == null){
                 	break;
@@ -2298,7 +2299,11 @@ public class Util {
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		List<Corretor> monitores = Util.loadSpreadsheetMonitor();
-		Util.loadSpreadsheetAtividades("1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU", monitores);
+	
+		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividades("1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU", monitores);
+		
+		Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1boyrI4pLZZuev_iCfdErRN0QE7uYDNy5OqJhz7MliMQ");
+
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println(String.format( "%.2f",0.0));
 		System.out.println(String.format( "%.2f",0.0).replace(',', '.'));

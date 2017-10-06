@@ -868,8 +868,8 @@ public class SubmissionServer extends Jooby {
 	    //return gson.toJson("Comentario salvo");
 	});
 	
-	post("/uploadSheet", (req) -> {
-		View html = Results.html("modal-uploadSheet");
+	post("/uploadSheet", (req,resp) -> {
+		//View html = Results.html("modal-uploadSheet");
 		
 		String tipoPlanilha = req.param("tipoPlanilha").value();
 		String senha = req.param("senha").value();
@@ -887,10 +887,12 @@ public class SubmissionServer extends Jooby {
 		}else{
 			throw new RuntimeException("Senha informada não é de professor algum");
 		}
-				
+		
+		Configuration.getInstance().reload(true);
 	    //resp.send("arquivo da frequencia carregado");
-	    
-	    return html;
+	    resp.redirect("menu");
+		
+	    //return html;
 	});
 	//use(new Auth().basic("*", MyUserClientLoginValidator.class));
 	//new SimpleTestTokenAuthenticator(){
