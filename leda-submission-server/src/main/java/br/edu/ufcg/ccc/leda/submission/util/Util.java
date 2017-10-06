@@ -1186,19 +1186,18 @@ public class Util {
 
             String sheetUrl =
                 "https://spreadsheets.google.com/feeds/list/" + idGoogleDrive + "/default/public/values";
-
+            
             // Use this String as url
             URL url = new URL(sheetUrl);
 
             // Get Feed of Spreadsheet url
             ListFeed lf = service.getFeed(url, ListFeed.class);
-
+            //System.out.println(lf.getEntries().size());
             //Iterate over feed to get cell value
             for (ListEntry le : lf.getEntries()) {
                 CustomElementCollection cec = le.getCustomElements();
                 //Pass column name to access it's cell values
                 String matricula = cec.getValue("mat".toLowerCase());
-                
                 String mediaEDA = cec.getValue("MédiaParcialEDA".toLowerCase());
                 if(matricula == null){
                 	break;
@@ -2302,8 +2301,9 @@ public class Util {
 	
 		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividades("1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU", monitores);
 		
-		Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1boyrI4pLZZuev_iCfdErRN0QE7uYDNy5OqJhz7MliMQ");
-
+		Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("18Wiz9d88WaMs8bRhwvzZwJshSJkLlkrACq_5rEUS0dc");
+		System.out.println(mediasEDA1.size());
+		System.exit(0);
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println(String.format( "%.2f",0.0));
 		System.out.println(String.format( "%.2f",0.0).replace(',', '.'));
