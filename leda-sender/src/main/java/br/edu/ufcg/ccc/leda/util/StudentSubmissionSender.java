@@ -45,6 +45,7 @@ public class StudentSubmissionSender extends Sender {
 		StringBody sem = new StringBody(semestre, ContentType.TEXT_PLAIN);
 		StringBody t = new StringBody(turma, ContentType.TEXT_PLAIN);
 		StringBody rot = new StringBody(roteiro, ContentType.TEXT_PLAIN);
+		//TODO tem que ver que IP está pegando para nao pegar o localhost
 		StringBody ip = new StringBody(Inet4Address.getLocalHost()
 				.getHostAddress(), ContentType.TEXT_PLAIN);
 
@@ -67,6 +68,7 @@ public class StudentSubmissionSender extends Sender {
 		StringBody files = new StringBody(gson.toJson(filesOwners), ContentType.TEXT_PLAIN);
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
+		
 		StringBuilder confirmation = new StringBuilder();
 		try {
 			HttpPost httppost = new HttpPost(url);
@@ -98,11 +100,18 @@ public class StudentSubmissionSender extends Sender {
 					}
 				}
 				EntityUtils.consume(resEntity);
+				response.close();
 				writeTicket(this.matricula + "-send.log",
 						confirmation.toString());
-			} finally {
+				System.out.println("--- RESPOSTA RETORNADA DO SERVIDOR");
+				System.out.println(confirmation.toString());
+				System.out.println("----------------------------------");
+				
+			}catch(IOException ex) {
 				response.close();
-			}
+			}finally {
+				response.close();
+			} 
 		} finally {
 			httpclient.close();
 		}

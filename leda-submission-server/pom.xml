@@ -27,7 +27,7 @@
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
 		<activitySheetIds>1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU,1sg06T2NVLIKglYjtUaz2l7F8rPCudAlP6ILR3403dcU</activitySheetIds>
-		<authorizedIPs>150.165.74,150.165.54</authorizedIPs>
+		<authorizedIPs>150.165.42</authorizedIPs>
 		<edaSheetIds>1boyrI4pLZZuev_iCfdErRN0QE7uYDNy5OqJhz7MliMQ,18Wiz9d88WaMs8bRhwvzZwJshSJkLlkrACq_5rEUS0dc</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>

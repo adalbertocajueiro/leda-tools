@@ -1,5 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class Validator {
 			}
 		} else if (atividade instanceof Roteiro && !(atividade instanceof RoteiroRevisao)){
 			//restricao para Adrews fazer download antecipado
-			if(matricula.equals("116110125") && !(atividade instanceof Prova)){
+			/*if(matricula.equals("116110125") && !(atividade instanceof Prova)){
 				GregorianCalendar dataLiberacao 
 					= (GregorianCalendar) atividade.getDataHora().clone();
 				dataLiberacao.add(Calendar.HOUR_OF_DAY, -3);
@@ -60,13 +61,13 @@ public class Validator {
 							Util.formatDate(dataLiberacao) + ".\n"
 							+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));			
 				}
-			}else{
+			}else{*/
 				if(dataAtual.before(atividade.getDataHora())){
 					throw new AtividadeException("Roteiro " + id + " disponivel para download apenas a partir de " +
 						Util.formatDate(atividade.getDataHora()) + ".\n"
 						+ "A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 				}
-			}
+			//}
 		}
 		
 		//se o arquivo for nulo (nao foi cadastrado ainda) ou nao existe fisicamente
@@ -186,13 +187,15 @@ public class Validator {
 		}
 		
 		GregorianCalendar dataAtual = new GregorianCalendar();
+		ArrayList<String> ips = Configuration.getInstance().getIpsAutorizados();
+		String ipCaller = config.getIp();
 		
 		//se for prova
 		if(Constants.PATTERN_PROVA.matcher(id).matches()){
 			//se o aluno submete de um IP invalido
-			String ipCaller = config.getIp();
+			//String ipCaller = config.getIp();
 			//System.out.println("Validator.IP: " + ipCaller);
-			ArrayList<String> ips = Configuration.getInstance().getIpsAutorizados();
+			
 			Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
 			if(ipStream.count() == 0){ //nao esta nos ips autorizados
 				throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
@@ -222,15 +225,48 @@ public class Validator {
 
 			
 		} else{ //eh roteiro
-					
- 			//se roteiro informado esta fora do prazo de recebimento
-			
+			//se roteiro informado esta fora do prazo de recebimento
 			if(atividade.getDataHora().after(dataAtual) ||
 					((Roteiro) atividade).getDataHoraLimiteEnvioAtraso().before(dataAtual)){
 	
 				throw new AtividadeException("Envio do roteiro " + id + " possivel apenas entre " + Util.formatDate(atividade.getDataHora())
 						+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso()) + ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
+			
+			//se a data do roteiro for antes da data da PP1 entao tem que aceitar 
+			//o primeiro envio apenas do lab. 
+			Atividade pp1 = atividades.get("PP1-" + config.getId().substring(4));
+			if(pp1 == null) {
+				throw new AtividadeException("Prova PP1-" + config.getId().substring(4) + " nao localizada!");
+			}
+			Atividade roteiro = atividades.get(config.getId());
+			if(roteiro == null) {
+				throw new AtividadeException("Roteiro " + config.getId() + " nao localizado!");
+			}			
+			
+			Submission sub = Util.getSubmissionForStudent(roteiro.getId(), config.getMatricula());
+			//se data do roteiro for antes da prova pratica 1 - o primeiro envio tem que ser feito 
+			//de dentro do lab e nas primeiras duas horas. 
+			if(roteiro.getDataHora().before(pp1.getDataHora())) { 
+				if(sub == null) { //nao tem primeira submissao ainda
+					GregorianCalendar now = new GregorianCalendar();
+					if( (now.getTimeInMillis() - roteiro.getDataHora().getTimeInMillis()) > 2*60*60*1000 ) {
+						//passou as duas horas iniciais e nao pode receber
+						throw new AtividadeException("Primeiro envio permitido apenas entre " + Util.formatDate(roteiro.getDataHora()) + " e " + Util.formatDate(((Roteiro)roteiro).getDataHoraLimiteEnvioNormal()));
+					} 
+					
+					Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
+					if(ipStream.count() == 0){ //nao esta nos ips autorizados
+						throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
+					}
+				}		
+			}
+			//nao aceita primeiro envio de fora do lab
+			
+			//se foi feito o primeiro envio do lab entao pode aceitar os demais desde que dentro do prazo
+			
+			//se primeiro envio nao foi feito dentro do lab entao nao pode aceitar envios tardios de
+			//fora do lab = falta
 		}
 		
 	}
