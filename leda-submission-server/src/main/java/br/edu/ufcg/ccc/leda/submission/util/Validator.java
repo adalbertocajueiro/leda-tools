@@ -245,17 +245,21 @@ public class Validator {
 			}			
 			
 			Submission sub = Util.getSubmissionForStudent(roteiro.getId(), config.getMatricula());
+			//System.out.println("Submissao encontrada: " + sub);
 			//se data do roteiro for antes da prova pratica 1 - o primeiro envio tem que ser feito 
 			//de dentro do lab e nas primeiras duas horas. 
+			//System.out.println("roteiro eh anterior a prova 1: " + roteiro.getDataHora().before(pp1.getDataHora()));
 			if(roteiro.getDataHora().before(pp1.getDataHora())) { 
 				if(sub == null) { //nao tem primeira submissao ainda
 					GregorianCalendar now = new GregorianCalendar();
 					if( (now.getTimeInMillis() - roteiro.getDataHora().getTimeInMillis()) > 2*60*60*1000 ) {
 						//passou as duas horas iniciais e nao pode receber
-						throw new AtividadeException("Primeiro envio permitido apenas entre " + Util.formatDate(roteiro.getDataHora()) + " e " + Util.formatDate(((Roteiro)roteiro).getDataHoraLimiteEnvioNormal()));
+						throw new AtividadeException("Primeiro envio permitido apenas dentro do prazo de duas horas a partir de " + Util.formatDate(roteiro.getDataHora()));
 					} 
-					
+					//System.out.println("Esta dentro do prazo");
 					Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
+					//System.out.println("IPS autorizados: " + Arrays.toString(ips.toArray()));
+					//System.out.println("IP do remetente: " + ipCaller);
 					if(ipStream.count() == 0){ //nao esta nos ips autorizados
 						throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
 					}
