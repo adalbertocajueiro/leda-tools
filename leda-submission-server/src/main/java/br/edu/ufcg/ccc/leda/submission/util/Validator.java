@@ -259,7 +259,7 @@ public class Validator {
 					//System.out.println("Esta dentro do prazo");
 					Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
 					//System.out.println("IPS autorizados: " + Arrays.toString(ips.toArray()));
-					//System.out.println("IP do remetente: " + ipCaller);
+					System.out.println("IP do remetente: " + ipCaller);
 					if(ipStream.count() == 0){ //nao esta nos ips autorizados
 						throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
 					}
