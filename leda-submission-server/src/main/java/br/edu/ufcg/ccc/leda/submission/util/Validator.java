@@ -245,12 +245,12 @@ public class Validator {
 			}			
 			
 			Submission sub = Util.getSubmissionForStudent(roteiro.getId(), config.getMatricula());
-			System.out.println("Submissao encontrada: " + sub);
+			System.out.println("Submissao encontrada: " + sub!=null?sub.getArquivoSubmetido():"null");
 			//se data do roteiro for antes da prova pratica 1 - o primeiro envio tem que ser feito 
 			//de dentro do lab e nas primeiras duas horas. 
 			System.out.println("roteiro eh anterior a prova 1: " + roteiro.getDataHora().before(pp1.getDataHora()));
 			if(roteiro.getDataHora().before(pp1.getDataHora())) { 
-				if(sub == null) { //nao tem primeira submissao ainda
+				if(sub == null || sub.getArquivoSubmetido() == null) { //nao tem primeira submissao ainda
 					GregorianCalendar now = new GregorianCalendar();
 					if( (now.getTimeInMillis() - roteiro.getDataHora().getTimeInMillis()) > 2*60*60*1000 ) {
 						//passou as duas horas iniciais e nao pode receber
