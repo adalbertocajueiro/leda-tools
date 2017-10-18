@@ -19,7 +19,7 @@ package br.edu.ufcg.ccc.leda;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.http.client.ClientProtocolException;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -97,9 +97,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 				sender.send();
 				System.out
 						.println("Please check your log file to see the confirmation from the server (last record)");
-			} catch (ClientProtocolException e) {
-				throw new MojoExecutionException("Send error", e);
-			} catch (IOException e) {
+			}  catch (IOException e) {
 				// e.printStackTrace();
 				throw new MojoExecutionException("Compaction error", e);
 			}

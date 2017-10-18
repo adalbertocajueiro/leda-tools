@@ -8,7 +8,6 @@ import java.net.Inet4Address;
 import java.util.Map;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -37,8 +36,17 @@ public class StudentSubmissionSender extends Sender {
 		this.turma = roteiro.substring(4);
 		this.filesOwners = files;
 	}
+	
+	public StudentSubmissionSender(File arquivo, String matricula,
+			String semestre, String roteiro, String url) {
+		super(arquivo, roteiro, url);
+		this.matricula = matricula;
+		this.semestre = semestre;
+		// RXX-XX onde os ultimos XX sao a turma
+		this.turma = roteiro.substring(4);
+	}
 
-	public void send() throws ClientProtocolException, IOException {
+	public void send() throws IOException {
 
 		FileBody arq = new FileBody(arquivo, ContentType.MULTIPART_FORM_DATA);
 		StringBody mat = new StringBody(matricula, ContentType.TEXT_PLAIN);
@@ -64,8 +72,8 @@ public class StudentSubmissionSender extends Sender {
                         }
                 }
 		 */
-		Gson gson = new Gson();
-		StringBody files = new StringBody(gson.toJson(filesOwners), ContentType.TEXT_PLAIN);
+		//Gson gson = new Gson();
+		//StringBody files = new StringBody(gson.toJson(filesOwners), ContentType.TEXT_PLAIN);
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
@@ -75,8 +83,8 @@ public class StudentSubmissionSender extends Sender {
 			HttpEntity reqEntity = MultipartEntityBuilder.create()
 					.addPart("arquivo", arq).addPart("matricula", mat)
 					.addPart("semestre", sem).addPart("turma", t)
-					.addPart("roteiro", rot).addPart("ip", ip)
-					.addPart("filesOwners",files).build();
+					.addPart("roteiro", rot).addPart("ip", ip).build();
+					//.addPart("filesOwners",files).build();
 
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending file: " + httppost.getRequestLine());

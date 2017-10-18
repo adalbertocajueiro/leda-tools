@@ -752,7 +752,7 @@ public class SubmissionServer extends Jooby {
 			      String semestre = req.param("semestre").value();
 			      String id = req.param("roteiro").value();
 			      String ip = req.param("ip").value();
-			      String files = req.param("filesOwners").value();
+			      String files = req.param("filesOwners").value("");
 			      Upload upload = req.param("arquivo").toUpload();
 			      
 			      

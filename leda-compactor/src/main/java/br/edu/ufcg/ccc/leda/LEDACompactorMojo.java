@@ -19,10 +19,8 @@ package br.edu.ufcg.ccc.leda;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.http.client.ClientProtocolException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -104,7 +102,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 		//TODO poderia fazer algumas validacoes na matricula e turma antes de compactar
 		//System.out.println("Injecting author information...");
 		//List<File> files = Util.getFiles(srcFolder, ".java");
-		Map<String,String> filesOwners = new HashMap<String,String>();
+		//Map<String,String> filesOwners = new HashMap<String,String>();
 		//try {
 		//	filesOwners = Util.addAuthorToFiles(files, aluno.getMatricula(), aluno.getNome());
 		//} catch (IOException e1) {
@@ -117,14 +115,12 @@ public class LEDACompactorMojo extends AbstractMojo {
 			compactor.zipFolder(srcFolder, destZipFile);
 			System.out.println("Compaction sucess: " + destZipFile.getName());
 			sender = new StudentSubmissionSender(destZipFile, matricula,
-					semestre, roteiro, url,filesOwners);
+					semestre, roteiro, url);
 			System.out.println("Submitting file " + destZipFile.getName()
 					+ " to " + url);
 			sender.send();
 			System.out
 					.println("Please check your log file to see the confirmation from the server (last record)");
-		} catch (ClientProtocolException e) {
-			throw new MojoExecutionException("Send error", e);
 		} catch (IOException e) {
 			// e.printStackTrace();
 			throw new MojoExecutionException("Compaction error", e);
