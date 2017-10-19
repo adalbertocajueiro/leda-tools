@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Inet4Address;
 import java.util.Map;
 
 import org.apache.http.HttpEntity;
@@ -18,7 +17,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import com.google.gson.Gson;
+import br.edu.ufcg.ccc.leda.sender.util.Util;
 
 public class StudentSubmissionSender extends Sender {
 
@@ -54,7 +53,8 @@ public class StudentSubmissionSender extends Sender {
 		StringBody t = new StringBody(turma, ContentType.TEXT_PLAIN);
 		StringBody rot = new StringBody(roteiro, ContentType.TEXT_PLAIN);
 		//TODO tem que ver que IP está pegando para nao pegar o localhost
-		StringBody ip = new StringBody(Inet4Address.getLocalHost()
+		StringBody ip = new StringBody(Util.getLocalIP()
+				//new StringBody(Inet4Address.getLocalHost()
 				.getHostAddress(), ContentType.TEXT_PLAIN);
 
 		/** AQUI PODE PRECISAR DE ALGUMA LOGICA PARA ELIMINAR O LOOPBACK 127.0.0.1
