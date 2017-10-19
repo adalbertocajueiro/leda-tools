@@ -235,7 +235,7 @@ public class Validator {
 			
 			//se a data do roteiro for antes da data da PP1 entao tem que aceitar 
 			//o primeiro envio apenas do lab. 
-			Atividade pp1 = atividades.get("PP1-" + config.getId().substring(4));
+			/*Atividade pp1 = atividades.get("PP1-" + config.getId().substring(4));
 			if(pp1 == null) {
 				throw new AtividadeException("Prova PP1-" + config.getId().substring(4) + " nao localizada!");
 			}
@@ -264,7 +264,7 @@ public class Validator {
 						throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
 					}
 				}		
-			}
+			}*/
 			//nao aceita primeiro envio de fora do lab
 			
 			//se foi feito o primeiro envio do lab entao pode aceitar os demais desde que dentro do prazo
