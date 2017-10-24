@@ -235,7 +235,7 @@ public class Validator {
 			
 			//se a data do roteiro for antes da data da PP1 entao tem que aceitar 
 			//o primeiro envio apenas do lab. 
-			/*Atividade pp1 = atividades.get("PP1-" + config.getId().substring(4));
+			Atividade pp1 = atividades.get("PP1-" + config.getId().substring(4));
 			if(pp1 == null) {
 				throw new AtividadeException("Prova PP1-" + config.getId().substring(4) + " nao localizada!");
 			}
@@ -245,10 +245,10 @@ public class Validator {
 			}			
 			
 			Submission sub = Util.getSubmissionForStudent(roteiro.getId(), config.getMatricula());
-			System.out.println("Submissao encontrada: " + sub!=null?sub.getArquivoSubmetido():"null");
+			//System.out.println("Submissao encontrada: " + sub!=null?sub.getArquivoSubmetido():"null");
 			//se data do roteiro for antes da prova pratica 1 - o primeiro envio tem que ser feito 
 			//de dentro do lab e nas primeiras duas horas. 
-			System.out.println("roteiro eh anterior a prova 1: " + roteiro.getDataHora().before(pp1.getDataHora()));
+			//System.out.println("roteiro eh anterior a prova 1: " + roteiro.getDataHora().before(pp1.getDataHora()));
 			if(roteiro.getDataHora().before(pp1.getDataHora())) { 
 				if(sub == null || sub.getArquivoSubmetido() == null) { //nao tem primeira submissao ainda
 					GregorianCalendar now = new GregorianCalendar();
@@ -258,13 +258,13 @@ public class Validator {
 					} 
 					//System.out.println("Esta dentro do prazo");
 					Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
-					System.out.println("IPS autorizados: " + Arrays.toString(ips.toArray()));
-					System.out.println("IP do remetente: " + ipCaller);
+					//System.out.println("IPS autorizados: " + Arrays.toString(ips.toArray()));
+					//System.out.println("IP do remetente: " + ipCaller);
 					if(ipStream.count() == 0){ //nao esta nos ips autorizados
-						throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
+						throw new AtividadeException("Primeiro envio a partir de IP nao autorizado: " + ipCaller + ". Envios sao possivels apenas a partir de IPs oriundos de: " + Arrays.toString(ips.toArray()));
 					}
 				}		
-			}*/
+			}
 			//nao aceita primeiro envio de fora do lab
 			
 			//se foi feito o primeiro envio do lab entao pode aceitar os demais desde que dentro do prazo

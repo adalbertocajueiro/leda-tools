@@ -26,7 +26,6 @@ import com.google.gdata.util.ServiceException;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.ccc.leda.submission.util.Atividade;
-import br.edu.ufcg.ccc.leda.submission.util.Aula;
 import br.edu.ufcg.ccc.leda.submission.util.AtividadeException;
 import br.edu.ufcg.ccc.leda.submission.util.AutomaticCorrector;
 import br.edu.ufcg.ccc.leda.submission.util.Configuration;
@@ -39,8 +38,6 @@ import br.edu.ufcg.ccc.leda.submission.util.FileUtilities;
 import br.edu.ufcg.ccc.leda.submission.util.Professor;
 import br.edu.ufcg.ccc.leda.submission.util.ProfessorUploadConfiguration;
 import br.edu.ufcg.ccc.leda.submission.util.Roteiro;
-import br.edu.ufcg.ccc.leda.submission.util.RoteiroEspecial;
-import br.edu.ufcg.ccc.leda.submission.util.RoteiroRevisao;
 import br.edu.ufcg.ccc.leda.submission.util.Student;
 import br.edu.ufcg.ccc.leda.submission.util.StudentException;
 import br.edu.ufcg.ccc.leda.submission.util.StudentUploadConfiguration;
