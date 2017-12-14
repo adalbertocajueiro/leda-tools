@@ -50,13 +50,13 @@
 				<!-- gera o relatorio de testes em html -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.18.1</version>
+				<version>2.20.1</version>
 			</plugin>
 			<plugin>
 				<!-- associa o resultado do relatorio com o codigo -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.1</version>
+				<version>2.5</version>
 			</plugin>
 		</plugins>
 	</reporting>
