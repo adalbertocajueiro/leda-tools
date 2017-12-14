@@ -100,6 +100,8 @@ public class MavenUtility {
 			request.setGoals(Arrays.asList("site", "--log-file "
 					+ MAVEN_OUTPUT_LOG));
 			request.setBaseDirectory(projectFolder);
+			request.setBatchMode(false);
+			
 			try {
 				invoker.execute(request);
 			} catch (MavenInvocationException e) {
