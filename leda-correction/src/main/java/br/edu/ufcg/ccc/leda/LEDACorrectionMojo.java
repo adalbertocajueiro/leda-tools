@@ -19,6 +19,7 @@ package br.edu.ufcg.ccc.leda;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,7 +156,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 					return result;
 				}
 			});
-	
+			ArrayList<File> folders = new ArrayList<File>();
 			if (submissions.length > 0) {
 				for (int i = 0; i < submissions.length; i++) {
 					File studZipFile = submissions[i];
@@ -167,7 +168,21 @@ public class LEDACorrectionMojo extends AbstractMojo {
 						File projectFolder = mu.createCompleteProjectFolder(
 								correctionEnvZipFile, studZipFile, fileNames);
 						System.out
-								.println("CREATING AND RUNNING MAVEN FOR FOLDER: "
+								.println("CREATING MAVEN PROJECT FOLDER: "
+										+ projectFolder.getAbsolutePath());
+						folders.add(projectFolder);
+						// run maven
+						//mu.executeMaven(projectFolder);
+					} catch (Exception e) {
+						e.printStackTrace();
+						throw new MojoExecutionException(
+								"Error creating project folder", e);
+					}
+				}
+				for (File projectFolder : folders) {
+					try {
+						System.out
+								.println("RUNNING MAVEN FOR FOLDER: "
 										+ projectFolder.getAbsolutePath());
 						// run maven
 						mu.executeMaven(projectFolder);
@@ -177,6 +192,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 								"Error creating project folder", e);
 					}
 				}
+				
 				System.out.println("GENERATING TEST REPORT IN JSON");
 				File targetFolder = new File(this.project.getBuild().getDirectory());
 				try {
