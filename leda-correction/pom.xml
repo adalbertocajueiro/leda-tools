@@ -14,7 +14,7 @@
 	<name>LEDA Correction System Mojo</name>
 	
 	<url>${plugin.repository.url}</url>
-	
+
 	<profiles>
 		<profile>
 			<id>server</id>

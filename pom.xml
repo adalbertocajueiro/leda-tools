@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</plugin.repository.url -->
 		<plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</plugin.repository.url>
+		<injected.plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</injected.plugin.repository.url>
 		<jdk.version>1.8</jdk.version>
 		<junit.version>4.12</junit.version>
 	</properties>
@@ -64,7 +65,7 @@
 		<!-- module>leda-submission-server</module -->
 		<!--  module>leda-submission-tool</module -->		
 	</modules>
-	<profiles>
+	<!--  profiles>
     <profile>
       <id>server</id>
       <properties>
@@ -81,7 +82,7 @@
         <injected.plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</injected.plugin.repository.url>
       </properties>   
     </profile>
-  </profiles>
+  </profiles -->
 	<build>
 		<plugins>
 			<plugin>
