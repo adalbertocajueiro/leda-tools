@@ -26,13 +26,13 @@
 		<idSheetMonitores>18TWvZkhondBly0x4zK6RkgK1k5Lzkbwyg1PWxhcpmzE</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
-		<activitySheetIds>1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU,1sg06T2NVLIKglYjtUaz2l7F8rPCudAlP6ILR3403dcU</activitySheetIds>
+		<activitySheetIds>1gVqM4gPKf_DlRhMK56t9kCMVO0uPehowVLQW-7_D6uU,1sg06T2NVLIKglYjtUaz2l7F8rPCudAlP6ILR3403dcU</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
 		<edaSheetIds>1boyrI4pLZZuev_iCfdErRN0QE7uYDNy5OqJhz7MliMQ,18Wiz9d88WaMs8bRhwvzZwJshSJkLlkrACq_5rEUS0dc</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
-
+	
 	<!-- repositories> <repository> <id>ufcg-leda</id> <url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url> 
 		<layout>default</layout> <snapshots> <enabled>true</enabled> </snapshots> 
 		</repository> </repositories -->

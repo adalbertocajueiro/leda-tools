@@ -334,6 +334,7 @@ public class FileUtilities {
 	 */
 	public static void salvarFrequencia(File excelFileFrequencia) throws IOException{
 		String turma = Util.extractTurmaFromExcelFile(excelFileFrequencia);
+		//System.out.println("TURMA DO ARQUIVO: " + turma);
 		if(!turma.equals("0")){ //arquivo parseado corretamente
 			//remove o que já tem la e depois salva
 			File[] frequencias = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
