@@ -34,7 +34,7 @@ public class PlagRunner {
 	private String atividadeId;
 	private File currentSemesterFolder;
 	private Properties properties;
-	private static double THRESHOLD = 0.99;
+	//private static double THRESHOLD = 0.99;
 
 	public PlagRunner(File currentSemesterFolder, String atividadeId, File analysisFolderInServer)
 			throws URISyntaxException, IOException {
@@ -98,7 +98,7 @@ public class PlagRunner {
 	 *            o ID da atividade sem a turma. Tem formato RRX,PPX,RXX,PRX,PFX
 	 * @throws Exception
 	 */
-	public List<SimilarityAnalysisResult> runPlagiarismAnalysis() throws Exception {
+	public List<SimilarityAnalysisResult> runPlagiarismAnalysis(double threshold) throws Exception {
 		List<SimilarityAnalysisResult> result = new ArrayList<SimilarityAnalysisResult>();
 		List<String> fileNames = new ArrayList<String>();
 		// PASTAS CONTENDO AS SUBMISSOES
@@ -140,7 +140,7 @@ public class PlagRunner {
 		}
 
 		result = runPlagiarismAnalysis(parentAnalysisFolder, atividadeId, atividadeSubFolders, fileNames);
-		result = result.stream().filter(sar -> sar.getSimilarity() > THRESHOLD).collect(Collectors.toList());
+		result = result.stream().filter(sar -> sar.getSimilarity() > threshold).collect(Collectors.toList());
 
 		return result;
 	}
@@ -364,7 +364,7 @@ public class PlagRunner {
 	public static void main(String[] args) throws Exception {
 		PlagRunner pr = new PlagRunner(new File("D:\\trash2\\leda-upload\\2017.1"), "PP1",
 				new File("D:\\UFCG\\leda\\leda-tools\\leda-submission-server\\public\\reports\\analysis"));
-		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis();
+		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis(0.99);
 		int i = 1;
 		for (SimilarityAnalysisResult r : results) {
 			System.out.println(i++ + " File: " + r.getFileStudent1().getName() + ": (" + r.getMatriculaStudent1() + ","

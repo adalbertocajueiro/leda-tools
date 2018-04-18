@@ -628,11 +628,12 @@ public class SubmissionServer extends Jooby {
 	});
 	get("/analisarPlagios", (req,resp) -> {
 		String id = req.param("id").value();
+		double threshold = req.param("threshold").doubleValue();
 		if(id.length() != 3){
 			resp.send("Id nao pode conter a turma. Ex: RXX,PPX,PRX,PFX");
 		}else{
 			//Util.runPlagiarismAnalysis(id);
-			Util.startPlagiarismAnalysis(id);
+			Util.startPlagiarismAnalysis(id,threshold);
 			resp.send("Analise de plagios iniciada");
 		}
 	});

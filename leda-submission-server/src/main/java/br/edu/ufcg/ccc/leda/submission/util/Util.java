@@ -189,10 +189,10 @@ public class Util {
 	/**
 	 * Roda a analise de plagios emuma thread a parte
 	 */
-	public static void startPlagiarismAnalysis(String atividadeId){
+	public static void startPlagiarismAnalysis(String atividadeId, double threshold){
 		Thread analysisThread = new Thread(() -> {
 		     try {
-				Util.runPlagiarismAnalysis(atividadeId);
+				Util.runPlagiarismAnalysis(atividadeId, threshold);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -208,7 +208,7 @@ public class Util {
 	 * @param atividadeId o id da atividade sem a turma
 	 * @throws Exception 
 	 */
-	public static void runPlagiarismAnalysis(String atividadeId) throws Exception{
+	public static void runPlagiarismAnalysis(String atividadeId, double threshold) throws Exception{
 		File reportsFolder = new File(Constants.REPORTS_FOLDER_NAME);
 		File parentAnalysisFolder = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.ANALYSIS_FOLDER_NAME);
 		if(!parentAnalysisFolder.exists()){
@@ -252,7 +252,7 @@ public class Util {
 		}
 		PlagRunner pr = new PlagRunner(Constants.PLAGIARISM_PROPERTIES,Constants.CURRENT_SEMESTER_FOLDER,atividadeId,analysisFolderInServer);
 		
-		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis();
+		List<SimilarityAnalysisResult> results = pr.runPlagiarismAnalysis(threshold);
 		
 		File jsonFile = new File(pr.getAnalysisFolder(),atividadeId + "-analysis-result.json");
 		Util.writeAnalysisResultToJson(results, jsonFile);
@@ -2308,8 +2308,8 @@ public class Util {
 		System.out.println(String.format( "%.2f",0.0));
 		System.out.println(String.format( "%.2f",0.0).replace(',', '.'));
 		Util.buildMediasProvasPraticasCSV();
-		Util.runPlagiarismAnalysis("PP1");
-		Util.runPlagiarismAnalysis("PP1");
+		Util.runPlagiarismAnalysis("PP1", 0.9);
+		Util.runPlagiarismAnalysis("PP1", 0.9);
 		List<SimilarityAnalysisResult> res = Util.loadPlagiarismAnalysisResult("PP1");
 		for (SimilarityAnalysisResult sar : res) {
 			System.out.println(sar.generateLinkFileStudent1());
