@@ -2297,6 +2297,8 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Map<String,Student> alunos = Util.loadStudentLists();
+		
 		List<Corretor> monitores = Util.loadSpreadsheetMonitor();
 	
 		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividades("1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU", monitores);
@@ -2336,7 +2338,7 @@ public class Util {
 		List<Submission> submissoes = Util.submissions(new File(Constants.CURRENT_SEMESTER_FOLDER,"R01-01"));
 		Util.exportRoteiroToExcel("R02-01");
 		Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
-		Map<String,Student> alunos = Util.loadStudentLists();
+		//Map<String,Student> alunos = Util.loadStudentLists();
 		mediasEDA.forEach((m,med) -> {
 			if(alunos.get(m) != null){
 				System.out.println(alunos.get(m).getNome() + " teve media de EDA " + med);
