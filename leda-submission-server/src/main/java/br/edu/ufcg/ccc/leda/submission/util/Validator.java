@@ -20,7 +20,12 @@ public class Validator {
 		Student requester = studentsMap.get(matricula);
 		String turma = id.substring(4);
 		if(requester == null){
-			throw new AtividadeException("Matricula " + matricula + " nao cadastrada");
+			List<Corretor> corretores = Configuration.getInstance().getMonitores();
+			if (!corretores.stream().filter(c -> c.getMatricula().equals(matricula))
+					.findFirst().isPresent()){
+			
+				throw new AtividadeException("Matricula " + matricula + " nao cadastrada");
+			}
 		}else if(!turma.equals(requester.getTurma())){
 			throw new AtividadeException("Estudante " + matricula + " nao pode fazer download de ambientes da turma " + turma);			
 		}

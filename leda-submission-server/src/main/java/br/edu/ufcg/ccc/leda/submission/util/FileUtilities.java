@@ -51,8 +51,10 @@ public class FileUtilities {
 		
 				Map<String,Student> studentsMap = Configuration.getInstance().getStudents();
 				Student requester = studentsMap.get(matricula);
-				content = "[DOWNLOAD]:atividade (roteiro ou prova) " + id + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
-				logger.log(content);
+				if(requester != null){
+					content = "[DOWNLOAD]:atividade (roteiro ou prova) " + id + " enviada para estudante " + matricula + "-" + requester.getNome() + " em " + Util.formatDate(new GregorianCalendar());
+					logger.log(content);
+				}
 			}
 		}
 		return environment;
