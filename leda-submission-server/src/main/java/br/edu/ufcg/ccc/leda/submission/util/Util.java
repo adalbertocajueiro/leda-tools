@@ -1202,6 +1202,9 @@ public class Util {
                 if(matricula == null){
                 	break;
                 }
+                if(mediaEDA == null) {
+                	mediaEDA = "0,0";
+                }
                 mediaEDA = mediaEDA.replace(',', '.');
 				mediasEDA.put(matricula, Double.valueOf(mediaEDA));
             }
@@ -2297,14 +2300,15 @@ public class Util {
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
+		Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1RLCM_LlhrI7y1n-7nbKff_Kcemvob3ZDCyb2z8B_Jio");
+		System.out.println(mediasEDA1.size());
+
 		Map<String,Student> alunos = Util.loadStudentLists();
 		
 		List<Corretor> monitores = Util.loadSpreadsheetMonitor();
 	
 		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividades("1oS6dHdXXzWcTcySSyUUaGGgRXs5NrOHTscU4IvbZaAU", monitores);
 		
-		Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("18Wiz9d88WaMs8bRhwvzZwJshSJkLlkrACq_5rEUS0dc");
-		System.out.println(mediasEDA1.size());
 		System.exit(0);
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println(String.format( "%.2f",0.0));
