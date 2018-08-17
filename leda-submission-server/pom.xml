@@ -21,14 +21,14 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2018.1</semestre.letivo>
+		<semestre.letivo>2018.2</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<idSheetMonitores>17YynUjFOqPkHJ4rSuiQsvhFwTLCJEk-dIt4Ns-Pi_gY</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
 		<activitySheetIds>1UjLEBRJdCDeDir3VzhRTrvUK1Fykv0hPoNwf7xsVQhk,1tq2-WzhvmxDpvUuu9LCMgLxuMMHgXUn23veTMOyz1iA</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
-		<edaSheetIds>1RLCM_LlhrI7y1n-7nbKff_Kcemvob3ZDCyb2z8B_Jio,1zkX8iYni-eoMGpy4fO5OmrrIjPvT_3DQKXQz-XCHSsU</edaSheetIds>
+		<edaSheetIds>1UdopTa39dC8y8arIbmepv0-JHyDIBAPGEvS-YUBS15U,1zkX8iYni-eoMGpy4fO5OmrrIjPvT_3DQKXQz-XCHSsU</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
