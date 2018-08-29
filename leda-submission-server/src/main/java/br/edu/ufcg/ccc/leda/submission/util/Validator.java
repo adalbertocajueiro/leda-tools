@@ -255,9 +255,7 @@ public class Validator {
 								+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso())
 								+ ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
-			if (!config.getMatricula().equals("117110040")) {
-				//o unico aluno que pode submeter tudo de casa no horario estabelecido eh Joeberth
-				//devido a uma cirurgia. O prazo serah ate 08/05/2018
+			
 				
 				// se a data do roteiro for antes da data da PP1 entao tem que aceitar
 				// o primeiro envio apenas do lab.
@@ -281,12 +279,15 @@ public class Validator {
 				if (roteiro.getDataHora().before(pp1.getDataHora())) {
 					if (sub == null || sub.getArquivoSubmetido() == null) { // nao tem primeira submissao ainda
 						GregorianCalendar now = new GregorianCalendar();
-						if ((now.getTimeInMillis() - roteiro.getDataHora().getTimeInMillis()) > 2 * 60 * 60 * 1000) {
+						
+						/*RESTRICAO PARA RECEBER A PRIMEIRA SUBMISSAO DO ROTEIRO NAS DUAS PRIMEIRAS HORAS
+						 * if ((now.getTimeInMillis() - roteiro.getDataHora().getTimeInMillis()) > 2 * 60 * 60 * 1000) {
 							// passou as duas horas iniciais e nao pode receber
 							throw new AtividadeException(
 									"Primeiro envio permitido apenas dentro do prazo de duas horas a partir de "
 											+ Util.formatDate(roteiro.getDataHora()));
-						}
+						}*/
+						
 						// System.out.println("Esta dentro do prazo");
 						Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
 						// System.out.println("IPS autorizados: " + Arrays.toString(ips.toArray()));
@@ -298,7 +299,7 @@ public class Validator {
 						}
 					}
 				}
-			}
+			
 			// nao aceita primeiro envio de fora do lab
 
 			// se foi feito o primeiro envio do lab entao pode aceitar os demais desde que
