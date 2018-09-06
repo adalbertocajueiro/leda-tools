@@ -717,8 +717,10 @@ public class SubmissionServer extends Jooby {
 			    //System.out.println(turma);
 			    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
 			    //System.out.println(numeroTurmas);
-			    Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
-			    Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+			    //Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();
+			    //Upload uploadCorrecao = req.param("arquivoCorrecao").toUpload();
+			    Upload uploadAmbiente = req.file("arquivoAmbiente");
+			    Upload uploadCorrecao = req.file("arquivoCorrecao");
 			    
 				  //System.out.println("upload " + upload);
 				ProfessorUploadConfiguration config = new ProfessorUploadConfiguration(id,semestre,turma,numeroTurmas);
@@ -751,7 +753,8 @@ public class SubmissionServer extends Jooby {
 			      String id = req.param("roteiro").value();
 			      String ip = req.param("ip").value();
 			      String files = req.param("filesOwners").value("");
-			      Upload upload = req.param("arquivo").toUpload();
+			      //Upload upload = req.param("arquivo").toUpload();
+			      Upload upload = req.file("arquivo");
 			      
 			      
 			      //R0X-0X
