@@ -101,7 +101,8 @@ public class SubmissionServer extends Jooby {
 		
 	}
   {
-	use(new Ftl());
+	use(new Ftl().doWith((freem, config) -> {
+	    freem.setAutoEscapingPolicy(freemarker.template.Configuration.DISABLE_AUTO_ESCAPING_POLICY);}));
 	//use(new Jade());
 	//session(EhSessionStore.class);
 	

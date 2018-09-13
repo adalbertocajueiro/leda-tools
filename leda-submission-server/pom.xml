@@ -49,6 +49,14 @@
 		</profile>
 
 		<profile>
+			<id>local-mac</id>
+			<properties>
+				<upload.folder>/Users/adalbertocajueiro/leda-upload</upload.folder>
+				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
+			</properties>
+		</profile>
+		
+		<profile>
 			<id>local</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
