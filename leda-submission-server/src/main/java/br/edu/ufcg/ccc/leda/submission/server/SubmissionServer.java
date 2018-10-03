@@ -89,7 +89,8 @@ public class SubmissionServer extends Jooby {
 	{
 		assets("/reports/**");
 		assets("/site/**");
-		assets("css/**");
+		assets("assets/**");
+		assets("scripts/**");
 		assets("/*.ico");
 		assets("/*.svg");
 		assets("/*.gif");
@@ -108,9 +109,10 @@ public class SubmissionServer extends Jooby {
 	
 	cookieSession();
 	
-	get("/", (req,resp) -> {
-		resp.send("Hello World!");
-	});
+	get("/", (req) -> {
+        View html = Results.html("index");
+        return html;
+    });
 	
 	get("/horaAtual", (req,resp) -> {
 		resp.send("Data e hora atual do servidor: " + Util.formatDate(new GregorianCalendar()));
