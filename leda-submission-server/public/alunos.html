@@ -101,7 +101,6 @@
 			<#else>
 				<div  role="tabpanel" class="nav-tab tab-pane fade" id="t${turma}">
 			</#if>
-            <br>
             <table id="t${turma}" class="table table-dark table-hover table-striped table-bordered">
 				<thead class="bg-dark">
 					<th class="text-xs-center">#</th>
@@ -136,13 +135,10 @@
 </script>  
 
 <script>
-	$(document).ready(function(){
-		$(".nav-tabs a").click(function(){
-			$(this).tab('show');
-		});
-	});
-	</script>
-</div> <!-- container -->
+$('[role="tabpanel"]').each(function( index ) {
+	$(this).addClass('show');
+});
+</script>
 
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
 <script src="scripts/leda.js"></script>
