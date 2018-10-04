@@ -2,12 +2,6 @@
     --link-color: rgba(255,255,255,.5); 
 }
 
-
-body{
-  background:#f9f9f9;
-  padding-top: 65px;
-}
-
 .navbar-expand-lg .navbar-nav.side-nav{
   flex-direction: column;
 }
@@ -32,10 +26,6 @@ body{
     margin: 7px 20px 4px 0;
     cursor: pointer;
   }
-
-#wrapper{
-  padding: 90px 15px 15px 15px;
-}
 
 .navbar-nav.side-nav.open {
   left:0;
@@ -65,6 +55,7 @@ body {
     font-weight: 400;
     max-width: 100%;
     overflow-x: hidden;
+    padding-top: 70px;
   }
   
   * {
@@ -212,7 +203,7 @@ body {
 }
 
 .table-dark.table-hover tbody tr:hover {
-  background-color: #eeeeee63;
+  background-color: #83838350;
 }
 
 .text-xs-center {

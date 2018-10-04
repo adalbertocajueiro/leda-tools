@@ -1,0 +1,87 @@
+<div>		
+			<p>
+				<b>Prazos dos envios dos roteiros (todas as turmas):</b>
+			</p>
+			<ul>
+				<li>Normal: 12 horas após a liberação.</li>
+				<li>Com atraso: 2 dias após a liberação.</li>
+				<li>Após os prazos acima o sistema NÃO recebe mais submissões.</li>
+				<li>Casos específicos com tempos diferenciados serão informados individualmente na própria descrição do roteiro.</li>
+			</ul>
+
+			<p>
+				<b>Recomendações:</b>
+			<p>
+			<ul>
+				<li>
+					Baixar a versão mais recente do Eclipse (for Java EE Developers porque já vem com o plugin do Maven) e descompactar em sua conta do DSC. 
+				Usar essa versão em LEDA.
+				</li>
+				<li>
+					<font color="red">Não usar MacOS porque o plugin de compactação não funciona no Mac.</font> Você precisa usar Windows ou Linux (mesmo que seja VM).
+				</li>
+				<li>
+					Caso queira usar o Maven na linha de comando:
+				</li>
+			
+				<ul>
+					<li>Baixar o maven e descompactar em alguma pasta da sua conta</li>
+					<li>Abrir janela de comando (terminal) e ir para a pasta do projeto</li>
+					<li>
+						Configurar a variavel de ambiente JAVA_HOME para a pasta onde se encontra o JDK instalado (deve ser o JDK 1.8). 
+						Voce pode ver a pasta do JDK nas preferencias do Eclipse "Java->Instaled JREs". No linux isso pode ser feito com o comando "export JAVA_HOME=pasta_instalacao_do_jdk"
+					</li>
+					<li>Execute o comando no terminal: mvn install (para ignorar os testes basta usar mvn install -DskipTests)</li>
+				</ul> 
+			</ul>
+			<p>
+				<b>Vídeo-aulas de familiarização com as ferramentas:</b>
+			<ul>
+				<li><a href="https://youtu.be/KHylcRSma0c" target="_blank">Interação com o site da disciplina (parte 1).</a></li>
+				<li><a href="https://youtu.be/f2LmY0-Q9W0" target="_blank">Interação com o site da disciplina (parte 2).</a></li>
+				<li><a href="https://youtu.be/ISMNe5L2VwI" target="_blank">Download de ambientes e uso do identificador das atividades nas configurações dos roteiros e provas.</a></li>
+				<li>Eclipse:</li>
+				<ul>
+					<li><a href="https://www.youtube.com/watch?v=ioBcjEkjxFE" target="_blank">Depurando programas em Eclipse</a></li>
+					<li>Aprenda e exercite o uso do Debugger do Eclipse (essencial para o curso) acessando <a href="https://www.youtube.com/watch?v=v_dkbsVulW0" target="_blank">esse vídeo</a>.</li>
+					<li><b>O uso do Debugger do Eclipse É ESSENCIAL na disciplina</b> para depurar e retirar os erros das implementações a serem desenvolvidas, usando 
+					um tempo bem menor do que com <i>prints</i> no código. 			 
+				</ul>			 
+				<li>Maven:</li>
+				<ul>
+					<li><a href="http://www.youtube.com/watch?v=vLXDlmnkwQo" target="_blank">Introdução ao Maven</a>.</li>
+					<li><a href="http://www.youtube.com/watch?v=mSX5rOHrX-w" target="_blank">Ações simples em um projeto Maven</a>.</li>
+					<li><a href="http://www.youtube.com/watch?v=al7bRZzz4oU&amp;list=PL92E89440B7BFD0F6" target="_blank">Maven tutorial</a> (excelente coleção de videos para dar uma visão geral com bons detalhes sobre Maven).</li>
+					<li>Dicas extras sobre Maven no Eclipse para a disciplina: <a href="https://youtu.be/6jXPTsJPnZA" target="_blank">parte 01</a>, <a href="https://youtu.be/dP6w4qZCNyQ" target="_blank">parte 02</a>, <a href="https://youtu.be/TOUSSFmWeWA" target="_blank">parte 03</a>.</li>
+				</ul>
+			 </ul>
+			</p>
+			<br>
+			<p>
+				<b>Recomendações para as provas:</b>
+				<ul>
+					<li>Verifique constantemente a <a href="http://150.165.85.29:81/horaAtual">hora atual do servidor</a>, pois o recebimento de submissões após essa hora NÃO ACONTECERÁ!
+					<li>As notas da prova serão publicadas e os alunos avisados. Até isso acontecer NÃO ENTREM EM CONTATO COM OS PROFESSORES para justificar nada,  querer ver a prova ou querer saber porque deu erro de compilação. Será publicado no site o horário para revisão de provas e será comentado em sala sobre a solução!
+					<li>Procure chegar uns 10 min mais cedo para verificar se sua conta no laboratório e a máquina está funcionando corretamente.
+					<li>Todos os alunos deverão usar os computadores dos laboratórios. Quando for permitido o uso dos próprios laptops, os alunos serão avisados com 
+					antecedência.
+					<li>Coindidências de código acarretarão em penalização severa independente de qualquer situação.
+					<li>Pegar código pronto da internet é proibido! Durante a prova apenas serão admitidas duas janelas abertas na maquina do aluno: a do eclipse e a do PDF com a descrição da prova. Navegadores só serão permitidos para fazer o download da prova e para o envio das respostas. Programas como messengers, chats, skype e similares estão proibidos.
+					<li>O download das provas de fora do DSC é permitido e o sistema    
+						registra todos os downloads realizados. Entretanto, o sistema não recebe submissões de prova vindas de computadores fora do DSC. No caso das provas, 
+						uma vez que o aluno faz o download, ele é automaticamente considerado
+						<b>fazendo</b> a prova como se estivesse presente no laboratório. Portanto, <font color="red" style="font-weight:bold;">se o aluno não vai enviar a prova, não faça o download!</font> 
+					<li>Não será permitido pegar nenhum código pronto! Nos casos em que o aluno precise reutilizar algum código que implementou durante
+					o semestre, o professor avisará com antecedência de 1 ou 2 dias.
+				</ul>
+			</p>
+			<br>
+			<p>
+				<b>Conferindo os envios:</b> A qualquer momento as submissões podem ser conferidas das seguintes formas:
+				<ul>
+					<li>Aluno pode vizualizar o log dos envios na pasta do projeto (gerado automaticamente com a compilação maven). 
+					<li>O sistema também contém uma <a href="http://150.165.85.29:81/submissoes?showAll=false"> lista de submissões</a> (roteiros e provas).
+					<li>O sistema também contém uma <a href="http://150.165.85.29:81/submissoes?showAll=true"> lista de todas as submissões</a> (incluindo roteiros de revisão).
+				</ul>
+			</div>
+		</div>

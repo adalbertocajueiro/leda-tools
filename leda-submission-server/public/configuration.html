@@ -23,24 +23,73 @@
 </head>
 
 <body>
-	
-<div class="container">
+	<nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
+		<span class="navbar-toggler-icon leftmenutrigger"></span>
+		<a class="navbar-brand" href="#">Configurações</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav animate side-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#"> user.name
+						<span class="sr-only">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">user.info</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Logout</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-md-auto d-md-flex">
+				<li class="nav-item">
+					<a class="nav-link" href="/">Home
+						<span class="sr-only">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="alunos">Estudantes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="cronograma">Cronograma</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="config">Configurações</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+					aria-expanded="false">Participação <b class="caret"></b></a> 
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="submissoes?showAll=false">Submissões</a>
+						<a class="dropdown-item" href="notas">Notas</a>
+						<a class="dropdown-item" href="faltas">Faltas</a>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="roteirosEspeciais">Roteiros Especiais</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
+<div class="wrapper container">
 <!-------->
 <div id="content">
-	<br>
     <ul id="tabs" class="nav nav-tabs" role="tablist" data-tabs="tabs">
         <li class="nav-item"><a class="nav-link active" href="#roteiros" role="tab" data-toggle="tab">Roteiros</a></li>
         <li class="nav-item"><a class="nav-link" href="#provas" role="tab" data-toggle="tab">Provas</a></li>
 		<li class="nav-item"><a class="nav-link" href="#ips" role="tab" data-toggle="tab">IPs</a></li>
-    </ul>
+	</ul>
+	
 	<#-- Create constructor object -->
 	<#assign objectConstructor = "freemarker.template.utility.ObjectConstructor"?new()>
 	<#-- Call formatter constructor -->
 	<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
     <div id="my-tab-content" class="tab-content">
         <div  role="tabpanel" class="tab-pane fade in active" id="roteiros">
-            <br>
             <table id="roteiros" class="table table-dark table-hover table-striped table-bordered center">
 				<thead class="bg-dark">
 					<th class="text-xs-center">ID</th>
@@ -64,8 +113,7 @@
 			</table>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="provas">
-            <br>
-            <table id="provas" class="table table-hover table-bordered">
+            <table id="provas" class="table table-dark table-hover table-striped table-bordered center">
 				<thead class="bg-dark">
 					<th class="text-xs-center">ID</th>
 					<th class="text-xs-center">Nome</th>
@@ -85,26 +133,34 @@
 			</table>
         </div>
 		<div role="tabpanel" class="tab-pane fade" id="ips">
-            <br>
-			<p>IPs Autorizados para envio de prova<p>
-			<ul>
-				<#list config.ipsAutorizados as ip>
-						<li>${ip}
-				</#list>
-			</ul>
-        </div>
+			<div class="card bg-dark container">
+				<br>
+				<h4>
+					IPs Autorizados para envio de prova
+				</h4>
+				<ul>
+					<#list config.ipsAutorizados as ip>
+					<li>${ip}
+						</#list>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
-
 <script type="text/javascript">
-    $('#tabs a').click(function (e) {
+	$('#tabs a').click(function (e) {
 		e.preventDefault()
-		$(this).tab('show')
-	})
-</script>  
+		$(this).tab('show');
+	});
+
+	$('[role="tabpanel"]').each(function( index ) {
+		$(this).addClass('show');
+	});
+</script>
 
 </div> <!-- container -->
-
+<script src="scripts/leda.js"></script>
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
 </body>
 </html>

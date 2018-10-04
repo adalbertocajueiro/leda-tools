@@ -135,19 +135,17 @@
         </div>
 		</#list>
 	</div>
-
+1
 
 <script type="text/javascript">
     $('#tabs a').click(function (e) {
 		e.preventDefault()
 		$(this).tab('show');
 	});
-</script>  
 
-<script>
-$('[role="tabpanel"]').each(function( index ) {
-	$(this).addClass('show');
-});
+	$('[role="tabpanel"]').each(function( index ) {
+		$(this).addClass('show');
+	});
 </script>
 
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
