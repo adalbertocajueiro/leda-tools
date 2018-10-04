@@ -197,3 +197,24 @@ body {
 .tab-content {
   padding-top: 0;
 }
+
+.nav-tabs .nav-link {
+  background: rgba(255,255,255,.82);
+  /* border: solid 1px rgba(0, 0, 0, 0.25); */
+  transition: 1s;
+}
+
+.nav-tabs .nav-link.active {
+  background: #212529;
+  color: white;
+  transform: scaleY(1.1);
+  /* border: solid 1px rgba(0, 0, 0, 0.25); */
+}
+
+.table-dark.table-hover tbody tr:hover {
+  background-color: #eeeeee63;
+}
+
+.text-xs-center {
+  text-align: center;
+}
