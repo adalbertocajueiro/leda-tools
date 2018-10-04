@@ -23,20 +23,175 @@
     <link rel="icon" href="favicon.png">
 </head>
 <body>
+<nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
+	<span class="navbar-toggler-icon leftmenutrigger"></span>
+	<a class="navbar-brand" href="#">Cronograma</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarText">
+		<ul class="navbar-nav animate side-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="#"> user.name
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">user.info</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">Logout</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav ml-md-auto d-md-flex">
+			<li class="nav-item">
+				<a class="nav-link" href="/">Home
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="alunos">Estudantes</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="cronograma">Cronograma</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="config">Configurações</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+				aria-expanded="false">Participação <b class="caret"></b></a> 
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="submissoes?showAll=false">Submissões</a>
+					<a class="dropdown-item" href="notas">Notas</a>
+					<a class="dropdown-item" href="faltas">Faltas</a>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="roteirosEspeciais">Roteiros Especiais</a>
+			</li>
+		</ul>
+	</div>
+</nav>
 <div class="container">
 	<div id="accordion">
-		<div class="card">
-			<div class="card-header" id="headingOne">
-			<h5 class="mb-0">
-				<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					Informações gerais para todas as turmas:
-				</button>
-			</h5>
+		<div class="card bg-dark">
+			<div class="card-header" id="classInfo">
+			<button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">
+				Informações gerais para todas as turmas:
+			</button>
 			</div>
 		
-			<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+			<div id="collapseInfo" class="collapse" aria-labelledby="classInfo" data-parent="#accordion">
 			<div class="card-body">
-				Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+				<div>
+					<p>
+						<b>Prazos dos envios dos roteiros (todas as turmas):</b>
+					</p>
+					<ul>
+						<li>Normal: 12 horas após a liberação.</li>
+						<li>Com atraso: 2 dias após a liberação.</li>
+						<li>Após os prazos acima o sistema NÃO recebe mais submissões.</li>
+						<li>Casos específicos com tempos diferenciados serão informados individualmente na própria descrição do roteiro.</li>
+					</ul>
+				
+					<p>
+						<b>Recomendações:</b>
+					</p>
+					<ul>
+						<li>
+							Baixar a versão mais recente do Eclipse (for Java EE Developers porque já vem com o plugin do Maven) e descompactar em sua
+							conta do DSC. Usar essa versão em LEDA.
+						</li>
+						<li>
+							<font color="red">Não usar MacOS porque o plugin de compactação não funciona no Mac.</font> Você precisa usar Windows
+							ou Linux (mesmo que seja VM).
+						</li>
+						<li>
+							Caso queira usar o Maven na linha de comando:
+						</li>
+				
+						<ul>
+							<li>Baixar o maven e descompactar em alguma pasta da sua conta</li>
+							<li>Abrir janela de comando (terminal) e ir para a pasta do projeto</li>
+							<li>
+								Configurar a variavel de ambiente JAVA_HOME para a pasta onde se encontra o JDK instalado (deve ser o JDK 1.8). Voce pode
+								ver a pasta do JDK nas preferencias do Eclipse "Java->Instaled JREs". No linux isso pode ser feito com o comando "export
+								JAVA_HOME=pasta_instalacao_do_jdk"
+							</li>
+							<li>Execute o comando no terminal: mvn install (para ignorar os testes basta usar mvn install -DskipTests)</li>
+						</ul>
+					</ul>
+					<p>
+						<b>Vídeo-aulas de familiarização com as ferramentas:</b>
+					</p>
+					<ul>
+						<li><a href="https://youtu.be/KHylcRSma0c" target="_blank">Interação com o site da disciplina (parte 1).</a></li>
+						<li><a href="https://youtu.be/f2LmY0-Q9W0" target="_blank">Interação com o site da disciplina (parte 2).</a></li>
+						<li><a href="https://youtu.be/ISMNe5L2VwI" target="_blank">Download de ambientes e uso do identificador das atividades
+								nas configurações dos roteiros e provas.</a></li>
+						<li>Eclipse:</li>
+						<ul>
+							<li><a href="https://www.youtube.com/watch?v=ioBcjEkjxFE" target="_blank">Depurando programas em Eclipse</a></li>
+							<li>Aprenda e exercite o uso do Debugger do Eclipse (essencial para o curso) acessando <a href="https://www.youtube.com/watch?v=v_dkbsVulW0"
+								 target="_blank">esse vídeo</a>.</li>
+							<li><b>O uso do Debugger do Eclipse É ESSENCIAL na disciplina</b> para depurar e retirar os erros das implementações a
+								serem desenvolvidas, usando um tempo bem menor do que com <i>prints</i> no código.
+						</ul>
+						<li>Maven:</li>
+						<ul>
+							<li><a href="http://www.youtube.com/watch?v=vLXDlmnkwQo" target="_blank">Introdução ao Maven</a>.</li>
+							<li><a href="http://www.youtube.com/watch?v=mSX5rOHrX-w" target="_blank">Ações simples em um projeto Maven</a>.</li>
+							<li><a href="http://www.youtube.com/watch?v=al7bRZzz4oU&amp;list=PL92E89440B7BFD0F6" target="_blank">Maven tutorial</a>
+								(excelente coleção de videos para dar uma visão geral com bons detalhes sobre Maven).</li>
+							<li>Dicas extras sobre Maven no Eclipse para a disciplina: <a href="https://youtu.be/6jXPTsJPnZA" target="_blank">parte
+									01
+								</a>, <a href="https://youtu.be/dP6w4qZCNyQ" target="_blank">parte 02</a>, <a href="https://youtu.be/TOUSSFmWeWA" target="_blank">parte
+									03
+								</a>.</li>
+						</ul>
+					</ul>
+					</p>
+					<br>
+					<p>
+						<b>Recomendações para as provas:</b>
+					</p>
+					<ul>
+						<li>Verifique constantemente a <a href="http://150.165.85.29:81/horaAtual">hora atual do servidor</a>, pois o recebimento
+							de submissões após essa hora NÃO ACONTECERÁ!</li>
+						<li>As notas da prova serão publicadas e os alunos avisados. Até isso acontecer NÃO ENTREM EM CONTATO COM OS PROFESSORES
+							para justificar nada, querer ver a prova ou querer saber porque deu erro de compilação. Será publicado no site o horário
+							para revisão de provas e será comentado em sala sobre a solução!</li>
+						<li>Procure chegar uns 10 min mais cedo para verificar se sua conta no laboratório e a máquina está funcionando corretamente.</li>
+						<li>Todos os alunos deverão usar os computadores dos laboratórios. Quando for permitido o uso dos próprios laptops, os
+							alunos serão avisados com antecedência.</li>
+						<li>Coindidências de código acarretarão em penalização severa independente de qualquer situação.</li>
+						<li>Pegar código pronto da internet é proibido! Durante a prova apenas serão admitidas duas janelas abertas na maquina
+							do aluno: a do eclipse e a do PDF com a descrição da prova. Navegadores só serão permitidos para fazer o download da prova
+							e para o envio das respostas. Programas como messengers, chats, skype e similares estão proibidos.</li>
+						<li>O download das provas de fora do DSC é permitido e o sistema registra todos os downloads realizados. Entretanto, o
+							sistema não recebe submissões de prova vindas de computadores fora do DSC. No caso das provas, uma vez que o aluno faz
+							o download, ele é automaticamente considerado
+							<b>fazendo</b> a prova como se estivesse presente no laboratório. Portanto, <font color="red" style="font-weight:bold;">se
+								o aluno não vai enviar a prova, não faça o download!</font>
+						</li>
+						<li>Não será permitido pegar nenhum código pronto! Nos casos em que o aluno precise reutilizar algum código que implementou
+							durante o semestre, o professor avisará com antecedência de 1 ou 2 dias.</li>
+					</ul>
+					</p>
+					<br>
+					<p>
+						<b>Conferindo os envios:</b> A qualquer momento as submissões podem ser conferidas das seguintes formas:
+					</p>
+					<ul>
+						<li>Aluno pode vizualizar o log dos envios na pasta do projeto (gerado automaticamente com a compilação maven).</li>
+						<li>O sistema também contém uma <a href="http://150.165.85.29:81/submissoes?showAll=false"> lista de submissões</a>
+							(roteiros e provas).</li>
+						<li>O sistema também contém uma <a href="http://150.165.85.29:81/submissoes?showAll=true"> lista de todas as submissões</a>
+							(incluindo roteiros de revisão).</li>
+					</ul>
+				</div>
 			</div>
 			</div>
 		</div>
@@ -75,7 +230,6 @@
 		<#else>
 			<div  role="tabpanel" class="tab-pane fade" id="t${idTurma}">
 		</#if>
-            <br>
             <table id="t${idTurma}" class="table table-dark table-hover table-striped table-bordered center">
 				<thead class="bg-dark">
 					<th class="text-xs-center">Aula</th>
@@ -193,30 +347,23 @@
         </div>
 	  </#list>
 	</div>
-
-
+<script src="scripts/leda.js"></script>
 <script type="text/javascript">
-    $('#tabs a').click(function (e) {
+	$('#tabs a').click(function (e) {
 		e.preventDefault()
-		$(this).tab('show')
-	})
-</script>  
+		$(this).tab('show');
+	});
+
+	$('[role="tabpanel"]').each(function( index ) {
+		$(this).addClass('show');
+	});
+</script>
 
 </div> <!-- container -->
-<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
-</script>
-
-<script>
-  $( function() {
-    $( "#accordion" ).accordion({
-      collapsible: true,
-	  active: false
-    });
-  } );
 </script>
   
 <!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
