@@ -94,7 +94,8 @@
         <li class="nav-item"><a class="nav-link active" href="#t1" role="tab" data-toggle="tab">Turma 1</a></li>
         <li class="nav-item"><a class="nav-link" href="#t2" role="tab" data-toggle="tab">Turma 2</a></li>
 		<li class="nav-item"><a class="nav-link" href="#t3" role="tab" data-toggle="tab">Turma 3</a></li -->
-    </ul>
+		</ul>
+	</div>
  	<#assign gray = 'true'>
 	<#assign active = 'true'>
     <div id="my-tab-content" class="tab-content">
@@ -135,22 +136,31 @@
 				</tbody>
 			</table>
         </div>
-		</#list>
+		</#list>	
+		</div>
 	</div>
+	<footer class="page-footer bg-dark">
+		<div class="container">
+			<div class="footer-copyright font-small text-center py-3">
+				Copyright ©
+				<script>
+					document.write(new Date().getFullYear())
+				</script> - Laboratório de Estruturas de Dados - <a href="https://hericlesme.github.io/Portfolio" class="text-muted font-weight-light" target="_blank">Héricles Emanuel.</a>
+			</div>
+		</div>
+	</footer>
 
+	<script type="text/javascript">
+		$('#tabs a').click(function (e) {
+			e.preventDefault()
+			$(this).tab('show');
+		});
 
-<script type="text/javascript">
-    $('#tabs a').click(function (e) {
-		e.preventDefault()
-		$(this).tab('show');
-	});
-
-	$('[role="tabpanel"]').each(function( index ) {
-		$(this).addClass('show');
-	});
-</script>
-
-<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
-<script src="scripts/leda.js"></script>
+		$('[role="tabpanel"]').each(function( index ) {
+			$(this).addClass('show');
+		});
+	</script>
+	<!-- script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script -->
+	<script src="scripts/leda.js"></script>
 </body>
 </html>
