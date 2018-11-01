@@ -104,8 +104,8 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 8px;
-    background: -webkit-gradient(linear, left top, right top, from(rgba(42, 159, 255, 0.2)), color-stop(60%, #212120), to(#212120));
-    background: linear-gradient(to right, rgba(42, 159, 255, 0.2) 0%, #212120 60%, #212120 100%);
+    background: -webkit-gradient(linear, left top, right top, from(rgba(42, 159, 255, 0.2)), color-stop(90%, #212120), to(#212120));
+    background: linear-gradient(to right, rgba(42, 159, 255, 0.2) 0%, '#212120' 90%, #212120 100%);
     background-blend-mode: multiply;
   }
   
@@ -195,7 +195,7 @@ body {
 }
 
 .nav-tabs .nav-link.active {
-  background: #212529;
+  background: #00879c;
   color: white;
   transform: scaleY(1.1);
   /* border: solid 1px rgba(0, 0, 0, 0.25); */
@@ -236,9 +236,3 @@ i {
   padding: 10px;
   background: #212529;
 }
-
-footer {
-  -webkit-box-shadow: 0px -4px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px -4px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px -4px 5px 0px rgba(0,0,0,0.75);
-  }

@@ -92,8 +92,8 @@
 	<#assign formatter = objectConstructor("java.text.SimpleDateFormat","dd/MM/yyyy HH:mm:ss")>
     <div id="my-tab-content" class="tab-content">
         <div  role="tabpanel" class="tab-pane fade in active" id="roteiros">
-            <table id="roteiros" class="table table-dark table-hover table-striped table-bordered center">
-				<thead class="bg-dark">
+            <table id="roteiros" class="table table-light table-hover table-striped table-bordered center">
+				<thead class="bg-info">
 					<th class="text-xs-center">ID</th>
 					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Data Liberação</th>
@@ -102,7 +102,7 @@
 					<th class="text-xs-center">Corretor</th>
 					<th class="text-xs-center">Ambiente</th> 
 				</thead>
-				<tbody>
+				<tbody class="text-dark">
 				<#list config.getRoteiros() as roteiro>
 						<tr><td>${roteiro.id} <td><#if roteiro.nome??>${roteiro.nome}</#if>
 						<td class="text-xs-center">${formatter.format(roteiro.dataHora.time)}
@@ -115,15 +115,15 @@
 			</table>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="provas">
-            <table id="provas" class="table table-dark table-hover table-striped table-bordered center">
-				<thead class="bg-dark">
+            <table id="provas" class="table table-light table-hover table-striped table-bordered center">
+				<thead class="bg-info">
 					<th class="text-xs-center">ID</th>
 					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Liberação</th>
 					<th class="text-xs-center">Limite Envio</th>
 					<th class="text-xs-center">Ambiente</th>
 				</thead>
-				<tbody>
+				<tbody class="text-dark">
 				<#list config.getProvas()?values as prova>
 						<tr><td>${prova.id} 
 						<td>${prova.nome!" "}
@@ -135,7 +135,7 @@
 			</table>
         </div>
 		<div role="tabpanel" class="tab-pane fade" id="ips">
-			<div class="card bg-dark container">
+			<div class="card bg-light text-dark container">
 				<br>
 				<h4>
 					IPs Autorizados para envio de prova

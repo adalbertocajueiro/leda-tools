@@ -106,14 +106,14 @@
 			<#else>
 				<div  role="tabpanel" class="nav-tab tab-pane fade" id="t${turma}">
 			</#if>
-            <table id="t${turma}" class="table table-dark table-hover table-striped table-bordered center">
-				<thead class="bg-dark">
+            <table id="t${turma}" class="table table-light table-hover table-striped table-bordered center">
+				<thead class="bg-info">
 				
 					<th class="text-xs-center">
 						<i class="fas fa-code"></i>
 					</th>
 					
-					<th class="text-xs-center">
+					<th class="text-xs-center text-light">
 						Estudante
 					</th>
 					
@@ -124,11 +124,11 @@
 				<#assign index = 1>
 				<#list alunos as student>
 					<#if gray == 'true' && student.turma == turma>
-						<tr><td class="text-xs-center">${index}<td>${student.nome} <!-- td>${student.matricula} -->
+						<tr class="text-dark"><td class="text-xs-center">${index}<td>${student.nome}</tr> <!-- td>${student.matricula} -->
 						<#assign index = index + 1>
 						<#assign gray = 'false'>
 					<#elseif gray == 'false' && student.turma == turma>
-						<tr><td class="text-xs-center">${index}<td>${student.nome} <!-- td>${student.matricula} -->
+						<tr class="text-dark"><td class="text-xs-center">${index}<td>${student.nome}</tr> <!-- td>${student.matricula} -->
 						<#assign index = index + 1>
 						<#assign gray = 'true'>
 					</#if>

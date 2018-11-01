@@ -103,11 +103,11 @@
 				<#else>
 					<div  role="tabpanel" class="tab-pane fade" id="t${turma}">
 				</#if>
-				<div class="pull-xs-12 sheet-download">Download em formato Excel (XLSX) <a href="exportToExcelFaltasSemestre?turma=${turma}"><img src="excel.svg" width="26" data-toggle="tooltip" data-placement="left" title='Download de dados no formato excel (XLSX)'/></a> 
+				<div class="pull-xs-12 sheet-download bg-light text-dark">Download em formato Excel (XLSX) <a href="exportToExcelFaltasSemestre?turma=${turma}"><img src="excel.svg" width="26" data-toggle="tooltip" data-placement="left" title='Download de dados no formato excel (XLSX)'/></a> 
 					(a exportação produz uma planilha com todas as atividades e a sumarização final para a disciplina de LEDA)
 				</div>
-				<table id="t${turma}" class="table table-dark table-hover table-striped table-bordered center">
-					<thead class="bg-dark" >
+				<table id="t${turma}" class="table table-light table-hover table-striped table-bordered center">
+					<thead class="bg-info" >
 					<th class="text-xs-center">Aluno</th>
 					<#list submissoes?keys as id>
 						<#assign t = id?keep_after("-")>
@@ -120,7 +120,7 @@
 					</#list>
 					<th class="text-xs-center" data-placement="top" data-toggle="tooltip"  title="Cada dia de falta corresponde a 2 aulas">Total</th>
 					</thead>
-					<tbody>
+					<tbody class="text-dark">
 					<#list alunos as aluno>
 						<#if aluno.turma == turma>
 							<tr>

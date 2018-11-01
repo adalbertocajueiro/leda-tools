@@ -73,7 +73,7 @@
 	</div>
 </nav>
 <div class="container">
-	<div class="card bg-dark">
+	<div class="card bg-light text-dark">
 		<div class="card-header">
 			<h4>Roteiros especiais</h4>
 		</div>
@@ -90,13 +90,13 @@
 		<#assign gray = 'true'>
 		<div id="my-tab-content" class="tab-content">
 			<div  role="tabpanel" class="tab-pane fade in active show">
-				<table id="roteiros" class="table table-dark table-hover table-striped table-bordered center">
-					<thead class="bg-dark">
+				<table id="roteiros" class="table table-light table-hover table-striped table-bordered center">
+					<thead class="bg-info">
 						<th class="text-xs-center">Roteiro</th>
 						<th class="text-xs-center">Nome</th>
 						<th class="text-xs-center">Descrição</th>
 					</thead>
-					<tbody>
+					<tbody class="text-dark">
 					<#list roteirosEspeciais as roteiro>
 						<#if gray == 'true'>
 							<tr>

@@ -76,14 +76,14 @@
 </nav>
 <div class="container">
 	<div id="accordion">
-		<div class="card bg-dark">
+		<div class="card bg-light">
 			<div class="card-header" id="classInfo">
-			<button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">
+			<button class="btn btn-block btn-info" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">
 				Informações gerais para todas as turmas:
 			</button>
 			</div>
 		
-			<div id="collapseInfo" class="collapse" aria-labelledby="classInfo" data-parent="#accordion">
+			<div id="collapseInfo" class="collapse text-dark" aria-labelledby="classInfo" data-parent="#accordion">
 			<div class="card-body">
 				<div>
 					<p>
@@ -230,14 +230,14 @@
 		<#else>
 			<div  role="tabpanel" class="tab-pane fade" id="t${idTurma}">
 		</#if>
-            <table id="t${idTurma}" class="table table-dark table-hover table-striped table-bordered center">
-				<thead class="bg-dark">
+            <table id="t${idTurma}" class="table table-light table-hover table-striped table-bordered center">
+				<thead class="bg-info">
 					<th class="text-xs-center">Aula</th>
 					<th class="text-xs-center">Data</th>
 					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Descrição</th>
 				</thead>
-				<tbody>
+				<tbody class="text-dark">
 				<#list atividades[idTurma] as atividade>
 					<#if gray == 'true'>
 						<tr>
