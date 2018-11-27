@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -33,7 +34,7 @@
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
-	
+
 	<!-- repositories> <repository> <id>ufcg-leda</id> <url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url> 
 		<layout>default</layout> <snapshots> <enabled>true</enabled> </snapshots> 
 		</repository> </repositories -->
@@ -41,10 +42,10 @@
 	<profiles>
 		<profile>
 			<id>server</id>
-			<properties>	
-				<!--upload.folder>/home/hericlesegs/leda-upload</upload.folder-->
-				<upload.folder>/home/hericlesme/leda-upload</upload.folder>
-				<!--><upload.folder>/home/ubuntu/leda-upload</upload.folder-->	
+			<properties>
+				<!--upload.folder>/home/hericlesegs/leda-upload</upload.folder -->
+				<upload.folder>/home/hericlesegs/leda-upload</upload.folder>
+				<!--><upload.folder>/home/ubuntu/leda-upload</upload.folder -->
 				<!-->upload.folder>/Users/adalbertocajueiro/leda-upload</upload.folder -->
 				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
 			</properties>
@@ -53,13 +54,13 @@
 		<profile>
 			<id>local-mac</id>
 			<properties>
-				<!--upload.folder>/home/hericlesegs/leda-upload</upload.folder-->
+				<!--upload.folder>/home/hericlesegs/leda-upload</upload.folder -->
 				<upload.folder>/home/hericlesme/leda-upload</upload.folder>
-				<!--><upload.folder>/home/ubuntu/leda-upload</upload.folder-->	
+				<!--><upload.folder>/home/ubuntu/leda-upload</upload.folder -->
 				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
 			</properties>
 		</profile>
-		
+
 		<profile>
 			<id>local</id>
 			<activation>
@@ -91,6 +92,12 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.25.0</version>
 		</dependency>
 
 		<dependency>
@@ -207,10 +214,8 @@
 			<version>2.5</version>
 		</dependency>
 
-		<!--  dependency>
-			<groupId>org.jooby</groupId>
-			<artifactId>jooby-hazelcast</artifactId>
-		</dependency -->
+		<!-- dependency> <groupId>org.jooby</groupId> <artifactId>jooby-hazelcast</artifactId> 
+			</dependency -->
 	</dependencies>
 
 	<build>
@@ -256,17 +261,9 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<!--  plugin>
-				<groupId>org.jooby</groupId>
-				<artifactId>jooby-maven-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>org.jboss.modules</groupId>
-						<artifactId>jboss-modules</artifactId>
-						<version>1.7.0.Beta3</version>
-					</dependency>
-				</dependencies>
-			</plugin -->
+			<!-- plugin> <groupId>org.jooby</groupId> <artifactId>jooby-maven-plugin</artifactId> 
+				<dependencies> <dependency> <groupId>org.jboss.modules</groupId> <artifactId>jboss-modules</artifactId> 
+				<version>1.7.0.Beta3</version> </dependency> </dependencies> </plugin -->
 			<!-- Build fat jar -->
 			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> 
 				</plugin -->
