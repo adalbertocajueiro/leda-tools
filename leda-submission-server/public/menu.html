@@ -97,6 +97,7 @@
     function onSuccess(googleUser) {
       console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
       console.log(googleUser.getBasicProfile());
+      console.log(googleUser.getAuthResponse().id_token);
     }
 
     function onFailure(error) {
