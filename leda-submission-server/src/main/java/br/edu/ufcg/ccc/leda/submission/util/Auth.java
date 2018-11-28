@@ -1,7 +1,6 @@
 package br.edu.ufcg.ccc.leda.submission.util;
 
 import java.util.List;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,10 +40,10 @@ public class Auth {
         }
     }
 
-/*    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         Auth a = new Auth();
-        String idTokenString = "Id Token received by POST";
+        String idTokenString = "Insert the idToken";
         Payload p = a.getPayload(Arrays.asList(CLIENT_ID1, CLIENT_ID2, CLIENT_ID3), idTokenString);
         System.out.println(Boolean.valueOf(p.getEmailVerified()));
-    } For Testing */
+    }*/ // For Testing
 }
