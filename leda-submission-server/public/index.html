@@ -20,6 +20,10 @@
     
     <link rel="stylesheet" href="assets/css/leda.css">  
     <link rel="icon" href="favicon.png">
+
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="93476930298-dcdjdcu4uk9kb9892isecsl80go05mlo.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
@@ -33,16 +37,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav animate side-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> user.name
-                            <span class="sr-only">(current)</span>
-                        </a>
+                    <li id="login" class="nav-item">
+                        <a class="nav-link" id="my-signin2">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">user.info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
+                    <li id="logout" class="nav-item" style="display:none;">
+                        <a class="nav-link" onclick="signOut()">Logout</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-md-auto d-md-flex">
@@ -123,7 +122,13 @@
 			</div>
 		</div>
     </footer>
-</body> 
+
+</body>
 <script src="./scripts/leda.js"></script>
-<script src="./scripts/navbar.js"></script>
+<script src="./scripts/auth.js"></script>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+<script>
+init();
+</script>
 </html>

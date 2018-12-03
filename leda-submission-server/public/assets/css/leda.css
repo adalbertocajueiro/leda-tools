@@ -46,6 +46,16 @@
 
 /* CardList */
 
+html {
+  height: 100% !important;
+}
+
+body {
+  min-height: 100% !important;
+  display: flex;
+  flex-direction: column; 
+}
+
 body {
     background-color: #dce1e5;
     font-family: "Montserrat", helvetica, arial, sans-serif;
@@ -235,4 +245,8 @@ i {
 .sheet-download {
   padding: 10px;
   background: #212529;
+}
+
+footer{
+  margin-top:auto; 
 }

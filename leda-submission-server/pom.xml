@@ -44,7 +44,7 @@
 			<id>server</id>
 			<properties>
 				<!--upload.folder>/home/hericlesegs/leda-upload</upload.folder -->
-				<upload.folder>/home/hericlesegs/leda-upload</upload.folder>
+				<upload.folder>/home/hericles/leda-upload</upload.folder>
 				<!--><upload.folder>/home/ubuntu/leda-upload</upload.folder -->
 				<!-->upload.folder>/Users/adalbertocajueiro/leda-upload</upload.folder -->
 				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
