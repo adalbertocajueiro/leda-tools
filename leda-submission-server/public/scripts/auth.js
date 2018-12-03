@@ -28,11 +28,20 @@ function signOut() {
     location.reload(true);
 }
 
-function onSuccess(googleUser) {
-    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    console.log(googleUser.getBasicProfile());
-    console.log(googleUser.getAuthResponse().id_token);
+function updateUserInfo(profile) {
     $('#logout').css('display', 'block');
+    $('#user-img').css('display', 'block');
+    $('#user-img').attr('src', profile.getImageUrl());
+    console.log($('#my-signin2 > div > div > span > span').text(profile.getGivenName()));
+
+}
+
+function onSuccess(googleUser) {
+    let profile = googleUser.getBasicProfile();
+    console.log('Logged in as: ' + profile.getGivenName());
+    console.log(profile);
+    console.log(googleUser.getAuthResponse().id_token);
+    updateUserInfo(profile);
 }
 
 function onFailure(error) {

@@ -250,3 +250,46 @@ i {
 footer{
   margin-top:auto; 
 }
+
+
+
+/* User */
+
+#login {
+  padding:0;  
+}
+
+#user-img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  padding: 10px;
+  display: none;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem .5rem 0rem .5rem;
+}
+
+#my-signin2 {
+  width: 100%;
+}
+
+.user-link {
+  color: #757575 !important;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+  border-radius: 1px;
+  text-align: center;
+  font-size: 13px;
+  height: 100%;
+  width: 100%;
+}
+
+#my-signin2 > div:hover {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+}
