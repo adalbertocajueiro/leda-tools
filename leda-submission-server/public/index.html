@@ -7,77 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LEDA UFCG</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <script
-		src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-		crossorigin="anonymous"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="assets/css/leda.css">  
+
+    <!-- Components -->
+    <script src="components/user-nav/UserNav.js"></script>
+    <script src="components/footer/LedaFooter.js"></script>
+
+    <!--StyleSheet-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/leda.css">
     <link rel="icon" href="favicon.png">
 
+    <!-- Google App Settings -->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="93476930298-dcdjdcu4uk9kb9892isecsl80go05mlo.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </head>
 
 <body>
     <div id="wrapper" class="animate">
-        <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
-            <span class="navbar-toggler-icon leftmenutrigger"></span>
-            <a class="navbar-brand" href="#">LEDA UFCG</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav animate side-nav">
-                    <li>
-                        <img id="user-img">
-                    </li>
-                    <li id="login" class="nav-item">
-                        <a class="nav-link" id="my-signin2">Login</a>
-                    </li>
-                    <li id="logout" class="nav-item" style="display:none;">
-                        <a class="nav-link user-link" onclick="signOut()">Logout</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-md-auto d-md-flex">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="alunos">Estudantes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cronograma">Cronograma</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="config">Configurações</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                            aria-expanded="false">Participação <b class="caret"></b></a> 
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="submissoes?showAll=false">Submissões</a>
-                            <a class="dropdown-item" href="notas">Notas</a>
-                            <a class="dropdown-item" href="faltas">Faltas</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="roteirosEspeciais">Roteiros Especiais</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
+        <user-nav></user-nav>
         <div id="page-card-list">
 
             <div class="page-card" onclick="redirect('cronograma')">
@@ -115,23 +72,13 @@
             </div>
         </div>
     </div>
-    <footer class="page-footer bg-dark">
-		<div class="container">
-			<div class="footer-copyright font-small text-center py-3">
-				Copyright ©
-				<script>
-					document.write(new Date().getFullYear())
-				</script> - Laboratório de Estruturas de Dados - <a href="https://hericlesme.github.io/Portfolio" class="text-muted font-weight-light" target="_blank">Héricles Emanuel.</a>
-			</div>
-		</div>
-    </footer>
 
+    <leda-footer class="page-footer bg-dark"></leda-footer>
+
+    <script src="scripts/leda.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </body>
-<script src="./scripts/leda.js"></script>
-<script src="./scripts/auth.js"></script>
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
-<script>
-init();
-</script>
+
 </html>
