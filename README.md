@@ -11,7 +11,5 @@ You can download the project as a compressed file or using: `git clone` via:
 ### Run Server
   Go to the `leda-tools` folder and run the `start-server` script for server-related options.
  
-#
- 
 > UFCG - Federal University of Campina Grande. 2018  
 > Laboratory of Data Structures and Algorithms

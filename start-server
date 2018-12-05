@@ -1,0 +1,22 @@
+#!/bin/bash
+PS3='Enter your choice: '
+options=("Run Server (Linux)" "Kill all Maven processes" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Run Server (Linux)")
+            cd leda-submission-server
+            mvn jooby:run -Pserver -l /home/ubuntu/leda/leda-tools/leda-submission-server/log/server-output-$(date "+%Y.%m.%d-%H.%M.%S").log &
+            break;
+            ;;
+        "Kill all Maven processes")
+            pkill -f maven
+            printf "\n|| All Maven processes have been closed."
+            printf "\n|| Want to do something else?\n\n"
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo "Invalid Option $REPLY";;
+    esac
+done
