@@ -22,14 +22,14 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2018.2</semestre.letivo>
+		<semestre.letivo>2019.1</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
-		<idSheetMonitores>1zRgcF97EbE1Ngmk2EspHd9FKd5cTEgOwkD4jk_LPu68</idSheetMonitores>
+		<idSheetMonitores>1CLNkzU20K-v0N8FAceU363hc5pmG8AXs72r1-4YJgl0</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
-		<activitySheetIds>1UjLEBRJdCDeDir3VzhRTrvUK1Fykv0hPoNwf7xsVQhk,1tq2-WzhvmxDpvUuu9LCMgLxuMMHgXUn23veTMOyz1iA</activitySheetIds>
+		<activitySheetIds>164QmWZ5ECj7PAEr0hu0Bt-j8CzJYFIvfX6eto9GdloQ,1pIzUFXMS4-B8Lj0VS4BgJAPrRKiGsZScjTffNW9emgo</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
-		<edaSheetIds>1UdopTa39dC8y8arIbmepv0-JHyDIBAPGEvS-YUBS15U,1VlOa876UErJLcfja_Tl-Q2As-evDM6eiDEM9ODkVVBM</edaSheetIds>
+		<edaSheetIds>1B07uTtUHwL6s-u6IlrXT-EZK2h1v8KpGuAujdTjP8kQ</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
@@ -50,6 +50,9 @@
 
 		<profile>
 			<id>local-mac</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<upload.folder>/Users/adalbertocajueiro/leda-upload</upload.folder>
 				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
@@ -57,10 +60,7 @@
 		</profile>
 		
 		<profile>
-			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+			<id>local-win</id>
 			<properties>
 				<upload.folder>D:\trash2\leda-upload</upload.folder>
 				<mavenHomeFolder>D:\apache-maven-3.5.0</mavenHomeFolder>
