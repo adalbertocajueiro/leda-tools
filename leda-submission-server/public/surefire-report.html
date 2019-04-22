@@ -22,7 +22,7 @@
 <div class="container">
   <#if submission??>
 	<#if submission.arquivoSubmetido ??>
-		<p>O(A) aluno(a) ${submission.aluno.nome} fez submissão mas o relatório de correção não foi gerado e não pode ser mostrado neste painel. Você precisa <a href='./reports/${id}/${submission.generateSubmittedFileLink()}'>baixar a submissão</a> do aluno 
+		<p>O(A) aluno(a) ${submission.aluno.nome} fez submissão mas o relatório de correção não foi gerado (provavalmente por erros de compilação) e não pode ser mostrado neste painel. Você precisa <a href='./reports/${id}/${submission.generateSubmittedFileLink()}'>baixar a submissão</a> do aluno 
 			para inspecionar a implementação e colocar os comentários e classificação no painel abaixo.</p>
 	<#else>
 		<p>O(A) aluno(a) ${submission.aluno.nome} não fez submissão para a atividade ${id}</p>
