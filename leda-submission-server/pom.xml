@@ -55,7 +55,7 @@
 			</activation>
 			<properties>
 				<upload.folder>/Users/adalbertocajueiro/leda-upload</upload.folder>
-				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
+				<mavenHomeFolder>/Users/adalbertocajueiro/apache-maven-3.5.3</mavenHomeFolder>
 			</properties>
 		</profile>
 		
