@@ -1164,7 +1164,7 @@ public class Util {
             }
             
     		//sobrescreve os dados lidos da spreadsheet (apenas os arquivos de ambiente e correcao coletados nas pastas)
-    		//Util.loadAtividadesFromUploadFolder(atividades);
+    		Util.loadAtividadesFromUploadFolder(atividades);
     		
         return atividades;
 	}
