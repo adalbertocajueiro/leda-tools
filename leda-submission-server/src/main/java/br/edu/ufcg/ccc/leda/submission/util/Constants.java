@@ -49,7 +49,7 @@ public abstract class Constants {
 	public static final Pattern PATTERN_AULA = Pattern.compile("A[0-9]{2}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_ROTEIRO = Pattern.compile("R[0-9]{2}-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_ROTEIRO_REVISAO = Pattern.compile("RR[0-9]{1}-[0-9][0-9[X]]");
-	public static final Pattern PATTERN_ROTEIRO_ESPECIAL = Pattern.compile("RE[0-9]{1}-[0-9][0-9]");
+	public static final Pattern PATTERN_ROTEIRO_ESPECIAL = Pattern.compile("RE[0-9]{1,2}-[0-9][0-9]");
 	public static final Pattern PATTERN_PROVA = Pattern.compile("P[PRF][1-9]-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_PROVA_PRATICA = Pattern.compile("P[P][1-9]-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_PROVA_REPOSICAO = Pattern.compile("P[R][1-9]-[0-9][0-9[X]]");

@@ -20,7 +20,6 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.pdf.PDFParser;
 import org.apache.tika.sax.BodyContentHandler;
-import org.apache.tika.sax.ToXMLContentHandler;
 import org.xml.sax.SAXException;
 
 public class POIUtils {
@@ -28,7 +27,9 @@ public class POIUtils {
 	public static void loadPDF() throws IOException, SAXException, TikaException{
 		BodyContentHandler handler = new BodyContentHandler();
 	      Metadata metadata = new Metadata();
-	      FileInputStream inputstream = new FileInputStream(new File("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (20-04-2019 08-43-54).pdf"));
+	      //FileInputStream inputstream = new FileInputStream(new File("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (20-04-2019 08-43-54).pdf"));
+	      FileInputStream inputstream = new FileInputStream(new File("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (23-04-2019 19-32-04).pdf"));
+	      
 	      ParseContext pcontext = new ParseContext();
 	      
 	      //parsing the document using PDF parser
@@ -39,9 +40,9 @@ public class POIUtils {
 	      //getting the content of the document
 	      //System.out.println("Contents of the PDF :" + handler.toString());
 	      List<String> content = content(handler.toString());
-	      for (String string : content) {
-	  			System.out.println(string);
-		}
+	      //for (String string : content) {
+	  	//		System.out.println(string);
+		//}
 	}
 	
 	private static List<String> content(String content){
