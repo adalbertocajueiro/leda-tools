@@ -42,7 +42,7 @@ public abstract class Atividade {
 	}
 
 	public String getTurma(){
-		return this.id.substring(4);
+		return this.id.substring(this.id.indexOf('-') + 1);
 	}
 	public String getId() {
 		return id;
