@@ -1614,6 +1614,7 @@ public class Util {
 		
 		return target;
 	}
+	
 	public static void compactAllData() throws IOException{
 		File[] foldersToCompact = 
 				Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
@@ -1660,21 +1661,6 @@ public class Util {
 		}
 	}
 
-	@Deprecated
-	public static void loadConfig(String path) throws IOException{
-		NgxConfig conf = NgxConfig.read(path);
-		NgxBlock app = conf.findBlock("application");
-		NgxBlock port = app.findBlock("port");
-		List<String> values = port.getValues();
-		String p = port.getValue(); // "8889"
-		NgxParam listen = port.findParam("port"); // Ex.2
-
-		//List<NgxEntry> rtmpServers = conf.findAll(NgxConfig.BLOCK, "rtmp", "server"); // Ex.3
-		//for (NgxEntry entry : rtmpServers) {
-		//    ((NgxBlock)entry).getName(); // "server"
-		//    ((NgxBlock)entry).findParam("application", "live"); // "on" for the first iter, "off" for the second one
-		//}
-	}
 	
 	/**
 	 * Retorna a lista dos alunos que fizeram o download de um roteiro ou prova. Essa lista
@@ -1924,6 +1910,42 @@ public class Util {
 		return result;
 	}
 	
+	//retorna a submissao mais antiga de um aluno para um roteiro
+	public static File getOldestSubmission(String id, String matricula) {
+		File result = null;
+		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
+		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
+		File atividadeFolder = new File(currentSemester, id);
+		File submissionsFolder = new File(atividadeFolder,Constants.SUBMISSIONS_FOLDER_NAME);
+		
+		File[] submissions = submissionsFolder.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				//arquivos que começam pela matricula do aluno e terminam pelo sufixo .zip ou .zip.bkp
+				
+				return pathname.getName().startsWith(matricula) && 
+						(pathname.getName().endsWith(".zip") || pathname.getName().endsWith(".zip.bkp"));
+			}
+		});
+		
+		//precisa agora ordenar por data de modificacao e retornar o primeiro
+		result = Arrays.stream(submissions)
+			.sorted((f1,f2) -> {
+				if (f1.lastModified() > f2.lastModified()) {
+					return 1;
+				} else if(f1.lastModified() < f2.lastModified()) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}).findFirst().orElse(null);
+		
+		return result;
+	}
+	
+	
+
 	public static List<Submission> submissions(File atividadeFolder) throws ConfigurationException, IOException, ServiceException{
 		Map<String,Student> alunos = Configuration.getInstance().getStudents();
 		List<Submission> result = new ArrayList<Submission>();

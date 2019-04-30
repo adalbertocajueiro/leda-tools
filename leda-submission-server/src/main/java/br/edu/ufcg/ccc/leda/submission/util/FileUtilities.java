@@ -6,10 +6,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 import com.google.gdata.util.ServiceException;
 
@@ -217,7 +221,7 @@ public class FileUtilities {
 		//TODO 
 		
 		String result = null;
-		// precisa verificar se o aluno que enviou esta realmente matriculado.
+		// faz todas as validacoes neccessarias para receber a submissao do aluno.
 		Validator.validate(config);
 		
 		Map<String,Student> students = Configuration.getInstance().getStudents();
@@ -244,8 +248,16 @@ public class FileUtilities {
 		String uploadFileName =  student.getMatricula() + "-" + student.getNome() + ".zip";
 
 		File fout = new File(submissionsAtividadeFolder,uploadFileName);
+		SimpleDateFormat df = new SimpleDateFormat(" $(dd-MM-YYYY HH*mm*ss)$");
+		long time = fout.lastModified();
+	    Date d = new Date(time);
 		if (!fout.exists()) {
 			fout.mkdirs();
+		}else {//existe uma submissao previa. peg aa anterior e acrescenta sufixo para mante-la	no historico
+			String newName = uploadFileName.substring(0,uploadFileName.lastIndexOf('.')) + df.format(time) + ".zip.bkp";
+			File oldRenamed = new File(submissionsAtividadeFolder,newName);
+			//System.out.println("Salvando arquivo: " + fout.getAbsolutePath() + " para " + oldRenamed.getAbsolutePath());
+		    FileUtils.copyFile(fout,oldRenamed);	
 		}
 		Files.move(uploaded.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		//PRECISA LOGAR OPERACOES DA APLICACAO???????
@@ -263,9 +275,6 @@ public class FileUtilities {
 		
 		return result;
 	}
-
-	
-	
 	
 	public static Map<String,File[]> allSubmissions(){
 		Map<String,File[]> result = new HashMap<String,File[]>();

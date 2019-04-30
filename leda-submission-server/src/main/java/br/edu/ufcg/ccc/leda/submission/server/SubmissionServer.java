@@ -711,11 +711,11 @@ public class SubmissionServer extends Jooby {
 				//toda a logica para receber um roteiro e guarda-lo por completo e mante-lo no mapeamento
 				//System.out.println("pedido de upload de roteiro recebido");
 				String id = req.param("roteiro").value();
-				//System.out.println(roteiro);
+				//System.out.println("ID: "+ id);
 			    String semestre = req.param("semestre").value();
 			    //System.out.println(semestre);
 			    String turma = req.param("turma").value();
-			    //System.out.println(turma);
+			    //System.out.println("TURMA: "+ turma);
 			    int numeroTurmas = Integer.parseInt(req.param("numeroTurmas").value());
 			    //System.out.println(numeroTurmas);
 			    //Upload uploadAmbiente = req.param("arquivoAmbiente").toUpload();

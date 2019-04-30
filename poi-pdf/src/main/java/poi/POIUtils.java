@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,14 +27,26 @@ import org.apache.tika.parser.pdf.PDFParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
+
 public class POIUtils {
 	
 	public static void loadPDF() throws IOException, SAXException, TikaException{
 		BodyContentHandler handler = new BodyContentHandler();
 	      Metadata metadata = new Metadata();
 	      //FileInputStream inputstream = new FileInputStream(new File("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (20-04-2019 08-43-54).pdf"));
-	      FileInputStream inputstream = new FileInputStream(new File("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (23-04-2019 19-32-04).pdf"));
-	      
+	      FileInputStream inputstream = new FileInputStream(new File("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (20-04-2019 08-43-54).pdf"));
+	      File f = new File("/Users/adalbertocajueiro/leda-upload/2019.1/RR1-01/subs/112211050-FABIANA ALVES GOMES.zip");
+	      long time = f.lastModified();
+	      Date d = new Date(time);
+	      SimpleDateFormat df = new SimpleDateFormat("$(dd-MM-YYYY HH*mm*ss)$");
+	      System.out.println(df.format(d));
+	      /*System.out.println(f.exists());
+	      GregorianCalendar now = new GregorianCalendar();
+		  SimpleDateFormat df = new SimpleDateFormat("dd-MM-YYYY HH*mm*ss");
+	      String newName = f.getName().substring(0,f.getName().lastIndexOf('.')) + " (" + df.format(now.getTime()) + ").zip";
+	      System.out.println(newName);
+	      File oldRenamed = new File(f.getParentFile(),newName);
+	      FileUtils.copyFile(f,oldRenamed);*/
 	      ParseContext pcontext = new ParseContext();
 	      
 	      //parsing the document using PDF parser

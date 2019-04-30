@@ -255,59 +255,38 @@ public class Validator {
 								+ " e " + Util.formatDate(((Roteiro) atividade).getDataHoraLimiteEnvioAtraso())
 								+ ". A hora atual do servidor eh: " + Util.formatDate(new GregorianCalendar()));
 			}
-			
-				
-				// se a data do roteiro for antes da data da PP1 entao tem que aceitar
-				// o primeiro envio apenas do lab.
-				Atividade pp1 = atividades.get("PP1-" + config.getId().substring(4));
-				if (pp1 == null) {
-					throw new AtividadeException("Prova PP1-" + config.getId().substring(4) + " nao localizada!");
-				}
-				Atividade roteiro = atividades.get(config.getId());
-				if (roteiro == null) {
-					throw new AtividadeException("Roteiro " + config.getId() + " nao localizado!");
-				}
 
-				Submission sub = Util.getSubmissionForStudent(roteiro.getId(), config.getMatricula());
-				// System.out.println("Submissao encontrada: " +
-				// sub!=null?sub.getArquivoSubmetido():"null");
-				// se data do roteiro for antes da prova pratica 1 - o primeiro envio tem que
-				// ser feito
-				// de dentro do lab e nas primeiras duas horas.
-				// System.out.println("roteiro eh anterior a prova 1: " +
-				// roteiro.getDataHora().before(pp1.getDataHora()));
-				if (roteiro.getDataHora().before(pp1.getDataHora())) {
-					if (sub == null || sub.getArquivoSubmetido() == null) { // nao tem primeira submissao ainda
-						GregorianCalendar now = new GregorianCalendar();
-						
-						/*RESTRICAO PARA RECEBER A PRIMEIRA SUBMISSAO DO ROTEIRO NAS DUAS PRIMEIRAS HORAS
-						 * if ((now.getTimeInMillis() - roteiro.getDataHora().getTimeInMillis()) > 2 * 60 * 60 * 1000) {
-							// passou as duas horas iniciais e nao pode receber
-							throw new AtividadeException(
-									"Primeiro envio permitido apenas dentro do prazo de duas horas a partir de "
-											+ Util.formatDate(roteiro.getDataHora()));
-						}*/
-						
-						// System.out.println("Esta dentro do prazo");
-						Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
-						// System.out.println("IPS autorizados: " + Arrays.toString(ips.toArray()));
-						// System.out.println("IP do remetente: " + ipCaller);
-						if (ipStream.count() == 0) { // nao esta nos ips autorizados
-							throw new AtividadeException("Primeiro envio a partir de IP nao autorizado: " + ipCaller
-									+ ". Envios sao possivels apenas a partir de IPs oriundos de: "
-									+ Arrays.toString(ips.toArray()));
-						}
+			// o primeiro envio pode ser feito de qualquer lugar. Entretanto, se o aluno nao assinar a ata 
+			// ele vai levar falta no controle academico. O sistema nao computa mais as faltas. 
+			// Apenas tem que lidar com o calculo da media dos roteiros considerando isso (pegando
+			// a data do primeiro envio do arquivo). 
+			/*
+			Atividade pp3 = atividades.get("PP1-" + config.getId().substring(4));
+			if (pp3 == null) {
+				throw new AtividadeException("Prova PP3-" + config.getId().substring(4) + " nao localizada!");
+			}
+			Atividade roteiro = atividades.get(config.getId());
+			if (roteiro == null) {
+				throw new AtividadeException("Roteiro " + config.getId() + " nao localizado!");
+			}
+
+			//tenta buscar a submissao de um estudante para determinado roteiro
+			Submission sub = Util.getSubmissionForStudent(roteiro.getId(), config.getMatricula());
+			if (roteiro.getDataHora().before(pp3.getDataHora())) {
+				if (sub == null || sub.getArquivoSubmetido() == null) { // nao tem primeira submissao ainda
+					GregorianCalendar now = new GregorianCalendar();
+
+					Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
+					
+					if (ipStream.count() == 0) { // nao esta nos ips autorizados
+						throw new AtividadeException("Primeiro envio a partir de IP nao autorizado: " + ipCaller
+								+ ". Envios sao possivels apenas a partir de IPs oriundos de: "
+								+ Arrays.toString(ips.toArray()));
 					}
 				}
-			
-			// nao aceita primeiro envio de fora do lab
+			}
+			*/
 
-			// se foi feito o primeiro envio do lab entao pode aceitar os demais desde que
-			// dentro do prazo
-
-			// se primeiro envio nao foi feito dentro do lab entao nao pode aceitar envios
-			// tardios de
-			// fora do lab = falta
 		}
 
 	}

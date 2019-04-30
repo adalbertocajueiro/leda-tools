@@ -39,18 +39,18 @@ public class Configuration {
 			throw new ConfigurationException(e);
 		} catch (ServiceException e) {
 			e.printStackTrace();
-			monitores = Util.loadSpreadsheetMonitorFromExcel();
-			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			//monitores = Util.loadSpreadsheetMonitorFromExcel();
+			//atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.addAll(Constants.authorizedIPs);
 		} catch (ConnectException e) {
 			e.printStackTrace();
-			monitores = Util.loadSpreadsheetMonitorFromExcel();
-			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			//monitores = Util.loadSpreadsheetMonitorFromExcel();
+			//atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.addAll(Constants.authorizedIPs);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			monitores = Util.loadSpreadsheetMonitorFromExcel();
-			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			//monitores = Util.loadSpreadsheetMonitorFromExcel();
+			//atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.addAll(Constants.authorizedIPs);
 		}
 	}
