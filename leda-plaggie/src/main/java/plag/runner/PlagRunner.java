@@ -336,7 +336,8 @@ public class PlagRunner {
 						CachingDetectionResult r = (CachingDetectionResult) o;
 						try {
 							SimilarityAnalysisResult newResult = new SimilarityAnalysisResult(r.getFileA(),
-									r.getFileB(), Math.max(r.getSimilarityA(), r.getSimilarityB()));
+									//r.getFileB(), Math.max(r.getSimilarityA(), r.getSimilarityB()));
+									r.getFileB(), result.getMaxFileSimilarityProduct());
 							analysisResults.add(newResult);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

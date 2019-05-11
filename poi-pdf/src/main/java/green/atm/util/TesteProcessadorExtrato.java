@@ -10,7 +10,9 @@ public class TesteProcessadorExtrato {
 
 	public static void main(String[] args) throws Exception {
 		ProcessadorExtratoSicoob processador = new ProcessadorExtratoSicoob();
-		Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (01-05-2019 19-37-03).pdf");
+		//Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (01-05-2019 19-37-03).pdf");
+		Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (08-05-2019 15-49-08) $MAIO$.pdf");
+		
 		
 		System.out.println("RESUMO: ");
 		double creditos = extrato.getTransacoes().stream().filter( t -> t.getValor() > 0.0)
