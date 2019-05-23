@@ -10,9 +10,16 @@ import green.atm.extrato.Transacao;
 public class Util {
 	public static final String FOLDER_CONFIG = "conf";
 	public static final String MODALIDADES_FILE_NAME = "modalidades.json";
+	public static final String TIPO_TRANSACAO_FILE_NAME = "tipoTransacao.json";
 	public static final String FUNCIONARIOS_FILE_NAME = "funcionarios.txt";
 	public static final String NOME_EMPRESA_SEGURANCA = "Optimus";
 	public static final String NOME_ENERGIA = "Energia";
+	
+	public static final String TOKEN_MAIS_CONDOMINIO = "H F M BARROS";
+	public static final String TOKEN_TERCEIRIZACAO_MAIS_CONDOMINIO = "Terceirizacao";
+	
+	public static final String TOKEN_SALARIO = "Salario";
+	public static final String TOKEN_ADIANTAMENTO_SALARIAL = "Adiantamento salarial";
 	
 	public static final Pattern PATTERN_EXTRACAO_VALOR = Pattern.compile("[.]*([0-9]{1,3}[.])*[0-9]{1,3},[0-9]{2}[D[C]][.]*");
 	public static final Pattern PATTERN_DATE = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4}");

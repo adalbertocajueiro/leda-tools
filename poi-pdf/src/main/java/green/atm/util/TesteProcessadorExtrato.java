@@ -1,6 +1,14 @@
 package green.atm.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.stream.Collectors;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import green.atm.extrato.Extrato;
 import green.atm.extrato.ProcessadorExtratoSicoob;
@@ -30,6 +38,12 @@ public class TesteProcessadorExtrato {
 		System.out.println("Transacoes agrupadas (modalidade - quantidade - valor): ");
 		extrato.getTransacoes().stream().collect(Collectors.groupingBy(Transacao::getTextoIdentificador))
 		.forEach((s,l) -> System.out.println(s + " - " + l.size() + " - " + l.stream().mapToDouble( t -> t.getValor()).sum() ));
+		
+		File folder = new File(Util.FOLDER_CONFIG);
+		File file = new File(folder,"extrato.json");
+		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		bw.write((new GsonBuilder().setPrettyPrinting().create()).toJson(extrato.getTransacoes()));
+		bw.close();
 		
 		int i = 0;
 	}

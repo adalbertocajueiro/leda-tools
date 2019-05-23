@@ -1,0 +1,1301 @@
+[
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -17138.0,
+    "descricao": "FAV.: H F M BARROS - ME - Terceirizacao de func. 04 2019 - ",
+    "numeroDOC": "1317705",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "TERCEIRIZACAO_FUNCIONARIOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -2403.0,
+    "descricao": "FAV.: H F M BARROS - ME - Adm do Condominio 04 2019 - ",
+    "numeroDOC": "1317706",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ADMINISTRACAO_CONDOMINIO"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -27231.58,
+    "descricao": "FAV.: OPTIMUS SEGURANCA PRIVADA LTDA - M - Optimus Seg Privada LTDA - ",
+    "numeroDOC": "1324236",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "VIGILANCIA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1530.79,
+    "descricao": "FAV.: OPTIMUS SEGURANCA PRIVADA LTDA - M - Dif Retroativa Optimus Seg LTDA - ",
+    "numeroDOC": "1325067",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "VIGILANCIA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -920.0,
+    "descricao": "FAV.: ALDECIR MEDEIROS QUINTINO - Salario 04 2019 - ",
+    "numeroDOC": "1325201",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -1438.56,
+    "descricao": "",
+    "numeroDOC": "3991134",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -997.34,
+    "descricao": "FAV.: FABIANO RODRIGUES - Salario 04 2019 - ",
+    "numeroDOC": "1325203",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1252.23,
+    "descricao": "FAV.: FRANCISCO DE ASSIS MARQUES - Salario 04 2019 - ",
+    "numeroDOC": "1325204",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1134.2,
+    "descricao": "FAV.: GEISON DANIEL DA SILVA - Salario 04 2019 - ",
+    "numeroDOC": "1325205",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -266.8,
+    "descricao": "FAV.: GILMAR COSTA DOS SANTOS - Salario 04 2019 - ",
+    "numeroDOC": "1325206",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1705.04,
+    "descricao": "FAV.: ISAAC GOMES DO NASCIMENTO - Salario 04 2019 - ",
+    "numeroDOC": "1325207",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1878.57,
+    "descricao": "FAV.: JOÃO BELARMINO DOS SANTOS - Salario 04 2019 - ",
+    "numeroDOC": "1325208",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -752.58,
+    "descricao": "",
+    "numeroDOC": "3991135",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -955.2,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - Salario 04 2019 - ",
+    "numeroDOC": "1325210",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -955.2,
+    "descricao": "FAV.: MERCIA RODRIGUES ALVES - Salario 04 2019 - ",
+    "numeroDOC": "1325211",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -999.03,
+    "descricao": "FAV.: VAMBERTO ALVES GONCALVES - Salario 04 2019 - ",
+    "numeroDOC": "1325212",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - 03 Limpezas de salao e espaco gourmet - ",
+    "numeroDOC": "1325213",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -3747.81,
+    "descricao": "FAV.: ISAAC GOMES DO NASCIMENTO - Ferias do func. Isaac Gomes - ",
+    "numeroDOC": "1325214",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000078282",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 7,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3783.43,
+    "descricao": "",
+    "numeroDOC": "0000078282",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 7,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000079134",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 7,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -30.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 8,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "APLICAÇÃO RDC",
+    "valor": -70000.0,
+    "descricao": "",
+    "numeroDOC": "41 - 3",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 8,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.CONV.TELECOMUN.",
+    "valor": -111.77,
+    "descricao": "Oi celular - ",
+    "numeroDOC": "1330658",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 8,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 517.54,
+    "descricao": "",
+    "numeroDOC": "0000079134",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -196.04,
+    "descricao": "Compra de fio de nylon - ",
+    "numeroDOC": "1332694",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -346.98,
+    "descricao": "Compra de mat. de pintura - ",
+    "numeroDOC": "1332695",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -162.0,
+    "descricao": "",
+    "numeroDOC": "003.558",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000065801",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1636.25,
+    "descricao": "FAV.: ELETROPOLO ELETRICIDADE LTDA - Eletropolo NF 21921 - ",
+    "numeroDOC": "1333506",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -238.46,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335448",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -164.4,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335449",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -307.37,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335450",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -472.26,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335451",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -79.32,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335452",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -798.4,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335453",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1646.53,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335454",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -476.69,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335455",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1108.35,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335456",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -758.66,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335457",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -95.0,
+    "descricao": "Mensalidade SPC SERASA - ",
+    "numeroDOC": "1335458",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -300.0,
+    "descricao": "Mat. para jardinagem - ",
+    "numeroDOC": "1335459",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -47.0,
+    "descricao": "Compra de cabo e enxada - ",
+    "numeroDOC": "1335460",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -791.94,
+    "descricao": "FAV.: E \u0026 S COMERCIO DE COMBUSTIVEIS E L - Abastecimento de máquinas e veiculos - ",
+    "numeroDOC": "1335461",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.EMI.TED DIF.TIT",
+    "valor": -180.0,
+    "descricao": "Espaco A Com de Móveis Eireli - Pes das mesas salao de festas - ",
+    "numeroDOC": "1335477",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.559",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1607.24,
+    "descricao": "",
+    "numeroDOC": "003.560",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1195.44,
+    "descricao": "",
+    "numeroDOC": "0000065801",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 13,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000074640",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 14,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.CONV.TELECOMUN.",
+    "valor": -111.77,
+    "descricao": "Oi Movel - ",
+    "numeroDOC": "1340913",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 14,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -328.25,
+    "descricao": "Material de limpeza - ",
+    "numeroDOC": "1342447",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 14,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000079442",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB CONV. FGTS",
+    "valor": -1530.46,
+    "descricao": "",
+    "numeroDOC": "1343101",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -240.0,
+    "descricao": "Beneficio social dos fun - ",
+    "numeroDOC": "1343102",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -511.0,
+    "descricao": "Troca de pecas do portao - ",
+    "numeroDOC": "1343103",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -255.0,
+    "descricao": "Plano odontologico func - ",
+    "numeroDOC": "1343104",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: ALDECIR MEDEIROS QUINTINO - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345416",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "4073102",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: FABIANO RODRIGUES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345418",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: FRANCISCO DE ASSIS MARQUES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345419",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: GEISON DANIEL DA SILVA - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345420",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: GILMAR COSTA DOS SANTOS - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345421",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -800.0,
+    "descricao": "FAV.: JOÃO BELARMINO DOS SANTOS - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345422",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "4073103",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345424",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MERCIA RODRIGUES ALVES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345425",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: VAMBERTO ALVES GONCALVES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345426",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -346.0,
+    "descricao": "Mat de jardinagem - ",
+    "numeroDOC": "1345427",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 7533.8,
+    "descricao": "",
+    "numeroDOC": "0000079442",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -24.0,
+    "descricao": "",
+    "numeroDOC": "0000074672",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 16,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4412.71,
+    "descricao": "",
+    "numeroDOC": "0000079016",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 16,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -21.0,
+    "descricao": "",
+    "numeroDOC": "0000079499",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 17,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 11082.69,
+    "descricao": "",
+    "numeroDOC": "0000079499",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 17,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -15.0,
+    "descricao": "",
+    "numeroDOC": "0000078426",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 17,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1000.0,
+    "descricao": "Mensalidade ATM 04 2019 - ",
+    "numeroDOC": "1348153",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -177.05,
+    "descricao": "",
+    "numeroDOC": "1325215",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.PGTO AG.GPS",
+    "valor": -5969.72,
+    "descricao": "",
+    "numeroDOC": "1343105",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -181.33,
+    "descricao": "",
+    "numeroDOC": "1343106",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -47.79,
+    "descricao": "",
+    "numeroDOC": "1343107",
+    "tipos": []
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 19,
+      "minute": 4,
+      "second": 3
+    },
+    "textoIdentificador": "DEB.PGTO AG.GPS",
+    "valor": -3305.95,
+    "descricao": "",
+    "numeroDOC": "1352791",
+    "tipos": []
+  }
+]

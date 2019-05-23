@@ -3,72 +3,20 @@ package green.atm.extrato;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.LinkedList;
 
-enum TipoTransacao {
-	SALDO_CORRENTE("Saldo Corrente"), 
+import green.atm.util.Configuration;
+import green.atm.util.Util;
 
-	RECEITA_OPERACIONAL("Receita Operacional"), 
-	TAXA_CONDOMINIO("Taxas de Condominio"),
-	TAXA_EXTRA("Taxas Extras"),
-	TAXA_SALAO_FESTA("Taxas Salao de Festas"),
-	MULTAS_JUROS("Multas e Juros"),
-	TAXA_AGUA("Taxa de Agua"),
-
-	RECUPERACAO_ATIVOS ("Recuperacao de Ativos"),
-	MULTA_JURO_CORRECAO_COBRANCA("Multa, Juros e Correcao de Cobranca"),
-	OUTRAS_RECEITAS("Outras receitas"),
-	
-	DESPESAS_PESSOAL("Despesas com pessoal"),
-	TERCEIRIZACAO_FUNCIONARIOS("Terceirizacao de Funcionarios"),
-	VIGILANCIA("Vigilancia"),
-	SALARIO_FUNCIONARIOS_ORGANICOS("Salario dos funcionarios organicos"),
-	ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS("Adiantamento salarial dos funcionarios organicos"),
-	AVISO_DE_FERIAS("Aviso de ferias"),
-	INSS("INSS funcionarios e vigilancia"),
-	FGTS("FGTS"),
-	PIS("PIS"),
-	ISS("ISS"),
-	BENEFICIO_SOCIAL("Beneficio social dos funcionarios organicos"),
-	OUTRAS_DESPESAS_PESSOAL("Outras despesas com pessoal"),
-	
-	DESPESAS_ADMINISTRATIVAS("Despesas Administrativas"),
-	ENERGISA("Energisa"),
-	CAGEPA("CAGEPA"),
-	COMPRA_MATERIAL("Compra de material"),
-	ADMINISTRACAO_CONDOMINIO("Administracao do condominio"),
-	MANUTENCAO("Manutencao realizada"),
-	ABASTECIMENTO("Abastecimentos"),
-	SERVICOS_TERCEIROS("Servicos realizados por terceiros"),
-	IRRF("IRRF"),
-	TARIFAS_BANCARIAS("Tarifas e taxas bancarias"),
-	OUTRAS_DESPESAS_ADMINISTRATIVAS("Outras despesas administrativas"),
-	
-	APLICACAO("Aplicacao");
-	
-	private String tipo;
-	
-	private TipoTransacao(String tipoTranscacao) {
-		this.tipo = tipoTranscacao;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	
-}
 public class Transacao {
 	private GregorianCalendar data;
 	private String textoIdentificador;
 	private double valor;
 	private String descricao;
 	private String numeroDOC;
-	private ArrayList<TipoTransacao> tipos;
-	
+	private LinkedList<TipoTransacao> tipos;
+
 	public Transacao(GregorianCalendar data, String textoIdentificador, double valor, String descricao,
 			String numeroDOC) {
 		super();
@@ -77,18 +25,50 @@ public class Transacao {
 		this.valor = valor;
 		this.descricao = descricao;
 		this.numeroDOC = numeroDOC;
-		this.tipos = new ArrayList<TipoTransacao>();
+		this.tipos = new LinkedList<TipoTransacao>();
 		preencheTipos();
 	}
-	
+
 	private void preencheTipos() {
-		//baseado no identificador, valor, no tipo, etc ja classifica inicialmente uma transacao
+		// baseado no identificador, valor, no tipo, etc ja classifica inicialmente uma
+		// transacao
+		HashMap<String, TipoTransacao> tiposTransacao = Configuration.getInstance().getTiposTransacao();
+		Object tipo = (tiposTransacao.get(this.textoIdentificador));
+		// se descricao contiver nome da optimus entao entra como despesa pessoal e
+		// vigilancia
+		if (this.descricao.contains(Util.NOME_EMPRESA_SEGURANCA) || this.descricao.contains(Util.NOME_EMPRESA_SEGURANCA.toUpperCase())) {
+			this.tipos.add(TipoTransacao.DESPESAS_PESSOAL);
+			this.tipos.add(TipoTransacao.VIGILANCIA);
+		}
+		if (this.descricao.contains(Util.TOKEN_MAIS_CONDOMINIO) && this.descricao.contains(Util.TOKEN_TERCEIRIZACAO_MAIS_CONDOMINIO)) {
+			this.tipos.add(TipoTransacao.DESPESAS_PESSOAL);
+			this.tipos.add(TipoTransacao.TERCEIRIZACAO_FUNCIONARIOS);
+		}
+		if (this.descricao.contains(Util.TOKEN_MAIS_CONDOMINIO) && !this.descricao.contains(Util.TOKEN_TERCEIRIZACAO_MAIS_CONDOMINIO)) {
+			this.tipos.add(TipoTransacao.DESPESAS_ADMINISTRATIVAS);
+			this.tipos.add(TipoTransacao.ADMINISTRACAO_CONDOMINIO);
+		}
+		// se descricao contem nome de algum trabalhador entao eh despesa com pessoal
+		if (this.descricao.contains(Util.TOKEN_SALARIO)) {
+			this.tipos.add(TipoTransacao.DESPESAS_PESSOAL);
+			this.tipos.add(TipoTransacao.SALARIO_FUNCIONARIOS_ORGANICOS);
+		}
+		if (this.descricao.contains(Util.TOKEN_ADIANTAMENTO_SALARIAL)) {
+			this.tipos.add(TipoTransacao.DESPESAS_PESSOAL);
+			this.tipos.add(TipoTransacao.ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS);
+		}
+		if (tipo == null) {
+
+		} else {
+
+		} // nao tem mapeamento inicial entao é calssificado como outros
+
 	}
-	
+
 	@Override
 	public String toString() {
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY");
-		
+
 		return df.format(this.data.getTime()) + " - " + this.valor + " - " + this.numeroDOC;
 	}
 
@@ -132,16 +112,16 @@ public class Transacao {
 		this.numeroDOC = numeroDOC;
 	}
 
-	public ArrayList<TipoTransacao> getTipos() {
+	public LinkedList<TipoTransacao> getTipos() {
 		return tipos;
 	}
 
-	public void setTipos(ArrayList<TipoTransacao> tipos) {
+	public void setTipos(LinkedList<TipoTransacao> tipos) {
 		this.tipos = tipos;
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		TipoTransacao t = TipoTransacao.valueOf("SALDO_CORRENTE");
 		System.out.println(TipoTransacao.SALDO_CORRENTE);
 		System.out.println(t);
