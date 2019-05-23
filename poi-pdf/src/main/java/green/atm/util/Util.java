@@ -61,6 +61,8 @@ public class Util {
 		
 		
 		t = new Transacao(data,textoIdentificador,valor,textoDescricao,numeroDOC);
+		//precisa preencher as tags de tipo da transacao baseado nas informacoes dela
+		///PPPPPP
 		
 		return t;
 	}
