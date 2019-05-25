@@ -1,0 +1,5027 @@
+[
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "Saldo Corrente",
+    "valor": 158439.27,
+    "descricao": "Saldo inicial do mes",
+    "numeroDOC": "00000000",
+    "tipos": [
+      "OUTRAS_RECEITAS",
+      "SALDO_CORRENTE"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -376.13,
+    "descricao": "",
+    "numeroDOC": "003.476",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -56.0,
+    "descricao": "",
+    "numeroDOC": "003.477",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -865.25,
+    "descricao": "",
+    "numeroDOC": "003.478",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -57.0,
+    "descricao": "",
+    "numeroDOC": "003.482",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 540.25,
+    "descricao": "",
+    "numeroDOC": "0000067267",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000064974",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -1210.0,
+    "descricao": "",
+    "numeroDOC": "003.464",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2179.95,
+    "descricao": "",
+    "numeroDOC": "0000064974",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000066788",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 7,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -785.5,
+    "descricao": "",
+    "numeroDOC": "003.451",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 7,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 5097.91,
+    "descricao": "",
+    "numeroDOC": "0000066788",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 7,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000067203",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -500.0,
+    "descricao": "",
+    "numeroDOC": "003.496",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -161.57,
+    "descricao": "",
+    "numeroDOC": "003.502",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -440.0,
+    "descricao": "",
+    "numeroDOC": "003.501",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -10000.0,
+    "descricao": "",
+    "numeroDOC": "003.494",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -7138.0,
+    "descricao": "",
+    "numeroDOC": "003.495",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -2403.0,
+    "descricao": "",
+    "numeroDOC": "003.493",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -14549.42,
+    "descricao": "",
+    "numeroDOC": "003.505",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -26135.02,
+    "descricao": "",
+    "numeroDOC": "003.499",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -905.9,
+    "descricao": "",
+    "numeroDOC": "003.492",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 455.98,
+    "descricao": "",
+    "numeroDOC": "0000067203",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -7.0,
+    "descricao": "",
+    "numeroDOC": "0000066312",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -330.89,
+    "descricao": "",
+    "numeroDOC": "003.488",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.507",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -166.5,
+    "descricao": "",
+    "numeroDOC": "003.481",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -160.0,
+    "descricao": "",
+    "numeroDOC": "003.503",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -160.0,
+    "descricao": "",
+    "numeroDOC": "003.504",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1083.62,
+    "descricao": "",
+    "numeroDOC": "0000066312",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 11,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000066534",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 12,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1442.78,
+    "descricao": "",
+    "numeroDOC": "003.506",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 12,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 648.34,
+    "descricao": "",
+    "numeroDOC": "0000066534",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 12,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000067930",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 13,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -255.0,
+    "descricao": "",
+    "numeroDOC": "003.508",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 13,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -557.15,
+    "descricao": "",
+    "numeroDOC": "003.480",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 13,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -480.34,
+    "descricao": "",
+    "numeroDOC": "003.479",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 13,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 469.0,
+    "descricao": "",
+    "numeroDOC": "0000067930",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 13,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000067471",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 14,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 454.17,
+    "descricao": "",
+    "numeroDOC": "0000067471",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 14,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000073513",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -1246.34,
+    "descricao": "",
+    "numeroDOC": "003.515",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -250.0,
+    "descricao": "",
+    "numeroDOC": "003.498",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -4812.51,
+    "descricao": "",
+    "numeroDOC": "003.519",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -95.0,
+    "descricao": "",
+    "numeroDOC": "003.512",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -5564.9,
+    "descricao": "",
+    "numeroDOC": "003.514",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -163.0,
+    "descricao": "",
+    "numeroDOC": "003.520",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 584.3,
+    "descricao": "",
+    "numeroDOC": "0000073513",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000077227",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 18,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "003.518",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 18,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -70.0,
+    "descricao": "",
+    "numeroDOC": "003.521",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 18,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.497",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 18,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 495.73,
+    "descricao": "",
+    "numeroDOC": "0000077227",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 18,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -43.0,
+    "descricao": "",
+    "numeroDOC": "0000066559",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -202.5,
+    "descricao": "",
+    "numeroDOC": "003.526",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -3126.1,
+    "descricao": "",
+    "numeroDOC": "003.517",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -6134.36,
+    "descricao": "",
+    "numeroDOC": "003.509",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -180.35,
+    "descricao": "",
+    "numeroDOC": "003.510",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -47.79,
+    "descricao": "",
+    "numeroDOC": "003.511",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 10759.83,
+    "descricao": "",
+    "numeroDOC": "0000066559",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 19,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -21.0,
+    "descricao": "",
+    "numeroDOC": "0000066566",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -869.51,
+    "descricao": "",
+    "numeroDOC": "003.522",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -885.0,
+    "descricao": "",
+    "numeroDOC": "003.513",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 5998.36,
+    "descricao": "",
+    "numeroDOC": "0000066566",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "0000057189",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -850.0,
+    "descricao": "",
+    "numeroDOC": "003.491",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1061.28,
+    "descricao": "",
+    "numeroDOC": "003.516",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 73440.04,
+    "descricao": "",
+    "numeroDOC": "0000066455",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -16.0,
+    "descricao": "",
+    "numeroDOC": "0000065730",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -30.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 22,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3655.07,
+    "descricao": "",
+    "numeroDOC": "0000065730",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 22,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -11.0,
+    "descricao": "",
+    "numeroDOC": "0000065761",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -968.32,
+    "descricao": "",
+    "numeroDOC": "003.532",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -475.34,
+    "descricao": "",
+    "numeroDOC": "003.533",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -100.0,
+    "descricao": "",
+    "numeroDOC": "003.525",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -496.33,
+    "descricao": "",
+    "numeroDOC": "003.535",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1523.28,
+    "descricao": "",
+    "numeroDOC": "003.534",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -309.1,
+    "descricao": "",
+    "numeroDOC": "003.529",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -341.04,
+    "descricao": "",
+    "numeroDOC": "003.528",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1455.86,
+    "descricao": "",
+    "numeroDOC": "003.523",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -376.13,
+    "descricao": "",
+    "numeroDOC": "003.536",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -70.35,
+    "descricao": "",
+    "numeroDOC": "003.500",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3517.51,
+    "descricao": "",
+    "numeroDOC": "0000065761",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 25,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -7.0,
+    "descricao": "",
+    "numeroDOC": "0000065880",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 26,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -500.0,
+    "descricao": "",
+    "numeroDOC": "003.542",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 26,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -393.0,
+    "descricao": "",
+    "numeroDOC": "003.531",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 26,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -100.0,
+    "descricao": "",
+    "numeroDOC": "003.537",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 26,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1920.65,
+    "descricao": "",
+    "numeroDOC": "0000065880",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 26,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000077320",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 27,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -144.0,
+    "descricao": "",
+    "numeroDOC": "003.527",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 27,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 150.0,
+    "descricao": "",
+    "numeroDOC": "0000077320",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 27,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -1.0,
+    "descricao": "",
+    "numeroDOC": "0000048404",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 2,
+      "dayOfMonth": 29,
+      "hourOfDay": 9,
+      "minute": 45,
+      "second": 48
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -2028.0,
+    "descricao": "",
+    "numeroDOC": "003.530",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "Saldo Corrente",
+    "valor": 163797.14,
+    "descricao": "Saldo inicial do mes",
+    "numeroDOC": "00000000",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -10000.0,
+    "descricao": "",
+    "numeroDOC": "003.539",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -7138.0,
+    "descricao": "",
+    "numeroDOC": "003.540",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -2403.0,
+    "descricao": "",
+    "numeroDOC": "003.541",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -1.0,
+    "descricao": "",
+    "numeroDOC": "0000073387",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 1,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 3,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -1.0,
+    "descricao": "",
+    "numeroDOC": "0000073394",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -25680.73,
+    "descricao": "FAV.: OPTIMUS SEGURANCA PRIVADA LTDA - M - Optimus Segurança Privada Ltda - ",
+    "numeroDOC": "1271719",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "VIGILANCIA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -914.3,
+    "descricao": "FAV.: ALDECIR MEDEIROS QUINTINO - Salario 03 2019 - ",
+    "numeroDOC": "1272124",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -845.6,
+    "descricao": "FAV.: FABIANO RODRIGUES - Salario 03 2019 - ",
+    "numeroDOC": "1272125",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1243.23,
+    "descricao": "FAV.: FRANCISCO DE ASSIS MARQUES - Salario 03 2019 - ",
+    "numeroDOC": "1272126",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1125.2,
+    "descricao": "FAV.: GEISON DANIEL DA SILVA - Salario 03 2019 - ",
+    "numeroDOC": "1272127",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1059.6,
+    "descricao": "FAV.: GILMAR COSTA DOS SANTOS - Salario 03 2019 - ",
+    "numeroDOC": "1272128",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1705.04,
+    "descricao": "FAV.: ISAAC GOMES DO NASCIMENTO - Salario 03 2019 - ",
+    "numeroDOC": "1272129",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1872.67,
+    "descricao": "FAV.: JOÃO BELARMINO DOS SANTOS - Salario 03 2019 - ",
+    "numeroDOC": "1272130",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -949.3,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - Salario 03 2019 - ",
+    "numeroDOC": "1272131",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -949.3,
+    "descricao": "FAV.: MERCIA RODRIGUES ALVES - Salario 03 2019 - ",
+    "numeroDOC": "1272132",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1014.61,
+    "descricao": "FAV.: VAMBERTO ALVES GONCALVES - Salario 03 2019 - ",
+    "numeroDOC": "1272133",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB CONV. FGTS",
+    "valor": -1433.52,
+    "descricao": "",
+    "numeroDOC": "1272140",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.CONV.SANEAMENTO",
+    "valor": -4611.54,
+    "descricao": "Cagepa 03 2019 - ",
+    "numeroDOC": "1272141",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -205.52,
+    "descricao": "Mat. p o jardim 01 02 - ",
+    "numeroDOC": "1272142",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1651.49,
+    "descricao": "Mat. eletrico 01 03 - ",
+    "numeroDOC": "1272143",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -869.27,
+    "descricao": "Refletores e lampadas 2 2 - ",
+    "numeroDOC": "1272144",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 5,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000068846",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 8,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -1438.56,
+    "descricao": "",
+    "numeroDOC": "3779178",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 8,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -706.18,
+    "descricao": "",
+    "numeroDOC": "3779179",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 8,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.EMI.TED DIF.TIT",
+    "valor": -1000.0,
+    "descricao": "Josefa Amskeline Barbosa Araujo - Contrato Tecnologa - ",
+    "numeroDOC": "1273309",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 8,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 479.04,
+    "descricao": "",
+    "numeroDOC": "0000068846",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 9,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1394.7,
+    "descricao": "FAV.: GILMAR COSTA DOS SANTOS - Ferias do func. Gilmar - ",
+    "numeroDOC": "1276904",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "FERIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 9,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -7.0,
+    "descricao": "",
+    "numeroDOC": "0000073054",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -240.0,
+    "descricao": "Beneficio Social dos Func - ",
+    "numeroDOC": "1272145",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "BENEFICIO_SOCIAL"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COB.EFETIV",
+    "valor": -95.0,
+    "descricao": "Mensalidade SPC - ",
+    "numeroDOC": "1272146",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -334.0,
+    "descricao": "Material para jardinagem - ",
+    "numeroDOC": "1272147",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -533.96,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280679",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -948.78,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280680",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -108.86,
+    "descricao": "Energia Área Rural 04 19 - ",
+    "numeroDOC": "1280681",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -852.74,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280682",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1700.19,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280683",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -474.93,
+    "descricao": "Energia Área Rural 04 19 - ",
+    "numeroDOC": "1280684",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -324.39,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280685",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -223.99,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280686",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -276.47,
+    "descricao": "Energia Centro 04 2019 - ",
+    "numeroDOC": "1280687",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1387.75,
+    "descricao": "Energia Portaria 04 2019 - ",
+    "numeroDOC": "1280688",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ENERGISA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1437.18,
+    "descricao": "",
+    "numeroDOC": "0000079260",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 10,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -5.0,
+    "descricao": "",
+    "numeroDOC": "0000076690",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 11,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 28.72,
+    "descricao": "",
+    "numeroDOC": "0000076690",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 11,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -18.0,
+    "descricao": "",
+    "numeroDOC": "0000077456",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COB.EFETIV",
+    "valor": -355.0,
+    "descricao": "Papel toalha e papel hig. - ",
+    "numeroDOC": "1272148",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.DIST.SOBRAS",
+    "valor": 2428.6,
+    "descricao": "",
+    "numeroDOC": "04042019R1",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -807.19,
+    "descricao": "",
+    "numeroDOC": "003.552",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -200.0,
+    "descricao": "",
+    "numeroDOC": "003.547",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -380.0,
+    "descricao": "",
+    "numeroDOC": "003.548",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3399.17,
+    "descricao": "",
+    "numeroDOC": "0000077456",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 12,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -18.0,
+    "descricao": "",
+    "numeroDOC": "0000077273",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -255.0,
+    "descricao": "Plano Odontologico func. - ",
+    "numeroDOC": "1272149",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: ALDECIR MEDEIROS QUINTINO - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285482",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: FABIANO RODRIGUES - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285483",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: FRANCISCO DE ASSIS MARQUES - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285484",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: GEISON DANIEL DA SILVA - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285485",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1312.51,
+    "descricao": "FAV.: ISAAC GOMES DO NASCIMENTO - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285486",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -800.0,
+    "descricao": "FAV.: JOÃO BELARMINO DOS SANTOS - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285487",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285488",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MERCIA RODRIGUES ALVES - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285489",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: VAMBERTO ALVES GONCALVES - Adiant. Salarial 04 2019 - ",
+    "numeroDOC": "1285490",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "3833964",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "3833966",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "APLICAÇÃO RDC",
+    "valor": -2428.6,
+    "descricao": "",
+    "numeroDOC": "41 - 2",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -68.0,
+    "descricao": "",
+    "numeroDOC": "003.546",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2957.4,
+    "descricao": "",
+    "numeroDOC": "0000077273",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 15,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -39.0,
+    "descricao": "",
+    "numeroDOC": "0000077488",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 16,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 11345.44,
+    "descricao": "",
+    "numeroDOC": "0000077488",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 16,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000077811",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 17,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1000.0,
+    "descricao": "Manutenção mensal ATM - ",
+    "numeroDOC": "1293336",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "MANUTENCAO"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 17,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1556.98,
+    "descricao": "",
+    "numeroDOC": "0000077811",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 17,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -24.0,
+    "descricao": "",
+    "numeroDOC": "0000077510",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 18,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.PGTO AG.GPS",
+    "valor": -3125.55,
+    "descricao": "",
+    "numeroDOC": "1272150",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "INSS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 18,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DEB.PGTO AG.GPS",
+    "valor": -5897.88,
+    "descricao": "",
+    "numeroDOC": "1280689",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "INSS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 18,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -179.19,
+    "descricao": "",
+    "numeroDOC": "1280690",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "IRPF"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 18,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -47.79,
+    "descricao": "",
+    "numeroDOC": "1280691",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "IRPF"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 18,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 5268.81,
+    "descricao": "",
+    "numeroDOC": "0000077510",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 18,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -17.0,
+    "descricao": "",
+    "numeroDOC": "0000067281",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 22,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -321.71,
+    "descricao": "Material de limpeza - ",
+    "numeroDOC": "1298248",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 22,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -90.0,
+    "descricao": "Comercial Macedo - ",
+    "numeroDOC": "1299070",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 22,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4558.09,
+    "descricao": "",
+    "numeroDOC": "0000067281",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 22,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -375.0,
+    "descricao": "",
+    "numeroDOC": "0000058775",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 23,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1516.12,
+    "descricao": "",
+    "numeroDOC": "003.555",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 23,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHQ.DEV.MOT.48",
+    "valor": 1516.12,
+    "descricao": "",
+    "numeroDOC": "3555",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 23,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 75214.24,
+    "descricao": "",
+    "numeroDOC": "0000077345",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 23,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -13.0,
+    "descricao": "",
+    "numeroDOC": "0000074049",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 24,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2486.94,
+    "descricao": "",
+    "numeroDOC": "0000077954",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 24,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -15.0,
+    "descricao": "",
+    "numeroDOC": "0000077384",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 25,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3608.89,
+    "descricao": "",
+    "numeroDOC": "0000077384",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 25,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -9.0,
+    "descricao": "",
+    "numeroDOC": "0000076859",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 26,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -900.0,
+    "descricao": "",
+    "numeroDOC": "003.545",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 26,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2435.01,
+    "descricao": "",
+    "numeroDOC": "0000076859",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 26,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -1.0,
+    "descricao": "",
+    "numeroDOC": "0000048429",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.CONV.SANEAMENTO",
+    "valor": -5932.02,
+    "descricao": "Cagepa 04 2019 - ",
+    "numeroDOC": "1311903",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -127.71,
+    "descricao": "Compra de EPI p func. - ",
+    "numeroDOC": "1311904",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "COMPRA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -199.25,
+    "descricao": "Casa do Agricultor - ",
+    "numeroDOC": "1311905",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -496.34,
+    "descricao": "Mat. p envernizar madeir - ",
+    "numeroDOC": "1311906",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -601.45,
+    "descricao": "Material elétrico - ",
+    "numeroDOC": "1311907",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -237.98,
+    "descricao": "Casa do Agricultor - ",
+    "numeroDOC": "1311908",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -376.14,
+    "descricao": "Porcelanato p jardineira - ",
+    "numeroDOC": "1311909",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1516.12,
+    "descricao": "",
+    "numeroDOC": "003.555",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 29,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000067314",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 3,
+      "dayOfMonth": 30,
+      "hourOfDay": 8,
+      "minute": 30,
+      "second": 55
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 530.68,
+    "descricao": "",
+    "numeroDOC": "0000067314",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 1,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "Saldo Corrente",
+    "valor": 172801.48,
+    "descricao": "Saldo inicial do mes",
+    "numeroDOC": "00000000",
+    "tipos": [
+      "OUTRAS_RECEITAS",
+      "SALDO_CORRENTE"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -17138.0,
+    "descricao": "FAV.: H F M BARROS - ME - Terceirizacao de func. 04 2019 - ",
+    "numeroDOC": "1317705",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "TERCEIRIZACAO_FUNCIONARIOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -2403.0,
+    "descricao": "FAV.: H F M BARROS - ME - Adm do Condominio 04 2019 - ",
+    "numeroDOC": "1317706",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ADMINISTRACAO_CONDOMINIO"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 2,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -27231.58,
+    "descricao": "FAV.: OPTIMUS SEGURANCA PRIVADA LTDA - M - Optimus Seg Privada LTDA - ",
+    "numeroDOC": "1324236",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "VIGILANCIA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1530.79,
+    "descricao": "FAV.: OPTIMUS SEGURANCA PRIVADA LTDA - M - Dif Retroativa Optimus Seg LTDA - ",
+    "numeroDOC": "1325067",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "VIGILANCIA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -920.0,
+    "descricao": "FAV.: ALDECIR MEDEIROS QUINTINO - Salario 04 2019 - ",
+    "numeroDOC": "1325201",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -1438.56,
+    "descricao": "",
+    "numeroDOC": "3991134",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -997.34,
+    "descricao": "FAV.: FABIANO RODRIGUES - Salario 04 2019 - ",
+    "numeroDOC": "1325203",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1252.23,
+    "descricao": "FAV.: FRANCISCO DE ASSIS MARQUES - Salario 04 2019 - ",
+    "numeroDOC": "1325204",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1134.2,
+    "descricao": "FAV.: GEISON DANIEL DA SILVA - Salario 04 2019 - ",
+    "numeroDOC": "1325205",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -266.8,
+    "descricao": "FAV.: GILMAR COSTA DOS SANTOS - Salario 04 2019 - ",
+    "numeroDOC": "1325206",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1705.04,
+    "descricao": "FAV.: ISAAC GOMES DO NASCIMENTO - Salario 04 2019 - ",
+    "numeroDOC": "1325207",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1878.57,
+    "descricao": "FAV.: JOÃO BELARMINO DOS SANTOS - Salario 04 2019 - ",
+    "numeroDOC": "1325208",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -752.58,
+    "descricao": "",
+    "numeroDOC": "3991135",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -955.2,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - Salario 04 2019 - ",
+    "numeroDOC": "1325210",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -955.2,
+    "descricao": "FAV.: MERCIA RODRIGUES ALVES - Salario 04 2019 - ",
+    "numeroDOC": "1325211",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -999.03,
+    "descricao": "FAV.: VAMBERTO ALVES GONCALVES - Salario 04 2019 - ",
+    "numeroDOC": "1325212",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "SALARIO_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - 03 Limpezas de salao e espaco gourmet - ",
+    "numeroDOC": "1325213",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -3747.81,
+    "descricao": "FAV.: ISAAC GOMES DO NASCIMENTO - Ferias do func. Isaac Gomes - ",
+    "numeroDOC": "1325214",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "FERIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 6,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000078282",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 7,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3783.43,
+    "descricao": "",
+    "numeroDOC": "0000078282",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 7,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000079134",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 7,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -30.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "APLICAÇÃO RDC",
+    "valor": -70000.0,
+    "descricao": "",
+    "numeroDOC": "41 - 3",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.CONV.TELECOMUN.",
+    "valor": -111.77,
+    "descricao": "Oi celular - ",
+    "numeroDOC": "1330658",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 8,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 517.54,
+    "descricao": "",
+    "numeroDOC": "0000079134",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -196.04,
+    "descricao": "Compra de fio de nylon - ",
+    "numeroDOC": "1332694",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "COMPRA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -346.98,
+    "descricao": "Compra de mat. de pintura - ",
+    "numeroDOC": "1332695",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "COMPRA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -162.0,
+    "descricao": "",
+    "numeroDOC": "003.558",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 9,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000065801",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -1636.25,
+    "descricao": "FAV.: ELETROPOLO ELETRICIDADE LTDA - Eletropolo NF 21921 - ",
+    "numeroDOC": "1333506",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -238.46,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335448",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -164.4,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335449",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -307.37,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335450",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -472.26,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335451",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -79.32,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335452",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -798.4,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335453",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1646.53,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335454",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -476.69,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335455",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1108.35,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335456",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -758.66,
+    "descricao": "Energisa 05 2019 - ",
+    "numeroDOC": "1335457",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -95.0,
+    "descricao": "Mensalidade SPC SERASA - ",
+    "numeroDOC": "1335458",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -300.0,
+    "descricao": "Mat. para jardinagem - ",
+    "numeroDOC": "1335459",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -47.0,
+    "descricao": "Compra de cabo e enxada - ",
+    "numeroDOC": "1335460",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "COMPRA"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -791.94,
+    "descricao": "FAV.: E \u0026 S COMERCIO DE COMBUSTIVEIS E L - Abastecimento de máquinas e veiculos - ",
+    "numeroDOC": "1335461",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "ABASTECIMENTO"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.EMI.TED DIF.TIT",
+    "valor": -180.0,
+    "descricao": "Espaco A Com de Móveis Eireli - Pes das mesas salao de festas - ",
+    "numeroDOC": "1335477",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.559",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1607.24,
+    "descricao": "",
+    "numeroDOC": "003.560",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 10,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1195.44,
+    "descricao": "",
+    "numeroDOC": "0000065801",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 13,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000074640",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 14,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.CONV.TELECOMUN.",
+    "valor": -111.77,
+    "descricao": "Oi Movel - ",
+    "numeroDOC": "1340913",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 14,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -328.25,
+    "descricao": "Material de limpeza - ",
+    "numeroDOC": "1342447",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 14,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000079442",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB CONV. FGTS",
+    "valor": -1530.46,
+    "descricao": "",
+    "numeroDOC": "1343101",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -240.0,
+    "descricao": "Beneficio social dos fun - ",
+    "numeroDOC": "1343102",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB. TIT. COBRANÇA",
+    "valor": -511.0,
+    "descricao": "Troca de pecas do portao - ",
+    "numeroDOC": "1343103",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -255.0,
+    "descricao": "Plano odontologico func - ",
+    "numeroDOC": "1343104",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: ALDECIR MEDEIROS QUINTINO - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345416",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "4073102",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: FABIANO RODRIGUES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345418",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: FRANCISCO DE ASSIS MARQUES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345419",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: GEISON DANIEL DA SILVA - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345420",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: GILMAR COSTA DOS SANTOS - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345421",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -800.0,
+    "descricao": "FAV.: JOÃO BELARMINO DOS SANTOS - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345422",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TRANSF.POU.INTE",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "4073103",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MARIA ZELIA RODRIGUES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345424",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: MERCIA RODRIGUES ALVES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345425",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.TR.CT.DIF.TIT.",
+    "valor": -300.0,
+    "descricao": "FAV.: VAMBERTO ALVES GONCALVES - Adiantamento salarial 05 2019 - ",
+    "numeroDOC": "1345426",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -346.0,
+    "descricao": "Mat de jardinagem - ",
+    "numeroDOC": "1345427",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 7533.8,
+    "descricao": "",
+    "numeroDOC": "0000079442",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 15,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -24.0,
+    "descricao": "",
+    "numeroDOC": "0000074672",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 16,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4412.71,
+    "descricao": "",
+    "numeroDOC": "0000079016",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 16,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -21.0,
+    "descricao": "",
+    "numeroDOC": "0000079499",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 17,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DÉB.TIT.COMPE.EFETI",
+    "valor": -1000.0,
+    "descricao": "Mensalidade ATM 04 2019 - ",
+    "numeroDOC": "1348153",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "SERVICOS_TERCEIROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 17,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 11082.69,
+    "descricao": "",
+    "numeroDOC": "0000079499",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 17,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -15.0,
+    "descricao": "",
+    "numeroDOC": "0000078426",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -177.05,
+    "descricao": "",
+    "numeroDOC": "1325215",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "IRPF"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.PGTO AG.GPS",
+    "valor": -5969.72,
+    "descricao": "",
+    "numeroDOC": "1343105",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "INSS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -181.33,
+    "descricao": "",
+    "numeroDOC": "1343106",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "IRPF"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DB.CONV.TR FD-RFB",
+    "valor": -47.79,
+    "descricao": "",
+    "numeroDOC": "1343107",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "IRPF"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "DEB.PGTO AG.GPS",
+    "valor": -3305.95,
+    "descricao": "",
+    "numeroDOC": "1352791",
+    "tipos": [
+      "DESPESAS_PESSOAL",
+      "INSS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3808.92,
+    "descricao": "",
+    "numeroDOC": "0000078426",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 20,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -360.0,
+    "descricao": "",
+    "numeroDOC": "0000060382",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 57816.22,
+    "descricao": "",
+    "numeroDOC": "0000077660",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 21,
+      "hourOfDay": 9,
+      "minute": 36,
+      "second": 23
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -18.0,
+    "descricao": "",
+    "numeroDOC": "0000080327",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  }
+]

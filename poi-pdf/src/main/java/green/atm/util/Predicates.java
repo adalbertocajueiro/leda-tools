@@ -12,7 +12,7 @@ public class Predicates {
 		ModalidadeTransacao mod = Configuration.getInstance().getModalidades().get(t.getTextoIdentificador());
 		if(mod != null) {
 			if (mod.equals(ModalidadeTransacao.RH_ORGANICO_SEGURANCA)) {
-				result = t.getDescricao().contains(Util.NOME_EMPRESA_SEGURANCA);
+				result = t.getDescricao().contains(Util.TOKEN_EMPRESA_SEGURANCA);
 			}
 		}
 		return result;
@@ -44,7 +44,7 @@ public class Predicates {
 		ModalidadeTransacao mod = Configuration.getInstance().getModalidades().get(t.getTextoIdentificador());
 		if(mod != null) {
 			if(mod.equals(ModalidadeTransacao.PGTO_BOLETO)) {
-				result = t.getDescricao().contains(Util.NOME_ENERGIA);						
+				result = t.getDescricao().contains(Util.TOKEN_ENERGIA);						
 			}
 		}
 		return result;

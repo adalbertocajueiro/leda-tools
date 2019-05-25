@@ -19,7 +19,8 @@ public enum TipoTransacao {
 	VIGILANCIA("Vigilancia"),
 	SALARIO_FUNCIONARIOS_ORGANICOS("Salario dos funcionarios organicos"),
 	ADIANTAMENTO_SALARIAL_FUNCIONARIOS_ORGANICOS("Adiantamento salarial dos funcionarios organicos"),
-	AVISO_DE_FERIAS("Aviso de ferias"),
+	//AVISO_DE_FERIAS("Aviso de ferias"),
+	FERIAS("Ferias"),
 	INSS("INSS funcionarios e vigilancia"),
 	FGTS("FGTS"),
 	PIS("PIS"),
@@ -30,16 +31,18 @@ public enum TipoTransacao {
 	DESPESAS_ADMINISTRATIVAS("Despesas Administrativas"),
 	ENERGISA("Energisa"),
 	CAGEPA("CAGEPA"),
-	COMPRA_MATERIAL("Compra de material"),
+	COMPRA("Compra"),
 	ADMINISTRACAO_CONDOMINIO("Administracao do condominio"),
 	MANUTENCAO("Manutencao realizada"),
 	ABASTECIMENTO("Abastecimentos"),
 	SERVICOS_TERCEIROS("Servicos realizados por terceiros"),
-	IRRF("IRRF"),
+	IRPF("Imposto de renda recolhido na fonte"),
 	TARIFAS_BANCARIAS("Tarifas e taxas bancarias"),
 	OUTRAS_DESPESAS_ADMINISTRATIVAS("Outras despesas administrativas"),
+	APLICACAO("Aplicacao"),
 	
-	APLICACAO("Aplicacao");
+	OUTROS("Outros");
+	
 	
 	private String tipo;
 	

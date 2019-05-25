@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import green.atm.extrato.Extrato;
@@ -19,7 +18,8 @@ public class TesteProcessadorExtrato {
 	public static void main(String[] args) throws Exception {
 		ProcessadorExtratoSicoob processador = new ProcessadorExtratoSicoob();
 		//Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (01-05-2019 19-37-03).pdf");
-		Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (20-05-2019 16-52-42)$MAIO$.pdf");
+		//Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (22-05-2019 16-38-48)$MAIO$.pdf");
+		Extrato extrato = processador.construirExtrato("/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (22-05-2019 16-40-48)$ABRIL$.pdf");
 		
 		
 		System.out.println("RESUMO: ");
@@ -40,7 +40,7 @@ public class TesteProcessadorExtrato {
 		.forEach((s,l) -> System.out.println(s + " - " + l.size() + " - " + l.stream().mapToDouble( t -> t.getValor()).sum() ));
 		
 		File folder = new File(Util.FOLDER_CONFIG);
-		File file = new File(folder,"extrato.json");
+		File file = new File(folder,"transacoes.json");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 		bw.write((new GsonBuilder().setPrettyPrinting().create()).toJson(extrato.getTransacoes()));
 		bw.close();

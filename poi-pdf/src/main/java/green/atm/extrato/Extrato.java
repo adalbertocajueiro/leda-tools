@@ -4,25 +4,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import green.atm.util.OrderedLinkedList;
+
 public class Extrato {
 	private GregorianCalendar dataInicial;
 	private GregorianCalendar dataFinal;
 	private double saldoAnterior;
 	private double saldoMinimo;
 	private double saldoMaximo;
-	private ArrayList<Transacao> transacoes;
+	private OrderedLinkedList<Transacao> transacoes;
 	
 	public Extrato() {
 		this.dataInicial = new GregorianCalendar();
 		this.dataFinal = new GregorianCalendar();
-		this.transacoes = new ArrayList<Transacao>();
+		this.transacoes = new OrderedLinkedList<Transacao>();
 	}
 	
 	public Extrato(GregorianCalendar dataInicial, GregorianCalendar dataFinal) {
 		super();
 		this.dataInicial = dataInicial;
 		this.dataFinal = dataFinal;
-		this.transacoes = new ArrayList<Transacao>();
+		this.transacoes = new OrderedLinkedList<Transacao>();
 	}
 	
 	public void calcularSaldosMinimoEMaximo() {
@@ -73,11 +75,11 @@ public class Extrato {
 		this.saldoMaximo = saldoMaximo;
 	}
 
-	public ArrayList<Transacao> getTransacoes() {
+	public OrderedLinkedList<Transacao> getTransacoes() {
 		return transacoes;
 	}
 
-	public void setTransacoes(ArrayList<Transacao> transacoes) {
+	public void setTransacoes(OrderedLinkedList<Transacao> transacoes) {
 		this.transacoes = transacoes;
 	}
 

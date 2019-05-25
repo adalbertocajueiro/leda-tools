@@ -12,14 +12,33 @@ public class Util {
 	public static final String MODALIDADES_FILE_NAME = "modalidades.json";
 	public static final String TIPO_TRANSACAO_FILE_NAME = "tipoTransacao.json";
 	public static final String FUNCIONARIOS_FILE_NAME = "funcionarios.txt";
-	public static final String NOME_EMPRESA_SEGURANCA = "Optimus";
-	public static final String NOME_ENERGIA = "Energia";
+	public static final String TRANSACOES_FILE_NAME = "transacoes.json";
+	public static final String TOKEN_INICIO_MOVIMENTACOES= "DATA HISTÓRICO VALOR";
+	
+	public static final String TOKEN_SALDO_CORRENTE = "Saldo Corrente";
+	public static final String TOKEN_EMPRESA_SEGURANCA = "Optimus";
+	public static final String TOKEN_ENERGIA = "Energia";
 	
 	public static final String TOKEN_MAIS_CONDOMINIO = "H F M BARROS";
 	public static final String TOKEN_TERCEIRIZACAO_MAIS_CONDOMINIO = "Terceirizacao";
 	
 	public static final String TOKEN_SALARIO = "Salario";
 	public static final String TOKEN_ADIANTAMENTO_SALARIAL = "Adiantamento salarial";
+	
+	public static final String TOKEN_FGTS = "DÉB CONV. FGTS";
+	public static final String TOKEN_INSS = "DEB.PGTO AG.GPS";
+	public static final String TOKEN_CONVENIO_SANEAMENTO = "DÉB.CONV.SANEAMENTO";
+	public static final String TOKEN_IRPF = "DB.CONV.TR FD-RFB";
+	
+	public static final String TOKEN_FERIAS = "Ferias";
+	public static final String TOKEN_BENEFICIO_SOCIAL = "Beneficio Social";
+	 
+	public static final String TOKEN_COMPRA = "Compra";
+	public static final String TOKEN_MANUTENCAO = "Manut";
+	public static final String TOKEN_ATM = "ATM";
+	public static final String TOKEN_ABASTECIMENTO = "Abastecimento";
+	
+	public static final String TOKEN_TARIFA = "TARIFA";
 	
 	public static final Pattern PATTERN_EXTRACAO_VALOR = Pattern.compile("[.]*([0-9]{1,3}[.])*[0-9]{1,3},[0-9]{2}[D[C]][.]*");
 	public static final Pattern PATTERN_DATE = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4}");
@@ -68,8 +87,6 @@ public class Util {
 		
 		
 		t = new Transacao(data,textoIdentificador,valor,textoDescricao,numeroDOC);
-		//precisa preencher as tags de tipo da transacao baseado nas informacoes dela
-		///PPPPPP
 		
 		return t;
 	}
@@ -107,5 +124,5 @@ public class Util {
 		return textoTransacao.substring(textoTransacao.indexOf("$DOC.:") + "$DOC.:".length()).trim();
 
 	}
-	public static final String TOKEN_INICIO_MOVIMENTACOES= "DATA HISTÓRICO VALOR";
+	
 }

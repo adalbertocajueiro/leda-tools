@@ -14,6 +14,7 @@ import org.apache.tika.parser.pdf.PDFParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.SAXException;
 
+import green.atm.util.OrderedLinkedList;
 import green.atm.util.Util;
 
 public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
@@ -32,13 +33,20 @@ public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
 		
 		ArrayList<String> list = removerInformacoesInuteis(conteudo);
 
-		ArrayList<Transacao> transacoes = 
+		OrderedLinkedList<Transacao> transacoes = 
 				construirListaTransacoes(saldoAnterior, list, dataFinal.get(Calendar.YEAR));
 		extrato.setDataInicial(dataInicial);
 		extrato.setDataFinal(dataFinal);
 		extrato.setSaldoAnterior(saldoAnterior);
 		extrato.setTransacoes(transacoes);
 		extrato.calcularSaldosMinimoEMaximo();
+		// acrescenta uma transacao inicial especifica somente para informar o saldo
+		Transacao saldoCorrente = new Transacao(dataInicial,Util.TOKEN_SALDO_CORRENTE,
+						saldoAnterior,"Saldo inicial do mes","00000000");
+		saldoCorrente.getTipos().add(TipoTransacao.SALDO_CORRENTE);
+		
+		//esse tipo de transacao tem sempre esse numero de DOC
+		extrato.getTransacoes().addFirst(saldoCorrente);
 		
 		return extrato;
 	}
@@ -57,7 +65,7 @@ public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
 		return content;
 	}
 	
-	private ArrayList<Transacao> construirListaTransacoes(double saldoAnterior, ArrayList<String> list, int ano) {
+	private OrderedLinkedList<Transacao> construirListaTransacoes(double saldoAnterior, ArrayList<String> list, int ano) {
 		ArrayList<String> transacoes = new ArrayList<String>();
 		String transacao = "";
 		for (String string : list) {
@@ -71,8 +79,9 @@ public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
 		}
 		//transacoes.forEach(t -> System.out.println(t));
 		
-		ArrayList<Transacao> transacoesObj = new ArrayList<Transacao>();
+		OrderedLinkedList<Transacao> transacoesObj = new OrderedLinkedList<Transacao>();
 		transacoes.stream().forEach( t -> transacoesObj.add(Util.buildTransacao(t, ano)));
+		
 		
 		return transacoesObj;
 	}
