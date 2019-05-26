@@ -1,6 +1,4536 @@
 [
   {
     "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "Saldo Corrente",
+    "valor": 116482.3,
+    "descricao": "Saldo inicial do mes",
+    "numeroDOC": "00000000",
+    "tipos": [
+      "OUTRAS_RECEITAS",
+      "SALDO_CORRENTE"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -2300.0,
+    "descricao": "",
+    "numeroDOC": "003.317",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -10400.0,
+    "descricao": "",
+    "numeroDOC": "003.315",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -6000.0,
+    "descricao": "",
+    "numeroDOC": "003.316",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000062480",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1008.58,
+    "descricao": "",
+    "numeroDOC": "0000062480",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -500.0,
+    "descricao": "",
+    "numeroDOC": "003.318",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000062551",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2473.31,
+    "descricao": "",
+    "numeroDOC": "0000062551",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -250.0,
+    "descricao": "",
+    "numeroDOC": "003.319",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -638.0,
+    "descricao": "",
+    "numeroDOC": "003.358",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -280.0,
+    "descricao": "",
+    "numeroDOC": "003.345",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -10.0,
+    "descricao": "",
+    "numeroDOC": "0000068807",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 5334.51,
+    "descricao": "",
+    "numeroDOC": "0000068807",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -30.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -2098.61,
+    "descricao": "",
+    "numeroDOC": "003.354",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -26134.82,
+    "descricao": "",
+    "numeroDOC": "003.341",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -13176.05,
+    "descricao": "",
+    "numeroDOC": "003.351",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000060160",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1745.76,
+    "descricao": "",
+    "numeroDOC": "0000060160",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.320",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000063110",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1090.76,
+    "descricao": "",
+    "numeroDOC": "0000063110",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -466.0,
+    "descricao": "",
+    "numeroDOC": "003.346",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.353",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000062820",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1844.25,
+    "descricao": "",
+    "numeroDOC": "0000062820",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 12,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000061266",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 12,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2399.83,
+    "descricao": "",
+    "numeroDOC": "0000061266",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 13,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -6949.31,
+    "descricao": "",
+    "numeroDOC": "003.361",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 13,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -557.15,
+    "descricao": "",
+    "numeroDOC": "003.362",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 13,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -750.31,
+    "descricao": "",
+    "numeroDOC": "003.363",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -95.0,
+    "descricao": "",
+    "numeroDOC": "003.360",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -350.0,
+    "descricao": "",
+    "numeroDOC": "003.359",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -77.1,
+    "descricao": "",
+    "numeroDOC": "003.313",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000061083",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 549.81,
+    "descricao": "",
+    "numeroDOC": "0000061083",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -100.0,
+    "descricao": "",
+    "numeroDOC": "003.364",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -1239.28,
+    "descricao": "",
+    "numeroDOC": "003.350",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -317.94,
+    "descricao": "",
+    "numeroDOC": "003.348",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.352",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -16.0,
+    "descricao": "",
+    "numeroDOC": "0000061740",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4902.99,
+    "descricao": "",
+    "numeroDOC": "0000061740",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -56.0,
+    "descricao": "",
+    "numeroDOC": "0000035116",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3323.54,
+    "descricao": "",
+    "numeroDOC": "0000035116",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -60.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -175.01,
+    "descricao": "",
+    "numeroDOC": "003.356",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -5888.47,
+    "descricao": "",
+    "numeroDOC": "003.355",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -400.93,
+    "descricao": "",
+    "numeroDOC": "003.347",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -37.36,
+    "descricao": "",
+    "numeroDOC": "003.357",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -294.0,
+    "descricao": "",
+    "numeroDOC": "003.365",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -36.0,
+    "descricao": "",
+    "numeroDOC": "0000061155",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 11990.86,
+    "descricao": "",
+    "numeroDOC": "0000061155",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -194.0,
+    "descricao": "",
+    "numeroDOC": "0000048665",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 60039.9,
+    "descricao": "",
+    "numeroDOC": "0000048665",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -6176.42,
+    "descricao": "",
+    "numeroDOC": "003.374",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -3126.3,
+    "descricao": "",
+    "numeroDOC": "003.344",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -361.5,
+    "descricao": "",
+    "numeroDOC": "003.370",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -7162.95,
+    "descricao": "",
+    "numeroDOC": "003.373",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -4750.01,
+    "descricao": "",
+    "numeroDOC": "003.376",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "0000062544",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 16507.71,
+    "descricao": "",
+    "numeroDOC": "0000062544",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -200.0,
+    "descricao": "",
+    "numeroDOC": "003.377",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -9.0,
+    "descricao": "",
+    "numeroDOC": "0000061116",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2113.63,
+    "descricao": "",
+    "numeroDOC": "0000061116",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -157.3,
+    "descricao": "",
+    "numeroDOC": "003.369",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -373.06,
+    "descricao": "",
+    "numeroDOC": "003.371",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -228.34,
+    "descricao": "",
+    "numeroDOC": "003.379",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -866.0,
+    "descricao": "",
+    "numeroDOC": "003.378",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000048340",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1001.9,
+    "descricao": "",
+    "numeroDOC": "0000058166",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000064168",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2018,
+      "month": 11,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 26,
+      "second": 52
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3471.24,
+    "descricao": "",
+    "numeroDOC": "0000064168",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "Saldo Corrente",
+    "valor": 131301.66,
+    "descricao": "Saldo inicial do mes",
+    "numeroDOC": "00000000",
+    "tipos": [
+      "OUTRAS_RECEITAS",
+      "SALDO_CORRENTE"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -500.0,
+    "descricao": "",
+    "numeroDOC": "003.390",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -2300.0,
+    "descricao": "",
+    "numeroDOC": "003.368",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -6000.0,
+    "descricao": "",
+    "numeroDOC": "003.367",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -10400.0,
+    "descricao": "",
+    "numeroDOC": "003.366",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -2132.82,
+    "descricao": "",
+    "numeroDOC": "003.382",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -290.19,
+    "descricao": "",
+    "numeroDOC": "003.387",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -376.0,
+    "descricao": "",
+    "numeroDOC": "003.388",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -124.72,
+    "descricao": "",
+    "numeroDOC": "003.384",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -784.43,
+    "descricao": "",
+    "numeroDOC": "003.385",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -707.1,
+    "descricao": "",
+    "numeroDOC": "003.386",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000062630",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1650.2,
+    "descricao": "",
+    "numeroDOC": "0000062630",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 2,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "003.389",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -26134.82,
+    "descricao": "",
+    "numeroDOC": "003.401",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -550.0,
+    "descricao": "",
+    "numeroDOC": "003.393",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000035123",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 3,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4407.76,
+    "descricao": "",
+    "numeroDOC": "0000035123",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.391",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000064849",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1146.48,
+    "descricao": "",
+    "numeroDOC": "0000064849",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -13175.63,
+    "descricao": "",
+    "numeroDOC": "003.403",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -2096.47,
+    "descricao": "",
+    "numeroDOC": "003.404",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -228.33,
+    "descricao": "",
+    "numeroDOC": "003.383",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1530.0,
+    "descricao": "",
+    "numeroDOC": "003.342",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -13.0,
+    "descricao": "",
+    "numeroDOC": "0000063689",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4751.54,
+    "descricao": "",
+    "numeroDOC": "0000063689",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 8,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000064372",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 8,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 454.17,
+    "descricao": "",
+    "numeroDOC": "0000064372",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 9,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000062401",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 9,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 639.04,
+    "descricao": "",
+    "numeroDOC": "0000062401",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -480.33,
+    "descricao": "",
+    "numeroDOC": "003.392",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.405",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -5.0,
+    "descricao": "",
+    "numeroDOC": "0000063965",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 10,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1481.18,
+    "descricao": "",
+    "numeroDOC": "0000063965",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000073119",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 708.3,
+    "descricao": "",
+    "numeroDOC": "0000073119",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -16.0,
+    "descricao": "",
+    "numeroDOC": "0000058736",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4640.44,
+    "descricao": "",
+    "numeroDOC": "0000058736",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -140.0,
+    "descricao": "",
+    "numeroDOC": "003.419",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -148.0,
+    "descricao": "",
+    "numeroDOC": "003.395",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.408",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -115.0,
+    "descricao": "",
+    "numeroDOC": "003.413",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -7361.55,
+    "descricao": "",
+    "numeroDOC": "003.416",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -4750.01,
+    "descricao": "",
+    "numeroDOC": "003.412",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -333.0,
+    "descricao": "",
+    "numeroDOC": "003.409",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -250.0,
+    "descricao": "",
+    "numeroDOC": "003.349",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -14.0,
+    "descricao": "",
+    "numeroDOC": "0000062702",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4915.07,
+    "descricao": "",
+    "numeroDOC": "0000062702",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 16,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -95.0,
+    "descricao": "",
+    "numeroDOC": "003.417",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 16,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -900.0,
+    "descricao": "",
+    "numeroDOC": "003.402",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 16,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -557.15,
+    "descricao": "",
+    "numeroDOC": "003.414",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 16,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000073656",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 16,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1324.14,
+    "descricao": "",
+    "numeroDOC": "0000073656",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -114.02,
+    "descricao": "",
+    "numeroDOC": "003.398",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -3126.3,
+    "descricao": "",
+    "numeroDOC": "003.411",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -174.47,
+    "descricao": "",
+    "numeroDOC": "003.407",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -5933.3,
+    "descricao": "",
+    "numeroDOC": "003.406",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -49.1,
+    "descricao": "",
+    "numeroDOC": "003.394",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -174.91,
+    "descricao": "",
+    "numeroDOC": "003.375",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.396",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -100.0,
+    "descricao": "",
+    "numeroDOC": "003.397",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -949.9,
+    "descricao": "",
+    "numeroDOC": "003.372",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -58.0,
+    "descricao": "",
+    "numeroDOC": "0000054080",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 17,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 6695.04,
+    "descricao": "",
+    "numeroDOC": "0000063822",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -37.36,
+    "descricao": "",
+    "numeroDOC": "003.415",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1061.28,
+    "descricao": "",
+    "numeroDOC": "003.343",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1061.28,
+    "descricao": "",
+    "numeroDOC": "003.410",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -10.0,
+    "descricao": "",
+    "numeroDOC": "0000063514",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2969.78,
+    "descricao": "",
+    "numeroDOC": "0000063514",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -559.0,
+    "descricao": "",
+    "numeroDOC": "003.420",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -248.0,
+    "descricao": "",
+    "numeroDOC": "0000048680",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 75695.36,
+    "descricao": "",
+    "numeroDOC": "0000048680",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CH COOP/AG.DEP.CTA",
+    "valor": -811.31,
+    "descricao": "",
+    "numeroDOC": "003.418",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -10.0,
+    "descricao": "",
+    "numeroDOC": "0000063450",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 5721.22,
+    "descricao": "",
+    "numeroDOC": "0000063450",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -30.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -170.0,
+    "descricao": "",
+    "numeroDOC": "003.400",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000076232",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 521.32,
+    "descricao": "",
+    "numeroDOC": "0000076232",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -195.0,
+    "descricao": "",
+    "numeroDOC": "003.423",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -7.0,
+    "descricao": "",
+    "numeroDOC": "0000048364",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 4475.98,
+    "descricao": "",
+    "numeroDOC": "0000076257",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000064057",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1061.39,
+    "descricao": "",
+    "numeroDOC": "0000064057",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -866.0,
+    "descricao": "",
+    "numeroDOC": "003.424",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -331.29,
+    "descricao": "",
+    "numeroDOC": "003.425",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -867.3,
+    "descricao": "",
+    "numeroDOC": "003.437",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -500.0,
+    "descricao": "",
+    "numeroDOC": "003.422",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -276.0,
+    "descricao": "",
+    "numeroDOC": "003.399",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -340.0,
+    "descricao": "",
+    "numeroDOC": "003.428",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -500.0,
+    "descricao": "",
+    "numeroDOC": "003.440",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -2132.82,
+    "descricao": "",
+    "numeroDOC": "003.435",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -228.33,
+    "descricao": "",
+    "numeroDOC": "003.426",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -250.0,
+    "descricao": "",
+    "numeroDOC": "003.427",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000076296",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 29,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 473.87,
+    "descricao": "",
+    "numeroDOC": "0000076296",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 30,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -290.18,
+    "descricao": "",
+    "numeroDOC": "003.381",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 30,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1523.26,
+    "descricao": "",
+    "numeroDOC": "003.430",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 30,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -707.1,
+    "descricao": "",
+    "numeroDOC": "003.431",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 30,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -1.0,
+    "descricao": "",
+    "numeroDOC": "0000071416",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 31,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000064254",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 0,
+      "dayOfMonth": 31,
+      "hourOfDay": 16,
+      "minute": 24,
+      "second": 17
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1403.71,
+    "descricao": "",
+    "numeroDOC": "0000064254",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "Saldo Corrente",
+    "valor": 147301.59,
+    "descricao": "Saldo inicial do mes",
+    "numeroDOC": "00000000",
+    "tipos": [
+      "OUTRAS_RECEITAS",
+      "SALDO_CORRENTE"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -1290.51,
+    "descricao": "",
+    "numeroDOC": "003.429",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -2403.0,
+    "descricao": "",
+    "numeroDOC": "003.434",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -7138.0,
+    "descricao": "",
+    "numeroDOC": "003.433",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -10000.0,
+    "descricao": "",
+    "numeroDOC": "003.432",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -238.2,
+    "descricao": "",
+    "numeroDOC": "003.436",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "DEB.PARC.SUBS/INTEG",
+    "valor": -50.0,
+    "descricao": "",
+    "numeroDOC": "4990",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 1,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "DEB PACOTE TARIFAS",
+    "valor": -59.0,
+    "descricao": "",
+    "numeroDOC": "129",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -146.0,
+    "descricao": "",
+    "numeroDOC": "003.438",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -355.0,
+    "descricao": "",
+    "numeroDOC": "003.439",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -7.0,
+    "descricao": "",
+    "numeroDOC": "0000065270",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 4,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1829.61,
+    "descricao": "",
+    "numeroDOC": "0000065270",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -99.0,
+    "descricao": "",
+    "numeroDOC": "003.443",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000065650",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 5,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3272.62,
+    "descricao": "",
+    "numeroDOC": "0000065650",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -1210.0,
+    "descricao": "",
+    "numeroDOC": "003.463",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -26135.57,
+    "descricao": "",
+    "numeroDOC": "003.446",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -300.0,
+    "descricao": "",
+    "numeroDOC": "003.442",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000064032",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 6,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 480.34,
+    "descricao": "",
+    "numeroDOC": "0000064032",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -13804.07,
+    "descricao": "",
+    "numeroDOC": "003.453",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1371.33,
+    "descricao": "",
+    "numeroDOC": "003.454",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000061868",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2676.06,
+    "descricao": "",
+    "numeroDOC": "0000061868",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 7,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -30.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 8,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -568.0,
+    "descricao": "",
+    "numeroDOC": "003.421",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 8,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -785.5,
+    "descricao": "",
+    "numeroDOC": "003.450",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 8,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -818.68,
+    "descricao": "",
+    "numeroDOC": "003.460",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -6512.94,
+    "descricao": "",
+    "numeroDOC": "003.465",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -239.2,
+    "descricao": "",
+    "numeroDOC": "003.445",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -95.0,
+    "descricao": "",
+    "numeroDOC": "003.452",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -480.33,
+    "descricao": "",
+    "numeroDOC": "003.461",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.455",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.441",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -8.0,
+    "descricao": "",
+    "numeroDOC": "0000065920",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 11,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2126.25,
+    "descricao": "",
+    "numeroDOC": "0000065920",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 13,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000035130",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 13,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 400.0,
+    "descricao": "",
+    "numeroDOC": "0000035130",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -329.0,
+    "descricao": "",
+    "numeroDOC": "003.448",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -240.0,
+    "descricao": "",
+    "numeroDOC": "003.456",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000064333",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 14,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1979.72,
+    "descricao": "",
+    "numeroDOC": "0000064333",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -129.8,
+    "descricao": "",
+    "numeroDOC": "003.471",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -468.0,
+    "descricao": "",
+    "numeroDOC": "003.470",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -575.0,
+    "descricao": "",
+    "numeroDOC": "003.466",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -420.0,
+    "descricao": "",
+    "numeroDOC": "003.449",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -9.0,
+    "descricao": "",
+    "numeroDOC": "0000064279",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 15,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2269.67,
+    "descricao": "",
+    "numeroDOC": "0000064279",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -72.0,
+    "descricao": "",
+    "numeroDOC": "0000055637",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 18,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 7615.6,
+    "descricao": "",
+    "numeroDOC": "0000064182",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -22.0,
+    "descricao": "",
+    "numeroDOC": "0000065010",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 19,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 9792.52,
+    "descricao": "",
+    "numeroDOC": "0000065010",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -4750.01,
+    "descricao": "",
+    "numeroDOC": "003.475",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -5826.23,
+    "descricao": "",
+    "numeroDOC": "003.457",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -171.42,
+    "descricao": "",
+    "numeroDOC": "003.458",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -47.79,
+    "descricao": "",
+    "numeroDOC": "003.459",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -3125.55,
+    "descricao": "",
+    "numeroDOC": "003.462",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -520.0,
+    "descricao": "",
+    "numeroDOC": "003.468",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -253.0,
+    "descricao": "",
+    "numeroDOC": "0000048705",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 20,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 76856.03,
+    "descricao": "",
+    "numeroDOC": "0000048705",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -557.15,
+    "descricao": "",
+    "numeroDOC": "003.467",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 21,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000065002",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -290.0,
+    "descricao": "",
+    "numeroDOC": "003.485",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -378.0,
+    "descricao": "",
+    "numeroDOC": "003.484",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -212.0,
+    "descricao": "",
+    "numeroDOC": "003.483",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000064215",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 842.4,
+    "descricao": "",
+    "numeroDOC": "0000065002",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -195.0,
+    "descricao": "",
+    "numeroDOC": "003.489",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -296.0,
+    "descricao": "",
+    "numeroDOC": "003.487",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1000.0,
+    "descricao": "",
+    "numeroDOC": "003.469",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -162.0,
+    "descricao": "",
+    "numeroDOC": "003.472",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -1061.28,
+    "descricao": "",
+    "numeroDOC": "003.447",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -4.0,
+    "descricao": "",
+    "numeroDOC": "0000048389",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 25,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 1168.97,
+    "descricao": "",
+    "numeroDOC": "0000064215",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -2.0,
+    "descricao": "",
+    "numeroDOC": "0000076683",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 26,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 445.84,
+    "descricao": "",
+    "numeroDOC": "0000076716",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 27,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -2132.82,
+    "descricao": "",
+    "numeroDOC": "003.486",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 27,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -1523.26,
+    "descricao": "",
+    "numeroDOC": "003.474",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 27,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "PGS-CH PRÓP COOP/AG",
+    "valor": -496.33,
+    "descricao": "",
+    "numeroDOC": "003.473",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 27,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 980.02,
+    "descricao": "",
+    "numeroDOC": "0000076683",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 27,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "FOLHA CHEQUE",
+    "valor": -60.0,
+    "descricao": "",
+    "numeroDOC": "17",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "CHEQUE PAGO CAIXA",
+    "valor": -850.0,
+    "descricao": "",
+    "numeroDOC": "003.490",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 1,
+      "dayOfMonth": 28,
+      "hourOfDay": 16,
+      "minute": 22,
+      "second": 2
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -3.0,
+    "descricao": "",
+    "numeroDOC": "0000067267",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
       "year": 2019,
       "month": 2,
       "dayOfMonth": 1,
@@ -3521,6 +8051,24 @@
     "data": {
       "year": 2019,
       "month": 4,
+      "dayOfMonth": 1,
+      "hourOfDay": 17,
+      "minute": 14,
+      "second": 7
+    },
+    "textoIdentificador": "RDC - Longo CDI",
+    "valor": 75317.35,
+    "descricao": "Valor aplicacao no mes",
+    "numeroDOC": "11111111",
+    "tipos": [
+      "OUTRAS_RECEITAS",
+      "VALOR_APLICACAO"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
       "dayOfMonth": 2,
       "hourOfDay": 9,
       "minute": 36,
@@ -5019,6 +9567,145 @@
     "valor": -18.0,
     "descricao": "",
     "numeroDOC": "0000080327",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 3584.04,
+    "descricao": "",
+    "numeroDOC": "0000080327",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 22,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -159.0,
+    "descricao": "",
+    "numeroDOC": "0000080610",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -10.75,
+    "descricao": "",
+    "numeroDOC": "003.556",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "CHQ CMP INTEGRADA",
+    "valor": -26.4,
+    "descricao": "",
+    "numeroDOC": "003.562",
+    "tipos": [
+      "OUTROS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 36836.77,
+    "descricao": "",
+    "numeroDOC": "0000080610",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 23,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -21.0,
+    "descricao": "",
+    "numeroDOC": "0000074776",
+    "tipos": [
+      "DESPESAS_ADMINISTRATIVAS",
+      "TARIFAS_BANCARIAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "CRÉD.LIQ.COBRANÇA",
+    "valor": 2434.36,
+    "descricao": "",
+    "numeroDOC": "0000078480",
+    "tipos": [
+      "OUTRAS_RECEITAS"
+    ]
+  },
+  {
+    "data": {
+      "year": 2019,
+      "month": 4,
+      "dayOfMonth": 24,
+      "hourOfDay": 16,
+      "minute": 20,
+      "second": 21
+    },
+    "textoIdentificador": "TARIFA COBRANÇA",
+    "valor": -6.0,
+    "descricao": "",
+    "numeroDOC": "0000083290",
     "tipos": [
       "DESPESAS_ADMINISTRATIVAS",
       "TARIFAS_BANCARIAS"

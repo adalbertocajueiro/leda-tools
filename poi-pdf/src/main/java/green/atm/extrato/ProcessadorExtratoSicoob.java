@@ -30,6 +30,7 @@ public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
 		GregorianCalendar dataInicial = Util.buildDate(periodo[0]);
 		GregorianCalendar dataFinal = Util.buildDate(periodo[1]);
 		double saldoAnterior = extrairSaldoAnterior(conteudo);
+		double valorAplicacao = extrairValorAplicado(conteudo);
 		
 		ArrayList<String> list = removerInformacoesInuteis(conteudo);
 
@@ -48,7 +49,31 @@ public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
 		//esse tipo de transacao tem sempre esse numero de DOC
 		extrato.getTransacoes().addFirst(saldoCorrente);
 		
+		Transacao valorAplicado = new Transacao(dataInicial,Util.TOKEN_RDC,
+				valorAplicacao,"Valor aplicacao no mes","11111111");
+		valorAplicado.getTipos().add(TipoTransacao.VALOR_APLICACAO);
+		extrato.getTransacoes().add(valorAplicado);
+		
 		return extrato;
+	}
+
+	private double extrairValorAplicado(String content) {
+		double valor = 0.0;
+		String textoValor = "";
+		int indexValorAplicado = content.indexOf(Util.TOKEN_RDC);
+		textoValor = content.substring(indexValorAplicado + Util.TOKEN_RDC.length() + 1,content.indexOf('\n', indexValorAplicado)).trim();
+		textoValor = textoValor.replaceAll("[.]", "");
+		textoValor = textoValor.replaceAll(",", ".");
+		
+		if(textoValor.endsWith("D")){
+			textoValor = textoValor.substring(0, textoValor.lastIndexOf('D'));
+			valor = - Double.parseDouble(textoValor);
+		}else {
+			textoValor = textoValor.substring(0, textoValor.lastIndexOf('C'));
+			valor = Double.parseDouble(textoValor);
+
+		}
+		return valor;
 	}
 
 	private String carregarConteudoPDF(String path) throws IOException, SAXException, TikaException{

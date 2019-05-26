@@ -56,6 +56,18 @@ public class ControladorAtmospheraGreen {
 		return saldoInicial;
 	}
 
+	public double obterValorAplicado(int mes, int ano) {
+		double valorAplicacao = 0.0;
+		Stream<Transacao> stream = Configuration.getInstance().getTransacoes().stream()
+				.filter(t -> t.getData().get(GregorianCalendar.MONTH) == (mes - 1))
+				.filter(t -> t.getData().get(GregorianCalendar.YEAR) == ano)
+				.filter(t -> t.getTipos().contains(TipoTransacao.VALOR_APLICACAO));
+		Transacao valorAplicado = stream.findFirst().orElse(null);
+		if (valorAplicado != null) {
+			valorAplicacao = valorAplicado.getValor();
+		}
+		return valorAplicacao;
+	}
 	/**
 	 * Mes precisa ser informado de 1 até 12
 	 * 
@@ -74,8 +86,10 @@ public class ControladorAtmospheraGreen {
 		double saldoAnterior = this.obterSaldoInicial(mes, ano);
 		saldoMinimo = saldoAnterior;
 		double saldoAtual = saldoAnterior;
-		List<Transacao> list = stream.skip(1).collect(Collectors.toList()); // descarta o primeiro elemento porque foi o
-																			// saldo atual
+		List<Transacao> list = stream.skip(1) // descarta o primeiro elemento porque foi o saldo atual
+				.filter(t -> !t.getTipos().contains(TipoTransacao.VALOR_APLICACAO)) //remove a transacao que guarda valor aplicado
+				.collect(Collectors.toList()); 
+																			 
 		for (Transacao t : list) {
 			saldoAtual = saldoAtual + t.getValor();
 			if (saldoAtual < saldoMinimo) {
@@ -104,8 +118,10 @@ public class ControladorAtmospheraGreen {
 		double saldoAnterior = this.obterSaldoInicial(mes, ano);
 		saldoMaximo = saldoAnterior;
 		double saldoAtual = saldoAnterior;
-		List<Transacao> list = stream.skip(1).collect(Collectors.toList()); // descarta o primeiro elemento porque
-																			// foi o saldo atual
+		List<Transacao> list = stream.skip(1) //descarta o primeiro elemento porque foi o saldo atual
+				.filter(t -> !t.getTipos().contains(TipoTransacao.VALOR_APLICACAO)) //remove a transacao que guarda valor aplicado
+				.collect(Collectors.toList());  
+																			
 		for (Transacao t : list) {
 			saldoAtual = saldoAtual + t.getValor();
 			if (saldoAtual > saldoMaximo) {
@@ -115,6 +131,8 @@ public class ControladorAtmospheraGreen {
 
 		return saldoMaximo;
 	}
+	
+	
 
 	public double calcularReceitas(int mes, int ano) {
 		double creditos = 0.0;
@@ -123,6 +141,7 @@ public class ControladorAtmospheraGreen {
 				.filter(t -> t.getData().get(GregorianCalendar.YEAR) == ano)
 				.filter(t -> t.getValor() > 0.0)
 				.skip(1) //descarta sempre a primeira porque é saldo corrente
+				.filter(t -> !t.getTipos().contains(TipoTransacao.VALOR_APLICACAO))
 				.mapToDouble(Transacao::getValor).sum();
 		return creditos;
 	}

@@ -2,6 +2,7 @@ package green.atm.extrato;
 
 public enum TipoTransacao {
 	SALDO_CORRENTE("Saldo Corrente"), 
+	VALOR_APLICACAO("Valor aplicado"),
 
 	RECEITA_OPERACIONAL("Receita Operacional"), 
 	TAXA_CONDOMINIO("Taxas de Condominio"),

@@ -14,6 +14,8 @@ public class Util {
 	public static final String FUNCIONARIOS_FILE_NAME = "funcionarios.txt";
 	public static final String TRANSACOES_FILE_NAME = "transacoes.json";
 	public static final String TOKEN_INICIO_MOVIMENTACOES= "DATA HISTÓRICO VALOR";
+	public static final String TOKEN_RDC = "RDC - Longo CDI";
+	
 	
 	public static final String TOKEN_SALDO_CORRENTE = "Saldo Corrente";
 	public static final String TOKEN_EMPRESA_SEGURANCA = "Optimus";

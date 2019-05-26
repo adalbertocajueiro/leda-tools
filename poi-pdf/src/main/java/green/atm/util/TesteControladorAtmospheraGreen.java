@@ -13,11 +13,32 @@ import green.atm.extrato.ControladorAtmospheraGreen;
 
 public class TesteControladorAtmospheraGreen {
 	public static void main(String[] args) throws Exception {
-		String extratoMaio = "/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (06-05-2019 09-51-22)$MAR$.pdf";
+		String extratoMaio = "/Users/adalbertocajueiro/Documents/Pessoal/Betinho/condominio/2019/extratos/Sicoob comprovante (26-05-2019 16-13-30)$MAIO$.pdf";
 		ControladorAtmospheraGreen controlador = new ControladorAtmospheraGreen();
 		controlador.loadArquivoExtrato(extratoMaio);
 		
 		System.out.println("RESUMO: ");
+		System.out.println("Saldo inicial em 12/2018: " + controlador.obterSaldoInicial(12, 2018));
+		System.out.println("Saldo minimo em 12/2018: " + controlador.obterSaldoMinimo(12, 2018));
+		System.out.println("Saldo maximo em 12/2018: " + controlador.obterSaldoMaximo(12, 2018));
+		System.out.println("Receita em 12/2018: " + controlador.calcularReceitas(12, 2018));
+		System.out.println("Despesa em 12/2018: " + controlador.calcularDespesas(12, 2018));
+		System.out.println("Saldo restante em 12/2018: " + controlador.calcularSaldoRestante(12, 2018));
+		System.out.println("");
+		System.out.println("Saldo inicial em 01/2019: " + controlador.obterSaldoInicial(1, 2019));
+		System.out.println("Saldo minimo em 01/2019: " + controlador.obterSaldoMinimo(1, 2019));
+		System.out.println("Saldo maximo em 01/2019: " + controlador.obterSaldoMaximo(1, 2019));
+		System.out.println("Receita em 01/2019: " + controlador.calcularReceitas(1, 2019));
+		System.out.println("Despesa em 01/2019: " + controlador.calcularDespesas(1, 2019));
+		System.out.println("Saldo restante em 01/2019: " + controlador.calcularSaldoRestante(1, 2019));
+		System.out.println("");
+		System.out.println("Saldo inicial em 02/2019: " + controlador.obterSaldoInicial(2, 2019));
+		System.out.println("Saldo minimo em 02/2019: " + controlador.obterSaldoMinimo(2, 2019));
+		System.out.println("Saldo maximo em 02/2019: " + controlador.obterSaldoMaximo(2, 2019));
+		System.out.println("Receita em 02/2019: " + controlador.calcularReceitas(2, 2019));
+		System.out.println("Despesa em 02/2019: " + controlador.calcularDespesas(2, 2019));
+		System.out.println("Saldo restante em 02/2019: " + controlador.calcularSaldoRestante(2, 2019));
+		System.out.println("");
 		System.out.println("Saldo inicial em 03/2019: " + controlador.obterSaldoInicial(3, 2019));
 		System.out.println("Saldo minimo em 03/2019: " + controlador.obterSaldoMinimo(3, 2019));
 		System.out.println("Saldo maximo em 03/2019: " + controlador.obterSaldoMaximo(3, 2019));
@@ -38,6 +59,7 @@ public class TesteControladorAtmospheraGreen {
 		System.out.println("Receita em 05/2019: " + controlador.calcularReceitas(5, 2019));
 		System.out.println("Despesa em 05/2019: " + controlador.calcularDespesas(5, 2019));
 		System.out.println("Saldo restante em 05/2019: " + controlador.calcularSaldoRestante(5, 2019));
+		System.out.println("Valor aplicado em 05/2019: " + controlador.obterValorAplicado(5, 2019));
 		
 		/*double creditos = Configuration.getInstance().getTransacoes().stream()
 				.filter(t -> t.getData().get(GregorianCalendar.MONTH) == 4)
