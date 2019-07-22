@@ -5,6 +5,9 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import green.atm.extrato.TipoTransacao;
+import green.atm.extrato.Transacao;
+
 public class OrderedLinkedList<T extends Comparable<T>> extends LinkedList<T> {
 
 	/**
@@ -52,6 +55,8 @@ public class OrderedLinkedList<T extends Comparable<T>> extends LinkedList<T> {
 		return result;
 	}
 
+	
+	
 	public static void main(String[] args) {
 		OrderedLinkedList<Integer> list = new OrderedLinkedList<Integer>();
 		list.add(5);

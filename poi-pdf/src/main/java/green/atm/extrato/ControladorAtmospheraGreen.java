@@ -2,9 +2,11 @@ package green.atm.extrato;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,6 +24,27 @@ public class ControladorAtmospheraGreen {
 		processadorExtrato = new ProcessadorExtratoSicoob();
 	}
 
+	/**
+	 * Carrega os extratos em todos os arquivos de extrato do Sicoob qu eestao em uma pasta especifica
+	 * @param folder
+	 */
+	public void carregarTodosExtratos(File folder) throws Exception{
+		if (folder.exists()) {
+			File[] arquivos = folder.listFiles(new FileFilter() {
+				
+				@Override
+				public boolean accept(File pathname) {
+					return pathname.getName().startsWith("Sicoob")
+							&& pathname.getName().endsWith(".pdf");
+				}
+			});
+			for (File file : arquivos) {
+				System.out.println("Carregando extrato de " + file.getName());
+				this.loadArquivoExtrato(file.getAbsolutePath());
+			}
+		}
+	}
+	
 	public void loadArquivoExtrato(String path) throws Exception {
 		Extrato extrato = processadorExtrato.construirExtrato(path);
 		OrderedLinkedList<Transacao> transacoes = Configuration.getInstance().getTransacoes();
@@ -157,4 +180,13 @@ public class ControladorAtmospheraGreen {
 	public double calcularSaldoRestante(int mes, int ano) {
 		return this.obterSaldoInicial(mes, ano) + this.calcularReceitas(mes, ano) + this.calcularDespesas(mes, ano);
 	}
+	
+	public List<Transacao> filtrarTransacoes(int mes, int ano, TipoTransacao tipo){
+		OrderedLinkedList<Transacao> transacoes = Configuration.getInstance().getTransacoes();
+		return transacoes.stream()
+		.filter(t -> t.getData().get(GregorianCalendar.MONTH) == (mes - 1))
+		.filter(t -> t.getData().get(GregorianCalendar.YEAR) == ano)
+		.filter(t -> t.getTipos().contains(tipo))
+		.collect(Collectors.toList());
+	} 
 }

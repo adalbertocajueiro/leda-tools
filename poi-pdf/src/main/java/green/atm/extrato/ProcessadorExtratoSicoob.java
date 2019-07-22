@@ -18,8 +18,6 @@ import green.atm.util.OrderedLinkedList;
 import green.atm.util.Util;
 
 public class ProcessadorExtratoSicoob implements ProcessadorExtrato{
-
-	
 	
 	@Override
 	public Extrato construirExtrato(String path) throws Exception {
