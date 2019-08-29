@@ -26,17 +26,13 @@
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<idSheetMonitores>1ghOpVMBpAIkCANUOIpAbI5LeiPEvShbG0qtSIjj7i6M</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
-		<quantidadeRoteiros>18</quantidadeRoteiros>
+		<quantidadeRoteiros>17</quantidadeRoteiros>
 		<activitySheetIds>1dhmqJQi0dwE-gKBTyPJvZvpcPsbqbFjy0MO0gjOe_dg,1_oZ0QUkrAMa5r95PpjF8Lp70yeg9E5xjbrKwoKAWkHk</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
-		<edaSheetIds>1B07uTtUHwL6s-u6IlrXT-EZK2h1v8KpGuAujdTjP8kQ</edaSheetIds>
+		<edaSheetIds>1KleDB_rFlaRNv072UuRxIs_AlQ9MpiA_DT0ar8xpZvE</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
-	
-	<!-- repositories> <repository> <id>ufcg-leda</id> <url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</url> 
-		<layout>default</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-		</repository> </repositories -->
 
 	<profiles>
 		<profile>
@@ -164,12 +160,7 @@
 			<artifactId>nginxparser</artifactId>
 			<version>0.9.6</version>
 		</dependency>
-		<!-- dependency to send email -->
-		<!-- dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> 
-			<version>1.4.7</version> </dependency> <dependency> <groupId>javax.mail</groupId> 
-			<artifactId>javax.mail-api</artifactId> <version>1.5.5</version> </dependency> 
-			<dependency> <groupId>org.jooby</groupId> <artifactId>jooby-pac4j</artifactId> 
-			</dependency -->
+
 		<dependency>
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-correction-tool</artifactId>
@@ -203,10 +194,6 @@
 			<version>2.5</version>
 		</dependency>
 
-		<!--  dependency>
-			<groupId>org.jooby</groupId>
-			<artifactId>jooby-hazelcast</artifactId>
-		</dependency -->
 	</dependencies>
 
 	<build>
