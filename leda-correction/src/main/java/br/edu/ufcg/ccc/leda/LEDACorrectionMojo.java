@@ -128,7 +128,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 			String url = prop.getProperty(Utilities.SUBMISSION_SERVER_URL);
 			String urlAllStudents = url + "/" + pathAllStudents;
 			System.out.println("Obtaining student lists from server " + urlAllStudents);
-			System.out.println("At time: " + new GregorianCalendar());
+			System.out.println("At time: " + (new GregorianCalendar()).getTime());
 			alunos = new HashMap<String,Student>();
 			try {
 				alunos = Util.getAllStudents(urlAllStudents);
