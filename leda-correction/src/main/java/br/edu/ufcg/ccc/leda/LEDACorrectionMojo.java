@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +128,7 @@ public class LEDACorrectionMojo extends AbstractMojo {
 			String url = prop.getProperty(Utilities.SUBMISSION_SERVER_URL);
 			String urlAllStudents = url + "/" + pathAllStudents;
 			System.out.println("Obtaining student lists from server " + urlAllStudents);
-			
+			System.out.println("At time: " + new GregorianCalendar());
 			alunos = new HashMap<String,Student>();
 			try {
 				alunos = Util.getAllStudents(urlAllStudents);
