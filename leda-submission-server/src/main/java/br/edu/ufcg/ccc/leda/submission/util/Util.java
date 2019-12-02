@@ -828,9 +828,9 @@ public class Util {
 				}
 			}
 		}
-		for (int i = 0; i < headers.length; i++) {
-			sheet.autoSizeColumn(i);
-		}
+		//for (int i = 0; i < headers.length; i++) {
+		//	sheet.autoSizeColumn(i);
+		//}
 	}
 	private static void createSheetAtividade(XSSFWorkbook workbook, String[] headers,CorrectionReport report) throws BiffException, IOException{
 		XSSFSheet sheet = workbook.createSheet(report.getId());
