@@ -876,9 +876,10 @@ public class Util {
 			cellComentario.setCellValue(cri.getComentario());
 			
 		}
-		for (int i = 0; i < headers.length; i++) {
-			sheet.autoSizeColumn(i);
-		}
+		//retirado porque o autosize comecou a dar problemas na geracao das planilhas.
+		//for (int i = 0; i < headers.length; i++) {
+		//	sheet.autoSizeColumn(i);
+		//}
 
 	}
 	private static boolean matchesRoteiroOuProva(String id){
