@@ -22,7 +22,7 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2019.2</semestre.letivo>
+		<semestre.letivo>2020.1</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<idSheetMonitores>1ghOpVMBpAIkCANUOIpAbI5LeiPEvShbG0qtSIjj7i6M</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
