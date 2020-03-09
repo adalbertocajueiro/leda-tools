@@ -89,7 +89,9 @@ public class StudentSubmissionSender extends Sender {
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending file: " + httppost.getRequestLine());
 			CloseableHttpResponse response = httpclient.execute(httppost);
-
+			if(response.getStatusLine().getStatusCode() != 200) {
+				throw new IOException(response.toString());
+			}
 			try {
 				System.out.println("----------------------------------------");
 				System.out.println(response.getStatusLine());
@@ -117,10 +119,13 @@ public class StudentSubmissionSender extends Sender {
 				
 			}catch(IOException ex) {
 				response.close();
+				throw ex;
 			}finally {
 				response.close();
 			} 
-		} finally {
+		} catch(IOException ex){
+			throw ex;
+		}finally {
 			httpclient.close();
 		}
 	}

@@ -769,6 +769,7 @@ public class SubmissionServer extends Jooby {
 			      StudentUploadConfiguration config = new StudentUploadConfiguration(id,semestre, turma, matricula,ip,files);
 				  File uploaded = upload.file();
 				  String result = "default response";
+				  resp.status(200);
 				  try {
 					result = FileUtilities.saveStudentSubmission(uploaded, config);
 					
@@ -776,21 +777,25 @@ public class SubmissionServer extends Jooby {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					result = e.getMessage();
+					resp.status(500);
 					
 				}catch (ConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					result = e.getMessage();
+					resp.status(500);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					result = e.getMessage();
+					resp.status(500);
 					
 				} catch (AtividadeException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					result = e.getMessage();
+					resp.status(500);
 				}
 				resp.send(result);  
 			    });
