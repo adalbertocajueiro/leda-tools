@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -160,7 +161,7 @@ public class Configuration {
 				.collect(Collectors.groupingBy( Atividade::getTurma))
 				.values()
 				.stream()
-				.findFirst().orElse(null);
+				.findFirst().orElse(new LinkedList<Atividade>());
 	}
 	
 	public ArrayList<String> getIpsAutorizados() {
