@@ -1505,6 +1505,9 @@ public class Util {
 			}
 			myWorkBook.close();
 		}
+		System.out.println("CORRETORES CARREGADOS");
+		corretores.forEach(c -> System.out.println("Nome: " + c.getNome() + " Senha: " + c.getSenha()));
+
 	}
 	private static Atividade createAtividade(String id, String nome, String descricao,
 			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,

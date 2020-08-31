@@ -882,6 +882,8 @@ public class SubmissionServer extends Jooby {
 		String senha = req.param("senha").value();
 		Upload upload = req.file("arquivo");
 		//validacao se a senha é de algum professor
+		System.out.println("MONITORES LIDOS");
+		Configuration.getInstance().getMonitores().forEach(c -> System.out.println("Nome: " + c.getNome() + " Senha: " + c.getSenha()));
 		boolean profValido = Configuration.getInstance().getMonitores().stream()
 		.filter(c -> (c instanceof Professor) && c.getSenha().equals(senha))
 		.findFirst().isPresent();
