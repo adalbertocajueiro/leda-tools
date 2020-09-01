@@ -27,9 +27,9 @@
 		<idSheetMonitores>1W3QkxhE4TlJADAXCCwLqLlbk-Ssl-I0U5lQ2Xur6Ebg</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
-		<activitySheetIds>1qx1j390X_uxD_fKlHrhXX0IqbEJor4kau9fK3bTYkxI</activitySheetIds>
+		<activitySheetIds>1qx1j390X_uxD_fKlHrhXX0IqbEJor4kau9fK3bTYkxI,110Tc96_BPO3tb1fhRSRO6QA8H5dBrRgc6I69zcpI2z8</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
-		<edaSheetIds>1KleDB_rFlaRNv072UuRxIs_AlQ9MpiA_DT0ar8xpZvE,1pxCXWY9t6fM4sTdxfTAE4W26G7cE_674jJ_spRykyUc</edaSheetIds>
+		<edaSheetIds>1KleDB_rFlaRNv072UuRxIs_AlQ9MpiA_DT0ar8xpZvE</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
