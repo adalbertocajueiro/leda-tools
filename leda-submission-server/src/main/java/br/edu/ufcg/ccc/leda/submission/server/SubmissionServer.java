@@ -775,27 +775,34 @@ public class SubmissionServer extends Jooby {
 					
 				} catch (StudentException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 					result = e.getMessage();
 					resp.status(500);
+					
+					
 					
 				}catch (ConfigurationException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 					result = e.getMessage();
 					resp.status(500);
+					
+					
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 					result = e.getMessage();
 					resp.status(500);
 					
+					
 				} catch (AtividadeException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 					result = e.getMessage();
 					resp.status(500);
+					
+					
 				}
 				resp.send(result);  
 			    });

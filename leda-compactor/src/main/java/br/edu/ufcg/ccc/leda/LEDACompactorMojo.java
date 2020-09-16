@@ -87,7 +87,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 		try {
 			alunos = Util.getAllStudents(urlAllStudents);
 		} catch (IOException e2) {
-			throw new MojoExecutionException(e2.getMessage(),e2);
+			throw new MojoExecutionException("\n CONNECTION ERROR: " + e2.getMessage(),e2);
 		}
 		//se acontecer da matricula nao estiver cadastrada nem o aluno cadastrado na turma correta
 		Student aluno = alunos.get(matricula);
@@ -123,7 +123,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 					.println("Please check your log file to see the confirmation from the server (last record)");
 		} catch (IOException e) {
 			// e.printStackTrace();
-			throw new MojoExecutionException("Compaction error", e);
+			throw new MojoExecutionException("\n COMPACTION ERROR", e);
 		}
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 	}

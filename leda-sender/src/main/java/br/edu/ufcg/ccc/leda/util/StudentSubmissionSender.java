@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+import org.apache.http.Header;
+import org.apache.http.HeaderIterator;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -78,6 +80,7 @@ public class StudentSubmissionSender extends Sender {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
 		StringBuilder confirmation = new StringBuilder();
+		CloseableHttpResponse response = null;
 		try {
 			HttpPost httppost = new HttpPost(url);
 			HttpEntity reqEntity = MultipartEntityBuilder.create()
@@ -88,44 +91,45 @@ public class StudentSubmissionSender extends Sender {
 
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending file: " + httppost.getRequestLine());
-			CloseableHttpResponse response = httpclient.execute(httppost);
-			if(response.getStatusLine().getStatusCode() != 200) {
-				throw new IOException(response.toString());
-			}
-			try {
-				System.out.println("----------------------------------------");
-				System.out.println(response.getStatusLine());
-				HttpEntity resEntity = response.getEntity();
-				if (resEntity != null) {
-					// System.out.println("Response content length: " +
-					// resEntity.getContentLength());
-					InputStreamReader isr = new InputStreamReader(
-							resEntity.getContent());
-					BufferedReader br = new BufferedReader(isr);
-					String line = "";
-					while ((line = br.readLine()) != null) {
-						// System.out.println(line);
-						confirmation.append(line);
-						confirmation.append("\n");
-					}
+			response = httpclient.execute(httppost);
+			//System.out.println("RESPONSE STATUS: " + response.getStatusLine());
+			
+			
+			System.out.println("----------------------------------------");
+			System.out.println(response.getStatusLine());
+			HttpEntity resEntity = response.getEntity();
+			if (resEntity != null) {
+				// System.out.println("Response content length: " +
+				// resEntity.getContentLength());
+				InputStreamReader isr = new InputStreamReader(
+						resEntity.getContent());
+				BufferedReader br = new BufferedReader(isr);
+				String line = "";
+				while ((line = br.readLine()) != null) {
+					// System.out.println(line);
+					confirmation.append(line);
+					confirmation.append("\n");
 				}
-				EntityUtils.consume(resEntity);
-				response.close();
-				writeTicket(this.matricula + "-send.log",
-						confirmation.toString());
-				System.out.println("--- RESPOSTA RETORNADA DO SERVIDOR");
-				System.out.println(confirmation.toString());
-				System.out.println("----------------------------------");
+			}
+			EntityUtils.consume(resEntity);
+			response.close();
+			if(response.getStatusLine().getStatusCode() != 200) {
+
+				throw new IOException(confirmation.toString());
 				
-			}catch(IOException ex) {
-				response.close();
-				throw ex;
-			}finally {
-				response.close();
-			} 
+			}
+			writeTicket(this.matricula + "-send.log",
+					confirmation.toString());
+			System.out.println("--- RESPOSTA RETORNADA DO SERVIDOR");
+			System.out.println(confirmation.toString());
+			System.out.println("----------------------------------");
+			
 		} catch(IOException ex){
 			throw ex;
 		}finally {
+			if(response != null) {
+				response.close();
+			}
 			httpclient.close();
 		}
 	}
