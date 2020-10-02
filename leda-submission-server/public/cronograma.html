@@ -159,7 +159,7 @@
 										<#if (.now > atividade.dataHora.time?datetime) >
 											<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
 										<#else>
-											<a href='#' data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</a>
+											<span data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</span>
 										</#if>
 									<#else>
 										<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
@@ -180,16 +180,30 @@
 								
 								
 							<td>${atividade.descricao}
-								
-								<#if (atividade.linksVideoAulas?size>0) >
-								<p> Video-aulas:
-									<ul>
-									<#list atividade.linksVideoAulas as link>
-									   <li><a href='${link.url!""}' target="_blank">${link.texto!""}</a></li>
-									</#list>
-									</ul>
+								<#if (atividade.id?starts_with("RR")) || (atividade.id?starts_with("A"))>
+									<#if (atividade.linksVideoAulas?size>0) >
+										<p> Video-aulas:
+										<ul>
+											<#list atividade.linksVideoAulas as link>
+											<li><a href='${link.url!""}' target="_blank">${link.texto!""}</a></li>
+										</#list>
+										</ul>
+									</#if>
+								<#else>
+									<#if (.now > atividade.dataHora.time?datetime) >
+										<#if (atividade.linksVideoAulas?size>0) >
+											<p> Video-aulas:
+											<ul>
+												<#list atividade.linksVideoAulas as link>
+												<li><a href='${link.url!""}' target="_blank">${link.texto!""}</a></li>
+											</#list>
+											</ul>
+										</#if>
+									<#else>
+										<br><span>Videos disponíveis a partir da data e hora de liberação</span>
+									</#if>
 								</#if>
-								
+
 								<#if atividade.monitores??> 
 									<#if (atividade.monitores?size>0)>
 										<p>Monitoria:<br> 
@@ -213,7 +227,7 @@
 										<#if (.now > atividade.dataHora.time?datetime) >
 											<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
 										<#else>
-											<a href='#' data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</a>
+											<span data-toggle="tooltip" data-placement="top" title="Disponível a partir da data e hora de liberação">${(atividade.nome)!""}</span>
 										</#if>
 									<#else>
 										<a href='requestDownload?id=${atividade.id}' data-toggle="tooltip" data-placement="top" title="Download environment">${(atividade.nome)!""}</a>
@@ -233,26 +247,41 @@
 									</ul>								
 								</#if>
 
-								<td>${atividade.descricao} 
-								<#if (atividade.linksVideoAulas?size>0)>
-								<p> Video-aulas:
-									<ul>
-									<#list atividade.linksVideoAulas as link>
-									   <li><a href='${link.url!""}' target="_blank">${link.texto!""}</a></li>
-									</#list>
-									</ul>
-								</#if>
-								
-								<#if atividade.monitores??> 
-									<#if (atividade.monitores?size>0)>
-										<p>Monitoria:<br> 
-										<ul>
-										<#list atividade.monitores as monitor>
-											<li>${monitor.nome!""} (${monitor.email!""}) 
-										</#list>
-										</ul>
+								<td>${atividade.descricao}
+									<#if (atividade.id?starts_with("RR")) || (atividade.id?starts_with("A"))>
+										<#if (atividade.linksVideoAulas?size>0) >
+											<p> Video-aulas:
+											<ul>
+												<#list atividade.linksVideoAulas as link>
+													<li><a href='${link.url!""}' target="_blank">${link.texto!""}</a></li>
+												</#list>
+											</ul>
+										</#if>
+									<#else>
+										<#if (.now > atividade.dataHora.time?datetime) >
+											<#if (atividade.linksVideoAulas?size>0) >
+												<p> Video-aulas:
+													<ul>
+														<#list atividade.linksVideoAulas as link>
+															<li><a href='${link.url!""}' target="_blank">${link.texto!""}</a></li>
+														</#list>
+													</ul>
+											</#if>
+										<#else>
+											<br><span>Videos disponíveis a partir da data e hora de liberação</span>
+										</#if>
 									</#if>
-								</#if> 
+
+									<#if atividade.monitores??>
+										<#if (atividade.monitores?size>0)>
+											<p>Monitoria:<br>
+											<ul>
+											<#list atividade.monitores as monitor>
+												<li>${monitor.nome!""} (${monitor.email!""})
+											</#list>
+											</ul>
+										</#if>
+									</#if>
 						<#assign gray = 'true'>
 					</#if>
 				</#list>
