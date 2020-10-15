@@ -438,7 +438,12 @@ public class SubmissionServer extends Jooby {
 		Gson gson = new Gson();
 		return gson.toJson(Util.buildMediasProvasPraticas());
 	  }).produces("json");
-	
+
+	  get("/mediaRoteiros", (req) -> {
+		  Gson gson = new Gson();
+		  return gson.toJson(Util.buildMediasRoteiros());
+	  }).produces("json");
+
 	get("/mediaProvasPraticasCSV", (req,resp) -> {
 		File fileToSend = null;
 		try {
