@@ -2329,7 +2329,9 @@ public class Util {
 		// Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1RLCM_LlhrI7y1n-7nbKff_Kcemvob3ZDCyb2z8B_Jio");
 		// System.out.println(mediasEDA1.size());
 
-		
+		Map<String,Double> mediasEda = Util.loadSpreadsheetMediasEDA("12VhXBu0RPRYkELKv8UOosjgK3qwGXtnz6q2am1XbvKk");
+		//Map<String,Double> mediasEda = Util.loadSpreadsheetMediasEDA("12VhXBu0RPRYkELKv8UOosjgK3qwGXtnz6q2am1XbvKk");
+
 		List<Corretor> monitores = Util.loadSpreadsheetMonitor();
 		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividades("164QmWZ5ECj7PAEr0hu0Bt-j8CzJYFIvfX6eto9GdloQ", monitores);
 		ativs.size();
