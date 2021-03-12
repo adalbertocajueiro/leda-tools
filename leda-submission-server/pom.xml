@@ -24,7 +24,7 @@
 		<jooby.version>${project.parent.version}</jooby.version>
 		<semestre.letivo>2020.1</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
-		<idSheetMonitores>1AN1-IUt1LMkmVxC2nIvHfHR49uO8Y9ebV34cBF7SLwk</idSheetMonitores>
+		<idSheetMonitores>1Z3yyI27ThzUCYmtmuKeZWJU18YCTwvZ-yxr5Ei5DW-o</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
 		<activitySheetIds>1tq25nSd8ChMKWwQtLDV_AUKE4T_EBQMvzLiCLRn3zi8,1OrC6zk1h1l6NfG58Nc4g5L5PjRwkglsnz_m7b6dvrUY</activitySheetIds>
