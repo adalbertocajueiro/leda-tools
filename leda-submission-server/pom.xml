@@ -22,14 +22,14 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2020.1</semestre.letivo>
+		<semestre.letivo>2020.2</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
-		<idSheetMonitores>1Z3yyI27ThzUCYmtmuKeZWJU18YCTwvZ-yxr5Ei5DW-o</idSheetMonitores>
+		<idSheetMonitores>1Qfth6rEq-kGr3kNphAloe3dIaSbWWbIbi-FxZbTnh2M</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
-		<activitySheetIds>1tq25nSd8ChMKWwQtLDV_AUKE4T_EBQMvzLiCLRn3zi8,1OrC6zk1h1l6NfG58Nc4g5L5PjRwkglsnz_m7b6dvrUY</activitySheetIds>
+		<activitySheetIds>1BYEMxrm4UhoopE9pNjG3GQM0qK24GEenEcuJZ2WU9dQ,1RnXiYOf9Vchj7EnzUJ54-HlqQqM6-gjaJx5J52OBzro</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
-		<edaSheetIds>1VD3wfRmwJTeNCzEMm_Ilnp8oVI4TNr8sJm2BwDI0Jpo,1YR-Ozfml8kZj1jP7McY1UC3N5PykEj8DJVVaGaNGraE</edaSheetIds>
+		<edaSheetIds>1YwFY4V4Zk9DuTFYxEPmnFKzfKve2hzv1b6-fLy1aFDM</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
