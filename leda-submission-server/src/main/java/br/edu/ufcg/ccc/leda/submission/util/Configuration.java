@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -20,30 +21,25 @@ import jxl.read.biff.BiffException;
 public class Configuration {
 
 	private Map<String, Student> students;
-	private Map<String,Atividade> atividades;
+	private Map<String,Atividade> atividades = new HashMap<String, Atividade>();
 	private List<Corretor> monitores;
 	private ArrayList<String> ipsAutorizados;
 	
 	private static Configuration instance;
 	
-	private Configuration() throws ConfigurationException, IOException {
+	private Configuration() throws ConfigurationException {
 		if(ipsAutorizados == null){
 			ipsAutorizados = new ArrayList<String>();
 		}
 		try {
 			students = Util.loadStudentLists();
-			monitores = Util.loadSpreadsheetMonitor();
+			monitores = Util.loadSpreadsheetMonitorFromExcel();// Util.loadSpreadsheetMonitor();
 			Util.loadSpreadsheetSenhasFromExcel(monitores);
-			atividades = Util.loadSpreadsheetsAtividades(monitores);
+			atividades = Util.loadSpreadsheetAtividadesFromExcel(monitores);
 			ipsAutorizados.addAll(Constants.authorizedIPs);
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-			//monitores = Util.loadSpreadsheetMonitorFromExcel();
-			//atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
-			ipsAutorizados.addAll(Constants.authorizedIPs);
-		} catch (ConnectException e) {
+		}  catch (ConnectException e) {
 			e.printStackTrace();
 			//monitores = Util.loadSpreadsheetMonitorFromExcel();
 			//atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
@@ -53,6 +49,8 @@ public class Configuration {
 			//monitores = Util.loadSpreadsheetMonitorFromExcel();
 			//atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
 			ipsAutorizados.addAll(Constants.authorizedIPs);
+		} catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 
@@ -63,21 +61,21 @@ public class Configuration {
 			students = Util.loadStudentLists();
 			monitores = Util.loadSpreadsheetMonitor();
 			Util.loadSpreadsheetSenhasFromExcel(monitores);
-			atividades = Util.loadSpreadsheetsAtividades(monitores);
+			atividades = Util.loadSpreadsheetAtividadesFromExcel(monitores);
 		} catch (BiffException e) {
 			throw new ConfigurationException(e);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
-			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			atividades = Util.loadSpreadsheetAtividadesFromExcel(monitores);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
-			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			atividades = Util.loadSpreadsheetAtividadesFromExcel(monitores);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			monitores = Util.loadSpreadsheetMonitorFromExcel();
-			atividades = Util.loadSpreadsheetAtividadeFromExcel(monitores);
+			atividades = Util.loadSpreadsheetAtividadesFromExcel(monitores);
 		}
 	}
 	public static Configuration getInstance() throws ConfigurationException, IOException, ServiceException {

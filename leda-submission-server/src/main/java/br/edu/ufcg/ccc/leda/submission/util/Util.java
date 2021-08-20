@@ -47,12 +47,20 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -1074,10 +1082,37 @@ public class Util {
 		
 		SpreadsheetService service = new SpreadsheetService("Sheet1");
         
-        String sheetUrl =
-            "https://spreadsheets.google.com/feeds/list/" + Constants.ID_MONITORES_SHEET + "/default/public/values";
+        //String sheetUrl =
+        //    "https://spreadsheets.google.com/feeds/list/" + Constants.ID_MONITORES_SHEET + "/default/public/values";
+		/*
+		String sheetUrl =
+				"https://sheets.googleapis.com/v4/spreadsheets/" + Constants.ID_MONITORES_SHEET + "?includeGridData=true&key=AIzaSyBtuO1i4mD-nHfCEWj8QE2mYRDoBR81nuM";
+				//"https://spreadsheets.google.com/feeds/list/" + Constants.ID_MONITORES_SHEET + "/default/public/values";
 
-        // Use this String as url
+		System.out.println("URL: " + sheetUrl);
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		try {
+
+			HttpGet request = new HttpGet(sheetUrl);
+			CloseableHttpResponse response = httpClient.execute(request);
+
+			try {
+
+				HttpEntity entity = response.getEntity();
+				if (entity != null) {
+					// return it as a String
+					String result = EntityUtils.toString(entity);
+					monitores = GooglesheetUtils.loadSpreadsheetMonitor(result);
+				}
+
+			} finally {
+				response.close();
+			}
+		} finally {
+			httpClient.close();
+		}
+		*/
+		/*		// Use this String as url
         URL url = new URL(sheetUrl);
 
         // Get Feed of Spreadsheet url
@@ -1102,11 +1137,11 @@ public class Util {
             
             monitores.add(corretor);
         }
-        
+        */
 		return monitores;
 	}
 	
-	public static Map<String,Atividade> loadSpreadsheetsAtividades(List<Corretor> corretores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
+	public static Map<String,Atividade> loadSpreadsheetsAtividadesOld(List<Corretor> corretores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
 		for (String id : Constants.activitySheetIds) {
 			atividades.putAll(loadSpreadsheetAtividades(id, corretores));
@@ -1402,10 +1437,10 @@ public class Util {
 		return atividades;
 	}
 
-	@Deprecated
+
 	public static List<Corretor> loadSpreadsheetMonitorFromExcel() throws IOException{
 		ArrayList<Corretor> monitores = new ArrayList<Corretor>();
-		File excelFile = new File(Constants.DEFAULT_CONFIG_FOLDER,"Monitores.xlsx");
+		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_CORRETORES_FILE_NAME);
 		FileInputStream fis = new FileInputStream(excelFile);
 		
 		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
@@ -1414,8 +1449,13 @@ public class Util {
 			myWorkBook = new XSSFWorkbook (fis);
 			mySheet = myWorkBook.getSheetAt(0);
 		}catch(POIXMLException ex){
-			//problema na leitura do arquivo excel
-			ex.printStackTrace();
+			try {
+				myWorkBook = new HSSFWorkbook(fis);
+				mySheet = myWorkBook.getSheetAt(0);
+			} catch(POIXMLException ex1){
+				//problema na leitura do arquivo excel
+				ex1.printStackTrace();
+			}
 		}
 	
 		Iterator<Row> rowIterator = mySheet.iterator();
@@ -1460,6 +1500,89 @@ public class Util {
 		return monitores;
 	}
 
+	public static Map<String,Atividade> loadSpreadsheetAtividadesFromExcel(List<Corretor> monitores) throws IOException{
+		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
+		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_ATIVIDADES_FILE_NAME);
+		FileInputStream fis = new FileInputStream(excelFile);
+
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet sheetTurma1 = null;
+		org.apache.poi.ss.usermodel.Sheet sheetTurma2 = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			sheetTurma1 = myWorkBook.getSheetAt(0);
+			sheetTurma2 = myWorkBook.getSheetAt(1);
+		}catch(POIXMLException ex){
+			try {
+				myWorkBook = new HSSFWorkbook(fis);
+				sheetTurma1 = myWorkBook.getSheetAt(0);
+				sheetTurma2 = myWorkBook.getSheetAt(1);
+			} catch(POIXMLException ex1){
+				//problema na leitura do arquivo excel
+				ex1.printStackTrace();
+			}
+		}
+		iterateOverSheetAtividade(monitores,atividades,sheetTurma1);
+		iterateOverSheetAtividade(monitores,atividades,sheetTurma2);
+
+		myWorkBook.close();
+
+		Util.loadAtividadesFromUploadFolder(atividades);
+
+		return atividades;
+	}
+	private static void iterateOverSheetAtividade(List<Corretor> monitores, Map<String,Atividade> atividades, Sheet sheet){
+		Iterator<Row> rowIterator = sheet.iterator();
+		while (rowIterator.hasNext()) {
+			Row row = rowIterator.next();
+			Iterator<org.apache.poi.ss.usermodel.Cell> cellIterator = row.cellIterator();
+			if(cellIterator.hasNext()){
+				org.apache.poi.ss.usermodel.Cell cellId = row.getCell(0);
+				if(cellId != null){
+					String idAtividade = null;
+					if(cellId.getCellType() != XSSFCell.CELL_TYPE_STRING){
+						idAtividade = String.valueOf((int)cellId.getNumericCellValue()); //
+					}else{
+						idAtividade = cellId.getStringCellValue();
+					}
+
+					if(!idAtividade.equalsIgnoreCase("Id") && idAtividade.length() > 1){ //pode trabalhar aqui com o matcher
+						org.apache.poi.ss.usermodel.Cell cellNome = row.getCell(1); //celula com o nome
+						org.apache.poi.ss.usermodel.Cell cellDescricao = row.getCell(2); //celula com a descricao
+						org.apache.poi.ss.usermodel.Cell cellDataHoraLiberacao = row.getCell(3);
+						org.apache.poi.ss.usermodel.Cell cellDataHoraEnvioNormal = row.getCell(4);
+						org.apache.poi.ss.usermodel.Cell cellDataHoraEnvioAtraso = row.getCell(5);
+						org.apache.poi.ss.usermodel.Cell cellMonitores = row.getCell(6);
+						org.apache.poi.ss.usermodel.Cell cellCorretor = row.getCell(7);
+						org.apache.poi.ss.usermodel.Cell cellDataInicioCorrecao = row.getCell(8);
+						org.apache.poi.ss.usermodel.Cell cellDataEntregaCorrecao = row.getCell(9);
+						org.apache.poi.ss.usermodel.Cell cellLinksVideoAulas = row.getCell(10); //celula de datahora de liberacao
+
+						String nome = cellNome != null?cellNome.getStringCellValue():"";
+						String descricao = cellDescricao != null?cellDescricao.getStringCellValue():"";
+						GregorianCalendar dataHoraLiberacao = buildDate(cellDataHoraLiberacao != null?cellDataHoraLiberacao.getDateCellValue():null);
+						GregorianCalendar dataHoraEnvioNormal = buildDate(cellDataHoraEnvioNormal != null?cellDataHoraEnvioNormal.getDateCellValue():null);
+						GregorianCalendar dataHoraEnvioAtraso = buildDate(cellDataHoraEnvioAtraso != null?cellDataHoraEnvioAtraso.getDateCellValue():null);
+						List<Monitor> monitoresRoteiro = listOfMonitores(cellMonitores!= null?cellMonitores.getStringCellValue():"",monitores);
+						String nomeMonitor = cellCorretor != null?cellCorretor.getStringCellValue():"";
+						Corretor corretor =
+								monitores.stream().filter(m -> m.getNome().equals(nomeMonitor)).findAny().orElse(null);
+						GregorianCalendar dataInicioCorrecao = buildDate(cellDataInicioCorrecao != null?cellDataInicioCorrecao.getDateCellValue():null);
+						GregorianCalendar dataEntregaCorrecao = buildDate(cellDataEntregaCorrecao != null?cellDataEntregaCorrecao.getDateCellValue():null);
+
+						List<LinkVideoAula>  linksVideoAulas = listOfLinks(cellLinksVideoAulas != null? cellLinksVideoAulas.getStringCellValue():"");
+						//(cellLinksVideoAulas.getCellType() != XSSFCell.CELL_TYPE_STRING)?String.valueOf((int)cellLinksVideoAulas.getNumericCellValue()):cellLinksVideoAulas.getStringCellValue():"";
+
+						Atividade atividade = createAtividade(idAtividade,nome,descricao,dataHoraLiberacao,
+								linksVideoAulas,dataHoraEnvioNormal,dataHoraEnvioAtraso,monitoresRoteiro,
+								corretor,dataInicioCorrecao,dataEntregaCorrecao);
+
+						atividades.put(idAtividade,atividade);
+					}
+				}
+			}
+		}
+	}
 	public static void loadSpreadsheetSenhasFromExcel(List<Corretor> corretores) throws IOException{
 		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_SENHAS_FILE_NAME);
 		if(excelFile.exists()){
@@ -1509,6 +1632,7 @@ public class Util {
 		//corretores.forEach(c -> System.out.println("Nome: " + c.getNome() + " Senha: " + c.getSenha()));
 
 	}
+
 	private static Atividade createAtividade(String id, String nome, String descricao,
 			GregorianCalendar dataHoraLiberacao, List<LinkVideoAula> linksVideoAulas, GregorianCalendar dataHoraEnvioNormal,
 			GregorianCalendar dataHoraLimiteEnvioAtraso, List<Monitor> monitores, Corretor corretor,
@@ -2328,8 +2452,8 @@ public class Util {
 		//students.forEach(s -> System.out.println(s.getNome()));
 		// Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1RLCM_LlhrI7y1n-7nbKff_Kcemvob3ZDCyb2z8B_Jio");
 		// System.out.println(mediasEDA1.size());
-		List<Corretor> monitores = Util.loadSpreadsheetMonitor();
-		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividades("164QmWZ5ECj7PAEr0hu0Bt-j8CzJYFIvfX6eto9GdloQ", monitores);
+		List<Corretor> monitores = Util.loadSpreadsheetMonitorFromExcel();
+		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividadesFromExcel(monitores);
 
 
 		Map<String,Double> mediasEda = Util.loadSpreadsheetMediasEDA("12VhXBu0RPRYkELKv8UOosjgK3qwGXtnz6q2am1XbvKk");

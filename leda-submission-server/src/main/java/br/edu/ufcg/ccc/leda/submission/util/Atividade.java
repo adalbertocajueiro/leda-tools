@@ -11,7 +11,10 @@ public abstract class Atividade {
 	protected GregorianCalendar dataHora;
 	protected List<LinkVideoAula> linksVideoAulas;
 	private List<Monitor> monitores;
-	
+
+	public Atividade(){
+
+	}
 	public Atividade(String id, String nome, String descricao, 
 			GregorianCalendar dataHora, List<LinkVideoAula> linksVideoAulas,
 			List<Monitor> monitores) {

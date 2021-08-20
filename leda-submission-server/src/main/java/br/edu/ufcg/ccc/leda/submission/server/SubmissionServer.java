@@ -902,8 +902,14 @@ public class SubmissionServer extends Jooby {
 		if(profValido){
 			if(tipoPlanilha.equals("FREQUENCIA")){
 				FileUtilities.salvarFrequencia(upload.file());
-			}else{
+			}else if(tipoPlanilha.equals("SENHAS")){
 				FileUtilities.salvarArquivoSenhas(upload.file());
+			} else if(tipoPlanilha.equals("MONITORES")){
+				FileUtilities.salvarArquivoMonitores(upload.file());
+			} else if(tipoPlanilha.equals("ATIVIDADES")){
+				FileUtilities.salvarArquivoAtividades(upload.file());
+			} else{ //escolheu planilha de EDA
+				FileUtilities.salvarArquivoNotasEDA(upload.file());
 			}
 		}else{
 			throw new RuntimeException("Senha informada não é de professor algum");

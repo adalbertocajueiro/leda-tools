@@ -386,10 +386,52 @@ public class FileUtilities {
 			fout.mkdirs();
 		}
 		Files.move(excelFileSenhas.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-
 	}
 
+	public static void salvarArquivoMonitores(File excelFileMonitores) throws IOException{
+		File monitores = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_CORRETORES_FILE_NAME);
+		if(monitores.exists()){
+			Files.delete(monitores.toPath());
+		}
+		//int index = excelFileMonitores.getName().indexOf(Constants.EXCEL_CORRETORES_FILE_NAME);
+		//String name = excelFileMonitores.getName().substring(index);
+
+		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_CORRETORES_FILE_NAME);
+		if (!fout.exists()) {
+			fout.mkdirs();
+		}
+		Files.move(excelFileMonitores.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	public static void salvarArquivoAtividades(File excelFileAtividades) throws IOException{
+		File monitores = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_ATIVIDADES_FILE_NAME);
+		if(monitores.exists()){
+			Files.delete(monitores.toPath());
+		}
+		//int index = excelFileAtividades.getName().indexOf(Constants.EXCEL_ATIVIDADES_FILE_NAME);
+		//String name = excelFileAtividades.getName().substring(index);
+
+		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_ATIVIDADES_FILE_NAME);
+		if (!fout.exists()) {
+			fout.mkdirs();
+		}
+		Files.move(excelFileAtividades.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	public static void salvarArquivoNotasEDA(File excelFileNotasEDA) throws IOException{
+		File monitores = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_FILE_NAME);
+		if(monitores.exists()){
+			Files.delete(monitores.toPath());
+		}
+		int index = excelFileNotasEDA.getName().indexOf(Constants.EXCEL_EDA_FILE_NAME);
+		String name = excelFileNotasEDA.getName().substring(index);
+
+		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,name);
+		if (!fout.exists()) {
+			fout.mkdirs();
+		}
+		Files.move(excelFileNotasEDA.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
 	public static void main(String[] args) throws ConfigurationException, IOException, AtividadeException, ServiceException {
 		File env = FileUtilities.getEnvironmentAtividade("PR1-01", "115210941");
 		String name = env.getName();
