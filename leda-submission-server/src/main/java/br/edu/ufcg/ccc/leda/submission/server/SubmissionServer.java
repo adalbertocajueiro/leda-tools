@@ -911,7 +911,7 @@ public class SubmissionServer extends Jooby {
 			} else if(tipoPlanilha.equals("NOTAS_EDA_T1")){ //escolheu planilha de EDA
 				FileUtilities.salvarArquivoNotasEDAT1(upload.file());
 			} else{
-				//FileUtilities.salvarArquivoNotasEDAT2(upload.file());
+				FileUtilities.salvarArquivoNotasEDAT2(upload.file());
 			}
 		}else{
 			throw new RuntimeException("Senha informada não é de professor algum");
