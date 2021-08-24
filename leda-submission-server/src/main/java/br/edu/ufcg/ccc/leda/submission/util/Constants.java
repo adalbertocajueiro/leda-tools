@@ -26,7 +26,8 @@ public abstract class Constants {
 	public static final String EXCEL_SENHAS_FILE_NAME = "Senhas.xlsx";
 	public static final String EXCEL_CORRETORES_FILE_NAME = "Monitores.xlsx";
 	public static final String EXCEL_ATIVIDADES_FILE_NAME = "Cronogramas.xlsx";
-	public static final String EXCEL_EDA_FILE_NAME = "EDA.xlsx";
+	public static final String EXCEL_EDA_T1_FILE_NAME = "NotasEDA-T1.xlsx";
+	public static final String EXCEL_EDA_T2_FILE_NAME = "NotasEDA-T2.xlsx";
 
 	public static File DEFAULT_CONFIG_FOLDER;
 	public static File UPLOAD_FOLDER;
@@ -58,6 +59,7 @@ public abstract class Constants {
 	public static final Pattern PATTERN_PROVA_PRATICA = Pattern.compile("P[P][1-9]-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_PROVA_REPOSICAO = Pattern.compile("P[R][1-9]-[0-9][0-9[X]]");
 	public static final Pattern PATTERN_PROVA_FINAL = Pattern.compile("P[F][1-9]-[0-9][0-9[X]]");
+	public static final Pattern PATTERN_MATRICULA = Pattern.compile("1[0-9]{8}");
 
 	public static final Pattern PATTERN_DATE_TIME = Pattern.compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
 	public static final String AUTOR_MATRICULA = "autor.matricula";

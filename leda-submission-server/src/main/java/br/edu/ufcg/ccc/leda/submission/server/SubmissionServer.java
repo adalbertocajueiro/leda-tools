@@ -496,7 +496,7 @@ public class SubmissionServer extends Jooby {
         html.put("mediasProvasPraticas", Util.buildMediasProvasPraticas());
         html.put("notasDaFinal", Util.getNotasDaFinal());
         html.put("mediasComFinal", Util.buildMediasLEDAComFinal());
-        html.put("mediasProvasTeoricas", Util.loadSpreadsheetsMediasEDA());
+        html.put("mediasProvasTeoricas", Util.loadSpreadsheetMediasEDAFromExcel());
         html.put("mediasRoteiros", Util.buildMediasRoteiros());
         return html;
 	  });
@@ -908,8 +908,10 @@ public class SubmissionServer extends Jooby {
 				FileUtilities.salvarArquivoMonitores(upload.file());
 			} else if(tipoPlanilha.equals("ATIVIDADES")){
 				FileUtilities.salvarArquivoAtividades(upload.file());
-			} else{ //escolheu planilha de EDA
-				FileUtilities.salvarArquivoNotasEDA(upload.file());
+			} else if(tipoPlanilha.equals("NOTAS_EDA_T1")){ //escolheu planilha de EDA
+				FileUtilities.salvarArquivoNotasEDAT1(upload.file());
+			} else{
+				//FileUtilities.salvarArquivoNotasEDAT2(upload.file());
 			}
 		}else{
 			throw new RuntimeException("Senha informada não é de professor algum");

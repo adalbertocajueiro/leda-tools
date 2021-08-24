@@ -418,15 +418,29 @@ public class FileUtilities {
 		Files.move(excelFileAtividades.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
 
-	public static void salvarArquivoNotasEDA(File excelFileNotasEDA) throws IOException{
-		File monitores = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_FILE_NAME);
+	public static void salvarArquivoNotasEDAT1(File excelFileNotasEDA) throws IOException{
+		File monitores = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T1_FILE_NAME);
 		if(monitores.exists()){
 			Files.delete(monitores.toPath());
 		}
-		int index = excelFileNotasEDA.getName().indexOf(Constants.EXCEL_EDA_FILE_NAME);
-		String name = excelFileNotasEDA.getName().substring(index);
+		//int index = excelFileNotasEDA.getName().indexOf(Constants.EXCEL_EDA_T1_FILE_NAME);
+		//String name = excelFileNotasEDA.getName().substring(index);
 
-		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,name);
+		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T1_FILE_NAME);
+		if (!fout.exists()) {
+			fout.mkdirs();
+		}
+		Files.move(excelFileNotasEDA.toPath(), fout.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
+	public static void salvarArquivoNotasEDAT2(File excelFileNotasEDA) throws IOException{
+		File monitores = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T2_FILE_NAME);
+		if(monitores.exists()){
+			Files.delete(monitores.toPath());
+		}
+		//int index = excelFileNotasEDA.getName().indexOf(Constants.EXCEL_EDA_T2_FILE_NAME);
+		//String name = excelFileNotasEDA.getName().substring(index);
+
+		File fout = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T2_FILE_NAME);
 		if (!fout.exists()) {
 			fout.mkdirs();
 		}

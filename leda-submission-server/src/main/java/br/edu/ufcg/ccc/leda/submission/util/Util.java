@@ -17,19 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -1225,7 +1213,7 @@ public class Util {
             
             // Use this String as url
             URL url = new URL(sheetUrl);
-
+	/*
             // Get Feed of Spreadsheet url
             ListFeed lf = service.getFeed(url, ListFeed.class);
             //System.out.println(lf.getEntries().size());
@@ -1245,10 +1233,119 @@ public class Util {
 				mediasEDA.put(matricula, Double.valueOf(mediaEDA));
             }
             
-		
+		*/
         return mediasEDA;
 	}
-	
+
+	public static Map<String,Double> loadSpreadsheetMediasEDAFromExcel() throws IOException, ServiceException, ConfigurationException{
+
+		Map<String,Double> mediasEDA = new HashMap<String,Double>();
+		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T1_FILE_NAME);
+		File excelFile2 = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T2_FILE_NAME);
+		FileInputStream fis = new FileInputStream(excelFile);
+		FileInputStream fis2 = new FileInputStream(excelFile2);
+
+		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
+		org.apache.poi.ss.usermodel.Sheet sheetTurma1 = null;
+		org.apache.poi.ss.usermodel.Workbook myWorkBook2 = null;
+		org.apache.poi.ss.usermodel.Sheet sheetTurma2 = null;
+		try{
+			myWorkBook = new XSSFWorkbook (fis);
+			myWorkBook2 = new XSSFWorkbook (fis2);
+			sheetTurma1 = myWorkBook.getSheetAt(0);
+			sheetTurma2 = myWorkBook2.getSheetAt(0);
+		}catch(POIXMLException ex){
+			try {
+				myWorkBook = new HSSFWorkbook(fis);
+				myWorkBook2 = new HSSFWorkbook(fis2);
+				sheetTurma1 = myWorkBook.getSheetAt(0);
+				sheetTurma2 = myWorkBook2.getSheetAt(0);
+			} catch(POIXMLException ex1){
+				//problema na leitura do arquivo excel
+				ex1.printStackTrace();
+			}
+		}
+		iterateOverSheetEDA(mediasEDA,sheetTurma1);
+		iterateOverSheetEDA(mediasEDA,sheetTurma2);
+		/*
+		for (ListEntry le : lf.getEntries()) {
+			CustomElementCollection cec = le.getCustomElements();
+			//Pass column name to access it's cell values
+			String matricula = cec.getValue("mat".toLowerCase());
+			String mediaEDA = cec.getValue("MédiaParcialEDA".toLowerCase());
+			if(matricula == null){
+				break;
+			}
+			if(mediaEDA == null) {
+				mediaEDA = "0,0";
+			}
+			mediaEDA = mediaEDA.replace(',', '.');
+			mediasEDA.put(matricula, Double.valueOf(mediaEDA));
+		}
+		*/
+
+		return mediasEDA;
+	}
+
+	private static void iterateOverSheetEDA(Map<String,Double> mediasEDA, Sheet sheet){
+		Row firstRow = sheet.getRow(0);
+		//descobrir o indice da celula the tem o nome "Média Parcial EDA"
+		//varrer as linhas lendo apenas essas colunas
+		Iterator<Cell> iterator = firstRow.cellIterator();
+		int indexColMedias = -1;
+		int indexColMat = -1;
+		int index = -1;
+		while(iterator.hasNext()){
+			Cell current = iterator.next();
+			index++;
+			String content = "";
+			if(current.getCellType() != XSSFCell.CELL_TYPE_STRING) {
+				content = String.valueOf(current.getNumericCellValue()); //
+			}else{
+				content = current.getStringCellValue();
+			}
+			if(content.equalsIgnoreCase("Média Parcial EDA")){
+				indexColMedias = index;
+			}
+			if(content.equalsIgnoreCase("Mat")){
+				indexColMat = index;
+			}
+		}
+		if(indexColMedias == -1){
+			throw new RuntimeException("Coluna de medias parciais de EDA nao encontrada na planilha");
+		}
+		if(indexColMat == -1){
+			throw new RuntimeException("Coluna de matricula de EDA nao encontrada na planilha");
+		}
+		Iterator<Row> rowIterator = sheet.iterator();
+
+		while (rowIterator.hasNext()) {
+			Row row = rowIterator.next();
+			org.apache.poi.ss.usermodel.Cell cellMat = row.getCell(indexColMat);
+			org.apache.poi.ss.usermodel.Cell cellMedia = row.getCell(indexColMedias);
+			String mat = "";
+			if(cellMat.getCellType() != XSSFCell.CELL_TYPE_STRING) {
+				mat = String.valueOf((int)cellMat.getNumericCellValue()); //
+			}else{
+				mat = cellMat.getStringCellValue();
+			}
+			String media = "0,0";
+			if(cellMedia.getCellType() != XSSFCell.CELL_TYPE_STRING) {
+				media = String.valueOf(cellMedia.getNumericCellValue()); //
+			}else{
+				media = cellMedia.getStringCellValue();
+			}
+
+			if(Constants.PATTERN_MATRICULA.matcher(mat).matches()){ //pode trabalhar aqui com o matcher
+				if(media == null) {
+					media = "0,0";
+				}
+				media = media.replace(',', '.');
+				mediasEDA.put(mat, Double.valueOf(media));
+			}
+		}
+	}
+
 	/**
 	 * Carrega os nomes dos alunso paseando-se nas matriculas. Os alunos
 	 * fornecem a matricula e o nome sera pego da lista dos amtriculados excel).
@@ -1990,16 +2087,17 @@ public class Util {
 				.collect(Collectors.toMap( a -> a.getId(), a -> a));
 				
 		Map<String,List<Submission>> result = //new HashMap<String,List<Submission>>();
-		new TreeMap<String,List<Submission>>(
-				(s1,s2) -> {
-					Atividade a1 = atividades.get(s1);
-					Atividade a2 = atividades.get(s2);
-					if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
-						return a1.getNome().compareTo(a2.getNome());
-					}else{
-						return a1.getDataHora().compareTo(a2.getDataHora());
-					}
-				});
+		new HashMap<String, List<Submission>>();
+		/**
+		 * (s1,s2) -> {
+		 * 			Atividade a1 = atividades.get(s1);
+		 * 			Atividade a2 = atividades.get(s2);
+		 * 			if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
+		 * 				return a1.getNome().compareTo(a2.getNome());
+		 *                        }else{
+		 * 				return a1.getDataHora().compareTo(a2.getDataHora());
+		 *            }* 		}
+		 */
 
 		File uploadFolder = new File(Constants.UPLOAD_FOLDER_NAME);
 		File currentSemester = new File(uploadFolder,Constants.CURRENT_SEMESTER);
@@ -2455,6 +2553,11 @@ public class Util {
 		List<Corretor> monitores = Util.loadSpreadsheetMonitorFromExcel();
 		Map<String,Atividade> ativs =  Util.loadSpreadsheetAtividadesFromExcel(monitores);
 
+		Map<String,Double> mediasEDA = Util.loadSpreadsheetMediasEDAFromExcel();
+
+		Map<String,List<Submission>> todasSubmissoes = Util.allSubmissions(false);
+
+		Collection<String> orderedKeys = todasSubmissoes.keySet().stream().sorted(Util.comparatorProvas()).collect(Collectors.toList());
 
 		Map<String,Double> mediasEda = Util.loadSpreadsheetMediasEDA("12VhXBu0RPRYkELKv8UOosjgK3qwGXtnz6q2am1XbvKk");
 		//Map<String,Double> mediasEda = Util.loadSpreadsheetMediasEDA("12VhXBu0RPRYkELKv8UOosjgK3qwGXtnz6q2am1XbvKk");
@@ -2495,7 +2598,7 @@ public class Util {
 		Util.exportPlaninhaGeralToExcel("01");
 		List<Submission> submissoes = Util.submissions(new File(Constants.CURRENT_SEMESTER_FOLDER,"R01-01"));
 		Util.exportRoteiroToExcel("R02-01");
-		Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
+		//Map<String,Double> mediasEDA = Util.loadSpreadsheetsMediasEDA();
 		//Map<String,Student> alunos = Util.loadStudentLists();
 		mediasEDA.forEach((m,med) -> {
 			if(alunos.get(m) != null){
