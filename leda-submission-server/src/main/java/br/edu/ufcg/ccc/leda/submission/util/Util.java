@@ -336,23 +336,7 @@ public class Util {
 	
 	public static Map<String,CorrectionReport> loadCorrectionReports(Predicate<String> patternValidator) throws IOException, ConfigurationException, ServiceException{
 		Map<String, Atividade> atividades = Configuration.getInstance().getAtividades();
-		Map<String,CorrectionReport> result = new TreeMap<String,CorrectionReport>( //(cr1,cr2) -> {
-        	
-        	//res = atividades.get(cr1).getDataHora().compareTo(atividades.get(cr2).getDataHora());
-        	/*if(cr1.charAt(0) != cr2.charAt(0)){
-        		res = cr2.charAt(0) -  cr1.charAt(0);
-        	} else{
-        		res = cr1.compareTo(cr2);
-        	}*/
-        	(cr1Id,cr2Id) -> {
-				Atividade a1 = atividades.get(cr1Id);
-				Atividade a2 = atividades.get(cr2Id);
-				if(a1.getDataHora().compareTo(a2.getDataHora()) == 0){
-					return a1.getNome().compareTo(a2.getNome());
-				}else{
-					return a1.getDataHora().compareTo(a2.getDataHora());
-				}
-        	});
+		Map<String,CorrectionReport> result = new LinkedHashMap<String,CorrectionReport>( );
 		
 		File[] atividadesFiltradas = Constants.CURRENT_SEMESTER_FOLDER.listFiles(new FileFilter() {
 			
@@ -361,12 +345,26 @@ public class Util {
 				return patternValidator.test(pathname.getName());
 			}
 		});
+		ArrayList<String> atividadesFiltradasOrdenadas =
+				new ArrayList<String>();
 		for (int i = 0; i < atividadesFiltradas.length; i++) {
-			CorrectionReport report = Util.loadCorrectionReport(atividadesFiltradas[i].getName());
-			if(report != null){
-				result.put(atividadesFiltradas[i].getName(), report);
-			}
+
+			atividadesFiltradasOrdenadas.add(atividadesFiltradas[i].getName());
 		}
+		atividadesFiltradasOrdenadas.sort(Util.comparatorProvas());
+		atividadesFiltradasOrdenadas.forEach(
+				name -> {
+					CorrectionReport report = null;
+					try {
+						report = Util.loadCorrectionReport(name);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					if(report != null){
+						result.put(name, report);
+					}
+				}
+		);
 		//result = result.values().stream()
 		//.sorted( (cr1,cr2) -> atividades.get(cr1.getId()).getDataHora().compareTo(atividades.get(cr2.getId()).getDataHora()))
 		//.collect(Collectors.toMap(cr -> cr.getId(), cr -> cr));
