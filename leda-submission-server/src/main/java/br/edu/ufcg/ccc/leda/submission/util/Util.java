@@ -2543,7 +2543,7 @@ public class Util {
 		//provas.forEach((id,p) -> System.out.println(p));
 		//List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
 		//Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
-		//Map<String,Student> alunos = Util.loadStudentLists();
+		Map<String,Student> alunos = Util.loadStudentLists();
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		// Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1RLCM_LlhrI7y1n-7nbKff_Kcemvob3ZDCyb2z8B_Jio");
@@ -2564,7 +2564,7 @@ public class Util {
 		ativs.size();
 		System.exit(0);
 		
-		Map<String,Student> alunos = Util.loadStudentLists();
+		//Map<String,Student> alunos = Util.loadStudentLists();
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println(String.format( "%.2f",0.0));
 		System.out.println(String.format( "%.2f",0.0).replace(',', '.'));
