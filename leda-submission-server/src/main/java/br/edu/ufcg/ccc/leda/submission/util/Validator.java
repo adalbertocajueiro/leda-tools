@@ -214,13 +214,13 @@ public class Validator {
 
 			// TODO RESTRICAO REMOVIDA PARA O SEMESTRE DE 2020.3
 			// SER POSSIVEL O ENVIO DE QUALQUER IP
-			// Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
-			// if (ipStream.count() == 0) { // nao esta nos ips autorizados
-			//	throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller
-			//			+ ". Envios sao possivels apenas a partir de IPs oriundos de: "
-			//			+ Arrays.toString(ips.toArray()));
-			// }
-			// ipStream.close();
+			Stream<String> ipStream = ips.stream().filter(ip -> ipCaller.startsWith(ip));
+			if (ipStream.count() == 0) { // nao esta nos ips autorizados
+				throw new AtividadeException("Envio a partir de IP nao autorizado: " + ipCaller
+						+ ". Envios sao possivels apenas a partir de IPs oriundos de: "
+						+ Arrays.toString(ips.toArray()));
+		 	}
+			ipStream.close();
 			if (atividade.getDataHora().after(dataAtual)
 					|| ((Roteiro) atividade).getDataHoraLimiteEnvioNormal().before(dataAtual)) {
 
