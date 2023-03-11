@@ -39,16 +39,8 @@ public class Util {
 		        		}
 		        	}
 		        }
-		        //if(current_addr.toString().contains("150.165"))
-		        //	return current_addr;
-		        //System.out.println(current_addr.getHostAddress());
 		    }
-		    //System.out.println("----");
 		}
 		return result;
-	}
-	
-	public static void main(String[] args) throws SocketException {
-		System.out.println("IP encontrado: " + Util.getLocalIP().getHostAddress());
 	}
 }

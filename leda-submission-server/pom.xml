@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -22,12 +23,13 @@
 
 	<properties>
 		<jooby.version>${project.parent.version}</jooby.version>
-		<semestre.letivo>2022.1</semestre.letivo>
+		<semestre.letivo>2022.2</semestre.letivo>
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<idSheetMonitores>1Qfth6rEq-kGr3kNphAloe3dIaSbWWbIbi-FxZbTnh2M</idSheetMonitores>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>17</quantidadeRoteiros>
-		<activitySheetIds>1BYEMxrm4UhoopE9pNjG3GQM0qK24GEenEcuJZ2WU9dQ,1RnXiYOf9Vchj7EnzUJ54-HlqQqM6-gjaJx5J52OBzro</activitySheetIds>
+		<activitySheetIds>
+			1BYEMxrm4UhoopE9pNjG3GQM0qK24GEenEcuJZ2WU9dQ,1RnXiYOf9Vchj7EnzUJ54-HlqQqM6-gjaJx5J52OBzro</activitySheetIds>
 		<authorizedIPs>150.165.42</authorizedIPs>
 		<edaSheetIds>1YwFY4V4Zk9DuTFYxEPmnFKzfKve2hzv1b6-fLy1aFDM</edaSheetIds>
 		<pesoTestes>0.4</pesoTestes>
@@ -38,7 +40,7 @@
 		<profile>
 			<id>server</id>
 			<properties>
-				<upload.folder>/home/ubuntu/leda-upload</upload.folder>	
+				<upload.folder>/home/ubuntu/leda-upload</upload.folder>
 				<!-->upload.folder>/Users/adalbertocajueiro/leda-upload</upload.folder -->
 				<mavenHomeFolder>/usr/share/maven</mavenHomeFolder>
 			</properties>
@@ -54,7 +56,7 @@
 				<mavenHomeFolder>/Users/adalbertocajueiro/apache-maven-3.5.3</mavenHomeFolder>
 			</properties>
 		</profile>
-		
+
 		<profile>
 			<id>local-win</id>
 			<properties>
@@ -284,7 +286,8 @@
 				</dependencies>
 			</plugin -->
 			<!-- Build fat jar -->
-			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> 
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-shade-plugin</artifactId> 
 				</plugin -->
 
 		</plugins>
