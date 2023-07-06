@@ -1129,9 +1129,9 @@ public class Util {
 	
 	public static Map<String,Atividade> loadSpreadsheetsAtividadesOld(List<Corretor> corretores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Atividade> atividades = new HashMap<String,Atividade>();
-		for (String id : Constants.activitySheetIds) {
-			atividades.putAll(loadSpreadsheetAtividades(id, corretores));
-		}
+		//for (String id : Constants.activitySheetIds) {
+		//	atividades.putAll(loadSpreadsheetAtividades(id, corretores));
+		//}
 		return atividades;
 	}
 	public static Map<String,Atividade> loadSpreadsheetAtividades(String idGoogleDrive, List<Corretor> monitores) throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
@@ -1193,9 +1193,9 @@ public class Util {
 
 	public static Map<String,Double> loadSpreadsheetsMediasEDA() throws WrongDateHourFormatException, IOException, ServiceException, ConfigurationException{
 		Map<String,Double> mediasEDA = new HashMap<String,Double>();
-		for (String id : Constants.edaSheetIds) {
-			mediasEDA.putAll(loadSpreadsheetMediasEDA(id));
-		}
+		//for (String id : Constants.edaSheetIds) {
+		//	mediasEDA.putAll(loadSpreadsheetMediasEDA(id));
+		//}
 		
 		return mediasEDA;
 	}

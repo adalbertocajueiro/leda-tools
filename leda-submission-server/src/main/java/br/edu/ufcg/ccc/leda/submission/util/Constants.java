@@ -42,9 +42,9 @@ public abstract class Constants {
 	public static String MAVEN_HOME_FOLDER;
 	//public static int QUANTIDADE_PROVAS;
 	//public static int QUANTIDADE_ROTEIROS;
-	public static List<String> activitySheetIds;
+	//public static List<String> activitySheetIds;
 	public static List<String> authorizedIPs;
-	public static List<String> edaSheetIds;
+	//public static List<String> edaSheetIds;
 	
 	public static double PESO_TESTES;
 	public static double PESO_DESIGN;
@@ -65,7 +65,7 @@ public abstract class Constants {
 	public static final String AUTOR_MATRICULA = "autor.matricula";
 	public static final String AUTOR_NOME = "autor.nome";
 
-	public static String ID_MONITORES_SHEET;
+	//public static String ID_MONITORES_SHEET;
 
 	public static final String CODIGO_LEDA = "1411306";
 
@@ -78,28 +78,28 @@ public abstract class Constants {
 			MAVEN_HOME_FOLDER = prop.getProperty("mavenHomeFolder");
 			//QUANTIDADE_PROVAS = Integer.valueOf(prop.getProperty("quantidadeProvas"));
 			//QUANTIDADE_ROTEIROS = Integer.valueOf(prop.getProperty("quantidadeRoteiros"));
-			ID_MONITORES_SHEET = prop.getProperty("idSheetMonitores");
+			//ID_MONITORES_SHEET = prop.getProperty("idSheetMonitores");
 			PESO_TESTES = Double.parseDouble(prop.getProperty("pesoTestes","0.4"));
 			PESO_DESIGN = Double.parseDouble(prop.getProperty("pesoDesign","0.6"));
 			
-			activitySheetIds = new ArrayList<String>();
+			//activitySheetIds = new ArrayList<String>();
 			authorizedIPs = new ArrayList<String>();
-			edaSheetIds = new ArrayList<String>();
+			//edaSheetIds = new ArrayList<String>();
 			
-			String ids = prop.getProperty("activitySheetIds");
-			for (String id : ids.split(",")) {
-				activitySheetIds.add(id.trim());
-			}
+			//String ids = prop.getProperty("activitySheetIds");
+			//for (String id : ids.split(",")) {
+			//	activitySheetIds.add(id.trim());
+			//}
 			
 			String ips = prop.getProperty("authorizedIPs");
 			for (String ip : ips.split(",")) {
 				authorizedIPs.add(ip.trim());
 			}
 			
-			String edaIds = prop.getProperty("edaSheetIds");
-			for (String id : edaIds.split(",")) {
-				edaSheetIds.add(id.trim());
-			}
+			//String edaIds = prop.getProperty("edaSheetIds");
+			//for (String id : edaIds.split(",")) {
+			//	edaSheetIds.add(id.trim());
+			//}
 			
 			DEFAULT_CONFIG_FOLDER = new File(Constants.DEFAULT_CONFIG_FOLDER_NAME);
     		if(!DEFAULT_CONFIG_FOLDER.exists()){
