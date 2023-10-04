@@ -1,1 +1,0 @@
-Pasta contendo links para as pastas de cada roteiro a ser corrigido. Isso sera permitido acesso via assets no servidor.
