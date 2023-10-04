@@ -37,78 +37,72 @@ import java.util.Map;
  * source files. Caches the token lists of the files in a static hash table.
  */
 public class CachingDetectionResult
-    extends DetectionResult
-{
+		extends DetectionResult {
 
-    protected Map tokenListCache;
+	protected Map tokenListCache;
 
-    /**
-     * Creates the token list of the given file, uses the cache, if possible.
-     */
-    protected TokenList createTokenList(File file,
-					CodeTokenizer tokenizer) 
-	throws Exception 
-    
-    {
-	Object retList;
-	if ( (retList = tokenListCache.get(file)) != null) {
-	    if (retList instanceof Exception) {
-		// Get the stored exception and rethrow it.
-		throw (Exception)retList;
-	    }
-	    //	    System.out.println("Getting token list from cache");
-	    return (TokenList)retList;
+	/**
+	 * Creates the token list of the given file, uses the cache, if possible.
+	 */
+	protected TokenList createTokenList(File file,
+			CodeTokenizer tokenizer)
+			throws Exception
+
+	{
+		Object retList;
+		if ((retList = tokenListCache.get(file)) != null) {
+			if (retList instanceof Exception) {
+				// Get the stored exception and rethrow it.
+				throw (Exception) retList;
+			}
+			// System.out.println("Getting token list from cache");
+			return (TokenList) retList;
+		}
+		TokenList tokens = null;
+		try {
+			Debug.println(this, "Creating token list of file: " + file.getPath());
+
+			// PlagSym.init(file.getPath());
+
+			// Reader fr = new BufferedReader(new FileReader(file));
+			// Lexer l = new Lexer(fr, 4);
+			// java_cup.runtime.lr_parser g = new Grm14(l);
+			// g.parse();
+
+			// tokens = PlagSym.getTokenList();
+
+			tokens = tokenizer.tokenize(file);
+
+			// fr.close();
+		} catch (Exception e) {
+			// Store the exception and rethrow it
+			tokenListCache.put(file, e);
+			Stats.incCounter("parse_failures");
+			throw e;
+		}
+		// catch (Error e2) {
+		// // System.out.println("Error reading file:"+ file.getPath());
+		// Exception e = new Exception("Error reading file:"+ file.getPath());
+		// tokenListCache.put(file, e);
+		// Stats.incCounter("parse_failures");
+		// throw e;
+		// }
+		tokenListCache.put(file, tokens);
+		Stats.incCounter("parsed_files");
+		return tokens;
 	}
-	TokenList tokens = null;
-	try {
-	    Debug.println(this, "Creating token list of file: "+file.getPath());
-	    
-//  	    PlagSym.init(file.getPath());
-	    
-//  	    Reader fr = new BufferedReader(new FileReader(file));
-//  	    Lexer l = new Lexer(fr, 4);
-//  	    java_cup.runtime.lr_parser g = new Grm14(l);
-//  	    g.parse();
-	    
-//  	    tokens = PlagSym.getTokenList();
-	    
-	    tokens = tokenizer.tokenize(file);
 
-	    //	    fr.close();
+	public CachingDetectionResult(File fileA,
+			File fileB,
+			TokenSimilarityChecker checker,
+			CodeTokenizer tokenizer,
+			Map tokenListCache)
+			throws Exception {
+		this.fileA = fileA;
+		this.fileB = fileB;
+		this.tokenListCache = tokenListCache;
+
+		this.createData(checker, tokenizer);
 	}
-	catch (Exception e) {
-	    // Store the exception and rethrow it
-	    tokenListCache.put(file, e);
-	    Stats.incCounter("parse_failures");
-	    throw e;
-	}
-//  	catch (Error e2) {
-//  	    //	    System.out.println("Error reading file:"+ file.getPath());
-//  	    Exception e = new Exception("Error reading file:"+ file.getPath());
-//  	    tokenListCache.put(file, e);
-//  	    Stats.incCounter("parse_failures");
-//  	    throw e;
-//  	}
-	tokenListCache.put(file, tokens);
-	Stats.incCounter("parsed_files");
-	return tokens;
-    }
-
-    public CachingDetectionResult(File fileA,
-				  File fileB,
-				  TokenSimilarityChecker checker,
-				  CodeTokenizer tokenizer,
-				  Map tokenListCache) 
-	throws Exception
-    {
-	this.fileA = fileA;
-	this.fileB = fileB;
-	this.tokenListCache = tokenListCache;
-
-	this.createData(checker, tokenizer);
-    }
 
 }
-
-
-
