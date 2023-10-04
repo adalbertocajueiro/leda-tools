@@ -21,10 +21,8 @@
 package plag.parser.java;
 
 import plag.parser.CodeExcluder;
-import plag.parser.TokenList;
 import plag.parser.Stats;
-
-import java.util.Iterator;
+import plag.parser.TokenList;
 
 /**
  * A code excluder, which excludes all the interface definitions from the code.

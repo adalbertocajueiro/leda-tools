@@ -20,8 +20,6 @@
  */
 package plag.parser;
 
-import java.io.Serializable;
-
 /**
  * Represents a similarity checker of two objects.
  */

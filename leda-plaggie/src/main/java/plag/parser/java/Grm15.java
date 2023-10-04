@@ -7,7 +7,6 @@
 package plag.parser.java;
 
 import plag.parser.java.lex.Lexer;
-import java_cup.runtime.*;
 
 /** CUP v0.10j generated parser.
   * @version Thu Aug 31 06:36:53 EEST 2006

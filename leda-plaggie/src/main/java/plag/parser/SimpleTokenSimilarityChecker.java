@@ -22,8 +22,6 @@ package plag.parser;
 
 import java.util.Iterator;
 
-import java.io.*;
-
 
 /**
  * Greedy string tiling algorithm from [5]. Very inefficient implementation.

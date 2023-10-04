@@ -20,10 +20,9 @@
  */
 package plag.parser.java;
 
-import java.io.FilenameFilter;
 import java.io.File;
+import java.io.FilenameFilter;
 
-import java.util.*;
 import plag.parser.Stats;
 
 /**

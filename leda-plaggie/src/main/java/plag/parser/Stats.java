@@ -20,10 +20,13 @@
  */
 package plag.parser;
 
-import java.io.*;
-import java.util.*;
-import plag.parser.report.HtmlPrintable;
+import java.io.PrintStream;
+import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class Stats implements Serializable {
 

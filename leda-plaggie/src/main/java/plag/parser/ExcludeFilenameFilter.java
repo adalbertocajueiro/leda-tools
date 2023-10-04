@@ -20,11 +20,11 @@
  */
 package plag.parser;
 
-import java.io.FilenameFilter;
 import java.io.File;
-
-import java.util.*;
-import plag.parser.Stats;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.StringTokenizer;
 
 /**
  * Filename filter, which accepts all files not in a list.
