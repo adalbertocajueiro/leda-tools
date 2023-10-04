@@ -12,6 +12,7 @@
 
 	<artifactId>leda-sender-tool</artifactId>
 	<packaging>maven-plugin</packaging>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>LEDA HTTP Sender Mojo</name>
 	<url>${plugin.repository.url}</url>
 
