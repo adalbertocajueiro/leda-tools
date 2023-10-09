@@ -4,7 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -52,11 +57,10 @@ public class StudentSubmissionSender extends Sender {
 		FileBody arq = new FileBody(arquivo, ContentType.MULTIPART_FORM_DATA);
 		StringBody mat = new StringBody(matricula, ContentType.TEXT_PLAIN);
 		StringBody sem = new StringBody(semestre, ContentType.TEXT_PLAIN);
-		StringBody t = new StringBody(turma, ContentType.TEXT_PLAIN);
 		StringBody rot = new StringBody(id, ContentType.TEXT_PLAIN);
 
-		StringBody ip = new StringBody(Util.getLocalIP()
-				.getHostAddress(), ContentType.TEXT_PLAIN);
+		InetAddress localIp = getLocalIP();
+		StringBody ip = new StringBody(localIp.getHostAddress(), ContentType.TEXT_PLAIN);
 
 		/**
 		 * AQUI PODE PRECISAR DE ALGUMA LOGICA PARA ELIMINAR O LOOPBACK 127.0.0.1
@@ -85,9 +89,12 @@ public class StudentSubmissionSender extends Sender {
 		try {
 			HttpPost httppost = new HttpPost(url);
 			HttpEntity reqEntity = MultipartEntityBuilder.create()
-					.addPart("arquivo", arq).addPart("matricula", mat)
-					.addPart("semestre", sem).addPart("turma", t)
-					.addPart("roteiro", rot).addPart("ip", ip).build();
+					.addPart("submissionFile", arq)
+					.addPart("matricula", mat)
+					.addPart("semester", sem)
+					.addPart("id", rot)
+					.addPart("ip", ip)
+					.build();
 
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending file: " + httppost.getRequestLine());
@@ -127,5 +134,41 @@ public class StudentSubmissionSender extends Sender {
 			}
 			httpclient.close();
 		}
+	}
+
+	public InetAddress getLocalIP() throws SocketException {
+		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+		InetAddress result = null;
+		Pattern IPADDRESS_PATTERN = Pattern.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+						"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+						"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+						"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+		
+		while (interfaces.hasMoreElements()){
+		    NetworkInterface current = interfaces.nextElement();
+		    //System.out.println(current);
+		    if (!current.isUp() || current.isLoopback() || current.isVirtual()) continue;
+		    Enumeration<InetAddress> addresses = current.getInetAddresses();
+		    while (addresses.hasMoreElements()){
+		        InetAddress current_addr = addresses.nextElement();
+		        if(current.toString().contains("127")) {
+		        	result = current_addr;		        	
+		        }
+		        if (current_addr.isLoopbackAddress()) {
+		        	continue;
+		        }else {
+		        	
+		        	//System.out.println(current_addr.getHostAddress());
+		        	if(current_addr.toString().contains("150.165")) {
+		        		return current_addr;
+		        	}else {
+		        		if(IPADDRESS_PATTERN.matcher(current_addr.getHostAddress()).matches()) {
+		        			result = current_addr;
+		        		}
+		        	}
+		        }
+		    }
+		}
+		return result;
 	}
 }

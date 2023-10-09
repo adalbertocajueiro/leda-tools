@@ -18,6 +18,7 @@ package br.edu.ufcg.leda;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +35,11 @@ import br.edu.ufcg.leda.commons.user.Student;
 import br.edu.ufcg.leda.sender.StudentSubmissionSender;
 import br.edu.ufcg.leda.util.Compactor;
 import br.edu.ufcg.leda.util.Util;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Mojo(name = "compact",defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class LEDACompactorMojo extends AbstractMojo {
 
@@ -44,18 +49,19 @@ public class LEDACompactorMojo extends AbstractMojo {
 	@Parameter(property = "matricula", required = true)
 	private String matricula;
 
-	@Parameter(property = "semestre", required = true)
-	private String semestre;
-
 	@Parameter(property = "roteiro", required = true)
 	private String roteiro;
 
-	@Parameter(property = "url", required = true)
-	private String url;
+	@Parameter(property = "urlCurrentSemester", required = true)
+	private String urlCurrentSemester;
+
+	@Parameter(property = "urlGetAllStudents", required = true)
+	private String urlGetAllStudents;
+
+	@Parameter(property = "urlSubmit", required = true)
+	private String urlSubmit;
 
 	private StudentSubmissionSender sender;
-
-	private String pathAllStudents = "alunos/allStudentsGroupedByClass";
 	
 	public void execute() throws MojoExecutionException {
 
@@ -65,17 +71,20 @@ public class LEDACompactorMojo extends AbstractMojo {
 
 		//faz validação para ver se estudante esta cadastrado e na turma correta
 		System.out.println("Checking matricula and turma");
-		String urlAllStudents = url.substring(0,url.lastIndexOf('/') + 1) + pathAllStudents;
 		List<Student> alunos = new LinkedList<Student>();
-
+		String currentSemester = "";
 		try {
-			alunos = Util.getAllStudents(urlAllStudents)
+			currentSemester = Util.getCurrentSemester(urlCurrentSemester);
+			alunos = Util.getAllStudents(currentSemester,urlGetAllStudents)
 					.values()
 					.stream()
 					.flatMap(Collection::stream)
 					.collect(Collectors.toList());
 		} catch (IOException e2) {
 			throw new MojoExecutionException("\n CONNECTION ERROR: " + e2.getMessage(),e2);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		//se acontecer da matricula nao estiver cadastrada nem o aluno cadastrado na turma correta
 		Student aluno = alunos.stream().findFirst().orElse(null);
@@ -89,7 +98,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 		File srcFolder = new File(project.getBuild().getSourceDirectory());
 
 		//Talvez precise isntanciar aqui um header com dados do usuario professor logado.
-		
+
 		//TODO poderia fazer algumas validacoes na matricula e turma antes de compactar
 		//System.out.println("Injecting author information...");
 		//List<File> files = Util.getFiles(srcFolder, ".java");
@@ -106,9 +115,9 @@ public class LEDACompactorMojo extends AbstractMojo {
 			compactor.zipFolder(srcFolder, destZipFile);
 			System.out.println("Compaction sucess: " + destZipFile.getName());
 			sender = new StudentSubmissionSender(destZipFile, matricula,
-					semestre, roteiro, url);
+					currentSemester, roteiro, urlSubmit);
 			System.out.println("Submitting file " + destZipFile.getName()
-					+ " to " + url);
+					+ " to " + urlSubmit);
 			sender.send();
 			System.out
 					.println("Please check your log file to see the confirmation from the server (last record)");

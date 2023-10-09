@@ -25,14 +25,17 @@ import lombok.Setter;
 public class ProfessorSender extends Sender {
 
 	private File arquivoCorrecao;
+	private File guiaCorrecaoFile;
 	private String semestre;
 	private String turma;
+	private String userName;
 
 	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro,
-			String url, String semestre) {
+			String url, String semestre, File guiaCorrecaoFile, String userName) {
 		super(ambiente, roteiro, url);
 		this.arquivoCorrecao = arquivoCorrecao;
 		this.semestre = semestre;
+		this.userName = userName;
 		// RXX-XX onde os ultimos XX sao a turma
 		this.turma = roteiro.substring(4);
 	}
@@ -46,19 +49,35 @@ public class ProfessorSender extends Sender {
 		FileBody corrArq = new FileBody(arquivoCorrecao,
 				ContentType.MULTIPART_FORM_DATA);
 		StringBody rot = new StringBody(id, ContentType.TEXT_PLAIN);
-		StringBody tur = new StringBody(turma, ContentType.TEXT_PLAIN);
 		StringBody sem = new StringBody(semestre, ContentType.TEXT_PLAIN);
+		FileBody guia = new FileBody(guiaCorrecaoFile, ContentType.MULTIPART_FORM_DATA);
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 
 		StringBuilder confirmation = new StringBuilder();
 		try {
 			HttpPost httppost = new HttpPost(url);
+			
 			HttpEntity reqEntity = MultipartEntityBuilder.create()
-					.addPart("arquivoAmbiente", arq).addPart("roteiro", rot)
-					.addPart("turma", tur).addPart("semestre", sem)
-					.addPart("arquivoCorrecao", corrArq).build();
-
+					.addPart("envFile", arq)
+					.addPart("id", rot)
+					.addPart("semester", sem)
+					.addPart("corrProjFile", corrArq)
+					.addPart("guiaCorrecao", guiaCorrecaoFile.exists()?guia:null)
+					.build();
+			
+			httppost.addHeader("loggedUser", "{\"name\" = \""+ this.userName + "\"}");
+			/*
+			 * @RequestHeader Map<String, String> headers
+			 * 
+			 * @RequestParam String semester,
+			 * 
+			 * @RequestParam String id,
+			 * 
+			 * @RequestParam MultipartFile envFile,
+			 * 
+			 * @RequestParam MultipartFile corrProjFile
+			 */
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending environment file: "
 					+ httppost.getRequestLine());
@@ -81,9 +100,13 @@ public class ProfessorSender extends Sender {
 				}
 				EntityUtils.consume(resEntity);
 				writeTicket(this.id + "-send.log", confirmation.toString());
-			} finally {
+			} catch(Exception e){
+				e.printStackTrace();
+			}finally {
 				response.close();
 			}
+		} catch(Exception e){
+			e.printStackTrace();
 		} finally {
 			httpclient.close();
 		}

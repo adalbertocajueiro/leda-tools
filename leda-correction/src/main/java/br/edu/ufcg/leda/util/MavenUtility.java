@@ -27,8 +27,6 @@ public class MavenUtility {
 	private FilesUtility filesUtility;
 	private TestReportUtility reportUtility;
 	public static final String BASIC_POM_FILE = "/project_pom.xml";
-	//private final String BASIC_HTML_FILE = "/template-report.html";
-	//private final String FINAL_REPORT_NAME = "/generated-report.html";
 
 	private File submissionsDirectory;
 	private File mavenHomeFolder;

@@ -41,32 +41,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Mojo(name = "correct",defaultPhase = LifecyclePhase.PROCESS_SOURCES)
-public class LEDACorrectionMojo extends AbstractMojo {
+@Mojo(name = "single-correct",defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+public class LEDAIndividualCorrectionMojo extends AbstractMojo {
 
 	@Parameter(property = "project",defaultValue = "${project}",required = true, readonly = true)
 	private MavenProject project;
 
-	/**
-	 * Directory where all submissions (zip files) are located). This directory
-	 * will be used to unpack all submissions (working directory).
-	 * 
-	 * @parameter submissionsDirectory
-	 * @required
-	 */
 	@Parameter(property = "submissionsDirectory", required = true)
 	private File submissionsDirectory;
 
-	/**
-	 * File containing the environment given to the students. It is used to
-	 * generate the basic directory for any submission (project directory of any
-	 * submission).
-	 * 
-	 * @parameter environmentZipFile
-	 * @required
-	 */
 	@Parameter(property = "correctionEnvZipFile", required = true)
 	private File correctionEnvZipFile;
+
+	@Parameter(property = "matricula", required = true)
+	private File matricula;
 
 	@Parameter(property = "mavenHomeFolder", required = true)
 	private File mavenHomeFolder;
@@ -80,11 +68,11 @@ public class LEDACorrectionMojo extends AbstractMojo {
 	@Parameter(property = "fileNames", required = true)
 	private List<String> fileNames;
 
-	@Parameter(property = "urlGetAllStudents", required = true)
-	private String urlGetAllStudents;
-
 	@Parameter(property = "urlCurrentSemester", required = true)
 	private String urlCurrentSemester;
+
+	@Parameter(property = "urlGetAllStudents", required = true)
+	private String urlGetAllStudents;
 
 	private Map<Integer,List<Student>> alunos;
 	
@@ -110,7 +98,6 @@ public class LEDACorrectionMojo extends AbstractMojo {
 		String currentSemester = "";
 		try {
 			currentSemester = Util.getCurrentSemester(urlCurrentSemester);
-			System.out.println("Obtaining student lists from server " + urlGetAllStudents);
 			System.out.println("At time: " + (new GregorianCalendar()).getTime());
 			alunos = new HashMap<Integer,List<Student>>();
 			try {

@@ -28,7 +28,11 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.leda.sender.ProfessorSender;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Mojo(name = "enviar-roteiro",defaultPhase = LifecyclePhase.INSTALL)
 public class LEDARoteiroSenderMojo extends AbstractMojo {
 
@@ -47,11 +51,8 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 	@Parameter(property = "url",required = true)
 	private String url;
 
-	/**
-	 * @parameter
-	 */
-	@Parameter(property = "numeroTurmas",required = true)
-	private int numeroTurmas = 1;
+	@Parameter(property = "userName",required = true)
+	private String userName;
 
 	private ProfessorSender sender;
 
@@ -64,11 +65,13 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			String correctionProjectName = project.getArtifactId()
 					+ "-correction-proj.zip";
 
+			File guiaCorrecaoFile = new File(project.getBasedir(), "Guia de correcao.pdf");
+
 			File envZipFile = new File(targetFolder, environmentName);
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
 
-				sender = new ProfessorSender(envZipFile, corrProjZipFile,roteiro, url, semestre);
+				sender = new ProfessorSender(envZipFile, corrProjZipFile,roteiro, url, semestre,guiaCorrecaoFile,userName);
 				System.out.println("Submitting environment file: "
 						+ envZipFile.getAbsolutePath() + " to " + url);
 				System.out.println("Submitting correction file: "

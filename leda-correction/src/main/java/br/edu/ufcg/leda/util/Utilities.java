@@ -5,15 +5,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import br.edu.ufcg.leda.commons.correctionReport.CorrectionReport;
-import br.edu.ufcg.leda.commons.user.Student;
 
 
 public class Utilities {
@@ -61,12 +58,4 @@ public class Utilities {
 		return result;
 	}
 	
-	public static void main(String[] args) throws IOException {
-		Properties prop = Utilities.loadProperties();
-		String url = prop.getProperty(Utilities.SUBMISSION_SERVER_URL);
-		System.out.println("Obtaining student lists from server " + url);
-		String urlAllStudents = url + "/alunosJson";
-		@SuppressWarnings("unused")
-		Map<Integer,List<Student>> alunos = Util.getAllStudents(urlAllStudents);
-	}
 }
