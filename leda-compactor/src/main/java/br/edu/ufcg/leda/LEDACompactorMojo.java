@@ -62,6 +62,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 	private String urlSubmit;
 
 	private StudentSubmissionSender sender;
+
 	
 	public void execute() throws MojoExecutionException {
 

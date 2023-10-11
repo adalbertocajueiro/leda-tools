@@ -1,12 +1,5 @@
 .project
 .classpath
 .settings/
-.idea
-*.iml
 target/
-exemplos/
-jooby/
-google-api-java-client-samples-master.zip
-drive-cmdline-sample/
-apache*.*
-apache*/
+.vscode/

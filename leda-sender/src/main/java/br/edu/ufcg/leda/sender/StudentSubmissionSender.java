@@ -22,7 +22,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import br.edu.ufcg.leda.util.Util;
 import lombok.Getter;
 import lombok.Setter;
 

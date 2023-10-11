@@ -11,8 +11,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- plugin.repository.url>http://web.cloud.lsd.ufcg.edu.br:44174/nexus/content/repositories/br.edu.ufcg</plugin.repository.url -->
-		<!-- >plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</plugin.repository.url -->
 		<plugin.repository.url>http://150.165.15.10:8081/nexus/content/repositories/ufcg-leda</plugin.repository.url>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -68,18 +66,11 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.5.14</version>
 		</dependency>
-		<!-- dependency>
+		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5</artifactId>
 			<version>5.2.1</version>
-			<scope>provided</scope>
-		</dependency -->
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-		<!-- dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.14</version>
-		</dependency -->
+		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -99,29 +90,11 @@
 
 	</dependencies>
 	<modules>
-		<!-- module>leda-sender</module>
-		<module>leda-compactor</module -->
-		<module>leda-correction</module>
+		<module>leda-sender</module>
+		<module>leda-compactor</module>
 		<module>leda-plaggie</module>		
 	</modules>
-	<!--  profiles>
-    <profile>
-      <id>server</id>
-      <properties>
-		<injected.plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</injected.plugin.repository.url>
-      </properties>
-    </profile>
-    
-    <profile>
-      <id>local</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <injected.plugin.repository.url>http://150.165.85.29:8081/nexus/content/repositories/ufcg-leda</injected.plugin.repository.url>
-      </properties>   
-    </profile>
-  </profiles -->
+	
 	<build>
 		<plugins>
 			<plugin>

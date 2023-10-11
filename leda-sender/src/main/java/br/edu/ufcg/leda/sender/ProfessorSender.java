@@ -36,6 +36,7 @@ public class ProfessorSender extends Sender {
 		this.arquivoCorrecao = arquivoCorrecao;
 		this.semestre = semestre;
 		this.userName = userName;
+		this.guiaCorrecaoFile = guiaCorrecaoFile;
 		// RXX-XX onde os ultimos XX sao a turma
 		this.turma = roteiro.substring(4);
 	}
@@ -57,14 +58,16 @@ public class ProfessorSender extends Sender {
 		StringBuilder confirmation = new StringBuilder();
 		try {
 			HttpPost httppost = new HttpPost(url);
-			
-			HttpEntity reqEntity = MultipartEntityBuilder.create()
+			MultipartEntityBuilder builder = MultipartEntityBuilder.create()
 					.addPart("envFile", arq)
 					.addPart("id", rot)
 					.addPart("semester", sem)
-					.addPart("corrProjFile", corrArq)
-					.addPart("guiaCorrecao", guiaCorrecaoFile.exists()?guia:null)
-					.build();
+					.addPart("corrProjFile", corrArq);
+					if(guiaCorrecaoFile.exists()){
+						builder.addPart("guiaCorrFile", guia);
+					}
+
+			HttpEntity reqEntity =  builder.build();
 			
 			httppost.addHeader("loggedUser", "{\"name\" = \""+ this.userName + "\"}");
 			/*
