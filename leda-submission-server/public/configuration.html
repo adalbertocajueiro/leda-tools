@@ -38,7 +38,7 @@
 					<th class="text-xs-center">Nome</th>
 					<th class="text-xs-center">Data Liberação</th>
 					<th class="text-xs-center">Data Limite Envio</th>
-					<th class="text-xs-center">Data Limite Correção</th>
+					
 					<th class="text-xs-center">Corretor</th>
 					<th class="text-xs-center">Ambiente</th> 
 				</thead>
@@ -47,7 +47,7 @@
 						<tr><td>${roteiro.id} <td><#if roteiro.nome??>${roteiro.nome}</#if>
 						<td class="text-xs-center">${formatter.format(roteiro.dataHora.time)}
 						<td class="text-xs-center">${formatter.format(roteiro.dataHoraLimiteEnvioAtraso.time)}
-						<td class="text-xs-center">${formatter.format(roteiro.dataLimiteCorrecao.time)}
+						
 						<td><#if roteiro.corretor??>${roteiro.corretor.nome?split(" ")[0]}</#if>
 						<td class="text-xs-center"><#if roteiro.arquivoAmbiente??> ${formatter.format(roteiro.arquivoAmbiente.lastModified()?number_to_datetime)} </#if>
 				</#list>
