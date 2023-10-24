@@ -65,7 +65,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			String correctionProjectName = project.getArtifactId()
 					+ "-correction-proj.zip";
 
-			File guiaCorrecaoFile = new File(project.getBuild().getSourceDirectory(), "Guia de correcao.pdf");
+			File guiaCorrecaoFile = new File(project.getBuild().getOutputDirectory(), "Guia de correcao.pdf");
 
 			File envZipFile = new File(targetFolder, environmentName);
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
