@@ -7,8 +7,34 @@
 	<version>2.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>All tools used in LEDA: correction tool, compaction tool and submission tool</name>
+	<name>All tools used in LEDA: compaction tool, sender tool and plaggie tool</name>
+	<description>This project contains all artifacts (MOJO) to be used by students during the course of Data structures and Algorithms at
+		the Computer Science course of Federal University of Campina Grande
+	</description>
+	<url>https://github.com/adalbertocajueiro/leda-tools</url>
 
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Adalberto Cajueiro de Farias</name>
+			<email>adalberto@computacao.ufcg.edu.br</email>
+			<organization>Universidade Federal de Campina Grande</organization>
+			<organizationUrl>http://www.computacao.ufcg.edu.br</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/adalbertocajueiro/leda-tools.git</connection>
+		<developerConnection>scm:git:ssh://github.com:adalbertocajueiro/leda-tools.git</developerConnection>
+		<url>https://github.com/adalbertocajueiro/leda-tools</url>
+	</scm>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<plugin.repository.url>http://150.165.15.10:8081/nexus/content/repositories/ufcg-leda</plugin.repository.url>
@@ -94,7 +120,9 @@
 		<module>leda-compactor</module>
 		<module>leda-plaggie</module>		
 	</modules>
+
 	
+
 	<build>
 		<plugins>
 			<plugin>
