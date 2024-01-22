@@ -20,27 +20,53 @@
  */
 package plag.parser.plaggie;
 
-import plag.parser.*;
-import plag.parser.java.*;
-import plag.parser.report.*;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.TreeSet;
-
-import br.edu.ufcg.ccc.leda.util.Student;
-
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 import java.util.StringTokenizer;
 
-import java.io.*;
-import java.net.URI;
-import java.net.URL;
+import plag.parser.CachingSimpleSubmissionSimilarityChecker;
+import plag.parser.CodeExcluder;
+import plag.parser.CodeTokenizer;
+import plag.parser.Debug;
+import plag.parser.DirectorySubmission;
+import plag.parser.ExcludeFilenameFilter;
+import plag.parser.ExistingCodeExcluder;
+import plag.parser.MultipleCodeExcluder;
+import plag.parser.MultipleFilenameFilter;
+import plag.parser.SimpleSubmissionSimilarityChecker;
+import plag.parser.SimpleTokenSimilarityChecker;
+import plag.parser.SingleFileSubmission;
+import plag.parser.Stats;
+import plag.parser.SubdirectoryFilter;
+import plag.parser.Submission;
+import plag.parser.SubmissionDetectionResult;
+import plag.parser.SubmissionSimilarityChecker;
+import plag.parser.TokenList;
+import plag.parser.TokenSimilarityChecker;
+import plag.parser.java.InterfaceCodeExcluder;
+import plag.parser.java.PlagSym;
+import plag.parser.report.HtmlPrintable;
+import plag.parser.report.ReportGenerator;
+import plag.parser.report.SimpleHtmlSubmissionReportGenerator;
+import plag.parser.report.SimpleTextReportGenerator;
+import plag.parser.report.SimpleTextSubmissionReportGenerator;
+import plag.parser.report.SubmissionReportGenerator;
 
 /**
  * A compare tool for comparing two assignment submssions and generating a

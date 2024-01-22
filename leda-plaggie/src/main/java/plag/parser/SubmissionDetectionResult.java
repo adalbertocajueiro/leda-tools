@@ -20,10 +20,9 @@
  */
 package plag.parser;
 
-import java.util.Collection;
-import java.io.Serializable;
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 
 public class SubmissionDetectionResult

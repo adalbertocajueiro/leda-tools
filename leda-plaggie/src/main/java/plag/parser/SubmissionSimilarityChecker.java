@@ -20,7 +20,6 @@
  */
 package plag.parser;
 
-import java.util.Iterator;
 import java.util.Collection;
 
 /**
