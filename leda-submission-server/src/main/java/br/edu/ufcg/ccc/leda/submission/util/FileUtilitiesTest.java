@@ -11,7 +11,10 @@ public class FileUtilitiesTest {
 	public static void main(String[] args) throws Exception {
 		Configuration config = Configuration.getInstance();
 		List<Corretor> profs = config.getMonitores();
-		File senhas = new File("/Users/adalbertocajueiro/leda-upload/2021.1/Senhas.xlsx");
+		File frequencia = new File("/Users/adalbertocajueiro/Downloads/frequencia_2023.2_1411179-01_154938676.xlsx");
+		FileUtilities.salvarFrequencia(frequencia);
+		
+		File senhas = new File("/Users/adalbertocajueiro/leda-upload/2023.2/Senhas.xlsx");
 		FileUtilities.salvarArquivoSenhas(senhas);
 		Map<String,Student> map = new HashMap<String,Student>();
 		Map<String,Roteiro> roteiros = new HashMap<String,Roteiro>();
