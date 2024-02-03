@@ -26,17 +26,17 @@
 			<version>11c</version>
 		</dependency>
 			
-		<dependency>
+		<!-- dependency>
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-correction-tool</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency -->
 		
-		<dependency>
+		<!-- dependency>
 			<groupId>br.edu.ufcg.ccc</groupId>
 			<artifactId>leda-compactor-tool</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
+		</dependency -->
 	</dependencies>
 
 </project>

@@ -21,7 +21,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import br.edu.ufcg.ccc.leda.util.XMLFileUtility;
+import br.edu.ufcg.leda.commons.util.XMLFileUtility;
 import plag.parser.CachingDetectionResult;
 import plag.parser.SubmissionDetectionResult;
 import plag.parser.plaggie.PlaggieUFCG;
@@ -124,7 +124,7 @@ public class PlagRunner {
 					if (submissoesAtividade.exists()) {
 						atividadeSubFolders.add(submissoesAtividade);
 					}
-					Document xmlDoc = xmlUtil.loadXMLFile(pomFile);
+					Document xmlDoc = xmlUtil.loadXMLFile(pomFile.getAbsolutePath());
 					Element fileNamesElement = xmlUtil.getElement(xmlDoc.getRootElement(), "fileNames");
 					List<Element> files = fileNamesElement.getChildren().stream().filter(e -> e instanceof Element)
 							.collect(Collectors.toList());
