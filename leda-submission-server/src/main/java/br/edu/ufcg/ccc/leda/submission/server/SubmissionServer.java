@@ -108,8 +108,8 @@ public class SubmissionServer extends Jooby {
 	
 	cookieSession();
 	
-	get("/", (req,resp) -> {
-		resp.send("Hello World!");
+	get("/", (req) -> {
+		return "Hello world!";
 	});
 	
 	get("/horaAtual", (req,resp) -> {
