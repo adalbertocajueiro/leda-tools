@@ -1,0 +1,148 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch DrawerTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.runner.DrawerTest",
+            "projectName": "leda-chart-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch InputGenerator",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.InputGenerator",
+            "projectName": "leda-chart-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch Utilities",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.Utilities",
+            "projectName": "leda-chart-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch CompactorTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.CompactorTest",
+            "projectName": "leda-compactor-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch UtilTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.UtilTest",
+            "projectName": "leda-compactor-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch CodeAdequacy",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.CodeAdequacy",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch CorrectionClassification",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.CorrectionClassification",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch FilesUtilityTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.FilesUtilityTest",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch HTMLFileUtility",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.HTMLFileUtility",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch MavenUtilityTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.MavenUtilityTest",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReportUtility",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.ReportUtility",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReportUtilityTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.ReportUtilityTest",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch TestReportErrorItem",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.TestReportErrorItem",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch Utilities(1)",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.Utilities",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch XMLFilesUtilityTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.XMLFilesUtilityTest",
+            "projectName": "leda-correction-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch Plaggie",
+            "request": "launch",
+            "mainClass": "plag.parser.plaggie.Plaggie",
+            "projectName": "leda-plaggie-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch PlagRunner",
+            "request": "launch",
+            "mainClass": "plag.runner.PlagRunner",
+            "projectName": "leda-plaggie-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch Util",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.sender.util.Util",
+            "projectName": "leda-sender-tool"
+        },
+        {
+            "type": "java",
+            "name": "Launch StudentSubmissionSenderTest",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.util.StudentSubmissionSenderTest",
+            "projectName": "leda-sender-tool"
+        }
+    ]
+}

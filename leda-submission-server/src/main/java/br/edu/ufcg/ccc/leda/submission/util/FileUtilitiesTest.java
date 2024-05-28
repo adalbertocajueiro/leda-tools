@@ -12,6 +12,7 @@ public class FileUtilitiesTest {
 		Configuration config = Configuration.getInstance();
 		List<Corretor> profs = config.getMonitores();
 		File frequencia = new File("/Users/adalbertocajueiro/Downloads/frequencia_2023.2_1411179-01_154938676.xlsx");
+		FileUtilities.salvarArquivoAtividades(new File("/Users/adalbertocajueiro/Downloads/Cronogramas 2023.2.xlsx"));
 		FileUtilities.salvarFrequencia(frequencia);
 		
 		File senhas = new File("/Users/adalbertocajueiro/leda-upload/2023.2/Senhas.xlsx");

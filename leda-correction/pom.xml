@@ -22,14 +22,14 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<submission.server.url>http://150.165.15.10:81</submission.server.url>
+				<submission.server.url>http://150.165.85.97</submission.server.url>
 			</properties>
 		</profile>
 
 		<profile>
 			<id>local</id>
 			<properties>
-				<submission.server.url>http://150.165.15.10:81</submission.server.url>
+				<submission.server.url>http://150.165.85.97</submission.server.url>
 			</properties>
 		</profile>
 		
