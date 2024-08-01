@@ -398,7 +398,7 @@ public class Util {
 				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
 				double nota = 0.0;
 				if(item != null){
-					nota = item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign() * Constants.PESO_DESIGN;
+					nota = item.calculateNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign() * Constants.PESO_DESIGN;
 				}
 				
 				notasDaFinal.put(mat, nota);
@@ -441,7 +441,7 @@ public class Util {
 			if(report != null){
 				CorrectionReportItem item = report.getCorrectionReportItemforStudent(mat);
 				//double nota = item.getNotaTestes() + item.getNotaDesign() * 0.6;
-				double notaDaFinal = item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign() * Constants.PESO_DESIGN;
+				double notaDaFinal = item.calculateNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign() * Constants.PESO_DESIGN;
 				double mediaSemFinal = mediasLEDASemfinal.get(mat);
 				double nota = mediaSemFinal;
 				if(nota <= 7.0 && nota >= 4.0){
@@ -537,7 +537,7 @@ public class Util {
 		alunos.keySet().forEach( m -> {
 			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
 				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
-				return item!=null ? item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
+				return item!=null ? item.calculateNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
 			}).sum();
 			mediasProvasPraticas.put(m,(double)somatorioNotas/numeroProvas);
 		});
@@ -559,7 +559,7 @@ public class Util {
 		alunos.keySet().forEach( m -> {
 			double somatorioNotas = correctionReports.values().stream().mapToDouble( cr -> {
 				CorrectionReportItem item = cr.getCorrectionReportItemforStudent(m);
-				return item!=null ? item.getNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
+				return item!=null ? item.calculateNotaTestes()*Constants.PESO_TESTES + item.getNotaDesign()*Constants.PESO_DESIGN: 0.0;
 			}).sum();
 			mediasRoteiros.put(m,(double)somatorioNotas/numeroRoteiros);
 		});
@@ -859,11 +859,11 @@ public class Util {
 			Cell cellAdequacao = newRow.createCell(3);
 			cellAdequacao.setCellValue(cri.getAdequacy().toString());
 			Cell cellNotaTestes = newRow.createCell(4);
-			cellNotaTestes.setCellValue(cri.getNotaTestes());
+			cellNotaTestes.setCellValue(cri.calculateNotaTestes());
 			Cell cellNotaDesign = newRow.createCell(5);
 			cellNotaDesign.setCellValue(cri.getNotaDesign());
 			Cell cellNotaFinal = newRow.createCell(6);
-			cellNotaFinal.setCellValue(cri.getNotaTestes()*Constants.PESO_TESTES + cri.getNotaDesign()*Constants.PESO_DESIGN);
+			cellNotaFinal.setCellValue(cri.calculateNotaTestes()*Constants.PESO_TESTES + cri.getNotaDesign()*Constants.PESO_DESIGN);
 			Cell cellClassificacao = newRow.createCell(7);
 			cellClassificacao.setCellValue(cri.getClassification().name());
 			Cell cellComentario = newRow.createCell(8);

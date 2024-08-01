@@ -312,7 +312,6 @@ public class ReportUtility {
 		CorrectionReport correctionReport = this
 				.generateJsonCorrectionReport(submissionsFolder, matriculaCorretor, 
 						alunos,testReport);
-		
 		File jsonCorrectionFile = new File(submissionsFolder.getParentFile(),submissionsFolder.getParentFile().getName() + "-correction.json");
 		//se ja existe algum correction report, ele aproveita as classificacoes, as adequacoes e as notas 
 		//do report existente

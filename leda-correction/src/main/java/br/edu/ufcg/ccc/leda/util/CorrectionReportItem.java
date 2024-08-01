@@ -8,6 +8,10 @@ public class CorrectionReportItem {
 	private TestReportItem testReportItem;
 	private double notaDesign;
 	
+	public CorrectionReportItem() {
+		super();
+	}
+
 	public CorrectionReportItem(String matricula, String comentario, 
 			CorrectionClassification classification, CodeAdequacy adequacy,
 			TestReportItem testReportItem) {
@@ -43,9 +47,9 @@ public class CorrectionReportItem {
 
 	public double calculateNotaTestes(){
 		double nota = 0.0;
-		
 		int testesAConsiderar = this.testReportItem.getTotalTests() - this.testReportItem.getSkipped();
 		nota = ((double)(testsPassed(true)/(double)testesAConsiderar))*10;
+		
 		return nota;
 	}
 	
@@ -90,9 +94,11 @@ public class CorrectionReportItem {
 		return nota;
 	}
 	
+	/* 
 	public double getNotaTestes(){
 		return calculateNotaTestes();
 	}
+		*/
 	public String getMatricula() {
 		return matricula;
 	}
@@ -133,6 +139,12 @@ public class CorrectionReportItem {
 		this.adequacy = adequacy;
 	}
 	
+	public TestReportItem getTestReportItem(){
+		return this.testReportItem;
+	}
 	
+	public void setTestReportItem(TestReportItem testReportItem){
+		this.testReportItem = testReportItem;
+	}
 	
 }

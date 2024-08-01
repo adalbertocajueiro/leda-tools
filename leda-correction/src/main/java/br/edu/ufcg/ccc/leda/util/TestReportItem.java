@@ -22,6 +22,10 @@ public class TestReportItem {
 	private File completeReport;
 	private File mavenOutputLog;
 
+	public TestReportItem() {
+		super();
+	}
+
 	public TestReportItem(File testResultXMLFile, String matricula,
 			String studentName, long lastModified, int totalTests, int errors,
 			int failures, int skiped, double time, File completeReport,

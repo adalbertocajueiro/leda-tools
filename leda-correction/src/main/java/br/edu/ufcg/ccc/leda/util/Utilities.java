@@ -1,15 +1,14 @@
 package br.edu.ufcg.ccc.leda.util;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 
 public class Utilities {
@@ -26,34 +25,54 @@ public class Utilities {
 	}
 	
 	public static void writeTestReportToJson(TestReport testReport, File jsonFile) throws IOException {
-		Gson gson = new Gson();
-
+		//GsonBuilder builder = new GsonBuilder();
+		//builder.registerTypeAdapter(TestReport.class, new TestReportAdapter());
+		//Gson gson = builder.create();
+		
 		FileWriter fw = new FileWriter(jsonFile);
-		gson.toJson(testReport, fw);
+		//System.out.println("WRITING TEST REPORT TO JSON GSON WITH ADAPTER");
+		//System.out.println("JSON WITH GSON: " + gson.toJson(testReport));
+
+		ObjectMapper  objectMapper = new ObjectMapper();
+        // Convert the object to JSON string
+        String jsonString = objectMapper.writeValueAsString(testReport);
+		//System.out.println("JSON WITH JACKSON: " + jsonString);
+		//System.out.println("WRITTEN");
+		// gson.toJson(testReport, fw);
+		fw.write(jsonString);
 		fw.flush();
 		fw.close();
 	}
 	
 	public static void writeCorrectionReportToJson(CorrectionReport correctionReport, File jsonFile) throws IOException {
-		Gson gson = new Gson();
+		//Gson gson = new Gson();
 		FileWriter fw = new FileWriter(jsonFile);
-		gson.toJson(correctionReport, fw);
+		ObjectMapper  objectMapper = new ObjectMapper();
+        // Convert the object to JSON string
+        String jsonString = objectMapper.writeValueAsString(correctionReport);
+		fw.write(jsonString);
+		//gson.toJson(correctionReport, fw);
 		fw.flush();
 		fw.close();
 	}
 	
 	public static TestReport loadTestReportFromJson(File jsonFile) throws IOException{
-		Gson gson = new Gson();
+		//Gson gson = new Gson();
 
-		FileReader fr = new FileReader(jsonFile);
-		TestReport result = gson.fromJson(fr, new TypeToken<TestReport>(){}.getType());
+		//FileReader fr = new FileReader(jsonFile);
+		ObjectMapper  objectMapper = new ObjectMapper();
+		TestReport result = objectMapper.readValue(jsonFile, TestReport.class);
+		//TestReport result = gson.fromJson(fr, new TypeToken<TestReport>(){}.getType());
 		return result;
 	}
 	
 	public static CorrectionReport loadCorrectionReportFromJson(File jsonFile) throws IOException{
-		Gson gson = new Gson();
-        FileReader fr = new FileReader(jsonFile);
-		CorrectionReport result = gson.fromJson(fr, new TypeToken<CorrectionReport>(){}.getType());
+		//Gson gson = new Gson();
+        //FileReader fr = new FileReader(jsonFile);
+		ObjectMapper  objectMapper = new ObjectMapper();
+		CorrectionReport result = objectMapper.readValue(jsonFile, CorrectionReport.class);
+
+		//CorrectionReport result = gson.fromJson(fr, new TypeToken<CorrectionReport>(){}.getType());
 		return result;
 	}
 	

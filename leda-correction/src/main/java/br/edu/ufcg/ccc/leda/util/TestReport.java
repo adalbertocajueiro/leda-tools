@@ -7,6 +7,11 @@ public class TestReport {
 	private int numberOfTests;
 	private ArrayList<TestReportItem> reportItems;
 
+	public TestReport() {
+		super();
+		this.reportItems = new ArrayList<TestReportItem>();
+	}
+
 	public TestReport(String testSuiteName, int numberOfTests) {
 		super();
 		this.testSuiteName = testSuiteName;

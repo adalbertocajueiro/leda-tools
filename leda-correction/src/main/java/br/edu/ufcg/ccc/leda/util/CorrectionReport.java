@@ -8,6 +8,11 @@ public class CorrectionReport {
 	private int numberOfTests;
 	private ArrayList<CorrectionReportItem> reportItems; 
 	
+	public CorrectionReport() {
+		super();
+		this.reportItems = new ArrayList<CorrectionReportItem>();
+	}
+
 	public CorrectionReport(String id, String matriculaCorretor, 
 			int numberOfTests, ArrayList<CorrectionReportItem> reportItems) {
 		super();
