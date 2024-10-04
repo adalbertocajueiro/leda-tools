@@ -1750,8 +1750,8 @@ public class Util {
 					monitores,corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
 			
 		}else if(Constants.PATTERN_PROVA.matcher(id).matches()){
-			System.out.println("MOntando atividade da prova: " + id);
-			System.out.println("Corretor: " + corretor);
+			//System.out.println("MOntando atividade da prova: " + id);
+			//System.out.println("Corretor: " + corretor);
 			result = new Prova(id,nome,descricao,dataHoraLiberacao,
 					linksVideoAulas,dataHoraEnvioNormal,
 					monitores,(Professor) corretor,dataHoraInicioCorrecao,dataHoraEntregaCorrecao,null,null);						
