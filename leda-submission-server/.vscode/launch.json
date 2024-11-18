@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Util",
+            "request": "launch",
+            "mainClass": "br.edu.ufcg.ccc.leda.submission.util.Util",
+            "projectName": "leda-submission-server"
+        },
+        {
+            "type": "java",
             "name": "FileUtilitiesTest",
             "request": "launch",
             "mainClass": "br.edu.ufcg.ccc.leda.submission.util.FileUtilitiesTest",

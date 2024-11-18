@@ -1429,8 +1429,10 @@ public class Util {
             	if(cell0 != null){
             			org.apache.poi.ss.usermodel.Cell cell1 = row.getCell(1);
             			org.apache.poi.ss.usermodel.Cell cell2 = row.getCell(2);
-            			Student student = new Student(cell1.getStringCellValue(), cell2.getStringCellValue(), turma);
-            			map.put(cell1.getStringCellValue(), student);
+            			if(cell1.getStringCellValue().length() > 0){
+							Student student = new Student(cell1.getStringCellValue(), cell2.getStringCellValue(), turma);
+            				map.put(cell1.getStringCellValue(), student);
+						}
             	}
             }
 		}
@@ -1603,22 +1605,34 @@ public class Util {
 		org.apache.poi.ss.usermodel.Workbook myWorkBook = null;
 		org.apache.poi.ss.usermodel.Sheet sheetTurma1 = null;
 		org.apache.poi.ss.usermodel.Sheet sheetTurma2 = null;
+		int numberOfSheets = 0;
 		try{
 			myWorkBook = new XSSFWorkbook (fis);
+			numberOfSheets = myWorkBook.getNumberOfSheets();
 			sheetTurma1 = myWorkBook.getSheetAt(0);
-			sheetTurma2 = myWorkBook.getSheetAt(1);
+			iterateOverSheetAtividade(monitores,atividades,sheetTurma1);
+			if(numberOfSheets > 1){
+				sheetTurma2 = myWorkBook.getSheetAt(1);
+				iterateOverSheetAtividade(monitores,atividades,sheetTurma2);
+			}
+			
+			
 		}catch(POIXMLException ex){
 			try {
 				myWorkBook = new HSSFWorkbook(fis);
 				sheetTurma1 = myWorkBook.getSheetAt(0);
-				sheetTurma2 = myWorkBook.getSheetAt(1);
+				iterateOverSheetAtividade(monitores,atividades,sheetTurma1);
+				if(numberOfSheets > 1){
+					sheetTurma2 = myWorkBook.getSheetAt(1);
+					iterateOverSheetAtividade(monitores,atividades,sheetTurma2);
+				}
 			} catch(POIXMLException ex1){
 				//problema na leitura do arquivo excel
 				ex1.printStackTrace();
 			}
 		}
-		iterateOverSheetAtividade(monitores,atividades,sheetTurma1);
-		iterateOverSheetAtividade(monitores,atividades,sheetTurma2);
+		
+		
 
 		myWorkBook.close();
 
@@ -2544,6 +2558,8 @@ public class Util {
 		//List<Monitor> monitores = Util.loadSpreadsheetMonitorFromExcel();
 		//Map<String,Atividade> atividades = Util.loadSpreadsheetsAtividades(monitores);
 		Map<String,Student> alunos = Util.loadStudentLists();
+		File excelEstudantes = new File ("/Users/adalbertocajueiro/Downloads/frequencia_2024.2_1411179-01_184853602 (LEDA).xlsx");
+		Util.loadStudentsFromXLSX(excelEstudantes, new HashMap<String,Student>());
 		//List<Student> students = alunos.values().stream().filter(a -> a.getTurma() == "01").sorted((a1,a2) -> a1.getNome().compareTo(a2.getNome())).collect(Collectors.toList());
 		//students.forEach(s -> System.out.println(s.getNome()));
 		// Map<String,Double> mediasEDA1 = Util.loadSpreadsheetMediasEDA("1RLCM_LlhrI7y1n-7nbKff_Kcemvob3ZDCyb2z8B_Jio");
