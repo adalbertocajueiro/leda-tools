@@ -27,7 +27,7 @@
 		<application.class>br.edu.ufcg.ccc.leda.submission.server.SubmissionServer</application.class>
 		<quantidadeProvas>3</quantidadeProvas>
 		<quantidadeRoteiros>13</quantidadeRoteiros>
-		<authorizedIPs>150.165.74</authorizedIPs>
+		<authorizedIPs>150.165.42</authorizedIPs>
 		<pesoTestes>0.4</pesoTestes>
 		<pesoDesign>0.6</pesoDesign>
 	</properties>
