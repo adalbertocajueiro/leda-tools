@@ -12,6 +12,7 @@ public class TestCompactorMojo {
 	@Test
 	public void testCompact01() throws IOException, MojoExecutionException{
 
+		
 		MavenProject mp = new MavenProject();
         mp.getBuild().setDirectory("/Users/adalbertocajueiro/Downloads/tmp/Rot-HeapBinaria-environment/target");
         mp.getBuild().setSourceDirectory("/Users/adalbertocajueiro/Downloads/tmp/Rot-HeapBinaria-environment/src");

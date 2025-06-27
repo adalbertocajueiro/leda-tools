@@ -75,12 +75,16 @@ public class LEDACompactorMojo extends AbstractMojo {
 		List<Student> alunos = new LinkedList<Student>();
 		String currentSemester = "";
 		try {
+			System.out.println("MOJO: getting current semester");
 			currentSemester = Util.getCurrentSemester(urlCurrentSemester);
+			System.out.println("MOJO: current semester received: " + currentSemester);
+			System.out.println("MOJO: getting all students: " + urlGetAllStudents);
 			alunos = Util.getAllStudents(currentSemester,urlGetAllStudents)
 					.values()
 					.stream()
 					.flatMap(Collection::stream)
 					.collect(Collectors.toList());
+			System.out.println("MOJO: all students received");
 		} catch (IOException e2) {
 			throw new MojoExecutionException("\n CONNECTION ERROR: " + e2.getMessage(),e2);
 		} catch (URISyntaxException e) {
