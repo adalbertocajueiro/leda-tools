@@ -5,17 +5,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.mime.FileBody;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.entity.mime.StringBody;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -53,9 +53,10 @@ public class ProfessorSender extends Sender {
 		StringBody sem = new StringBody(semestre, ContentType.TEXT_PLAIN);
 		FileBody guia = new FileBody(guiaCorrecaoFile, ContentType.MULTIPART_FORM_DATA);
 
-		CloseableHttpClient httpclient = HttpClients.createDefault();
+		CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+		//HttpClients.createDefault();
 
-		StringBuilder confirmation = new StringBuilder();
+		
 		try {
 			HttpPost httppost = new HttpPost(url);
 			MultipartEntityBuilder builder = MultipartEntityBuilder.create()
@@ -83,30 +84,37 @@ public class ProfessorSender extends Sender {
 			 */
 			httppost.setEntity(reqEntity);
 			System.out.println("Sending environment file: "
-					+ httppost.getRequestLine());
-			CloseableHttpResponse response = httpclient.execute(httppost);
+					+ httppost.getEntity());
+			
+			HttpClientResponseHandler<String> handler = response -> {
+				StringBuilder content = new StringBuilder();
+				HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStreamReader isr = new InputStreamReader(
+								entity.getContent());
+								BufferedReader br = new BufferedReader(isr);
+								String line = "";
+								while ((line = br.readLine()) != null) {
+									content.append(line);
+									content.append("\n");
+								}
+								EntityUtils.consume(entity);
+            } else {
+							content.append("Server response with no content");
+						}
+            if(response.getCode() != 200){
+							throw new IOException(content.toString());
+						} else {
+							return content.toString();
+						}
+        };
+			String confirmation = httpclient.execute(httppost,handler);
 
 			try {
 				System.out.println("----------------------------------------");
-				System.out.println(response.getStatusLine());
-				HttpEntity resEntity = response.getEntity();
-				if (resEntity != null) {
-					InputStreamReader isr = new InputStreamReader(
-							resEntity.getContent());
-					BufferedReader br = new BufferedReader(isr);
-					String line = "";
-					while ((line = br.readLine()) != null) {
-						// System.out.println(line);
-						confirmation.append(line);
-						confirmation.append("\n");
-					}
-				}
-				EntityUtils.consume(resEntity);
 				writeTicket(this.id + "-send.log", confirmation.toString());
 			} catch(Exception e){
 				e.printStackTrace();
-			}finally {
-				response.close();
 			}
 		} catch(Exception e){
 			e.printStackTrace();

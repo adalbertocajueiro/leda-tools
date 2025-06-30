@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.hc.client5.http.ClientProtocolException;
 
 import br.edu.ufcg.leda.sender.Sender;
 import br.edu.ufcg.leda.sender.StudentSubmissionSender;

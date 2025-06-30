@@ -11,16 +11,16 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.mime.FileBody;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.entity.mime.StringBody;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -81,10 +81,9 @@ public class StudentSubmissionSender extends Sender {
 		// StringBody files = new StringBody(gson.toJson(filesOwners),
 		// ContentType.TEXT_PLAIN);
 
-		CloseableHttpClient httpclient = HttpClients.createDefault();
+		CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+		//HttpClients.createDefault();
 
-		StringBuilder confirmation = new StringBuilder();
-		CloseableHttpResponse response = null;
 		try {
 			HttpPost httppost = new HttpPost(url);
 			HttpEntity reqEntity = MultipartEntityBuilder.create()
@@ -96,41 +95,41 @@ public class StudentSubmissionSender extends Sender {
 					.build();
 
 			httppost.setEntity(reqEntity);
-			System.out.println("Sending file: " + httppost.getRequestLine());
-			response = httpclient.execute(httppost);
+			System.out.println("Sending file: " + httppost.getEntity());
 
-			System.out.println("----------------------------------------");
-			System.out.println(response.getStatusLine());
-			HttpEntity resEntity = response.getEntity();
-			if (resEntity != null) {
-				InputStreamReader isr = new InputStreamReader(
-						resEntity.getContent());
-				BufferedReader br = new BufferedReader(isr);
-				String line = "";
-				while ((line = br.readLine()) != null) {
-					confirmation.append(line);
-					confirmation.append("\n");
-				}
+			HttpClientResponseHandler<String> handler = response -> {
+				StringBuilder content = new StringBuilder();
+				
+				HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStreamReader isr = new InputStreamReader(
+								entity.getContent());
+								BufferedReader br = new BufferedReader(isr);
+								String line = "";
+								while ((line = br.readLine()) != null) {
+									content.append(line);
+									content.append("\n");
+								}
+								EntityUtils.consume(entity);
+            } else {
+							content.append("Server response with no content");
+						}
+						if(response.getCode() != 200){
+							throw new IOException(content.toString());
+						} else {
+							return content.toString();
+						}
+        };
+			String confirmation = httpclient.execute(httppost,handler);
+			try {
+				System.out.println("----------------------------------------");
+				writeTicket(this.matricula + "-send.log", confirmation.toString());
+			} catch(Exception e){
+				e.printStackTrace();
 			}
-			EntityUtils.consume(resEntity);
-			response.close();
-			if (response.getStatusLine().getStatusCode() != 200) {
-
-				throw new IOException(confirmation.toString());
-
-			}
-			writeTicket(this.matricula + "-send.log",
-					confirmation.toString());
-			System.out.println("--- RESPOSTA RETORNADA DO SERVIDOR");
-			System.out.println(confirmation.toString());
-			System.out.println("----------------------------------");
-
-		} catch (IOException ex) {
-			throw ex;
+		} catch(Exception e){
+			e.printStackTrace();
 		} finally {
-			if (response != null) {
-				response.close();
-			}
 			httpclient.close();
 		}
 	}
