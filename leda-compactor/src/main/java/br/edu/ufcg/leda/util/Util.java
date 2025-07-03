@@ -48,7 +48,6 @@ public class Util {
 								while ((line = br.readLine()) != null) {
 									content.append(line);
 								}
-								System.out.println("response: " + content.toString());
 								Gson gson = new Gson();
 								singleList = gson.fromJson(content.toString(), new TypeToken<List<String>>(){}.getType());	        
 								//currentSemester = singleList.get(0);
@@ -91,7 +90,6 @@ public class Util {
 								while ((line = br.readLine()) != null) {
 									content.append(line);
 								}
-								System.out.println("response: " + content.toString());
 								Gson gson = new Gson();
 								returnedMap = gson.fromJson(content.toString(), new TypeToken<Map<Integer, List<Student>>>(){}.getType());	     
 								//currentSemester = singleList.get(0);
