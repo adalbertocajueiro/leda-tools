@@ -2,7 +2,7 @@ package br.edu.ufcg.leda;
 
 import java.io.IOException;
 
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class TestCompactorMojo {
 
 	@Test
-	public void testCompact01() throws IOException, MojoExecutionException{
+	public void testCompact01() throws IOException, MojoFailureException{
 
 		
 		MavenProject mp = new MavenProject();

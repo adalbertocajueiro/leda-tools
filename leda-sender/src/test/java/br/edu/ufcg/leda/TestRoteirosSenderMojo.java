@@ -1,6 +1,6 @@
 package br.edu.ufcg.leda;
 
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuildingException;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class TestRoteirosSenderMojo {
     
     @Test
-    public void testUploadEnvironment01() throws ProjectBuildingException, MojoExecutionException{ 
+    public void testUploadEnvironment01() throws ProjectBuildingException, MojoFailureException{ 
         MavenProject mp = new MavenProject();
         mp.getBuild().setDirectory("/Users/adalbertocajueiro/Documents/UFCG/new-leda/new-leda-roteiros/Heap binaria/target");
         mp.getBuild().setSourceDirectory("/Users/adalbertocajueiro/Documents/UFCG/new-leda/new-leda-roteiros/Heap binaria");        

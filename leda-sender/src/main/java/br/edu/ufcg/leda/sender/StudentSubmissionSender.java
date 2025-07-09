@@ -82,7 +82,6 @@ public class StudentSubmissionSender extends Sender {
 		// ContentType.TEXT_PLAIN);
 
 		CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-		//HttpClients.createDefault();
 
 		try {
 			HttpPost httppost = new HttpPost(url);
@@ -95,7 +94,7 @@ public class StudentSubmissionSender extends Sender {
 					.build();
 
 			httppost.setEntity(reqEntity);
-			System.out.println("Sending file: " + httppost.getEntity());
+			System.out.println("Sending file: " + httppost.getEntity() + " to URL " + url);
 
 			HttpClientResponseHandler<String> handler = response -> {
 				StringBuilder content = new StringBuilder();
@@ -121,14 +120,11 @@ public class StudentSubmissionSender extends Sender {
 						}
         };
 			String confirmation = httpclient.execute(httppost,handler);
-			try {
-				System.out.println("----------------------------------------");
-				writeTicket(this.matricula + "-send.log", confirmation.toString());
-			} catch(Exception e){
-				e.printStackTrace();
-			}
+			System.out.println("----------------------------------------");
+			writeTicket(this.matricula + "-send.log", confirmation.toString());
 		} catch(Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw e;
 		} finally {
 			httpclient.close();
 		}

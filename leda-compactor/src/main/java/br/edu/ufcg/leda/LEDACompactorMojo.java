@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -64,7 +64,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 	private StudentSubmissionSender sender;
 
 	
-	public void execute() throws MojoExecutionException {
+	public void execute() throws MojoFailureException  {
 
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
 		System.out.println("Folder to be compacted: "
@@ -85,18 +85,19 @@ public class LEDACompactorMojo extends AbstractMojo {
 					.collect(Collectors.toList());
 			System.out.println("MOJO: all students received: " + alunos.size());
 		} catch (IOException e2) {
-			throw new MojoExecutionException("\n CONNECTION ERROR: " + e2.getMessage(),e2);
+			throw new MojoFailureException("\n CONNECTION ERROR: " + e2.getMessage(),e2);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
+			throw new MojoFailureException("\n ERROR in URL: " + e.getMessage(),e);
 		}
 		//se acontecer da matricula nao estiver cadastrada nem o aluno cadastrado na turma correta
 		Student aluno = alunos.stream().findFirst().orElse(null);
 		Integer turma = Integer.parseInt(roteiro.substring(4));
 		if(aluno == null){
-			throw new MojoExecutionException("Aluno " + matricula + " nao cadastrado");
+			throw new MojoFailureException("Aluno " + matricula + " nao cadastrado");
 		}else if (aluno.getTurma() != turma){
-			throw new MojoExecutionException("Aluno " + matricula + " nao pertence a turma " + turma);			
+			throw new MojoFailureException("Aluno " + matricula + " nao pertence a turma " + turma);			
 		}
 		Compactor compactor = new Compactor();
 		File srcFolder = new File(project.getBuild().getSourceDirectory());
@@ -127,7 +128,7 @@ public class LEDACompactorMojo extends AbstractMojo {
 					.println("Please check your log file to see the confirmation from the server (last record)");
 		} catch (IOException e) {
 			// e.printStackTrace();
-			throw new MojoExecutionException("\n COMPACTION ERROR", e);
+			throw new MojoFailureException("\n COMPACTION ERROR", e);
 		}
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 	}

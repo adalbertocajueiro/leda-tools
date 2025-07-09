@@ -19,9 +19,8 @@ package br.edu.ufcg.leda;
 import java.io.File;
 import java.io.IOException;
 
-
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -56,7 +55,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 
 	private ProfessorSender sender;
 
-	public void execute() throws MojoExecutionException {
+	public void execute() throws MojoFailureException {
 		if (defaultSend) {
 			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%");
 			File targetFolder = new File(project.getBuild().getDirectory());
@@ -81,7 +80,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 						.println("Please check your log file to see the confirmation from the server (last record)");
 			}  catch (IOException e) {
 				// e.printStackTrace();
-				throw new MojoExecutionException("Sender error", e);
+				throw new MojoFailureException("Sender error", e);
 			}
 			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		}

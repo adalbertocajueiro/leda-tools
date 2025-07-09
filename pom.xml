@@ -42,8 +42,8 @@
 		<maven.plugin.api.version>3.9.10</maven.plugin.api.version>
 		<maven.plugin.annotations.version>3.15.1</maven.plugin.annotations.version>
 		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>18</maven.compiler.source>
+		<maven.compiler.target>18</maven.compiler.target>
 		<junit.jupiter.version>5.13.2</junit.jupiter.version>
 		<junit.suite.engine.version>1.13.2</junit.suite.engine.version>
 		<junit.runner.version>1.13.2</junit.runner.version>
@@ -99,11 +99,7 @@
 			<version>2.2.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>${httpmime.version}</version>
-		</dependency -->
+		
 		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5</artifactId>
@@ -132,8 +128,6 @@
 		<module>leda-compactor</module>
 		<module>leda-plaggie</module>		
 	</modules>
-
-	
 
 	<build>
 		<plugins>
