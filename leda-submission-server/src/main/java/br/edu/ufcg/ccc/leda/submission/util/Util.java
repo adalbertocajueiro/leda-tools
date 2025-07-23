@@ -847,28 +847,30 @@ public class Util {
 		Map<String,Student> alunos = Util.loadStudentLists();
 		int count = 1;
 		for (CorrectionReportItem cri : report.getReportItems()) {
-			Row newRow = sheet.createRow(count);
-			Cell cellNumber = newRow.createCell(0);
-			cellNumber.setCellValue(count);
-			count++;
-			Cell cellMat = newRow.createCell(1);
 			Student aluno = alunos.get(cri.getMatricula());
-			cellMat.setCellValue(cri.getMatricula());
-			Cell cellNome = newRow.createCell(2);
-			cellNome.setCellValue(aluno.getNome());
-			Cell cellAdequacao = newRow.createCell(3);
-			cellAdequacao.setCellValue(cri.getAdequacy().toString());
-			Cell cellNotaTestes = newRow.createCell(4);
-			cellNotaTestes.setCellValue(cri.calculateNotaTestes());
-			Cell cellNotaDesign = newRow.createCell(5);
-			cellNotaDesign.setCellValue(cri.getNotaDesign());
-			Cell cellNotaFinal = newRow.createCell(6);
-			cellNotaFinal.setCellValue(cri.calculateNotaTestes()*Constants.PESO_TESTES + cri.getNotaDesign()*Constants.PESO_DESIGN);
-			Cell cellClassificacao = newRow.createCell(7);
-			cellClassificacao.setCellValue(cri.getClassification().name());
-			Cell cellComentario = newRow.createCell(8);
-			cellComentario.setCellValue(cri.getComentario());
-			
+			if (aluno != null){
+				Row newRow = sheet.createRow(count);
+				Cell cellNumber = newRow.createCell(0);
+				cellNumber.setCellValue(count);
+				count++;
+				Cell cellMat = newRow.createCell(1);
+				
+				cellMat.setCellValue(cri.getMatricula());
+				Cell cellNome = newRow.createCell(2);
+				cellNome.setCellValue(aluno.getNome());
+				Cell cellAdequacao = newRow.createCell(3);
+				cellAdequacao.setCellValue(cri.getAdequacy().toString());
+				Cell cellNotaTestes = newRow.createCell(4);
+				cellNotaTestes.setCellValue(cri.calculateNotaTestes());
+				Cell cellNotaDesign = newRow.createCell(5);
+				cellNotaDesign.setCellValue(cri.getNotaDesign());
+				Cell cellNotaFinal = newRow.createCell(6);
+				cellNotaFinal.setCellValue(cri.calculateNotaTestes()*Constants.PESO_TESTES + cri.getNotaDesign()*Constants.PESO_DESIGN);
+				Cell cellClassificacao = newRow.createCell(7);
+				cellClassificacao.setCellValue(cri.getClassification().name());
+				Cell cellComentario = newRow.createCell(8);
+				cellComentario.setCellValue(cri.getComentario());
+			}
 		}
 		//retirado porque o autosize comecou a dar problemas na geracao das planilhas.
 		//for (int i = 0; i < headers.length; i++) {
