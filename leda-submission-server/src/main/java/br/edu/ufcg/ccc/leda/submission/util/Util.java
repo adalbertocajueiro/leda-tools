@@ -1240,6 +1240,7 @@ public class Util {
 	public static Map<String,Double> loadSpreadsheetMediasEDAFromExcel() throws IOException, ServiceException, ConfigurationException{
 
 		Map<String,Double> mediasEDA = new HashMap<String,Double>();
+		/*
 		File excelFile = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T1_FILE_NAME);
 		File excelFile2 = new File(Constants.CURRENT_SEMESTER_FOLDER,Constants.EXCEL_EDA_T2_FILE_NAME);
 		FileInputStream fis = new FileInputStream(excelFile);
@@ -1267,7 +1268,7 @@ public class Util {
 		}
 		iterateOverSheetEDA(mediasEDA,sheetTurma1);
 		iterateOverSheetEDA(mediasEDA,sheetTurma2);
-		/*
+		
 		for (ListEntry le : lf.getEntries()) {
 			CustomElementCollection cec = le.getCustomElements();
 			//Pass column name to access it's cell values
