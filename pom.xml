@@ -42,8 +42,8 @@
 		<maven.plugin.api.version>3.9.10</maven.plugin.api.version>
 		<maven.plugin.annotations.version>3.15.1</maven.plugin.annotations.version>
 		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
-		<maven.compiler.source>18</maven.compiler.source>
-		<maven.compiler.target>18</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<junit.jupiter.version>5.13.2</junit.jupiter.version>
 		<junit.suite.engine.version>1.13.2</junit.suite.engine.version>
 		<junit.runner.version>1.13.2</junit.runner.version>
