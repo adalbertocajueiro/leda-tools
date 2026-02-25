@@ -6,12 +6,14 @@ import org.apache.maven.project.ProjectBuildingException;
 import org.junit.jupiter.api.Test;
 
 public class TestRoteirosSenderMojo {
-    
+
     @Test
-    public void testUploadEnvironment01() throws ProjectBuildingException, MojoFailureException{ 
+    public void testUploadEnvironment01() throws ProjectBuildingException, MojoFailureException {
         MavenProject mp = new MavenProject();
-        mp.getBuild().setDirectory("/Users/adalbertocajueiro/Documents/UFCG/new-leda/new-leda-roteiros/Heap binaria/target");
-        mp.getBuild().setSourceDirectory("/Users/adalbertocajueiro/Documents/UFCG/new-leda/new-leda-roteiros/Heap binaria");        
+        mp.getBuild()
+                .setDirectory("/Users/adalbertocajueiro/Documents/UFCG/new-leda/new-leda-roteiros/Heap binaria/target");
+        mp.getBuild()
+                .setSourceDirectory("/Users/adalbertocajueiro/Documents/UFCG/new-leda/new-leda-roteiros/Heap binaria");
         mp.setArtifactId("Rot-HeapBinaria");
 
         LEDARoteiroSenderMojo mojo = new LEDARoteiroSenderMojo();
@@ -19,7 +21,7 @@ public class TestRoteirosSenderMojo {
         mojo.setRoteiro("R12-0X");
         mojo.setSemestre("2023.1");
         mojo.setUrl("http://localhost:8080/ambientes/uploadEnvironment");
-        mojo.setUserName("Adalberto Cajueiro de Farias");
+        mojo.setEmail("Adalberto Cajueiro de Farias");
         mojo.setDefaultSend(true);
         mojo.execute();
     }

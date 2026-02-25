@@ -28,14 +28,14 @@ public class ProfessorSender extends Sender {
 	private File guiaCorrecaoFile;
 	private String semestre;
 	private String turma;
-	private String userName;
+	private String email;
 
 	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro,
-			String url, String semestre, File guiaCorrecaoFile, String userName) {
+			String url, String semestre, File guiaCorrecaoFile, String email) {
 		super(ambiente, roteiro, url);
 		this.arquivoCorrecao = arquivoCorrecao;
 		this.semestre = semestre;
-		this.userName = userName;
+		this.email = email;
 		this.guiaCorrecaoFile = guiaCorrecaoFile;
 		// RXX-XX onde os ultimos XX sao a turma
 		this.turma = roteiro.substring(4);
@@ -70,7 +70,10 @@ public class ProfessorSender extends Sender {
 
 			HttpEntity reqEntity =  builder.build();
 			
-			httppost.addHeader("loggedUser", "{\"name\" = \""+ this.userName + "\"}");
+			//TODO provavalmente vai precisar adicionar aqui a email, etc. porque o interceptor pega por email e insere no request
+			// tem que acrescentar um outro header do semester tambem
+			httppost.addHeader("loggeduser", "{\"email\" = \""+ this.email + "\"}");
+			httppost.addHeader("semester", this.semestre);
 			/*
 			 * @RequestHeader Map<String, String> headers
 			 * 

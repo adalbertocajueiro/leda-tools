@@ -32,26 +32,26 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Mojo(name = "enviar-roteiro",defaultPhase = LifecyclePhase.INSTALL)
+@Mojo(name = "enviar-roteiro", defaultPhase = LifecyclePhase.INSTALL)
 public class LEDARoteiroSenderMojo extends AbstractMojo {
 
-	@Parameter(property = "project",defaultValue = "${project}",required = true, readonly = true)
+	@Parameter(property = "project", defaultValue = "${project}", required = true, readonly = true)
 	private MavenProject project;
 
-	@Parameter(property = "roteiro",required = true)
+	@Parameter(property = "roteiro", required = true)
 	private String roteiro;
 
-	@Parameter(property = "semestre",required = true)
+	@Parameter(property = "semestre", required = true)
 	private String semestre;
 
-	@Parameter(property = "defaultSend",required = true)
+	@Parameter(property = "defaultSend", required = true)
 	private boolean defaultSend;
 
-	@Parameter(property = "url",required = true)
+	@Parameter(property = "url", required = true)
 	private String url;
 
-	@Parameter(property = "userName",required = true)
-	private String userName;
+	@Parameter(property = "email", required = true)
+	private String email;
 
 	private ProfessorSender sender;
 
@@ -70,7 +70,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
 
-				sender = new ProfessorSender(envZipFile, corrProjZipFile,roteiro, url, semestre,guiaCorrecaoFile,userName);
+				sender = new ProfessorSender(envZipFile, corrProjZipFile, roteiro, url, semestre, guiaCorrecaoFile, email);
 				System.out.println("Submitting environment file: "
 						+ envZipFile.getAbsolutePath() + " to " + url);
 				System.out.println("Submitting correction file: "
@@ -78,7 +78,7 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 				sender.send();
 				System.out
 						.println("Please check your log file to see the confirmation from the server (last record)");
-			}  catch (IOException e) {
+			} catch (IOException e) {
 				// e.printStackTrace();
 				throw new MojoFailureException("Sender error", e);
 			}
