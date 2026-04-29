@@ -40,10 +40,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Mojo(name = "compact",defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@Mojo(name = "compact", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class LEDACompactorMojo extends AbstractMojo {
 
-	@Parameter(property = "project",defaultValue = "${project}",required = true, readonly = true)
+	@Parameter(property = "project", defaultValue = "${project}", required = true, readonly = true)
 	private MavenProject project;
 
 	@Parameter(property = "matricula", required = true)
@@ -63,14 +63,13 @@ public class LEDACompactorMojo extends AbstractMojo {
 
 	private StudentSubmissionSender sender;
 
-	
-	public void execute() throws MojoFailureException  {
+	public void execute() throws MojoFailureException {
 
 		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
 		System.out.println("Folder to be compacted: "
 				+ project.getBuild().getSourceDirectory());
 
-		//faz validação para ver se estudante esta cadastrado e na turma correta
+		// faz validação para ver se estudante esta cadastrado e na turma correta
 		System.out.println("Checking matricula and turma");
 		List<Student> alunos = new LinkedList<Student>();
 		String currentSemester = "";
@@ -78,45 +77,39 @@ public class LEDACompactorMojo extends AbstractMojo {
 			currentSemester = Util.getCurrentSemester(urlCurrentSemester);
 			System.out.println("MOJO: current semester received: " + currentSemester);
 			System.out.println("MOJO: getting all students: " + urlGetAllStudents);
-			alunos = Util.getAllStudents(currentSemester,urlGetAllStudents)
+			alunos = Util.getAllStudents(currentSemester, urlGetAllStudents)
 					.values()
 					.stream()
 					.flatMap(Collection::stream)
 					.collect(Collectors.toList());
 			System.out.println("MOJO: all students received: " + alunos.size());
 		} catch (IOException e2) {
-			throw new MojoFailureException("\n CONNECTION ERROR: " + e2.getMessage(),e2);
+			throw new MojoFailureException("\n CONNECTION ERROR: " + e2.getMessage(), e2);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
-			throw new MojoFailureException("\n ERROR in URL: " + e.getMessage(),e);
+			throw new MojoFailureException("\n ERROR in URL: " + e.getMessage(), e);
 		}
-		//se acontecer da matricula nao estiver cadastrada nem o aluno cadastrado na turma correta
-		Student aluno = alunos.stream().findFirst().orElse(null);
-		Integer turma = Integer.parseInt(roteiro.substring(4));
-		if(aluno == null){
-			throw new MojoFailureException("Aluno " + matricula + " nao cadastrado");
-		}else if (aluno.getTurma() != turma){
-			throw new MojoFailureException("Aluno " + matricula + " nao pertence a turma " + turma);			
-		}
-		Compactor compactor = new Compactor();
-		File srcFolder = new File(project.getBuild().getSourceDirectory());
 
-		//Talvez precise isntanciar aqui um header com dados do usuario professor logado.
-
-		//TODO poderia fazer algumas validacoes na matricula e turma antes de compactar
-		//System.out.println("Injecting author information...");
-		//List<File> files = Util.getFiles(srcFolder, ".java");
-		//Map<String,String> filesOwners = new HashMap<String,String>();
-		//try {
-		//	filesOwners = Util.addAuthorToFiles(files, aluno.getMatricula(), aluno.getNome());
-		//} catch (IOException e1) {
-		//	System.out.println("Author information could not be injected: " + e1.getMessage());
-		//}
-		// System.out.println("Source folder: " + srcFolder);
-		File destZipFile = new File(project.getBuild().getDirectory(),
-				matricula + ".zip");
 		try {
+			// se acontecer da matricula nao estiver cadastrada nem o aluno cadastrado na
+			// turma correta
+			Student aluno = alunos.stream().findFirst().orElse(null);
+			Integer turma = Integer.parseInt(roteiro.substring(4));
+			if (aluno == null) {
+				throw new MojoFailureException("Aluno " + matricula + " nao cadastrado");
+			} else if (aluno.getTurma() != turma) {
+				throw new MojoFailureException("Aluno " + matricula + " nao pertence a turma " + turma);
+			}
+
+			Compactor compactor = new Compactor();
+			File srcFolder = new File(project.getBuild().getSourceDirectory());
+
+			// Talvez precise isntanciar aqui um header com dados do usuario professor
+			// logado.
+
+			File destZipFile = new File(project.getBuild().getDirectory(),
+					matricula + ".zip");
 			compactor.zipFolder(srcFolder, destZipFile);
 			System.out.println("Compaction sucess: " + destZipFile.getName());
 			sender = new StudentSubmissionSender(destZipFile, matricula,
@@ -126,6 +119,9 @@ public class LEDACompactorMojo extends AbstractMojo {
 			sender.send();
 			System.out
 					.println("Please check your log file to see the confirmation from the server (last record)");
+		} catch (NumberFormatException e) {
+			// e.printStackTrace();
+			throw new MojoFailureException("\n ERROR WHEN EXTRACTING CLASS", e);
 		} catch (IOException e) {
 			// e.printStackTrace();
 			throw new MojoFailureException("\n COMPACTION ERROR", e);
