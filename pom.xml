@@ -42,8 +42,7 @@
 		<maven.plugin.api.version>3.9.10</maven.plugin.api.version>
 		<maven.plugin.annotations.version>3.15.1</maven.plugin.annotations.version>
 		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.release>18</maven.compiler.release>
 		<junit.jupiter.version>6.0.3</junit.jupiter.version>
 		<junit.suite.engine.version>6.0.3</junit.suite.engine.version>
 		<junit.runner.version>1.13.2</junit.runner.version>
@@ -98,6 +97,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -120,8 +120,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
+					<release>${maven.compiler.release}</release>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
