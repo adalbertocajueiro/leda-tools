@@ -43,12 +43,13 @@
 		<maven.plugin.annotations.version>3.15.1</maven.plugin.annotations.version>
 		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
 		<maven.compiler.release>18</maven.compiler.release>
+		<maven.compiler.proc>full</maven.compiler.proc>
 		<junit.jupiter.version>6.0.3</junit.jupiter.version>
 		<junit.suite.engine.version>6.0.3</junit.suite.engine.version>
 		<junit.runner.version>1.13.2</junit.runner.version>
 		<httpClient5.version>5.5</httpClient5.version>
 		<gson.version>2.13.1</gson.version>
-		<lombok.version>1.18.38</lombok.version>
+		<lombok.version>1.18.46</lombok.version>
 		<leda.commons.version>2.0.0-SNAPSHOT</leda.commons.version>
 		<httpmime.version>4.5.14</httpmime.version>
 	</properties>
@@ -121,7 +122,6 @@
 				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
 					<release>${maven.compiler.release}</release>
-					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<!-- plugin>
