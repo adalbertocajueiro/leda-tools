@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -34,25 +35,22 @@
 		<developerConnection>scm:git:ssh://github.com:adalbertocajueiro/leda-tools.git</developerConnection>
 		<url>https://github.com/adalbertocajueiro/leda-tools</url>
 	</scm>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<plugin.repository.url>http://150.165.85.97:8081/repository/ufcg-leda/</plugin.repository.url>
+		<maven.compiler.release>25</maven.compiler.release>
 		<maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
-		<maven.plugin.api.version>3.9.10</maven.plugin.api.version>
-		<maven.plugin.annotations.version>3.15.1</maven.plugin.annotations.version>
-		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
+		<maven.plugin.plugin.version>3.15.2</maven.plugin.plugin.version>
+		<maven.plugin.api.version>3.9.16</maven.plugin.api.version>
+		<maven.plugin.annotations.version>3.15.2</maven.plugin.annotations.version>
 		<maven.source.plugin.version>3.4.0</maven.source.plugin.version>
-		<maven.compiler.release>17</maven.compiler.release>
+		<org.ow2.asm.version>9.10.1</org.ow2.asm.version>
 		<!-- <maven.compiler.proc>full</maven.compiler.proc> -->
-		<junit.jupiter.version>6.0.3</junit.jupiter.version>
-		<junit.suite.engine.version>6.0.3</junit.suite.engine.version>
-		<junit.runner.version>1.13.2</junit.runner.version>
-		<httpClient5.version>5.6.1</httpClient5.version>
-		<gson.version>2.13.1</gson.version>
+		<junit.jupiter.version>6.1.3</junit.jupiter.version>
+		<httpClient5.version>5.6.4</httpClient5.version>
 		<lombok.version>1.18.46</lombok.version>
 		<leda.commons.version>2.0.0-SNAPSHOT</leda.commons.version>
-		<httpmime.version>4.5.14</httpmime.version>
 	</properties>
 
 	<dependencies>
@@ -62,7 +60,7 @@
 			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
@@ -94,7 +92,7 @@
 			<version>2.2.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -118,7 +116,7 @@
 	<modules>
 		<module>leda-sender</module>
 		<module>leda-compactor</module>
-		<module>leda-plaggie</module>		
+		<module>leda-plaggie</module>
 	</modules>
 
 	<build>
@@ -128,7 +126,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
-					<release>17</release> 
+					<release>17</release>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -154,7 +152,15 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.15.1</version>
+				<version>${maven.plugin.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.ow2.asm</groupId>
+						<artifactId>asm</artifactId>
+						<!-- Use version 9.7 or newer which supports up to Java 25 -->
+						<version>${org.ow2.asm.version}</version>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<!-- see http://jira.codehaus.org/browse/MNG-5346 -->
 					<goalPrefix>plugin</goalPrefix>
@@ -169,7 +175,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 	<distributionManagement>
