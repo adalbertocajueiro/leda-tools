@@ -17,7 +17,10 @@ package br.edu.ufcg.leda;
  */
 
 import java.io.File;
-import java.io.IOException;
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
@@ -55,9 +58,11 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 
 	private ProfessorSender sender;
 
+	private static final Logger logger = LogManager.getLogger(LEDARoteiroSenderMojo.class);
+
 	public void execute() throws MojoFailureException {
 		if (defaultSend) {
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%");
+			logger.info("SENDING FILES TO SERVER");
 			File targetFolder = new File(project.getBuild().getDirectory());
 			String environmentName = project.getArtifactId()
 					+ "-environment.zip";
@@ -70,19 +75,19 @@ public class LEDARoteiroSenderMojo extends AbstractMojo {
 			File corrProjZipFile = new File(targetFolder, correctionProjectName);
 			try {
 
-				sender = new ProfessorSender(envZipFile, corrProjZipFile, roteiro, url, semestre, guiaCorrecaoFile, email);
-				System.out.println("Submitting environment file: "
-						+ envZipFile.getAbsolutePath() + " to " + url);
-				System.out.println("Submitting correction file: "
-						+ corrProjZipFile.getAbsolutePath() + " to " + url);
+				sender = new ProfessorSender(envZipFile, corrProjZipFile, roteiro, url, semestre, guiaCorrecaoFile,
+						email);
+				logger.info("ACTIVITY: " + roteiro);
+				logger.info("SEMESTER: " + semestre);
+				logger.info("END POINT: " + url);
+				logger.info("ENVIRONMENT: " + envZipFile.getName());
+				logger.info("CORRECTION: " + corrProjZipFile.getName());
 				sender.send();
-				System.out
-						.println("Please check your log file to see the confirmation from the server (last record)");
-			} catch (IOException e) {
-				// e.printStackTrace();
-				throw new MojoFailureException("Sender error", e);
+				logger.debug("File send! Please check your log file to see the confirmation from the server (last record)");
+			} catch (Exception e) {
+				logger.warn("SENDER ERROR: " + e.getMessage());
+				throw new MojoFailureException("SENDER ERROR", e);
 			}
-			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		}
 
 	}

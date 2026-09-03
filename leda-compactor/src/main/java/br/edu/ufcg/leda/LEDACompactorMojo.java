@@ -24,6 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -52,8 +54,8 @@ public class LEDACompactorMojo extends AbstractMojo {
 	@Parameter(property = "roteiro", required = true)
 	private String roteiro;
 
-	@Parameter(property = "urlCurrentSemester", required = true)
-	private String urlCurrentSemester;
+	@Parameter(property = "urlSemesters", required = true)
+	private String urlSemesters;
 
 	@Parameter(property = "urlGetAllStudents", required = true)
 	private String urlGetAllStudents;
@@ -63,38 +65,29 @@ public class LEDACompactorMojo extends AbstractMojo {
 
 	private StudentSubmissionSender sender;
 
+	private static final Logger logger = LogManager.getLogger(LEDACompactorMojo.class);
+
 	public void execute() throws MojoFailureException {
 
-		System.out.println("%%%%%%%%%% Parameters %%%%%%%%%%");
-		System.out.println("Folder to be compacted: "
-				+ project.getBuild().getSourceDirectory());
+		logger.info("COMPACTING FOLDER: " + project.getBuild().getSourceDirectory());
 
 		// faz validação para ver se estudante esta cadastrado e na turma correta
-		System.out.println("Checking matricula and turma");
+		logger.info("Checking matricula and turma");
 		List<Student> alunos = new LinkedList<Student>();
 		String currentSemester = "";
 		try {
-			currentSemester = Util.getCurrentSemester(urlCurrentSemester);
-			System.out.println("MOJO: current semester received: " + currentSemester);
-			System.out.println("MOJO: getting all students: " + urlGetAllStudents);
+			logger.info("URL DO GET SEMESTERS: " + urlSemesters);
+			currentSemester = Util.getCurrentSemester(urlSemesters);
+			logger.info("CURRENT SEMESTER: " + currentSemester);
+			logger.info("URL TO GET STUDENTS: " + urlGetAllStudents);
 			alunos = Util.getAllStudents(currentSemester, urlGetAllStudents)
 					.values()
 					.stream()
 					.flatMap(Collection::stream)
 					.collect(Collectors.toList());
-			System.out.println("MOJO: all students received: " + alunos.size());
-		} catch (IOException e2) {
-			throw new MojoFailureException("\n CONNECTION ERROR: " + e2.getMessage(), e2);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			throw new MojoFailureException("\n ERROR in URL: " + e.getMessage(), e);
-		}
+			logger.info("NUMBER OF STUDENTS: " + alunos.size());
 
-		try {
-			// se acontecer da matricula nao estiver cadastrada nem o aluno cadastrado na
-			// turma correta
-			Student aluno = alunos.stream().findFirst().orElse(null);
+			Student aluno = alunos.stream().filter(a -> a.getMatricula().equals(matricula)).findFirst().orElse(null);
 			Integer turma = Integer.parseInt(roteiro.substring(4));
 			if (aluno == null) {
 				throw new MojoFailureException("Aluno " + matricula + " nao cadastrado");
@@ -111,21 +104,24 @@ public class LEDACompactorMojo extends AbstractMojo {
 			File destZipFile = new File(project.getBuild().getDirectory(),
 					matricula + ".zip");
 			compactor.zipFolder(srcFolder, destZipFile);
-			System.out.println("Compaction sucess: " + destZipFile.getName());
+			logger.info("FILE TO SEND: " + destZipFile.getName());
+			logger.info("END POINT TO SUBMIT: " + urlSubmit);
+
 			sender = new StudentSubmissionSender(destZipFile, matricula,
 					currentSemester, roteiro, urlSubmit);
-			System.out.println("Submitting file " + destZipFile.getName()
-					+ " to " + urlSubmit);
+
 			sender.send();
-			System.out
-					.println("Please check your log file to see the confirmation from the server (last record)");
+			logger.debug("File send! Please check your log file to see the confirmation from the server (last record)");
+		} catch (IOException e) {
+			logger.warn("ERROR: " + e.getMessage());
+			throw new MojoFailureException("\n ERROR: " + e.getMessage(), e);
+		} catch (URISyntaxException e) {
+			logger.warn("URL ERROR: " + e.getMessage());
+			throw new MojoFailureException("\n ERROR in URL: " + e.getMessage(), e);
 		} catch (NumberFormatException e) {
 			// e.printStackTrace();
+			logger.warn("NUMBER FORMAT ERROR WHEN EXTRACTING CLASS: " + e.getMessage());
 			throw new MojoFailureException("\n ERROR WHEN EXTRACTING CLASS", e);
-		} catch (IOException e) {
-			// e.printStackTrace();
-			throw new MojoFailureException("\n COMPACTION ERROR", e);
 		}
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 	}
 }

@@ -18,7 +18,6 @@ public class Util {
 		
 		while (interfaces.hasMoreElements()){
 		    NetworkInterface current = interfaces.nextElement();
-		    //System.out.println(current);
 		    if (!current.isUp() || current.isLoopback() || current.isVirtual()) continue;
 		    Enumeration<InetAddress> addresses = current.getInetAddresses();
 		    while (addresses.hasMoreElements()){
@@ -29,8 +28,6 @@ public class Util {
 		        if (current_addr.isLoopbackAddress()) {
 		        	continue;
 		        }else {
-		        	
-		        	//System.out.println(current_addr.getHostAddress());
 		        	if(current_addr.toString().contains("150.165")) {
 		        		return current_addr;
 		        	}else {

@@ -16,7 +16,10 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import br.edu.ufcg.leda.util.SenderException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +33,8 @@ public class ProfessorSender extends Sender {
 	private String turma;
 	private String email;
 
+	private static final Logger logger = LogManager.getLogger(ProfessorSender.class);
+
 	public ProfessorSender(File ambiente, File arquivoCorrecao, String roteiro,
 			String url, String semestre, File guiaCorrecaoFile, String email) {
 		super(ambiente, roteiro, url);
@@ -42,7 +47,7 @@ public class ProfessorSender extends Sender {
 	}
 
 	@Override
-	public void send() throws ClientProtocolException, IOException {
+	public void send() throws IOException, ClientProtocolException {
 		// provas tambem sao empacotadas so mesmo jeito e o id delas eh P0X-0X.
 		// entretnato a URL é diferente e o servidor nao preicsa se preocupar
 		// com essa diferenca
@@ -54,77 +59,82 @@ public class ProfessorSender extends Sender {
 		FileBody guia = new FileBody(guiaCorrecaoFile, ContentType.MULTIPART_FORM_DATA);
 
 		CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-		//HttpClients.createDefault();
-
-		
-		try {
 			HttpPost httppost = new HttpPost(url);
 			MultipartEntityBuilder builder = MultipartEntityBuilder.create()
 					.addPart("envFile", arq)
 					.addPart("id", rot)
 					.addPart("semester", sem)
 					.addPart("corrProjFile", corrArq);
-					if(guiaCorrecaoFile.exists()){
-						builder.addPart("guiaCorrFile", guia);
-					}
+			if (guiaCorrecaoFile.exists()) {
+				builder.addPart("guiaCorrFile", guia);
+			}
 
-			HttpEntity reqEntity =  builder.build();
-			
-			//TODO provavalmente vai precisar adicionar aqui a email, etc. porque o interceptor pega por email e insere no request
-			// tem que acrescentar um outro header do semester tambem
-			httppost.addHeader("loggeduser", "{\"email\" = \""+ this.email + "\"}");
+			HttpEntity reqEntity = builder.build();
+
+			httppost.addHeader("loggeduser", "{\"email\" = \"" + this.email + "\"}");
 			httppost.addHeader("semester", this.semestre);
-			/*
-			 * @RequestHeader Map<String, String> headers
-			 * 
-			 * @RequestParam String semester,
-			 * 
-			 * @RequestParam String id,
-			 * 
-			 * @RequestParam MultipartFile envFile,
-			 * 
-			 * @RequestParam MultipartFile corrProjFile
-			 */
-			httppost.setEntity(reqEntity);
-			System.out.println("Sending environment file: "
-					+ httppost.getEntity());
 			
+			httppost.setEntity(reqEntity);
+
 			HttpClientResponseHandler<String> handler = response -> {
 				StringBuilder content = new StringBuilder();
-				HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                InputStreamReader isr = new InputStreamReader(
-								entity.getContent());
-								BufferedReader br = new BufferedReader(isr);
-								String line = "";
-								while ((line = br.readLine()) != null) {
-									content.append(line);
-									content.append("\n");
-								}
+
+				int statusCode = response.getCode(); // e.g., 400, 404, 500
+				String reason = response.getReasonPhrase();
+				
+
+				if (statusCode != 200) {
+					logger.warn("HTTP STATUS CODE: " + statusCode);
+
+					// 3. Extract the error payload from the body
+					HttpEntity entity = response.getEntity();
+					if (entity != null) {
+						try {
+							// Convert the entity stream into a readable String
+							String errorBody = EntityUtils.toString(entity);
+							throw new SenderException("Server responded with error: " + statusCode + " - " + reason + ". Error body: " + errorBody);
+						} catch (IOException e) {
+							throw new SenderException("Failed to read error body", e);
+						} finally {
+							// Always ensure the entity is fully consumed or closed
+							try {
 								EntityUtils.consume(entity);
-            } else {
-							content.append("Server response with no content");
+							} catch (IOException ignored) {
+
+							}
 						}
-            if(response.getCode() != 200){
-							throw new IOException(content.toString());
-						} else {
-							return content.toString();
+					} else {
+						throw new SenderException("Server response with no content for error status code: " + statusCode);
+					}
+				} else {
+					HttpEntity entity = response.getEntity();
+					if (entity != null) {
+						InputStreamReader isr = new InputStreamReader(
+								entity.getContent());
+						BufferedReader br = new BufferedReader(isr);
+						String line = "";
+						while ((line = br.readLine()) != null) {
+							content.append(line);
+							content.append("\n");
 						}
-        };
-			String confirmation = httpclient.execute(httppost,handler);
+						EntityUtils.consume(entity);
+					} else {
+						throw new SenderException(
+								"Server response with no content for success status code: " + statusCode);
+					}
+					logger.debug("HTTP STATUS CODE: " + statusCode);
+				}
+				return content.toString();
+			};
+
+			String confirmation = httpclient.execute(httppost, handler);
 
 			try {
-				System.out.println("----------------------------------------");
 				writeTicket(this.id + "-send.log", confirmation.toString());
-			} catch(Exception e){
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} catch(Exception e){
-			e.printStackTrace();
-		} finally {
 			httpclient.close();
-		}
-
 	}
 
 	@Override
