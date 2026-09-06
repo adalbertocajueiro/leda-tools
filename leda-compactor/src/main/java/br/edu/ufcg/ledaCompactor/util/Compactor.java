@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.util;
+package br.edu.ufcg.ledaCompactor.util;
 
 import java.io.File;
 import java.io.FileInputStream;

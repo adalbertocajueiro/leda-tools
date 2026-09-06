@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda;
+package br.edu.ufcg.ledaSender.mojos;
 
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
@@ -29,7 +29,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-import br.edu.ufcg.leda.sender.ProfessorSender;
+import br.edu.ufcg.ledaSender.sender.ProfessorSender;
 import lombok.Getter;
 import lombok.Setter;
 

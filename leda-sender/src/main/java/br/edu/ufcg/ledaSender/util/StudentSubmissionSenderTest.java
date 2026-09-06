@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.util;
+package br.edu.ufcg.ledaSender.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,8 +6,9 @@ import java.util.HashMap;
 
 import org.apache.hc.client5.http.ClientProtocolException;
 
-import br.edu.ufcg.leda.sender.Sender;
-import br.edu.ufcg.leda.sender.StudentSubmissionSender;
+import br.edu.ufcg.ledaSender.sender.Sender;
+import br.edu.ufcg.ledaSender.sender.StudentSubmissionSender;
+
 
 public class StudentSubmissionSenderTest {
 

@@ -6,6 +6,8 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.junit.jupiter.api.Test;
 
+import br.edu.ufcg.ledaCompactor.mojos.LEDACompactorMojo;
+
 public class TestCompactorMojo {
 
 	@Test

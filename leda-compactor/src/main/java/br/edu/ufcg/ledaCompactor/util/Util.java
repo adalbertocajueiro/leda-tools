@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.util;
+package br.edu.ufcg.ledaCompactor.util;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import br.edu.ufcg.leda.commons.user.Student;
 import br.edu.ufcg.leda.commons.util.Semester;
+import br.edu.ufcg.ledaSender.util.SenderException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 

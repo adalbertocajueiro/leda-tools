@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import br.edu.ufcg.leda.util.Compactor;
+import br.edu.ufcg.ledaCompactor.util.Compactor;
 
 public class CompactorTest {
 

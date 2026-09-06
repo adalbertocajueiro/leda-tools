@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import br.edu.ufcg.leda.commons.user.Student;
-import br.edu.ufcg.leda.util.Util;
+import br.edu.ufcg.ledaCompactor.util.Util;
 
 public class TestUtil {
 

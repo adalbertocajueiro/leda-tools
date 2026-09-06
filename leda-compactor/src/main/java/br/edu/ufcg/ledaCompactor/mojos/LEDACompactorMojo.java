@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda;
+package br.edu.ufcg.ledaCompactor.mojos;
 
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
@@ -34,9 +34,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import br.edu.ufcg.leda.commons.user.Student;
-import br.edu.ufcg.leda.sender.StudentSubmissionSender;
-import br.edu.ufcg.leda.util.Compactor;
-import br.edu.ufcg.leda.util.Util;
+import br.edu.ufcg.ledaCompactor.util.Compactor;
+import br.edu.ufcg.ledaCompactor.util.Util;
+import br.edu.ufcg.ledaSender.sender.StudentSubmissionSender;
 import lombok.Getter;
 import lombok.Setter;
 

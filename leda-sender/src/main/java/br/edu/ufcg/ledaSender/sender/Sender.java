@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.sender;
+package br.edu.ufcg.ledaSender.sender;
 
 import java.io.File;
 import java.io.FileWriter;

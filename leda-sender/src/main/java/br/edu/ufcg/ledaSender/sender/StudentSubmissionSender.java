@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.sender;
+package br.edu.ufcg.ledaSender.sender;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +24,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import br.edu.ufcg.leda.util.SenderException;
+import br.edu.ufcg.ledaSender.util.SenderException;
 import lombok.Getter;
 import lombok.Setter;
 

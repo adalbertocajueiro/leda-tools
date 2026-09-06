@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.util;
+package br.edu.ufcg.ledaSender.util;
 
 public class SenderException extends RuntimeException {
 

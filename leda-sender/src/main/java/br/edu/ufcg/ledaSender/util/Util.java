@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda.util;
+package br.edu.ufcg.ledaSender.util;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

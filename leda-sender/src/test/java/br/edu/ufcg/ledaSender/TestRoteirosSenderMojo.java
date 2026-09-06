@@ -1,9 +1,11 @@
-package br.edu.ufcg.leda;
+package br.edu.ufcg.ledaSender;
 
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuildingException;
 import org.junit.jupiter.api.Test;
+
+import br.edu.ufcg.ledaSender.mojos.LEDARoteiroSenderMojo;
 
 public class TestRoteirosSenderMojo {
 

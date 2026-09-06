@@ -1,4 +1,4 @@
-package br.edu.ufcg.leda;
+package br.edu.ufcg.ledaSender.mojos;
 
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
