@@ -58,6 +58,17 @@
 		<leda.commons.version>2.0.0-SNAPSHOT</leda.commons.version>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>secure-server</id>
+			<properties>
+				<base.url>https://192.168.0.34</base.url>
+				<base.url.nexus>http://192.168.0.34:8081/nexus</base.url.nexus>
+				<plugin.repository.url>${base.url.nexus}/repository/ufcg-leda/</plugin.repository.url>
+			</properties>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
